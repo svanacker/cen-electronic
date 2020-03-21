@@ -80,14 +80,14 @@ void internalChangeAddressLine(I2cBusConnection* i2cBusConnection, unsigned char
 }
 
 void SRF02ChangeAddress(I2cBusConnection* i2cBusConnection, unsigned char oldAddress, unsigned char newAddress) {
-  // StartI2C();
-  // MasterWriteI2C(addr);
-  // command register
-  internalChangeAddressLine(i2cBusConnection, oldAddress, CHANGE_ADDRESS_FIRST_COMMAND);
-  internalChangeAddressLine(i2cBusConnection, oldAddress, CHANGE_ADDRESS_SECOND_COMMAND);
-  internalChangeAddressLine(i2cBusConnection, oldAddress, CHANGE_ADDRESS_THIRD_COMMAND);
-  internalChangeAddressLine(i2cBusConnection, oldAddress, newAddress);
-  // StopI2C();
+    // StartI2C();
+    // MasterWriteI2C(addr);
+    // command register
+    internalChangeAddressLine(i2cBusConnection, oldAddress, CHANGE_ADDRESS_FIRST_COMMAND);
+    internalChangeAddressLine(i2cBusConnection, oldAddress, CHANGE_ADDRESS_SECOND_COMMAND);
+    internalChangeAddressLine(i2cBusConnection, oldAddress, CHANGE_ADDRESS_THIRD_COMMAND);
+    internalChangeAddressLine(i2cBusConnection, oldAddress, newAddress);
+    // StopI2C();
 }
 
 unsigned int getSRF02SoftwareRevision(I2cBusConnection* i2cBusConnection, unsigned char sonarIndex) {

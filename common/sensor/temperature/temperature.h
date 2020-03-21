@@ -9,7 +9,7 @@ typedef struct Temperature Temperature;
  * Get the value from the temperature sensor
  * @return temperature  the value from the temperature sensor
  */
-typedef int TemperatureReadSensorValueFunction (Temperature* temperature);
+typedef int TemperatureReadSensorValueFunction(Temperature* temperature);
 
 /** 
  * Set the temperature to know if we are above the value.
@@ -36,8 +36,8 @@ struct Temperature {
  * @param writeAlertLimit the pointer on the callback function to write the alert limit of the temperature sensor (in celcius degree).
  */
 void initTemperature(Temperature* temperature,
-                     TemperatureReadSensorValueFunction* readSensorValue,
-                     TemperatureWriteAlertLimitFunction* writeAlertLimit,
-                     void* object);
+        TemperatureReadSensorValueFunction* readSensorValue,
+        TemperatureWriteAlertLimitFunction* writeAlertLimit,
+        void* object);
 
 #endif

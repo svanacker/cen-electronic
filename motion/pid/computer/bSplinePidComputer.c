@@ -39,7 +39,7 @@ float bSplineMotionGetNormalAlpha(BSplineCurve* curve, float bSplineTime) {
         normalAlpha += PI;
         normalAlpha = mod2PI(normalAlpha);
     }
-    
+
     return normalAlpha;
 }
 
@@ -52,7 +52,7 @@ float bSplineMotionComputeAlphaAndThetaDiff(Point* robotPoint, Point* normalPoin
     if (curve->backward) {
         angleRealAndNormalOrientation += PI;
     }
-    */
+     */
     float alphaAndThetaDiff = angleRealAndNormalOrientation - normalAlpha;
 
     // restriction to [-PI, PI]
@@ -60,7 +60,6 @@ float bSplineMotionComputeAlphaAndThetaDiff(Point* robotPoint, Point* normalPoin
 
     return alphaAndThetaDiff;
 }
-
 
 /**
  * @private
@@ -80,17 +79,16 @@ float bSplineMotionUComputeAlphaError(PidMotion* pidMotion, BSplineCurve* curve,
     // Convert the alpha error into a "distance" equivalence
     // TODO : To review
     float alphaDistanceEquivalentError = rotationInRadiansToRealDistanceForLeftWheel(robotKinematics, alphaErrorInRadian);
-    
+
     // But it's not finished, because even if alphaError is equal to 0, and "theta" is OK, the risk is too
     // Follow a "parallel" curve to the right One
     // So we try to compute a complementary distance equivalent to the distance between this "parallel curve" (the normal curve)
     // and the robot curve
     float additionalError = -(sinf(alphaAndThetaDiff) * distanceRealAndNormalPoint);
     if (curve->backward) {
-        alphaDistanceEquivalentError -= additionalError;  
-    }
-    else {
-        alphaDistanceEquivalentError += additionalError;  
+        alphaDistanceEquivalentError -= additionalError;
+    } else {
+        alphaDistanceEquivalentError += additionalError;
     }
     PidComputationValues* computationValues = &(pidMotion->computationValues);
     PidComputationInstructionValues* alphaValues = &(computationValues->values[ALPHA]);
@@ -100,7 +98,7 @@ float bSplineMotionUComputeAlphaError(PidMotion* pidMotion, BSplineCurve* curve,
     // The PID Parameters used must be strong to keep the angle => We use PID_TYPE_MAINTAIN_POSITION_INDEX
     PidParameter* alphaPidParameter = getPidParameterByPidType(pidMotion, PID_TYPE_MAINTAIN_POSITION_INDEX);
     alphaValues->u = computePidCorrection(alphaValues, alphaPidParameter, alphaNormalSpeed, alphaDistanceEquivalentError);
-    
+
     // For History
     PidComputationInstructionValues* alphaComputationInstructionValues = &(computationValues->values[ALPHA]);
     alphaComputationInstructionValues->error = alphaDistanceEquivalentError;
@@ -127,11 +125,11 @@ float bSplineMotionUComputeAlphaError(PidMotion* pidMotion, BSplineCurve* curve,
  * @return 
  */
 float bSplineMotionUComputeThetaError(PidMotion* pidMotion,
-                                      PidMotionDefinition* motionDefinition,
-                                      float alphaAndThetaDiff,
-                                      float distanceRealAndNormalPoint) {
+        PidMotionDefinition* motionDefinition,
+        float alphaAndThetaDiff,
+        float distanceRealAndNormalPoint) {
     float cosAlphaAndThetaDiff = cosf(alphaAndThetaDiff);
-    
+
     // We do the "projection" point to determine if we are the error only
     // the Distance error (theta Error))
     float thetaError = distanceRealAndNormalPoint * cosAlphaAndThetaDiff;
@@ -144,7 +142,7 @@ float bSplineMotionUComputeThetaError(PidMotion* pidMotion,
     float thetaNormalSpeed = computeNormalSpeed(thetaInstruction, pidTime);
 
     PidParameter* thetaPidParameter = getPidParameterByPidType(pidMotion, PID_TYPE_GO_INDEX);
-        
+
     // We take GO PID, because it's relative to a distance Management
     PidComputationInstructionValues* thetaValues = &(computationValues->values[THETA]);
 
@@ -163,7 +161,7 @@ float bSplineMotionUComputeThetaError(PidMotion* pidMotion,
 void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
     // Distance
     BSplineCurve* curve = &(motionDefinition->curve);
-	PidComputationValues* computationValues = &(pidMotion->computationValues);
+    PidComputationValues* computationValues = &(pidMotion->computationValues);
     float pidTime = computationValues->pidTimeInSecond;
     MotionInstruction* thetaInstruction = &(motionDefinition->inst[THETA]);
     float normalPosition = computeNormalPosition(thetaInstruction, pidTime);
@@ -173,7 +171,7 @@ void bSplineMotionUCompute(PidMotion* pidMotion, PidMotionDefinition* motionDefi
     float bSplineTime = computeBSplineTimeAtDistance(curve, normalDistance);
 
     Position* robotPosition = getPosition();
-    
+
     Point* robotPoint = &(robotPosition->pos);
     // SOME PRELIMINARY COMPUTATION
     float normalAlpha = bSplineMotionGetNormalAlpha(curve, bSplineTime);

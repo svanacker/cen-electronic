@@ -11,9 +11,9 @@
 #include "../../navigation/path.h"
 
 /**
-* Define the function which must be called.
-* @return true if the function succeed, false if there is an error.
-*/
+ * Define the function which must be called.
+ * @return true if the function succeed, false if there is an error.
+ */
 typedef bool GameTargetActionFunction(int* context);
 
 /**

@@ -7,7 +7,7 @@
 
 typedef struct {
     /** A pointer on an array of BSplineCurve. */
-    BSplineCurve (*curves)[];
+    BSplineCurve(*curves)[];
     /** The max length of the list. */
     unsigned int length;
     /** The pointer used to write Data (we write at the end). */

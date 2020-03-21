@@ -3,7 +3,7 @@
 
 /**
  * @private.
- */ 
+ */
 void _initTimers();
 
 #endif

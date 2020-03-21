@@ -26,31 +26,31 @@
 
 char* getTypeAsString(OutputStream* outputStream, int parameterType) {
     switch (parameterType) {
-        case DEVICE_ARG_SEPARATOR : return "-";
-        case DEVICE_ARG_UNSIGNED_CHAR_1 : return "u1";
-        case DEVICE_ARG_UNSIGNED_CHAR_2 : return "u_2";
-        case DEVICE_ARG_UNSIGNED_HEX_2 : return "hex_u_2";
-        case DEVICE_ARG_SIGNED_HEX_2 : return "hex_s_2";
-        case DEVICE_ARG_UNSIGNED_HEX_3 : return "hex_u_3";
-        case DEVICE_ARG_UNSIGNED_HEX_4 : return "hex_u_4";
-        case DEVICE_ARG_SIGNED_HEX_4 : return "hex_s_4";
-        case DEVICE_ARG_UNSIGNED_HEX_5 : return "hex_u_5";
-        case DEVICE_ARG_SIGNED_HEX_5 : return "hex_s_5";
-        case DEVICE_ARG_UNSIGNED_HEX_6 : return "hex_u_6";
+        case DEVICE_ARG_SEPARATOR: return "-";
+        case DEVICE_ARG_UNSIGNED_CHAR_1: return "u1";
+        case DEVICE_ARG_UNSIGNED_CHAR_2: return "u_2";
+        case DEVICE_ARG_UNSIGNED_HEX_2: return "hex_u_2";
+        case DEVICE_ARG_SIGNED_HEX_2: return "hex_s_2";
+        case DEVICE_ARG_UNSIGNED_HEX_3: return "hex_u_3";
+        case DEVICE_ARG_UNSIGNED_HEX_4: return "hex_u_4";
+        case DEVICE_ARG_SIGNED_HEX_4: return "hex_s_4";
+        case DEVICE_ARG_UNSIGNED_HEX_5: return "hex_u_5";
+        case DEVICE_ARG_SIGNED_HEX_5: return "hex_s_5";
+        case DEVICE_ARG_UNSIGNED_HEX_6: return "hex_u_6";
         case DEVICE_ARG_FIXED_CHAR_ARRAY: return "char[4]_L_8";
-        case DEVICE_ARG_SIGNED_HEX_6 : return "hex_s_6";
-        case DEVICE_ARG_UNSIGNED_HEX_8 : return "hex_u_8";
-        case DEVICE_ARG_SIGNED_HEX_8 : return "hex_s_8";
-        case DEVICE_ARG_UNSIGNED_HEX_9 : return "hex_u_9";
-        case DEVICE_ARG_UNSIGNED_HEX_10 : return "hex_u_10";
-        case DEVICE_ARG_UNSIGNED_HEX_12 : return "hex_u_12";
+        case DEVICE_ARG_SIGNED_HEX_6: return "hex_s_6";
+        case DEVICE_ARG_UNSIGNED_HEX_8: return "hex_u_8";
+        case DEVICE_ARG_SIGNED_HEX_8: return "hex_s_8";
+        case DEVICE_ARG_UNSIGNED_HEX_9: return "hex_u_9";
+        case DEVICE_ARG_UNSIGNED_HEX_10: return "hex_u_10";
+        case DEVICE_ARG_UNSIGNED_HEX_12: return "hex_u_12";
         case DEVICE_ARG_UNSIGNED_FLOAT_HEX_2: return "hex_f_2";
         case DEVICE_ARG_UNSIGNED_FLOAT_HEX_4: return "hex_f_4";
         case DEVICE_ARG_UNSIGNED_FLOAT_HEX_6: return "hex_f_6";
     }
-	// TODO
+    // TODO
     writeError(DEVICE_INTERFACE_PROBLEM);
-	return "??????";
+    return "??????";
 }
 
 /**
@@ -59,27 +59,27 @@ char* getTypeAsString(OutputStream* outputStream, int parameterType) {
  * @return the size of the argument
  */
 unsigned int printArgument(OutputStream* outputStream, DeviceArgument* deviceArgument, int argumentIndex) {
-	appendStringTableData(outputStream, "", DEVICE_USAGE_HEADER_COLUMN_LENGTH);
-	appendStringTableData(outputStream, "", DEVICE_USAGE_NAME_COLUMN_LENGTH);
-	appendStringTableData(outputStream, "", DEVICE_USAGE_IO_COLUMN_LENGTH);
-	appendStringTableData(outputStream, "", DEVICE_USAGE_IO_SIZE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "", DEVICE_USAGE_HEADER_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "", DEVICE_USAGE_NAME_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "", DEVICE_USAGE_IO_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "", DEVICE_USAGE_IO_SIZE_COLUMN_LENGTH);
 
     const char* argumentName = deviceArgument->name;
-	appendStringTableData(outputStream, argumentName, DEVICE_USAGE_PARAM_NAME_COLUMN_LENGTH);
+    appendStringTableData(outputStream, argumentName, DEVICE_USAGE_PARAM_NAME_COLUMN_LENGTH);
 
     unsigned char type = deviceArgument->type;
 
-	unsigned int result = getLengthOfType(type);
-	appendDecTableData(outputStream, result, DEVICE_USAGE_PARAM_SIZE_COLUMN_LENGTH);
-	if (result == -1) {
-		writeError(DEVICE_INTERFACE_PROBLEM);
-	}
+    unsigned int result = getLengthOfType(type);
+    appendDecTableData(outputStream, result, DEVICE_USAGE_PARAM_SIZE_COLUMN_LENGTH);
+    if (result == -1) {
+        writeError(DEVICE_INTERFACE_PROBLEM);
+    }
 
-	const char* typeAsString = getTypeAsString(outputStream, type);
-	appendStringTableData(outputStream, typeAsString, DEVICE_USAGE_PARAM_TYPE_COLUMN_LENGTH);
-	appendTableSeparator(outputStream);
-	println(outputStream);
-   
+    const char* typeAsString = getTypeAsString(outputStream, type);
+    appendStringTableData(outputStream, typeAsString, DEVICE_USAGE_PARAM_TYPE_COLUMN_LENGTH);
+    appendTableSeparator(outputStream);
+    println(outputStream);
+
     return result;
 }
 
@@ -93,35 +93,35 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
         DeviceMethodMetaData* deviceMethodMetaData = getDeviceMethodMetaData();
 
         // Function Header
-		appendCharTableData(outputStream, commandHeader, DEVICE_USAGE_HEADER_COLUMN_LENGTH);
+        appendCharTableData(outputStream, commandHeader, DEVICE_USAGE_HEADER_COLUMN_LENGTH);
 
         // functionName
-		const char* functionName = deviceMethodMetaData->functionName;
-		appendStringTableData(outputStream, functionName, DEVICE_USAGE_NAME_COLUMN_LENGTH);
+        const char* functionName = deviceMethodMetaData->functionName;
+        appendStringTableData(outputStream, functionName, DEVICE_USAGE_NAME_COLUMN_LENGTH);
 
         // arguments
-		appendStringTableData(outputStream, "IN", DEVICE_USAGE_IO_COLUMN_LENGTH);
-		int argumentCount = deviceMethodMetaData->argumentsSize;
-		int argumentIndex;
-		int realArgumentLength = 0;
-		for (argumentIndex = 0; argumentIndex < argumentCount; argumentIndex++) {
-			DeviceArgument deviceArgument = deviceMethodMetaData->arguments[argumentIndex];
-			realArgumentLength += getLengthOfType(deviceArgument.type);
-		}
-		appendDecTableData(outputStream, realArgumentLength, DEVICE_USAGE_IO_SIZE_COLUMN_LENGTH);
+        appendStringTableData(outputStream, "IN", DEVICE_USAGE_IO_COLUMN_LENGTH);
+        int argumentCount = deviceMethodMetaData->argumentsSize;
+        int argumentIndex;
+        int realArgumentLength = 0;
+        for (argumentIndex = 0; argumentIndex < argumentCount; argumentIndex++) {
+            DeviceArgument deviceArgument = deviceMethodMetaData->arguments[argumentIndex];
+            realArgumentLength += getLengthOfType(deviceArgument.type);
+        }
+        appendDecTableData(outputStream, realArgumentLength, DEVICE_USAGE_IO_SIZE_COLUMN_LENGTH);
 
-		// param name empty
-		appendStringTableData(outputStream, "", DEVICE_USAGE_PARAM_NAME_COLUMN_LENGTH);
-		appendStringTableData(outputStream, "", DEVICE_USAGE_PARAM_SIZE_COLUMN_LENGTH);
-		appendStringTableData(outputStream, "", DEVICE_USAGE_PARAM_TYPE_COLUMN_LENGTH);
-		appendTableSeparator(outputStream);
-		println(outputStream);
+        // param name empty
+        appendStringTableData(outputStream, "", DEVICE_USAGE_PARAM_NAME_COLUMN_LENGTH);
+        appendStringTableData(outputStream, "", DEVICE_USAGE_PARAM_SIZE_COLUMN_LENGTH);
+        appendStringTableData(outputStream, "", DEVICE_USAGE_PARAM_TYPE_COLUMN_LENGTH);
+        appendTableSeparator(outputStream);
+        println(outputStream);
 
-		for (argumentIndex = 0; argumentIndex < argumentCount; argumentIndex++) {
-			DeviceArgument deviceArgument = deviceMethodMetaData->arguments[argumentIndex];
-			printArgument(outputStream, &deviceArgument, argumentIndex);
-		}
-		// TODO : Error must be check at the beginning of the function and not Inside
+        for (argumentIndex = 0; argumentIndex < argumentCount; argumentIndex++) {
+            DeviceArgument deviceArgument = deviceMethodMetaData->arguments[argumentIndex];
+            printArgument(outputStream, &deviceArgument, argumentIndex);
+        }
+        // TODO : Error must be check at the beginning of the function and not Inside
         if (argumentLength != realArgumentLength) {
             writeError(DEVICE_INTERFACE_PROBLEM);
             result = false;
@@ -137,24 +137,24 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
         // results
         if (!notification) {
 
-			appendStringTableData(outputStream, "", DEVICE_USAGE_HEADER_COLUMN_LENGTH);
-			appendStringTableData(outputStream, "", DEVICE_USAGE_NAME_COLUMN_LENGTH);
-			appendStringTableData(outputStream, "OUT", DEVICE_USAGE_IO_COLUMN_LENGTH);
+            appendStringTableData(outputStream, "", DEVICE_USAGE_HEADER_COLUMN_LENGTH);
+            appendStringTableData(outputStream, "", DEVICE_USAGE_NAME_COLUMN_LENGTH);
+            appendStringTableData(outputStream, "OUT", DEVICE_USAGE_IO_COLUMN_LENGTH);
 
-			int resultCount = deviceMethodMetaData->resultsSize;
-			int realResultLength = 0;
-			int resultIndex;
-			for (resultIndex = 0; resultIndex < resultCount; resultIndex++) {
-				DeviceArgument resultArgument = deviceMethodMetaData->results[resultIndex];
-				realResultLength += getLengthOfType(resultArgument.type);
-			}
-			appendDecTableData(outputStream, realResultLength, DEVICE_USAGE_IO_SIZE_COLUMN_LENGTH);
+            int resultCount = deviceMethodMetaData->resultsSize;
+            int realResultLength = 0;
+            int resultIndex;
+            for (resultIndex = 0; resultIndex < resultCount; resultIndex++) {
+                DeviceArgument resultArgument = deviceMethodMetaData->results[resultIndex];
+                realResultLength += getLengthOfType(resultArgument.type);
+            }
+            appendDecTableData(outputStream, realResultLength, DEVICE_USAGE_IO_SIZE_COLUMN_LENGTH);
 
-			appendStringTableData(outputStream, "", DEVICE_USAGE_PARAM_NAME_COLUMN_LENGTH);
-			appendStringTableData(outputStream, "", DEVICE_USAGE_PARAM_SIZE_COLUMN_LENGTH);
-			appendStringTableData(outputStream, "", DEVICE_USAGE_PARAM_TYPE_COLUMN_LENGTH);
-			appendTableSeparator(outputStream);
-			println(outputStream);
+            appendStringTableData(outputStream, "", DEVICE_USAGE_PARAM_NAME_COLUMN_LENGTH);
+            appendStringTableData(outputStream, "", DEVICE_USAGE_PARAM_SIZE_COLUMN_LENGTH);
+            appendStringTableData(outputStream, "", DEVICE_USAGE_PARAM_TYPE_COLUMN_LENGTH);
+            appendTableSeparator(outputStream);
+            println(outputStream);
 
             for (resultIndex = 0; resultIndex < resultCount; resultIndex++) {
                 DeviceArgument resultArgument = deviceMethodMetaData->results[resultIndex];
@@ -173,7 +173,7 @@ bool printMethodOrNotificationMetaData(OutputStream* outputStream, DeviceInterfa
                 appendCRLF(outputStream);
             }
         }
-		appendTableHeaderSeparatorLine(outputStream);
+        appendTableHeaderSeparatorLine(outputStream);
     }
     return result;
 }
@@ -196,45 +196,45 @@ void printDeviceUsageLine(OutputStream* outputStream, unsigned char header, Devi
         if (!ok) {
             printMethodOrNotificationMetaData(outputStream, deviceInterface, header, argumentLength, resultLength, false);
         }
-    }
-    else{
+    } else {
         printMethodOrNotificationMetaData(outputStream, deviceInterface, header, argumentLength, resultLength, false);
     }
 }
 
 void printDeviceHeader(OutputStream* outputStream, Device* device) {
-	DeviceInterface* deviceInterface = device->deviceInterface;;
-	const char* deviceName = deviceInterface->deviceGetName();
+    DeviceInterface* deviceInterface = device->deviceInterface;
+    ;
+    const char* deviceName = deviceInterface->deviceGetName();
 
-	println(outputStream);
-	appendTableHeaderSeparatorLine(outputStream);
-	int length = appendStringTableData(outputStream, deviceName, 0);
-	unsigned char deviceHeader = deviceInterface->deviceHeader;
-	appendString(outputStream, " : ");
-	append(outputStream, deviceHeader);
-	appendSpaces(outputStream, PRINT_TABLE_WRITER_DEFAULT_PAGE_CHAR_WIDTH - length - 5);
-	appendTableSeparator(outputStream);
-	println(outputStream);
+    println(outputStream);
+    appendTableHeaderSeparatorLine(outputStream);
+    int length = appendStringTableData(outputStream, deviceName, 0);
+    unsigned char deviceHeader = deviceInterface->deviceHeader;
+    appendString(outputStream, " : ");
+    append(outputStream, deviceHeader);
+    appendSpaces(outputStream, PRINT_TABLE_WRITER_DEFAULT_PAGE_CHAR_WIDTH - length - 5);
+    appendTableSeparator(outputStream);
+    println(outputStream);
 
-	// Table Header
-	appendTableHeaderSeparatorLine(outputStream);
-	appendStringHeader(outputStream, "h", DEVICE_USAGE_HEADER_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "name", DEVICE_USAGE_NAME_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "I/0", DEVICE_USAGE_IO_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "L ", DEVICE_USAGE_IO_SIZE_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "param/res name", DEVICE_USAGE_PARAM_NAME_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "L", DEVICE_USAGE_PARAM_SIZE_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "type", DEVICE_USAGE_PARAM_TYPE_COLUMN_LENGTH);
-	appendTableSeparator(outputStream);
-	println(outputStream);
-	appendTableHeaderSeparatorLine(outputStream);
+    // Table Header
+    appendTableHeaderSeparatorLine(outputStream);
+    appendStringHeader(outputStream, "h", DEVICE_USAGE_HEADER_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "name", DEVICE_USAGE_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "I/0", DEVICE_USAGE_IO_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "L ", DEVICE_USAGE_IO_SIZE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "param/res name", DEVICE_USAGE_PARAM_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "L", DEVICE_USAGE_PARAM_SIZE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "type", DEVICE_USAGE_PARAM_TYPE_COLUMN_LENGTH);
+    appendTableSeparator(outputStream);
+    println(outputStream);
+    appendTableHeaderSeparatorLine(outputStream);
 }
 
 void printDeviceUsage(OutputStream* outputStream, Device* device, bool showOnlyProblem) {
-	printDeviceHeader(outputStream, device);
+    printDeviceHeader(outputStream, device);
     unsigned char header;
     // We start after special characters and use only ANSI chars
-	// We must search, because there is no list of header provided, we provide a char, and after this is catch (or not) by the device
+    // We must search, because there is no list of header provided, we provide a char, and after this is catch (or not) by the device
     for (header = 32; header < 127; header++) {
         printDeviceUsageLine(outputStream, header, device, showOnlyProblem);
     }
@@ -266,16 +266,16 @@ void printDeviceNotificationLine(OutputStream* outputStream, unsigned char heade
  * @private
  */
 void printDeviceNotification(OutputStream* outputStream, Device* device) {
-	unsigned char header;
-	// Not all Device have notification, so we check it before
-	for (header = 32; header < 127; header++) {
-		DeviceInterface* deviceInterface = device->deviceInterface;
-		int argumentLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_NOTIFY, true);
-		if (argumentLength != DEVICE_HEADER_NOT_HANDLED) {
-			printDeviceHeader(outputStream, device);
-			break;
-		}
-	}
+    unsigned char header;
+    // Not all Device have notification, so we check it before
+    for (header = 32; header < 127; header++) {
+        DeviceInterface* deviceInterface = device->deviceInterface;
+        int argumentLength = deviceInterface->deviceGetInterface(header, DEVICE_MODE_NOTIFY, true);
+        if (argumentLength != DEVICE_HEADER_NOT_HANDLED) {
+            printDeviceHeader(outputStream, device);
+            break;
+        }
+    }
 
     // We start after special characters and use only ANSI chars
     for (header = 32; header < 127; header++) {

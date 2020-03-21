@@ -12,7 +12,6 @@
 #include "../../../../common/pc/pipe/pipeClientHelper.h"
 #include "../../../../common/pc/pipe/pipeServerHelper.h"
 
-
 unsigned char portableSlaveReadI2C(I2cBusConnection* i2cBusConnection) {
     I2cBusConnectionPc* i2cBusConnectionPc = getI2cBusConnectionPc(i2cBusConnection);
     if (i2cBusConnectionPc == NULL) {

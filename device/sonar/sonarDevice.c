@@ -49,16 +49,15 @@ void deviceSonarHandleRawData(char commandHeader, InputStream* inputStream, Outp
             int distance = getSRF02Distance(sonarDeviceI2cBusConnection, sonarIndex);
             appendHex4(outputStream, distance);
         }
-    }
-    else if (commandHeader == COMMAND_SONAR_CHANGE_ADDRESS) {
+    } else if (commandHeader == COMMAND_SONAR_CHANGE_ADDRESS) {
         int oldAddress = readHex2(inputStream);
         int newAddress = readHex2(inputStream);
 
         appendStringAndDec(getInfoOutputStreamLogger(), "\noldAddress=", oldAddress);
         appendStringAndDec(getInfoOutputStreamLogger(), "\newAddress=", newAddress);
 
-        SRF02ChangeAddress(sonarDeviceI2cBusConnection, oldAddress, newAddress); 
-        
+        SRF02ChangeAddress(sonarDeviceI2cBusConnection, oldAddress, newAddress);
+
         ackCommand(outputStream, SONAR_DEVICE_HEADER, COMMAND_SONAR_CHANGE_ADDRESS);
         append(outputStream, COMMAND_SONAR_CHANGE_ADDRESS);
     }

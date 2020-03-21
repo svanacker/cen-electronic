@@ -14,7 +14,7 @@ long hex4CharToLong(unsigned char b0, unsigned char b1, unsigned char b2, unsign
 }
 
 int hex2CharToInt(unsigned char b0, unsigned char b1) {
-    return (b0 << 4) + b1;
+    return (b0 << 4) +b1;
 }
 
 

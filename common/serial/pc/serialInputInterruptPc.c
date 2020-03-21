@@ -20,7 +20,7 @@
 DWORD WINAPI serialInputInterruptCallback(LPVOID lpvParam);
 
 static HANDLE serialPipeThreadHandle1;
-static DWORD  serialPipeThreadId1 = 0;
+static DWORD serialPipeThreadId1 = 0;
 
 static Buffer* serialInputBuffer1;
 
@@ -32,9 +32,9 @@ void initSerialInputBuffer(Buffer* buffer, int serialPortIndex) {
 
         // Create a thread to handle master to slave data
         serialPipeThreadHandle1 = createStandardThread(
-            serialInputInterruptCallback,    // thread proc
-            (LPVOID)serialPortIndex,    // thread parameter 
-            &serialPipeThreadId1);      // returns thread ID 
+                serialInputInterruptCallback, // thread proc
+                (LPVOID) serialPortIndex, // thread parameter 
+                &serialPipeThreadId1); // returns thread ID 
 
     }
 }
@@ -45,11 +45,10 @@ void printSerialInputBuffers(OutputStream* outputStream) {
     printDebugBuffer(outputStream, serialInputBuffer1);
 }
 
-
 DWORD WINAPI serialInputInterruptCallback(LPVOID lpvParam) {
     printf("PC->MainBoard -> SerialInputInterruptCallback !\r\n");
     while (true) {
-        int serialPortIndex = (int)lpvParam;
+        int serialPortIndex = (int) lpvParam;
         HANDLE serialPipeHandle1 = getSerialInputPipeHandle(serialPortIndex);
 
         if (serialPipeHandle1 == NULL) {

@@ -70,8 +70,8 @@ void mainBoardCommonIOExpanderListInitDrivers32(void) {
     I2cBus* ioExpanderBus = getI2cBusByIndex(MAIN_BOARD_TOF_EXPANDER_BUS_INDEX);
     // IO Expander List
     appendString(getDebugOutputStreamLogger(), "IO Expander List ...");
-    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MAIN_BOARD_IO_EXPANDER_LIST_LENGTH);
-    
+    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) & ioExpanderArray, MAIN_BOARD_IO_EXPANDER_LIST_LENGTH);
+
     // -> IO Expander (either classical or IOButtonBoard)
     IOExpander* ioExpander = getIOExpanderByIndex(&ioExpanderList, 0);
     I2cBusConnection* ioExpanderBusConnection = addI2cBusConnection(ioExpanderBus, PCF8574_ADDRESS_0, true);
@@ -86,8 +86,8 @@ void mainBoardCommonIOExpanderListInitDrivers32(void) {
 MultiplexerList* mainBoardCommonMultiplexerListInitDrivers32(void) {
     I2cBus* multiplexerBus = getI2cBusByIndex(MAIN_BOARD_MULTIPLEXER_BUS_INDEX);
     appendString(getDebugOutputStreamLogger(), "Multiplexer List ...");
-    initMultiplexerList(&multiplexerList, (Multiplexer(*)[]) &multiplexerArray, MAIN_BOARD_MULTIPLEXER_LIST_LENGTH);
-    
+    initMultiplexerList(&multiplexerList, (Multiplexer(*)[]) & multiplexerArray, MAIN_BOARD_MULTIPLEXER_LIST_LENGTH);
+
     // -> Multiplexer 0 Board
     Multiplexer* multiplexerExpander0 = getMultiplexerByIndex(&multiplexerList, 0);
     I2cBusConnection* multiplexerBoardBusConnection0 = addI2cBusConnection(multiplexerBus, TCA9548A_ADDRESS_0, true);
@@ -97,38 +97,38 @@ MultiplexerList* mainBoardCommonMultiplexerListInitDrivers32(void) {
     Multiplexer* multiplexerExpander1 = getMultiplexerByIndex(&multiplexerList, 1);
     I2cBusConnection* multiplexerBoardBusConnection1 = addI2cBusConnection(multiplexerBus, TCA9548A_ADDRESS_1, true);
     initMultiplexerTca9548A(multiplexerExpander1, multiplexerBoardBusConnection1, true);
-    
+
     appendStringLN(getDebugOutputStreamLogger(), "OK");
-    
+
     return &multiplexerList;
 }
 
 void mainBoardCommonTofInitDrivers32(RobotConfig* robotConfig) {
     // IO Expander List
     mainBoardCommonIOExpanderListInitDrivers32();
-    
+
     // Multiplexer List
     mainBoardCommonMultiplexerListInitDrivers32();
-    
+
     TofSensorList* tofSensorList = mainBoardCommonTofInitDrivers(robotConfig, &multiplexerList, &ioExpanderList);
-    
+
     // HARDWARE Initialization
     appendStringLN(getDebugOutputStreamLogger(), "TOF ...");
     initTofSensorListVL53L0X(mainBoardCommonTofGetTofSensorList(),
-                             (TofSensor(*)[]) tofSensorList->tofSensorArray,
-                             (TofSensorVL53L0X(*)[]) &tofSensorVL53L0XArray,
-                              // Size
-                              MAIN_BOARD_TOF_SENSOR_LIST_LENGTH,
-                              // debug
-                              true
+            (TofSensor(*)[]) tofSensorList->tofSensorArray,
+            (TofSensorVL53L0X(*)[]) & tofSensorVL53L0XArray,
+            // Size
+            MAIN_BOARD_TOF_SENSOR_LIST_LENGTH,
+            // debug
+            true
             );
-    
+
     // BEEP
     IOExpander* beepIOExpander = getIOExpanderByIndex(&ioExpanderList, MAIN_BOARD_TOF_BEEP_IO_EXPANDER_INDEX);
-    initTofSensorListBeep(tofSensorList, 
-                          beepIOExpander, 
-                          MAIN_BOARD_TOF_BEEP_IO_EXPANDER_GROUND_PIN_INDEX,
-                          MAIN_BOARD_TOF_BEEP_IO_EXPANDER_VCC_PIN_INDEX);
+    initTofSensorListBeep(tofSensorList,
+            beepIOExpander,
+            MAIN_BOARD_TOF_BEEP_IO_EXPANDER_GROUND_PIN_INDEX,
+            MAIN_BOARD_TOF_BEEP_IO_EXPANDER_VCC_PIN_INDEX);
 
     appendStringLN(getDebugOutputStreamLogger(), "OK");
 }

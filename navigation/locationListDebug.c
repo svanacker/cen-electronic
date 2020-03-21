@@ -32,21 +32,21 @@
 #define LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH            0
 
 /**
-* Private.
-*/
+ * Private.
+ */
 void printLocationListHeader(OutputStream* outputStream) {
-	println(outputStream);
-	// Table Header
+    println(outputStream);
+    // Table Header
     // Line Header 1
-	appendTableHeaderSeparatorLine(outputStream);
+    appendTableHeaderSeparatorLine(outputStream);
     appendStringHeader(outputStream, "Idx", LOCATION_LIST_LOCATION_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Usa", LOCATION_LIST_LOCATION_USAGE_TYPE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "name", LOCATION_LIST_LOCATION_NAME_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "name", LOCATION_LIST_LOCATION_NAME_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "x", LOCATION_LIST_LOCATION_X_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "y", LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "x Hex", LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "y Hex", LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "name", LOCATION_LIST_LOCATION_NAME_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "x", LOCATION_LIST_LOCATION_X_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "y", LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "x Hex", LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "y Hex", LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Tmp", LOCATION_LIST_LOCATION_TMP_COST_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Next", LOCATION_LIST_LOCATION_NEXT_COLUMN_LENGTH);
 
@@ -73,14 +73,13 @@ void printLocationTable(OutputStream* outputStream, Location* location, unsigned
     if (location != NULL) {
         appendFixedCharArrayTableData(outputStream, &(location->name), LOCATION_LIST_LOCATION_NAME_COLUMN_LENGTH);
         appendHexFixedCharArrayTableData(outputStream, &(location->name), LOCATION_LIST_LOCATION_NAME_HEX_COLUMN_LENGTH);
-    }
-    else {
+    } else {
         appendStringTableData(outputStream, "NULL", LOCATION_LIST_LOCATION_NAME_COLUMN_LENGTH);
         appendStringTableData(outputStream, "NULL", LOCATION_LIST_LOCATION_NAME_HEX_COLUMN_LENGTH);
     }
-	appendDecfTableData(outputStream, location->x, LOCATION_LIST_LOCATION_X_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, location->y, LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH);
-	appendHexFloat4TableData(outputStream, location->x, POSITION_DIGIT_MM_PRECISION, LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, location->x, LOCATION_LIST_LOCATION_X_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, location->y, LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH);
+    appendHexFloat4TableData(outputStream, location->x, POSITION_DIGIT_MM_PRECISION, LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
     appendHexFloat4TableData(outputStream, location->y, POSITION_DIGIT_MM_PRECISION, LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
 
     appendDecfTableData(outputStream, location->computedCost, LOCATION_LIST_LOCATION_TMP_COST_COLUMN_LENGTH);
@@ -88,25 +87,24 @@ void printLocationTable(OutputStream* outputStream, Location* location, unsigned
     // Next
     if (location->computedNextLocation != NULL && location->computedNextLocation->name != NULL) {
         appendFixedCharArrayTableData(outputStream, &(location->computedNextLocation->name), LOCATION_LIST_LOCATION_NEXT_COLUMN_LENGTH);
-    }
-    else {
+    } else {
         appendStringTableData(outputStream, "NULL", LOCATION_LIST_LOCATION_NEXT_COLUMN_LENGTH);
     }
-	appendEndOfTableColumn(outputStream, LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH);
 }
 
 void printLocationListTable(OutputStream* outputStream, LocationList* locationList) {
-	int locationIndex;
-	int size = locationList->size;
-	printLocationListHeader(outputStream);
-	for (locationIndex = 0; locationIndex < size; locationIndex++) {
-		Location* location = getLocation(locationList, locationIndex);
-		printLocationTable(outputStream, location, locationIndex);
+    int locationIndex;
+    int size = locationList->size;
+    printLocationListHeader(outputStream);
+    for (locationIndex = 0; locationIndex < size; locationIndex++) {
+        Location* location = getLocation(locationList, locationIndex);
+        printLocationTable(outputStream, location, locationIndex);
         if (locationIndex % 5 == 4) {
             appendTableHeaderSeparatorLine(outputStream);
         }
-	}
-	appendTableHeaderSeparatorLine(outputStream);
+    }
+    appendTableHeaderSeparatorLine(outputStream);
 }
 
 unsigned int appendLocationLinkedPath(OutputStream* outputStream, Location* startPoint) {
@@ -128,8 +126,8 @@ unsigned int appendLocationLinkedPath(OutputStream* outputStream, Location* star
 // Tests Data
 
 void addLocationListTestsData(LocationList* locationList) {
-	addNamedLocation(locationList, LOCATION_USAGE_TYPE_PERMANENT, "STAR", "STAR", 10, 20);
-	addNamedLocation(locationList, LOCATION_USAGE_TYPE_PERMANENT, "OBJ1", "OBJ 1", 200, 300);
-	addNamedLocation(locationList, LOCATION_USAGE_TYPE_PERMANENT, "OBJ2", "OBJ 2", 400, 700);
-	addNamedLocation(locationList, LOCATION_USAGE_TYPE_PERMANENT, "END", "END", 1500, 2000);
+    addNamedLocation(locationList, LOCATION_USAGE_TYPE_PERMANENT, "STAR", "STAR", 10, 20);
+    addNamedLocation(locationList, LOCATION_USAGE_TYPE_PERMANENT, "OBJ1", "OBJ 1", 200, 300);
+    addNamedLocation(locationList, LOCATION_USAGE_TYPE_PERMANENT, "OBJ2", "OBJ 2", 400, 700);
+    addNamedLocation(locationList, LOCATION_USAGE_TYPE_PERMANENT, "END", "END", 1500, 2000);
 }

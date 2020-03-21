@@ -32,20 +32,19 @@ void ioExpanderPcWriteSingleValue(IOExpander* ioExpander, unsigned int ioIndex, 
     if (value) {
         // Set the bit
         *(ioExpander->object) |= (1UL << ioIndex);
-    }
-    else {
+    } else {
         // Clear the bit
         *(ioExpander->object) &= ~(1UL << ioIndex);
     }
 }
 
 void initIOExpanderPc(IOExpander* ioExpander, int* ioExpanderValue) {
-    initIOExpander(ioExpander, 
-                   &ioExpanderPcInit,
-                   &ioExpanderPcReadValue,
-                   &ioExpanderPcWriteValue,
-                   &ioExpanderPcReadSingleValue,
-                   &ioExpanderPcWriteSingleValue,
-                   IO_EXPANDER_BIT_COUNT,
-                   ioExpanderValue);
+    initIOExpander(ioExpander,
+            &ioExpanderPcInit,
+            &ioExpanderPcReadValue,
+            &ioExpanderPcWriteValue,
+            &ioExpanderPcReadSingleValue,
+            &ioExpanderPcWriteSingleValue,
+            IO_EXPANDER_BIT_COUNT,
+            ioExpanderValue);
 }

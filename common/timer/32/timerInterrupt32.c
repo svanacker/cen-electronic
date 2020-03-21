@@ -15,7 +15,7 @@
  */
 void __ISR(_TIMER_1_VECTOR, IPL3SOFT) Timer1Handler(void) {
     _internalUpdateTimerListValues(1);
-    
+
     // clear the interrupt flag
     mT1ClearIntFlag();
 }

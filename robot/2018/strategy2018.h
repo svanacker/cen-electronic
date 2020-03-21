@@ -128,13 +128,13 @@
 #define GARBAGE_FRONT_TO_GARBAGE_RELEASE_SPEED_FACTOR                 MOTION_SPEED_FACTOR_NORMAL
 #define GARBAGE_FRONT_TO_GARBAGE_RELEASE_ACCELERATION_FACTOR          MOTION_ACCELERATION_FACTOR_NORMAL
 /**
-* Init all elements for 2018.
-*/
+ * Init all elements for 2018.
+ */
 void initStrategy2018(GameStrategyContext* gameStrategyContext);
 
 /**
-* Define the color and update strategy.
-*/
+ * Define the color and update strategy.
+ */
 void setColor2018(GameStrategyContext* gmeStrategyContext, enum TeamColor color);
 
 #endif

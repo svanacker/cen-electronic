@@ -31,7 +31,7 @@ OutputStream* getChildOutputStream(CompositeOutputStream* compositeOutputStream,
         writeError(COMPOSITE_OUTPUT_STREAM_ILLEGAL_INDEX);
         return NULL;
     }
-    OutputStream** result = (OutputStream**)compositeOutputStream->streams;
+    OutputStream** result = (OutputStream**) compositeOutputStream->streams;
     // we don't need use sizeof because our pointer is a OutputStream* pointer, so the shift
     // is already of the structure, we just have to shift of index.
     result += index;
@@ -80,14 +80,13 @@ void addOutputStream(CompositeOutputStream* compositeOutputStream, OutputStream*
 
     unsigned int size = compositeOutputStream->size;
     if (size < compositeOutputStream->maxSize) {
-        OutputStream** pointer = (OutputStream**)compositeOutputStream->streams;
+        OutputStream** pointer = (OutputStream**) compositeOutputStream->streams;
         pointer += size;
         *pointer = childOutputStream;
 
         compositeOutputStream->size++;
         return;
-    }
-    else {
+    } else {
         writeError(COMPOSITE_OUTPUT_STREAM_FULL);
         return;
     }

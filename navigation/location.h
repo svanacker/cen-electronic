@@ -15,10 +15,9 @@
 struct Location;
 typedef struct Location Location;
 
-
 /**
-* Determine the usage of the Location.
-*/
+ * Determine the usage of the Location.
+ */
 enum LocationUsageType {
     LOCATION_USAGE_TYPE_UNKNOWN = 0,
     /** The location is permanent */
@@ -61,8 +60,8 @@ bool locationEquals(Location* location1, Location* location2);
 // UTILS METHODS
 
 /**
-* "Fly" distance between the 2 locations;
-*/
+ * "Fly" distance between the 2 locations;
+ */
 float distanceBetweenLocations(Location* location1, Location* location2);
 
 #endif

@@ -29,9 +29,9 @@
 #include "../../robot/strategy/gameStrategyContext.h"
 
 TofSensorList* mainBoardCommonTofInitDriversPc(RobotConfig* robotConfig,
-                                                MultiplexerList* multiplexerList,
-                                                IOExpanderList* ioExpanderList,
-                                                GameStrategyContext* gameStrategyContext);
+        MultiplexerList* multiplexerList,
+        IOExpanderList* ioExpanderList,
+        GameStrategyContext* gameStrategyContext);
 
 #endif
 

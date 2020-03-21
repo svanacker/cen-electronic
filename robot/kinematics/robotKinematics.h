@@ -10,6 +10,7 @@
 
 #define MILLI_TO_MICRO_FACTOR                                    1000.0f
 #define MILLI_TO_NANO_FACTOR                                     1000000.0f
+
 /** 
  * Encapsulation of all information needed to manage the Kinematics (Rotation, Forward / Backward) and coders capacities.
  */
@@ -90,9 +91,9 @@ float getMotorWheelAverageDiameterMM(RobotKinematics* robotKinematics);
 void setMotorWheelAverageDiameterMM(RobotKinematics* robotKinematics, float value);
 
 /**
-*  The average distance between The average distance between motor wheel. It could be needed when we do some rotation, between the must apply
+ *  The average distance between The average distance between motor wheel. It could be needed when we do some rotation, between the must apply
  * a factor between the distance of motor and the distance of coder wheel. This is not the case when we go forward
-*/
+ */
 float getMotorWheelDistanceBetweenWheelsMM(RobotKinematics* robotKinematics);
 
 void setMotorWheelDistanceBetweenWheelsMM(RobotKinematics* robotKinematics, float value);
@@ -136,9 +137,9 @@ float getCoderWheelsDistanceFromCenter(RobotKinematics* robotKinematics);
 
 
 /**
-* Returns the wheels half distance (from center to one coder wheel).
-* @param robotKinematics Structure with all parameters
-*/
+ * Returns the wheels half distance (from center to one coder wheel).
+ * @param robotKinematics Structure with all parameters
+ */
 float getCoderWheelsDistanceFromCenter(RobotKinematics* robotKinematics);
 
 
@@ -151,9 +152,9 @@ float getCoderWheelsDistanceFromCenter(RobotKinematics* robotKinematics);
 float getCoderLeftWheelLengthForOnePulse(RobotKinematics* robotKinematics);
 
 /**
-* Returns the wheel right length for One Pulse.
-* We use the average value of both wheels and we use delta value (+ for left, - for right).
-*/
+ * Returns the wheel right length for One Pulse.
+ * We use the average value of both wheels and we use delta value (+ for left, - for right).
+ */
 float getCoderRightWheelLengthForOnePulse(RobotKinematics* robotKinematics);
 
 /**
@@ -177,49 +178,49 @@ float getCoderWheelAndMotorWheelAverageDiameterFactor(RobotKinematics* robotKine
 float getCoderWheelPulseBySecondsAtFullSpeed(RobotKinematics* robotKinematics, bool rotationMode);
 
 /**
-* Get the corresponding distance done by the coder by seconds at full speed.
-* We must consider that there is a factor between motor wheel diameter and coder wheel diameter
-* @param robotKinematics Structure with all parameters
-* @param rotationMode if we rotate, we must introduce a new factor depending on the geometry of the motor wheel / coder wheel distance. If we are in forward / backward mode
-* we only need to manage the factor between motor wheel diameter and coder wheel diameter
-* @return the total amount of pulse done by seconds at full speed
-*/
+ * Get the corresponding distance done by the coder by seconds at full speed.
+ * We must consider that there is a factor between motor wheel diameter and coder wheel diameter
+ * @param robotKinematics Structure with all parameters
+ * @param rotationMode if we rotate, we must introduce a new factor depending on the geometry of the motor wheel / coder wheel distance. If we are in forward / backward mode
+ * we only need to manage the factor between motor wheel diameter and coder wheel diameter
+ * @return the total amount of pulse done by seconds at full speed
+ */
 float getCoderWheelDistanceMMBySecondsAtFullSpeed(RobotKinematics* robotKinematics, bool rotationMode);
 
 /**
-* Convert for a rotation around center (both left and right wheel) the distance to do
-* for the left Wheel to reach an angle in radians
-* @param robotKinematics
-* @param angleRadians the rotation
-* @return the number of left pulse to do to accomplish the rotation
-*/
+ * Convert for a rotation around center (both left and right wheel) the distance to do
+ * for the left Wheel to reach an angle in radians
+ * @param robotKinematics
+ * @param angleRadians the rotation
+ * @return the number of left pulse to do to accomplish the rotation
+ */
 float rotationInRadiansToRealDistanceForLeftWheel(RobotKinematics* robotKinematics, float angleRadians);
 
 /**
-* Convert for a rotation around center (both left and right wheel) the distance to do
-* for the right Wheel to reach an angle in radians
-* @param robotKinematics
-* @param angleRadians the angle for the rotation
-* @return the number of right pulse to do to accomplish the rotation
-*/
+ * Convert for a rotation around center (both left and right wheel) the distance to do
+ * for the right Wheel to reach an angle in radians
+ * @param robotKinematics
+ * @param angleRadians the angle for the rotation
+ * @return the number of right pulse to do to accomplish the rotation
+ */
 float rotationInDegreeToRealDistanceForRightWheel(RobotKinematics* robotKinematics, float angleRadians);
 
 /**
-* Convert for a rotation around center (both left and right wheel) the distance to do
-* for the left Wheel to reach an angle in degree
-* @param robotKinematics
-* @param angleDegree the rotation
-* @return the number of left pulse to do to accomplish the rotation
-*/
+ * Convert for a rotation around center (both left and right wheel) the distance to do
+ * for the left Wheel to reach an angle in degree
+ * @param robotKinematics
+ * @param angleDegree the rotation
+ * @return the number of left pulse to do to accomplish the rotation
+ */
 float rotationInDegreeToRealDistanceForLeftWheel(RobotKinematics* robotKinematics, float angleDegree);
 
 /**
-* Convert for a rotation around center (both left and right wheel) the distance to do
-* for the right Wheel to reach an angle in degree
-* @param robotKinematics
-* @param angleDegree the angle for the rotation
-* @return the number of right pulse to do to accomplish the rotation
-*/
+ * Convert for a rotation around center (both left and right wheel) the distance to do
+ * for the right Wheel to reach an angle in degree
+ * @param robotKinematics
+ * @param angleDegree the angle for the rotation
+ * @return the number of right pulse to do to accomplish the rotation
+ */
 float rotationInDegreeToRealDistanceForRightWheel(RobotKinematics* robotKinematics, float angleDegree);
 
 #endif

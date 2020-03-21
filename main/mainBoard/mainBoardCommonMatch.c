@@ -27,17 +27,17 @@ EndMatch* mainBoardCommonMatchGetEndMatch(void) {
     return &endMatch;
 }
 
-void mainBoardCommonMatchMainInitDrivers(RobotConfig* robotConfig, 
-                                         StartupCheckListFunction* startupCheckListFunction,
-                                         IsMatchStartedFunction* isMatchStartedFunctionParam, 
-                                         LoopUntilStartHandleFunction* loopUntilStartHandleFunction,
-                                         MatchHandleInstructionFunction* matchHandleInstructionFunction) {
+void mainBoardCommonMatchMainInitDrivers(RobotConfig* robotConfig,
+        StartupCheckListFunction* startupCheckListFunction,
+        IsMatchStartedFunction* isMatchStartedFunctionParam,
+        LoopUntilStartHandleFunction* loopUntilStartHandleFunction,
+        MatchHandleInstructionFunction* matchHandleInstructionFunction) {
     initEndMatch(&endMatch, robotConfig, MATCH_DURATION);
     initStartMatch(&startMatch,
-                   robotConfig,
-                   &endMatch,
-                   startupCheckListFunction,
-                   isMatchStartedFunctionParam,
-                  loopUntilStartHandleFunction,
-                matchHandleInstructionFunction);
+            robotConfig,
+            &endMatch,
+            startupCheckListFunction,
+            isMatchStartedFunctionParam,
+            loopUntilStartHandleFunction,
+            matchHandleInstructionFunction);
 }

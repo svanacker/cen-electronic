@@ -12,7 +12,7 @@
 #include <stdio.h>
 
 static HANDLE timerThreadHandle;
-static DWORD  timerThreadId = 0;
+static DWORD timerThreadId = 0;
 
 DWORD WINAPI timerCallback(LPVOID lpvParam) {
     printf("Timer Callback start !\r\n");
@@ -30,7 +30,7 @@ DWORD WINAPI timerCallback(LPVOID lpvParam) {
         if (totalElapsedMicroseconds - elapsedMicrosecondsTriggered > STEP_IN_MILLISECONDS) {
             elapsedMicrosecondsTriggered += STEP_IN_MILLISECONDS;
 
-            int increment = (int)((STEP_IN_MILLISECONDS * TIME_DIVIDER_1_HERTZ) / 1000000L);
+            int increment = (int) ((STEP_IN_MILLISECONDS * TIME_DIVIDER_1_HERTZ) / 1000000L);
             _internalUpdateTimerListValues(increment);
         }
         // handleI2CDataFromMaster();
@@ -46,7 +46,7 @@ DWORD WINAPI timerCallback(LPVOID lpvParam) {
 void _initTimers() {
     // Create a thread to handle timer
     timerThreadHandle = createStandardThread(
-        timerCallback,    // thread proc
-        (LPVOID) timerThreadHandle,    // thread parameter 
-        &timerThreadId);      // returns thread ID 
+            timerCallback, // thread proc
+            (LPVOID) timerThreadHandle, // thread parameter 
+            &timerThreadId); // returns thread ID 
 }

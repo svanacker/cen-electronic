@@ -8,8 +8,8 @@ const char* getBatteryDeviceName(void) {
     return "Battery";
 }
 
-int deviceBatteryGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
-    if (commandHeader == COMMAND_READ_BATTERY ) {
+int deviceBatteryGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    if (commandHeader == COMMAND_READ_BATTERY) {
         if (fillDeviceArgumentList) {
             setFunction("Battery Read", 0, 1);
             setResultUnsignedHex4(0, "Battery Value (mV)");

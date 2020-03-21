@@ -6,8 +6,8 @@
 #include "../../common/io/buffer.h"
 
 /**
-* Print the list of I2cBusConnection.
-*/
+ * Print the list of I2cBusConnection.
+ */
 void printI2cBusConnectionList(OutputStream* outputStream);
 
 #endif

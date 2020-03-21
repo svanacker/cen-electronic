@@ -4,9 +4,9 @@
 #include "../../../device/deviceDescriptor.h"
 
 /**
-* Returns a descriptor around motion simulation.
-* @return a descriptor for motion device
-*/
+ * Returns a descriptor around motion simulation.
+ * @return a descriptor for motion device
+ */
 DeviceDescriptor* getMotionSimulationDeviceDescriptor(void);
 
 #endif

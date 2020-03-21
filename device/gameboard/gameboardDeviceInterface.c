@@ -25,101 +25,86 @@ int deviceGameBoardGetInterface(unsigned char commandHeader, DeviceInterfaceMode
             setResultUnsignedChar1(0, "0 = not in coll. area, 1 = in coll. Area ");
         }
         return commandLengthValueForMode(mode, 9, 1);
-    }
-    // Print
+    }// Print
     else if (commandHeader == COMMAND_GAME_BOARD_PRINT) {
         // same input/output
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("printGameBoard");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // Show/Hide Location
+    }// Show/Hide Location
     else if (commandHeader == COMMAND_GAME_BOARD_SHOW_LOCATION) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Show Location");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_LOCATION) {
+    } else if (commandHeader == COMMAND_GAME_BOARD_HIDE_LOCATION) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Hide Location");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // Show/Hide Path
+    }// Show/Hide Path
     else if (commandHeader == COMMAND_GAME_BOARD_SHOW_PATH) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("show Path");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_PATH) {
+    } else if (commandHeader == COMMAND_GAME_BOARD_HIDE_PATH) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Hide Path");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // Show/Hide Unavailable Path
+    }// Show/Hide Unavailable Path
     else if (commandHeader == COMMAND_GAME_BOARD_SHOW_UNAVAILABLE_PATH) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("show Unavailable Path");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_UNAVAILABLE_PATH) {
+    } else if (commandHeader == COMMAND_GAME_BOARD_HIDE_UNAVAILABLE_PATH) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Hide Unavailable Path");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // Show/Hide Robot
+    }// Show/Hide Robot
     else if (commandHeader == COMMAND_GAME_BOARD_SHOW_ROBOT) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Show Robot");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_ROBOT) {
+    } else if (commandHeader == COMMAND_GAME_BOARD_HIDE_ROBOT) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Hide Robot");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // Show/Hide Robot Cone
+    }// Show/Hide Robot Cone
     else if (commandHeader == COMMAND_GAME_BOARD_SHOW_ROBOT_TOF_CONE) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Show Robot Tofs Cone");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_ROBOT_TOF_CONE) {
+    } else if (commandHeader == COMMAND_GAME_BOARD_HIDE_ROBOT_TOF_CONE) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Hide Robot Tofs Cone");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // Show/Hide Outgoing Path
+    }// Show/Hide Outgoing Path
     else if (commandHeader == COMMAND_GAME_BOARD_SHOW_OUTGOING_PATH) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Show OutgoingPath");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_OUTGOING_PATH) {
+    } else if (commandHeader == COMMAND_GAME_BOARD_HIDE_OUTGOING_PATH) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Hide OutgoingPath");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // Show/Hide Unreachable Area
+    }// Show/Hide Unreachable Area
     else if (commandHeader == COMMAND_GAME_BOARD_SHOW_UNREACHABLE_AREA) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Show Unreachable Area");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_GAME_BOARD_HIDE_UNREACHABLE_AREA) {
+    } else if (commandHeader == COMMAND_GAME_BOARD_HIDE_UNREACHABLE_AREA) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Hide  Unreachable Area");
         }

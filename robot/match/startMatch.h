@@ -14,17 +14,17 @@ struct StartMatch;
 typedef struct StartMatch StartMatch;
 
 /**
-* Define a call back function which must be called during loopUntilStart.
-* @param startMatch encapsulation of the information about the match
-* @return true if it must continue, false if we must escape
-*/
+ * Define a call back function which must be called during loopUntilStart.
+ * @param startMatch encapsulation of the information about the match
+ * @return true if it must continue, false if we must escape
+ */
 typedef bool LoopUntilStartHandleFunction(StartMatch* startMatch);
 
 /**
-* Define a call back function which must be called during match.
-* @param startMatch encapsulation of the information about the match
-* @return true if it must continue, false if we must escape
-*/
+ * Define a call back function which must be called during match.
+ * @param startMatch encapsulation of the information about the match
+ * @return true if it must continue, false if we must escape
+ */
 typedef bool MatchHandleInstructionFunction(StartMatch* startMatch);
 
 /**
@@ -70,22 +70,22 @@ struct StartMatch {
  * @param matchHandleInstructionFunction the function which must be called after the start of the match
  */
 void initStartMatch(StartMatch* startMatch,
-                    RobotConfig* robotConfig,
-                    EndMatch* endMatch,
-                    StartupCheckListFunction* startupCheckListFunction,
-                    IsMatchStartedFunction* isMatchStartedFunctionParam,
-                    LoopUntilStartHandleFunction* loopUntilStartHandleFunction,
-                    MatchHandleInstructionFunction* matchHandleInstructionFunction);
+        RobotConfig* robotConfig,
+        EndMatch* endMatch,
+        StartupCheckListFunction* startupCheckListFunction,
+        IsMatchStartedFunction* isMatchStartedFunctionParam,
+        LoopUntilStartHandleFunction* loopUntilStartHandleFunction,
+        MatchHandleInstructionFunction* matchHandleInstructionFunction);
 
 /**
-* Wait before start, but call the function given in argument.
-*/
+ * Wait before start, but call the function given in argument.
+ */
 void loopUntilStart(StartMatch* startMatch);
 
 /**
-* Test if the match is started or not.
-* @return true if the match is started, false else.
-*/
+ * Test if the match is started or not.
+ * @return true if the match is started, false else.
+ */
 bool isMatchStarted(StartMatch* startMatch);
 
 #endif

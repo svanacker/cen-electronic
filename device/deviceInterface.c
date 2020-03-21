@@ -20,31 +20,31 @@ void setFunctionNoArgumentAndNoResult(const char* functionName) {
 }
 
 void setNotification(const char* notificationName, int notificationArguments) {
-   deviceMethodMetaData.functionName = notificationName;
-   deviceMethodMetaData.argumentsSize = notificationArguments;
-   deviceMethodMetaData.resultsSize = 0;
+    deviceMethodMetaData.functionName = notificationName;
+    deviceMethodMetaData.argumentsSize = notificationArguments;
+    deviceMethodMetaData.resultsSize = 0;
 }
 
 int getLengthOfType(int parameterType) {
     switch (parameterType) {
-        case DEVICE_ARG_SEPARATOR : return 1;
-        case DEVICE_ARG_UNSIGNED_CHAR_1 : return 1;
-        case DEVICE_ARG_UNSIGNED_CHAR_2 : return 2;
-        case DEVICE_ARG_SIGNED_HEX_2 : return 2;
+        case DEVICE_ARG_SEPARATOR: return 1;
+        case DEVICE_ARG_UNSIGNED_CHAR_1: return 1;
+        case DEVICE_ARG_UNSIGNED_CHAR_2: return 2;
+        case DEVICE_ARG_SIGNED_HEX_2: return 2;
         case DEVICE_ARG_UNSIGNED_HEX_2: return 2;
-        case DEVICE_ARG_UNSIGNED_HEX_3 : return 3;
-        case DEVICE_ARG_UNSIGNED_HEX_4 : return 4;
-        case DEVICE_ARG_SIGNED_HEX_4 : return 4;
-        case DEVICE_ARG_UNSIGNED_HEX_5 : return 5;
-        case DEVICE_ARG_SIGNED_HEX_5 : return 5;
-        case DEVICE_ARG_UNSIGNED_HEX_6 : return 6;
-        case DEVICE_ARG_SIGNED_HEX_6 : return 6;
-        case DEVICE_ARG_UNSIGNED_HEX_8 : return 8;
-        case DEVICE_ARG_SIGNED_HEX_8 : return 8;
+        case DEVICE_ARG_UNSIGNED_HEX_3: return 3;
+        case DEVICE_ARG_UNSIGNED_HEX_4: return 4;
+        case DEVICE_ARG_SIGNED_HEX_4: return 4;
+        case DEVICE_ARG_UNSIGNED_HEX_5: return 5;
+        case DEVICE_ARG_SIGNED_HEX_5: return 5;
+        case DEVICE_ARG_UNSIGNED_HEX_6: return 6;
+        case DEVICE_ARG_SIGNED_HEX_6: return 6;
+        case DEVICE_ARG_UNSIGNED_HEX_8: return 8;
+        case DEVICE_ARG_SIGNED_HEX_8: return 8;
         case DEVICE_ARG_FIXED_CHAR_ARRAY: return 8;
-        case DEVICE_ARG_UNSIGNED_HEX_9 : return 9;
-        case DEVICE_ARG_UNSIGNED_HEX_10 : return 10;
-        case DEVICE_ARG_UNSIGNED_HEX_12 : return 12;
+        case DEVICE_ARG_UNSIGNED_HEX_9: return 9;
+        case DEVICE_ARG_UNSIGNED_HEX_10: return 10;
+        case DEVICE_ARG_UNSIGNED_HEX_12: return 12;
         case DEVICE_ARG_UNSIGNED_FLOAT_HEX_2: return 2;
         case DEVICE_ARG_UNSIGNED_FLOAT_HEX_4: return 4;
         case DEVICE_ARG_UNSIGNED_FLOAT_HEX_6: return 6;
@@ -55,13 +55,11 @@ int getLengthOfType(int parameterType) {
 int commandLengthValueForMode(DeviceInterfaceMode mode, int input, int output) {
     if (mode == DEVICE_MODE_INPUT) {
         return input;
-    }
-    else if (mode == DEVICE_MODE_OUTPUT) {
+    } else if (mode == DEVICE_MODE_OUTPUT) {
         return output;
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }
-
 
 void setArgument(int index, int type, const char* name) {
     deviceMethodMetaData.arguments[index].type = type;

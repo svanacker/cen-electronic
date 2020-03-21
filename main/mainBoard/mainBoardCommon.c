@@ -93,6 +93,10 @@
 #include "../../device/log/logDevice.h"
 #include "../../device/log/logDeviceInterface.h"
 
+// IO
+#include "../../device/io/ioDevice.h"
+#include "../../device/io/ioDeviceInterface.h"
+
 // I2C
 #include "../../device/i2c/i2cCommonDebugDevice.h"
 #include "../../device/i2c/i2cCommonDebugDeviceInterface.h"
@@ -100,6 +104,10 @@
 // I2C MASTER DEBUG
 #include "../../device/i2c/master/i2cMasterDebugDevice.h"
 #include "../../device/i2c/master/i2cMasterDebugDeviceInterface.h"
+
+// LOG
+#include "../../device/led/ledDevice.h"
+#include "../../device/led/ledDeviceInterface.h"
 
 // SERIAL
 #include "../../device/serial/serialDebugDevice.h"
@@ -149,6 +157,9 @@
 // -> Eeprom
 #include "../../drivers/eeprom/24c512.h"
 
+// -> LED
+#include "../../drivers/led/pca9685/ledPca9685.h"
+
 // -> System
 #include "../../drivers/system/systemDriver.h"
 
@@ -166,6 +177,7 @@
 #include "../../robot/config/robotConfigDevice.h"
 #include "../../robot/config/robotConfigDeviceInterface.h"
 #include "../../robot/config/32/robotConfigPic32.h"
+#include "../../common/io/32/pin32.h"
 #include "../../common/pwm/servo/32/servoPwm32.h"
 #include "../../common/pwm/servo/32/servoList32.h"
 #include "i2c/multiplexer/tca9548A.h"
@@ -173,6 +185,8 @@
 // 2020
 #include "../../robot/2020/arm/armDeviceInterface2020.h"
 #include "../../robot/2020/arm/armDevice2020.h"
+#include "io/ioDevice.h"
+#include "led/led.h"
 
 
 // COMMON TO ALL MAIN BOARD
@@ -195,6 +209,15 @@ static I2cBusConnection* eepromI2cBusConnection;
 static Clock clock;
 static I2cBusConnection* clockI2cBusConnection;
 
+// IO
+static PinList pinList;
+
+// LED
+static LedArray ledArray;
+static I2cBusConnection* ledArrayBusConnection;
+
+// LOG
+static LedArray ledArray;
 
 // SPECIFIC
 
@@ -264,15 +287,15 @@ void mainBoardCommonInitSerialList(void) {
 }
 
 void mainBoardCommonDebugOpenSerialLink(void) {
-        // Open the serial Link for debug and LOG !
-    openSerialLink(&debugSerialStreamLink, 
+    // Open the serial Link for debug and LOG !
+    openSerialLink(&debugSerialStreamLink,
             "SERIAL_DEBUG",
             &debugInputBuffer, &debugInputBufferArray, MAIN_BOARD_DEBUG_INPUT_BUFFER_LENGTH,
             &debugOutputBuffer, &debugOutputBufferArray, MAIN_BOARD_DEBUG_OUTPUT_BUFFER_LENGTH,
             &debugOutputStream,
             MAIN_BOARD_SERIAL_PORT_DEBUG,
             DEFAULT_SERIAL_SPEED);
-    
+
     // Serial Debug LOG
     addLogHandler("UART", &debugOutputStream, LOG_LEVEL_DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
 }
@@ -280,9 +303,9 @@ void mainBoardCommonDebugOpenSerialLink(void) {
 // I2C BUS LIST
 
 void mainBoardCommonInitBusList(void) {
-        // MAIN I2C
-    initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MAIN_BOARD_I2C_BUS_LIST_LENGTH);
-	initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH);
+    // MAIN I2C
+    initI2cBusList((I2cBus(*)[]) & i2cBusListArray, MAIN_BOARD_I2C_BUS_LIST_LENGTH);
+    initI2cBusConnectionList((I2cBusConnection(*)[]) & i2cBusConnectionListArray, MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH);
 
     // MAIN I2C BUS
     i2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
@@ -330,15 +353,17 @@ void mainBoardCommonAddDevices(RobotConfig* robotConfig) {
     addLocalDevice(getDataDispatcherDeviceInterface(), getDataDispatcherDeviceDescriptor());
     addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor());
     addLocalDevice(getI2cMasterDebugDeviceInterface(), getI2cMasterDebugDeviceDescriptor());
-    
+
     // COMMON DEVICES
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(&servoList));
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
+    addLocalDevice(getIODeviceInterface(), getIODeviceDescriptor(&pinList));
+    addLocalDevice(getLedDeviceInterface(), getLedDeviceDescriptor(&ledArray));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
     // addLocalDevice(getCurrentSensorDeviceInterface(), getCurrentSensorDeviceDescriptor(&current));
     addLocalDevice(getADCDeviceInterface(), getADCDeviceDescriptor());
-    
+
     // ACCELEROMETER
     // addLocalDevice(getAccelerometerDeviceInterface(), getAccelerometerDeviceDescriptor(&accelerometer));
     addLocalDevice(getArm2020DeviceInterface(), getArm2020DeviceDescriptor(&servoList));
@@ -346,7 +371,7 @@ void mainBoardCommonAddDevices(RobotConfig* robotConfig) {
     // ROBOT CONFIG
     addLocalDevice(getRobotConfigDeviceInterface(), getRobotConfigDeviceDescriptor(robotConfig));
 }
-    
+
 /**
  * TODO : Rename Driver into ClientDriver
  * @private
@@ -354,7 +379,7 @@ void mainBoardCommonAddDevices(RobotConfig* robotConfig) {
 void initMainBoardClientDriversBuffer() {
     // Init the drivers
     initDrivers(&driverRequestBuffer, &driverRequestBufferArray, MAIN_BOARD_REQUEST_DRIVER_BUFFER_LENGTH,
-                &driverResponseBuffer, &driverResponseBufferArray, MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH);
+            &driverResponseBuffer, &driverResponseBufferArray, MAIN_BOARD_RESPONSE_DRIVER_BUFFER_LENGTH);
 
     // Get test driver for debug purpose
     addDriver(testDriverGetDescriptor(), TRANSMIT_LOCAL);
@@ -362,14 +387,18 @@ void initMainBoardClientDriversBuffer() {
 
 void mainBoardCommonInitDriverDataDispatcherList(void) {
     initDriverDataDispatcherList(&driverDataDispatcherListArray, MAIN_BOARD_DRIVER_DATA_DISPATCHER_LIST_LENGTH);
-    
+
     initMainBoardClientDriversBuffer();
-    
+
     // Configure data dispatcher
     addLocalDriverDataDispatcher();
 }
 
 void mainBoardCommonInitCommonDrivers(void) {
+    // -> IO
+    appendString(getDebugOutputStreamLogger(), "IO PINS ...");
+    initPinList32(&pinList);
+    appendStringLN(getDebugOutputStreamLogger(), "OK");
     // -> Eeproms
     appendString(getDebugOutputStreamLogger(), "EEPROM ...");
     eepromI2cBusConnection = addI2cBusConnection(i2cBus, ST24C512_ADDRESS_0, true);
@@ -379,6 +408,11 @@ void mainBoardCommonInitCommonDrivers(void) {
     appendString(getDebugOutputStreamLogger(), "CLOCK ...");
     clockI2cBusConnection = addI2cBusConnection(i2cBus, PCF8563_WRITE_ADDRESS, true);
     initClockPCF8563(&clock, clockI2cBusConnection);
+    appendStringLN(getDebugOutputStreamLogger(), "OK");
+    // -> LED
+    appendString(getDebugOutputStreamLogger(), "LED ...");
+    ledArrayBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_1, true);
+    initLedArrayPca9685(&ledArray, ledArrayBusConnection);
     appendStringLN(getDebugOutputStreamLogger(), "OK");
     // -> Temperature
     appendString(getDebugOutputStreamLogger(), "TEMPERATURE ...");
@@ -391,12 +425,12 @@ void mainBoardCommonInitCommonDrivers(void) {
     currentI2CBusConnection = addI2cBusConnection(i2cBus, INA3221_ADDRESS_1, true);
     initCurrentINA3221(&current, currentI2CBusConnection);
     appendStringLN(getDebugOutputStreamLogger(), "OK");    
-    */
-    
+     */
+
     // -> Servo
-    initServoList(&servoList, (Servo(*)[]) &servoListArray, MAIN_BOARD_SERVO_LIST_LENGTH);
+    initServoList(&servoList, (Servo(*)[]) & servoListArray, MAIN_BOARD_SERVO_LIST_LENGTH);
     addServos_1_2_5(&servoList, "PWM 1", "PWM 2", "PWM 5");
-    
+
     // -> Accelerometer
     /*
     appendString(getDebugOutputStreamLogger(), "ACCELEROMETER ...");
@@ -409,8 +443,8 @@ void mainBoardCommonInitCommonDrivers(void) {
                                             ADXL345_RATE_400HZ,
                                             ADXL345_RANGE_16G);
     appendStringLN(getDebugOutputStreamLogger(), "OK");
-    */
-    
+     */
+
     // Start interruptions
     startTimerList(true);
 }
@@ -423,7 +457,7 @@ void mainBoardCommonHandleStreamInstruction(void) {
             &debugOutputStream,
             NULL,
             &filterRemoveCRLF_255,
-            NULL); 
+            NULL);
 }
 
 /*
@@ -433,7 +467,7 @@ void mainBoardCommonHandleAccelerometer(void) {
         appendStringLN(getDebugOutputStreamLogger(), "SHOCKED !");
     }
 }
-*/
+ */
 
 void mainBoardCommonMainInit(RobotConfig* robotConfig) {
     // LOG the BoardName

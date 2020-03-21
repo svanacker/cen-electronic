@@ -7,11 +7,11 @@ bool isDeviceDescriptorInitializedProperly(DeviceDescriptor* deviceDescriptor) {
 }
 
 void initDeviceDescriptor(DeviceDescriptor* deviceDescriptor,
-                        deviceInitFunction *deviceInit,
-                        deviceShutDownFunction *deviceShutDown,
-                        deviceIsOkFunction *deviceIsOk,
-                        deviceHandleRawDataFunction *deviceHandleRawData,
-                        int* object) {
+        deviceInitFunction *deviceInit,
+        deviceShutDownFunction *deviceShutDown,
+        deviceIsOkFunction *deviceIsOk,
+        deviceHandleRawDataFunction *deviceHandleRawData,
+        int* object) {
     deviceDescriptor->deviceInit = deviceInit;
     deviceDescriptor->deviceShutDown = deviceShutDown;
     deviceDescriptor->deviceIsOk = deviceIsOk;

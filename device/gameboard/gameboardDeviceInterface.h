@@ -38,8 +38,8 @@
 #define COMMAND_GAME_BOARD_HIDE_UNREACHABLE_AREA      'u'
 
 /**
-* Interface for Device
-*/
+ * Interface for Device
+ */
 DeviceInterface* getGameboardDeviceInterface(void);
 
 #endif

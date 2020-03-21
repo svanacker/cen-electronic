@@ -34,13 +34,13 @@ void printMotionInstructionTableTrajectoryHeader(OutputStream* outputStream, enu
 
     // First Header Line
     appendStringHeader(outputStream, "Index", MOTION_INSTRUCTION_TABLE_INDEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Pid", MOTION_INSTRUCTION_TABLE_PID_TIME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Pid", MOTION_INSTRUCTION_TABLE_PID_TIME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Normal", MOTION_INSTRUCTION_TABLE_MM_SECOND_NORMAL_ACCELERATION_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Normal", MOTION_INSTRUCTION_TABLE_MM_SECOND_NORMAL_SPEED_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Normal", MOTION_INSTRUCTION_TABLE_MM_NORMAL_POSITION_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Normal", MOTION_INSTRUCTION_TABLE_PWM_NORMAL_U_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Normal", MOTION_INSTRUCTION_TABLE_PWM_NORMAL_U_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, MOTION_INSTRUCTION_TABLE_LAST_COLUMN_LENGTH);
-    
+
     // Second Header Line
     appendStringHeader(outputStream, "", MOTION_INSTRUCTION_TABLE_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Time", MOTION_INSTRUCTION_TABLE_PID_TIME_COLUMN_LENGTH);
@@ -49,7 +49,7 @@ void printMotionInstructionTableTrajectoryHeader(OutputStream* outputStream, enu
     appendStringHeader(outputStream, "Position", MOTION_INSTRUCTION_TABLE_MM_NORMAL_POSITION_COLUMN_LENGTH);
     appendStringHeader(outputStream, "U", MOTION_INSTRUCTION_TABLE_PWM_NORMAL_U_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, MOTION_INSTRUCTION_TABLE_LAST_COLUMN_LENGTH);
-    
+
     // Third Header line 
     appendStringHeader(outputStream, "", MOTION_INSTRUCTION_TABLE_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(second)", MOTION_INSTRUCTION_TABLE_PID_TIME_COLUMN_LENGTH);
@@ -59,7 +59,7 @@ void printMotionInstructionTableTrajectoryHeader(OutputStream* outputStream, enu
     appendStringHeader(outputStream, "[0..255]", MOTION_INSTRUCTION_TABLE_PWM_NORMAL_U_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, MOTION_INSTRUCTION_TABLE_LAST_COLUMN_LENGTH);
 
-	appendTableHeaderSeparatorLine(outputStream);
+    appendTableHeaderSeparatorLine(outputStream);
 }
 
 /**
@@ -70,12 +70,12 @@ void printMotionInstructionTableTrajectoryHeader(OutputStream* outputStream, enu
  * @param mmBySecondNormalSpeed the speed in mm / second
  */
 void printMotionInstructionTableTrajectoryLine(OutputStream* outputStream,
-                                               unsigned int index,
-                                               float pidTime,
-                                               float normalAcceleration,
-                                               float normalSpeed,
-                                               float normalPosition,
-                                               float pwmNormalU) {
+        unsigned int index,
+        float pidTime,
+        float normalAcceleration,
+        float normalSpeed,
+        float normalPosition,
+        float pwmNormalU) {
     appendDecTableData(outputStream, index, MOTION_INSTRUCTION_TABLE_INDEX_COLUMN_LENGTH);
     appendDecfTableData(outputStream, pidTime, MOTION_INSTRUCTION_TABLE_PID_TIME_COLUMN_LENGTH);
     appendDecfTableData(outputStream, normalAcceleration, MOTION_INSTRUCTION_TABLE_MM_SECOND_NORMAL_ACCELERATION_COLUMN_LENGTH);

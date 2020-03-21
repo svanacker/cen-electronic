@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdlib.h>
 
 #include "lcdDevice.h"
 #include "lcdDeviceInterface.h"
@@ -21,8 +22,8 @@ bool deviceLCDIsOk(void) {
 }
 
 void deviceLCDHandleRawData(unsigned char commandHeader,
-                            InputStream* inputStream,
-                            OutputStream* outputStream, OutputStream* notificationOutputStream) {
+        InputStream* inputStream,
+        OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_LCD) {
         ackCommand(outputStream, LCD_DEVICE_HEADER, COMMAND_LCD);
         // print character
@@ -35,8 +36,7 @@ void deviceLCDHandleRawData(unsigned char commandHeader,
             }
             writeLCDChar(c);
         }
-    }
-    else if (commandHeader == COMMAND_LCD_TEST) {
+    } else if (commandHeader == COMMAND_LCD_TEST) {
         ackCommand(outputStream, LCD_DEVICE_HEADER, COMMAND_LCD_TEST);
         writeLCDChar('H');
         writeLCDChar('E');
@@ -49,25 +49,25 @@ void deviceLCDHandleRawData(unsigned char commandHeader,
         writeLCDChar('R');
         writeLCDChar('L');
         writeLCDChar('D');
-    }
-    else if (commandHeader == COMMAND_BACKLIGHT_LCD) {
+    } else if (commandHeader == COMMAND_BACKLIGHT_LCD) {
         ackCommand(outputStream, LCD_DEVICE_HEADER, COMMAND_BACKLIGHT_LCD);
         bool enabled = readBool(inputStream);
         setBacklight(enabled);
-    }
-    else if (commandHeader == COMMAND_CLEAR_LCD) {
+    } else if (commandHeader == COMMAND_CLEAR_LCD) {
         ackCommand(outputStream, LCD_DEVICE_HEADER, COMMAND_CLEAR_LCD);
         clearScreen();
     }
 }
 
-static DeviceDescriptor descriptor = {
-    .deviceInit = &deviceLCDInit,
-    .deviceShutDown = &deviceLCDShutDown,
-    .deviceIsOk = &deviceLCDIsOk,
-    .deviceHandleRawData = &deviceLCDHandleRawData,
-};
+static DeviceDescriptor descriptor;
 
-DeviceDescriptor* getLCDDeviceDescriptor(void) {
+DeviceDescriptor* getLCDDeviceDescriptor() {
+    initDeviceDescriptor(&descriptor,
+            &deviceLCDInit,
+            &deviceLCDShutDown,
+            &deviceLCDIsOk,
+            &deviceLCDHandleRawData,
+            NULL);
+
     return &descriptor;
 }

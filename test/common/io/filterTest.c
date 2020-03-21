@@ -33,7 +33,7 @@ void test_filterBinaryToValueChar(void) {
     actual = filterBinaryToValueChar('\31', outputPointer);
     TEST_ASSERT_FALSE(actual);
     TEST_ASSERT_EQUAL(*outputPointer, '\31');
-    
+
     // '1' -> 1
     actual = filterBinaryToValueChar('1', outputPointer);
 

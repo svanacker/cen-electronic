@@ -27,12 +27,12 @@ void setDebugI2cEnabled(bool enabled) {
 }
 
 void initI2CDebugBuffers(Buffer* aDebugI2cInputBuffer,
-    unsigned char(*debugI2cInputBufferArray)[],
-    unsigned int debugI2cInputBufferLength,
-    Buffer* aDebugI2cOutputBuffer,
-    unsigned char(*debugI2cOutputBufferArray)[],
-    unsigned int debugI2cOutputBufferLength
-) {
+        unsigned char(*debugI2cInputBufferArray)[],
+        unsigned int debugI2cInputBufferLength,
+        Buffer* aDebugI2cOutputBuffer,
+        unsigned char(*debugI2cOutputBufferArray)[],
+        unsigned int debugI2cOutputBufferLength
+        ) {
     debugI2cInputBuffer = aDebugI2cInputBuffer;
     debugI2cOutputBuffer = aDebugI2cOutputBuffer;
     // Init Buffers
@@ -87,15 +87,13 @@ void printI2cBus(OutputStream* outputStream, I2cBus* i2cBus) {
     // Type
     appendString(outputStream, "I2C : type=");
     if (i2cBus->busType == I2C_BUS_TYPE_UNKNOWN) {
-        appendString(outputStream, " !! UNKNOWN !!");    
+        appendString(outputStream, " !! UNKNOWN !!");
     }
     if (i2cBus->busType == I2C_BUS_TYPE_MASTER) {
-        appendString(outputStream, "MASTER");    
-    }
-    else if (i2cBus->busType == I2C_BUS_TYPE_MASTER) {
-        appendString(outputStream, "SLAVE"); 
-    }
-    else {
+        appendString(outputStream, "MASTER");
+    } else if (i2cBus->busType == I2C_BUS_TYPE_MASTER) {
+        appendString(outputStream, "SLAVE");
+    } else {
         appendString(outputStream, "??");
     }
 
@@ -121,22 +119,22 @@ void printI2cBusConnection(OutputStream* outputStream, I2cBusConnection* i2cBusC
 }
 
 const char* getI2cBusTypeAsString(enum I2cBusType i2cBusType) {
-	switch (i2cBusType) {
-		case I2C_BUS_TYPE_MASTER: return "I2C_MASTER";
-		case I2C_BUS_TYPE_SLAVE: return "I2C_SLAVE";
-		case I2C_BUS_TYPE_UNKNOWN: return "I2C_UNKOWN";
-		default: return "I2C_???";
-	}
-	return "I2C_???";
+    switch (i2cBusType) {
+        case I2C_BUS_TYPE_MASTER: return "I2C_MASTER";
+        case I2C_BUS_TYPE_SLAVE: return "I2C_SLAVE";
+        case I2C_BUS_TYPE_UNKNOWN: return "I2C_UNKOWN";
+        default: return "I2C_???";
+    }
+    return "I2C_???";
 }
 
 const char* getI2cPortAsString(enum I2cPort i2cPort) {
-	switch (i2cPort) {
-		case I2C_BUS_PORT_1: return "I2C_BUS_PORT_1";
-		case I2C_BUS_PORT_2: return "I2C_BUS_PORT_2";
-		case I2C_BUS_PORT_3: return "I2C_BUS_PORT_3";
-		case I2C_BUS_PORT_4: return "I2C_BUS_PORT_4";
-		default: return "I2C_PORT_??";
-	}
-	return "I2C_PORT_??";
+    switch (i2cPort) {
+        case I2C_BUS_PORT_1: return "I2C_BUS_PORT_1";
+        case I2C_BUS_PORT_2: return "I2C_BUS_PORT_2";
+        case I2C_BUS_PORT_3: return "I2C_BUS_PORT_3";
+        case I2C_BUS_PORT_4: return "I2C_BUS_PORT_4";
+        default: return "I2C_PORT_??";
+    }
+    return "I2C_PORT_??";
 }

@@ -18,7 +18,7 @@ SerialLinkList* getSerialLinkList(void) {
     return &serialLinkList;
 }
 
-void initSerialLinkList(SerialLink (*serialLinkArray)[], unsigned char serialLinkSize) {
+void initSerialLinkList(SerialLink(*serialLinkArray)[], unsigned char serialLinkSize) {
     serialLinkList.links = serialLinkArray;
     serialLinkList.size = 0;
     serialLinkList.maxSize = serialLinkSize;
@@ -71,10 +71,9 @@ SerialLink* getSerialLinkBySerialPort(enum SerialPort serialPort) {
         if (serialLink->serialPort == serialPort) {
             return serialLink;
         }
-    } 
+    }
     return NULL;
 }
-
 
 int getSerialLinkCount() {
     return serialLinkList.size;

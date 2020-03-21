@@ -9,7 +9,7 @@ typedef struct Current Current;
  * Get the value from the current sensor
  * @return current  the value from the current sensor
  */
-typedef int CurrentReadSensorValueFunction (Current* current);
+typedef int CurrentReadSensorValueFunction(Current* current);
 
 /** 
  * Set the current to know if we are above the value.
@@ -36,8 +36,8 @@ struct Current {
  * @param writeAlertLimit the pointer on the callback function to write the alert limit of the current sensor (in celcius degree).
  */
 void initCurrent(Current* current,
-                     CurrentReadSensorValueFunction* readSensorValue,
-                     CurrentWriteAlertLimitFunction* writeAlertLimit,
-                     void* object);
+        CurrentReadSensorValueFunction* readSensorValue,
+        CurrentWriteAlertLimitFunction* writeAlertLimit,
+        void* object);
 
 #endif

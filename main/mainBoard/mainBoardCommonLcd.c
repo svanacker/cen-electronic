@@ -30,7 +30,7 @@ void mainBoardCommonLcdAddDevices(void) {
 }
 
 void mainBoardCommonLcdInit(RobotConfig* robotConfig) {
-        // LCD (LCD via Parallel interface)
+    // LCD (LCD via Parallel interface)
     initLCDOutputStream(&lcdOutputStream);
     addLogHandler("LCD", &lcdOutputStream, LOG_LEVEL_ERROR, LOG_HANDLER_CATEGORY_ALL_MASK);
 

@@ -14,12 +14,11 @@
 bool acceleratorDrop(int* context, const char* logName) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, logName);
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) context;
     ServoList* servoList = gameStrategyContext->servoList;
     if (isViolet2019(gameStrategyContext)) {
         accelerator2019Drop(servoList, FORK_2019_RIGHT_INDEX, FORK_2019_LEFT_INDEX);
-    }
-    else {
+    } else {
         accelerator2019Drop(servoList, FORK_2019_LEFT_INDEX, FORK_2019_RIGHT_INDEX);
     }
 

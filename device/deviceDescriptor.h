@@ -9,36 +9,36 @@
 #include "../common/io/outputStream.h"
 
 /**
-* Defines the type for the function which init the component.
-*/
+ * Defines the type for the function which init the component.
+ */
 typedef void deviceInitFunction(void);
 
 /**
-* Defines the type for the function which stop the component.
-*/
+ * Defines the type for the function which stop the component.
+ */
 typedef void deviceShutDownFunction(void);
 
 /**
-* Defines the function to know if a device is ok or not.
-* @return true if the device is ok, false else
-*/
+ * Defines the function to know if a device is ok or not.
+ * @return true if the device is ok, false else
+ */
 typedef bool deviceIsOkFunction(void);
 
 /**
-* Function for handling raw data sent to the device.
-* @param commandHeader the header char
-* @param inputStream the input Stream where we can get commandHeader, and input parameters
-* @param outputStream the output Stream where we can write some results, ack (with commandHeader)
-* @param notificationOutputStream the output Stream in which we will write, but probably later by a callback
-*/
+ * Function for handling raw data sent to the device.
+ * @param commandHeader the header char
+ * @param inputStream the input Stream where we can get commandHeader, and input parameters
+ * @param outputStream the output Stream where we can write some results, ack (with commandHeader)
+ * @param notificationOutputStream the output Stream in which we will write, but probably later by a callback
+ */
 typedef void deviceHandleRawDataFunction(unsigned char commandHeader,
-                                         InputStream* inputStream,
-                                         OutputStream* outputStream,
-                                         OutputStream* notificationOutputStream);
+        InputStream* inputStream,
+        OutputStream* outputStream,
+        OutputStream* notificationOutputStream);
 
 /**
-* Defines the structure used to describe a device descriptor.
-*/
+ * Defines the structure used to describe a device descriptor.
+ */
 typedef struct DeviceDescriptor {
     /**
      * Gets the error Code during initialization, 0 if the device has no error.
@@ -59,12 +59,12 @@ typedef struct DeviceDescriptor {
 /**
  * Initializes a device descriptor with all data needed.
  */
-void initDeviceDescriptor(DeviceDescriptor* deviceDescriptor, 
-                        deviceInitFunction *deviceInit,
-                        deviceShutDownFunction *deviceShutDown,
-                        deviceIsOkFunction *deviceIsOk,
-                        deviceHandleRawDataFunction *deviceHandleRawData,
-                        int* object);
+void initDeviceDescriptor(DeviceDescriptor* deviceDescriptor,
+        deviceInitFunction *deviceInit,
+        deviceShutDownFunction *deviceShutDown,
+        deviceIsOkFunction *deviceIsOk,
+        deviceHandleRawDataFunction *deviceHandleRawData,
+        int* object);
 
 /**
  * Returns true if the device descriptor was initialized properly

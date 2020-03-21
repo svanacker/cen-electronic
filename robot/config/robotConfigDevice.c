@@ -41,18 +41,16 @@ void deviceRobotConfigHandleRawData(unsigned char commandHeader, InputStream* in
         unsigned int config = getConfigValue(robotConfig);
         ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_GET_CONFIG);
         appendHex4(outputStream, config);
-    }
-    else if (commandHeader == COMMAND_SET_CONFIG) {
+    } else if (commandHeader == COMMAND_SET_CONFIG) {
         ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_SET_CONFIG);
         unsigned int config = readHex4(inputStream);
         if (robotConfig->robotConfigWriteInt != NULL) {
             robotConfig->robotConfigWriteInt(robotConfig, config);
         }
+    } else if (commandHeader == COMMAND_CONFIG_DEBUG) {
+        ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_CONFIG_DEBUG);
+        printRobotTableConfig(getInfoOutputStreamLogger(), robotConfig);
     }
-	else if (commandHeader == COMMAND_CONFIG_DEBUG) {
-		ackCommand(outputStream, ROBOT_CONFIG_DEVICE_HEADER, COMMAND_CONFIG_DEBUG);
-		printRobotTableConfig(getInfoOutputStreamLogger(), robotConfig);
-	}
 }
 
 static DeviceDescriptor descriptor = {

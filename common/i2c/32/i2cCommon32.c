@@ -14,7 +14,6 @@
 
 #include "../../../common/log/logger.h"
 
-
 I2C_MODULE getI2C_MODULE(unsigned char portIndex) {
     if (portIndex == I2C_BUS_PORT_1) {
         return I2C1;
@@ -54,8 +53,8 @@ void internalWaitI2C(I2cBus* i2cBus, unsigned int address) {
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
                     i2cBus->error = I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR;
                     writeError(I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR);
-                    appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Port=", i2cBus->port);
-                    appendStringAndHex2LN (getErrorOutputStreamLogger(), "I2C Addr (Hex)=", address);
+                    appendStringAndDecLN(getErrorOutputStreamLogger(), "I2C Port=", i2cBus->port);
+                    appendStringAndHex2LN(getErrorOutputStreamLogger(), "I2C Addr (Hex)=", address);
                     break;
                 }
             }
@@ -67,8 +66,8 @@ void internalWaitI2C(I2cBus* i2cBus, unsigned int address) {
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
                     i2cBus->error = I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR;
                     writeError(I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR);
-                    appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Port=",i2cBus->port);
-                    appendStringAndHex2LN (getErrorOutputStreamLogger(), "I2C Addr (Hex)=", address);
+                    appendStringAndDecLN(getErrorOutputStreamLogger(), "I2C Port=", i2cBus->port);
+                    appendStringAndHex2LN(getErrorOutputStreamLogger(), "I2C Addr (Hex)=", address);
                     break;
                 }
 
@@ -82,8 +81,8 @@ void internalWaitI2C(I2cBus* i2cBus, unsigned int address) {
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
                     i2cBus->error = I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR;
                     writeError(I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR);
-                    appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Port=", i2cBus->port);
-                    appendStringAndHex2LN (getErrorOutputStreamLogger(), "I2C Addr (Hex)=", address);
+                    appendStringAndDecLN(getErrorOutputStreamLogger(), "I2C Port=", i2cBus->port);
+                    appendStringAndHex2LN(getErrorOutputStreamLogger(), "I2C Addr (Hex)=", address);
                     break;
                 }
             }
@@ -96,8 +95,8 @@ void internalWaitI2C(I2cBus* i2cBus, unsigned int address) {
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
                     i2cBus->error = I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR;
                     writeError(I2C_TOO_MUCH_LOOP_WAIT_I2C_ERROR);
-                    appendStringAndDecLN (getErrorOutputStreamLogger(), "I2C Port=", i2cBus->port);
-                    appendStringAndHex2LN (getErrorOutputStreamLogger(), "I2C Addr (Hex)=", address);
+                    appendStringAndDecLN(getErrorOutputStreamLogger(), "I2C Port=", i2cBus->port);
+                    appendStringAndHex2LN(getErrorOutputStreamLogger(), "I2C Addr (Hex)=", address);
                     break;
                 }
             }
@@ -117,7 +116,7 @@ void WaitI2cBusConnection(I2cBusConnection* i2cBusConnection) {
     }
     if (i2cBusConnection->error == ERROR_NONE) {
         I2cBus* i2cBus = i2cBusConnection->i2cBus;
-        internalWaitI2C(i2cBus, i2cBusConnection->i2cAddress);        
+        internalWaitI2C(i2cBus, i2cBusConnection->i2cAddress);
     }
 }
 

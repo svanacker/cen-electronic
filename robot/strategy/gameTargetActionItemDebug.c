@@ -12,17 +12,13 @@
 unsigned int appendActionItemStatusAsString(OutputStream* outputStream, enum ActionItemStatus actionItemStatus) {
     if (actionItemStatus == ACTION_ITEM_STATUS_TODO) {
         return appendString(outputStream, "TODO");
-    }
-    else if (actionItemStatus == ACTION_ITEM_STATUS_DONE) {
+    } else if (actionItemStatus == ACTION_ITEM_STATUS_DONE) {
         return appendString(outputStream, "DONE");
-    }
-    else if (actionItemStatus == ACTION_ITEM_STATUS_DISABLED) {
+    } else if (actionItemStatus == ACTION_ITEM_STATUS_DISABLED) {
         return appendString(outputStream, "DISABLED");
-    }
-    else if (actionItemStatus == ACTION_ITEM_STATUS_ERROR) {
+    } else if (actionItemStatus == ACTION_ITEM_STATUS_ERROR) {
         return appendString(outputStream, "ERROR");
-    }
-    else {
+    } else {
         return appendString(outputStream, "???");
     }
 }

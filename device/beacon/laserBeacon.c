@@ -24,7 +24,6 @@
 
 #include "../../robot/robotDetector.h"
 
-
 void initLaserDetectorStruct(Laser* laser, int servoIndex, pinValueFunction *pinValue,
         int maxLeft, int maxRight, int shortTrackingInterval,
         float angleFactorCompute, int servoInitValueCompute, int beaconAngleDegree) {
@@ -76,7 +75,7 @@ void updateLaserPosition(Laser* laserDetector) {
                     laserDetector->hitDuringLast[LEFT_DIRECTION] = false;
                     laserDetector->laserHitCounter = 0;
                     laserDetector->currentMaxRight = laserDetector->maxRight;
-                }                    // -> we are under the maximum
+                }// -> we are under the maximum
                 else {
                     // we increase with the limit of MAX_RIGHT
                     laserDetector->currentMaxRight = minInt(laserDetector->maxRight, laserDetector->currentMaxRight + laserDetector->shortTrackingInterval);
@@ -104,7 +103,7 @@ void updateLaserPosition(Laser* laserDetector) {
                     laserDetector->hitDuringLast[RIGHT_DIRECTION] = false;
                     laserDetector->laserHitCounter = 0;
                     laserDetector->currentMaxLeft = laserDetector->maxLeft;
-                }                    // -> we try to decrease the limit
+                }// -> we try to decrease the limit
                 else {
                     // we decrease with the limit of MAX_RIGHT
                     laserDetector->currentMaxLeft = maxInt(laserDetector->maxLeft, laserDetector->currentMaxLeft - laserDetector->shortTrackingInterval);
@@ -148,8 +147,7 @@ void detectsLaser(Laser* laserDetector) {
                 }
             }
         }
-    }
-    else {
+    } else {
         if (laserDetector->laserHitCounter > 0) {
             laserDetector->laserHitCounter--;
         }
@@ -218,7 +216,6 @@ void recalibrateServoInitValue(OutputStream* outputStream, Laser* laser, float r
 }
 
 // DEBUG
-
 
 void printLaserStruct(OutputStream* outputStream, Laser* laser) {
     appendStringAndDec(outputStream, "servoIdx=", laser->servoIndex);

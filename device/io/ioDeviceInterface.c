@@ -20,8 +20,7 @@ int deviceIOGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, 
             setArgumentUnsignedChar1(2, "Value (bool)");
         }
         return commandLengthValueForMode(mode, 4, 0);
-    }
-    else if (commandHeader == COMMAND_IO_READ) {
+    } else if (commandHeader == COMMAND_IO_READ) {
         if (fillDeviceArgumentList) {
             setFunction("Read Bit", 1, 1);
             setArgumentUnsignedHex2(0, "Pin Expander Index");

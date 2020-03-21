@@ -47,12 +47,12 @@ unsigned int adxl345_readSampleCount(Accelerometer* accelerometer) {
     return (unsigned int) adxl345_read8(i2cBusConnection, REG_FIFO_STATUS & FIFO_STATUS_ENTRIES_MASK);
 }
 
-void adxl345_setupInterruptOnSingleTapOnInt1(Accelerometer* accelerometer, 
-                                       unsigned int thresholdMilliG,
-                                       unsigned int thresholdDurationMilliSec,
-                                       unsigned char tapAxesMap,
-                                       unsigned char rate,
-                                       unsigned char rangeMask) {
+void adxl345_setupInterruptOnSingleTapOnInt1(Accelerometer* accelerometer,
+        unsigned int thresholdMilliG,
+        unsigned int thresholdDurationMilliSec,
+        unsigned char tapAxesMap,
+        unsigned char rate,
+        unsigned char rangeMask) {
     I2cBusConnection* i2cBusConnection = _ADXL345_getI2cBusConnection(accelerometer);
     AccelerometerData* accelerometerData = accelerometer->accelerometerData;
     unsigned char deviceId = adxl345_readDeviceID(i2cBusConnection);
@@ -63,7 +63,7 @@ void adxl345_setupInterruptOnSingleTapOnInt1(Accelerometer* accelerometer,
         return;
     }
     accelerometerData->rangeMask = rangeMask;
-    
+
     // Start to measure
     adxl345_start(i2cBusConnection);
     adxl345_clearOffset(i2cBusConnection);
@@ -76,12 +76,12 @@ void adxl345_setupInterruptOnSingleTapOnInt1(Accelerometer* accelerometer,
     // adxl345_write8(i2cBusConnection, REG_TAP_AXES, TAP_AXES_SUPPRESS | tapAxesMap);
     adxl345_write8(i2cBusConnection, REG_TAP_AXES, tapAxesMap);
     // Start enable of Interrupt
-    adxl345_write8(i2cBusConnection, REG_INT_ENABLE, INT_ENABLE_SINGLE_TAP); 
-    
+    adxl345_write8(i2cBusConnection, REG_INT_ENABLE, INT_ENABLE_SINGLE_TAP);
+
     // Manage to get data in STREAM, and keep INT Trigger
     // TODO : Change this, if we want to use INT
     adxl345_writeFifoCtrl(i2cBusConnection, FIFO_CTL_FIFO_MODE_STREAM);
-    
+
     // Start Measurement
     adxl345_start(i2cBusConnection);
 }
@@ -101,7 +101,7 @@ unsigned int adxl345_getThresholdInMilliG(Accelerometer* accelerometer) {
             return (unsigned int) (thresholdTapValue * 62.5f);
         default:
             return 0;
-    }    
+    }
 }
 
 void adxl345_setThresholdInMilliG(Accelerometer* accelerometer, unsigned int thresholdInMilliG) {
@@ -123,7 +123,7 @@ void adxl345_setThresholdInMilliG(Accelerometer* accelerometer, unsigned int thr
                 break;
             default:
                 thresholdTapValue = 0;
-        }    
+        }
     }
     I2cBusConnection* i2cBusConnection = _ADXL345_getI2cBusConnection(accelerometer);
     adxl345_write8(i2cBusConnection, REG_THRESH_TAP, thresholdTapValue);
@@ -165,7 +165,7 @@ void adxl345_setupOffset(I2cBusConnection* i2cBusConnection, unsigned char offse
     // Not optimal, does not use multiple writes, but must work
     adxl345_write8(i2cBusConnection, REG_OFSX, offsetX);
     adxl345_write8(i2cBusConnection, REG_OFSY, offsetY);
-    adxl345_write8(i2cBusConnection, REG_OFSZ, offsetZ);    
+    adxl345_write8(i2cBusConnection, REG_OFSZ, offsetZ);
 }
 
 void adxl345_clearOffset(I2cBusConnection* i2cBusConnection) {
@@ -201,7 +201,7 @@ void adxl345_readAccelerometerData(Accelerometer* accelerometer) {
     AccelerometerData* accelerometerData = accelerometer->accelerometerData;
 
     portableMasterWaitSendI2C(i2cBusConnection);
-    
+
     // Start
     portableMasterStartI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
@@ -216,15 +216,15 @@ void adxl345_readAccelerometerData(Accelerometer* accelerometer) {
 
     portableMasterStopI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     // Restart in read mode
     portableMasterStartI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     // send read address (bit zero is set)
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress | 1);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     // X
     accelerometerData->xRawLowValue = portableMasterReadI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
@@ -240,7 +240,7 @@ void adxl345_readAccelerometerData(Accelerometer* accelerometer) {
         accelerometerData->xRawValue -= 65536;
     }
     accelerometerData->milligXValue = adxl345_convertRawToMilliG(accelerometerData->xRawValue, accelerometer);
- 
+
     // Y
     WaitI2cBusConnection(i2cBusConnection);
     accelerometerData->yRawLowValue = portableMasterReadI2C(i2cBusConnection);
@@ -281,7 +281,7 @@ unsigned char adxl345_read8(I2cBusConnection* i2cBusConnection, unsigned char re
     unsigned char result;
     portableMasterWaitSendI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     // Start
     portableMasterStartI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
@@ -293,15 +293,15 @@ unsigned char adxl345_read8(I2cBusConnection* i2cBusConnection, unsigned char re
     // Register
     portableMasterWriteI2C(i2cBusConnection, reg);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     // Restart in read mode
     portableMasterStartI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     // send read address (bit zero is set)
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress | 1);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     result = portableMasterReadI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
 
@@ -321,22 +321,22 @@ unsigned char adxl345_read8(I2cBusConnection* i2cBusConnection, unsigned char re
  */
 I2cBusConnection* _ADXL345_getI2cBusConnection(Accelerometer* accelerometer) {
     I2cBusConnection* result = (I2cBusConnection*) accelerometer->object;
-    
+
     return result;
 }
 
-void initADXL345AsAccelerometer(Accelerometer* accelerometer, 
-                       AccelerometerData* accelerometerData,
-                       I2cBusConnection* i2cBusConnection) {
-    initAccelerometer(accelerometer, 
-                      accelerometerData,
-                      adxl345_readSampleCount,
-                      adxl345_readAccelerometerData,
-                      // THRESHOLD
-                      adxl345_getThresholdInMilliG,
-                      adxl345_setThresholdInMilliG,
-                      // DEBUG
-                      adxl345_debugMainRegisterList,
-                      adxl345_debugValueRegisterList,
-                      (int*) i2cBusConnection);
+void initADXL345AsAccelerometer(Accelerometer* accelerometer,
+        AccelerometerData* accelerometerData,
+        I2cBusConnection* i2cBusConnection) {
+    initAccelerometer(accelerometer,
+            accelerometerData,
+            adxl345_readSampleCount,
+            adxl345_readAccelerometerData,
+            // THRESHOLD
+            adxl345_getThresholdInMilliG,
+            adxl345_setThresholdInMilliG,
+            // DEBUG
+            adxl345_debugMainRegisterList,
+            adxl345_debugValueRegisterList,
+            (int*) i2cBusConnection);
 }

@@ -19,7 +19,7 @@ void pathListTestSuite(void) {
 }
 
 void pathListTest(void) {
-    initPathList(&pathList, (PathData(*)[]) &pathDataListArray, PATH_LIST_ARRAY_TEST);
+    initPathList(&pathList, (PathData(*)[]) & pathDataListArray, PATH_LIST_ARRAY_TEST);
 
     Location locationA;
     Location locationB;
@@ -50,7 +50,7 @@ void pathListTest(void) {
     // getPath
     tmpPathData = getPath(&pathList, 2);
     TEST_ASSERT_EQUAL(pathDataBD, tmpPathData);
-    
+
     // getPathCount
     unsigned pathCount = getPathCount(&pathList);
     TEST_ASSERT_EQUAL(3, pathCount);
@@ -58,7 +58,7 @@ void pathListTest(void) {
     // getPathOfLocations
     tmpPathData = getPathOfLocations(&pathList, &locationB, &locationE);
     TEST_ASSERT_EQUAL(NULL, tmpPathData);
-    
+
     tmpPathData = getPathOfLocations(&pathList, &locationA, &locationC);
     TEST_ASSERT_EQUAL(pathDataAC, tmpPathData);
 }

@@ -44,15 +44,14 @@ const Device* deviceDataDispatcherFindDevice(const unsigned char deviceHeader, c
         // deviceDataLength = data + 2 (2 = size of device header + size of command header)
         if (dataLength >= expectedDeviceDataLength + DEVICE_AND_COMMAND_HEADER_LENGTH) {
             return result;
-        }
-        else {
+        } else {
             /*
             // dataLength is not enough : we can return IMMEDIATELY
             appendStringAndDec(getWarningOutputStreamLogger(), "header=", header);
             appendStringAndDec(getWarningOutputStreamLogger(), "dataLength=", dataLength);
             appendStringAndDec(getWarningOutputStreamLogger(), ", deviceDataLength=", deviceDataLength);
             println(getWarningOutputStreamLogger());
-            */
+             */
             return NULL;
         }
     }

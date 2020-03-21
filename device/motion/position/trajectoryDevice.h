@@ -17,13 +17,13 @@
 // DEVICE INTERFACE
 
 /**
-* Returns a device descriptor on trajectory device.
-*/
+ * Returns a device descriptor on trajectory device.
+ */
 DeviceDescriptor* getTrajectoryDeviceDescriptor(void);
 
 /**
-* Notify the absolute position without the header.
-*/
+ * Notify the absolute position without the header.
+ */
 void notifyAbsolutePositionAndSpeedWithoutHeader(OutputStream* outputStream, bool fakeData);
 
 // NOTIFICATION

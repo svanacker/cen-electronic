@@ -34,11 +34,11 @@ void clearTargetActionItemList(GameTargetActionItemList* targetActionItemList);
  * @param targetActionItem the target item to add to the list
  */
 void addTargetActionItem(GameTargetActionItemList* targetActionItemList,
-                     GameTargetActionItem* targetActionItem,
-                     GameTargetActionFunction* function,
-                     char* name
-//                    float timeToAchieve,
-);
+        GameTargetActionItem* targetActionItem,
+        GameTargetActionFunction* function,
+        char* name
+        //                    float timeToAchieve,
+        );
 
 /**
  * Get the target action item at index.

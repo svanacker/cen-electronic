@@ -25,7 +25,7 @@ int Temperature;
  *          LSB : Poid faible transfere dans le registre*
  * @return : none                     *
  ********************************************************/
-void setRegMCP9804 (unsigned char reg, unsigned char MSB , unsigned char LSB){
+void setRegMCP9804(unsigned char reg, unsigned char MSB, unsigned char LSB) {
     StartI2C();
     MasterWriteI2C(0x30);
     MasterWriteI2C(reg);
@@ -34,41 +34,37 @@ void setRegMCP9804 (unsigned char reg, unsigned char MSB , unsigned char LSB){
     CloseI2C();
 }
 
-
-void setConfRegMCP9804 ( unsigned char MSB, unsigned char LSB) {
-    setRegMCP9804 (CONF_REG_MCP9804, MSB , LSB);
+void setConfRegMCP9804(unsigned char MSB, unsigned char LSB) {
+    setRegMCP9804(CONF_REG_MCP9804, MSB, LSB);
 }
 
-
-void setTempUpperRegMCP9804 ( unsigned char MSB , unsigned char LSB){
-    setRegMCP9804 (TEMP_UPPER_REG_MCP9804, MSB , LSB);
+void setTempUpperRegMCP9804(unsigned char MSB, unsigned char LSB) {
+    setRegMCP9804(TEMP_UPPER_REG_MCP9804, MSB, LSB);
 }
 
-
-void setTempLowerRegMCP9804 ( unsigned char MSB, unsigned char LSB){
-    setRegMCP9804 (TEMP_LOWER_REG_MCP9804, MSB , LSB);
+void setTempLowerRegMCP9804(unsigned char MSB, unsigned char LSB) {
+    setRegMCP9804(TEMP_LOWER_REG_MCP9804, MSB, LSB);
 }
 
-
-void setTempCriticRegMCP9804 ( unsigned char MSB , unsigned char LSB){
-    setRegMCP9804 (TEMP_CRITIC_REG_MCP9804, MSB , LSB);
+void setTempCriticRegMCP9804(unsigned char MSB, unsigned char LSB) {
+    setRegMCP9804(TEMP_CRITIC_REG_MCP9804, MSB, LSB);
 }
 
-void initRegMCP9804 (unsigned char CONFMSB,
-                     unsigned char CONFLSB,
-                     unsigned char TUPMSB,
-                     unsigned char TUPLSB,
-                     unsigned char TLOWMSB,
-                     unsigned char TLOWLSB,
-                     unsigned char TCRITMSB,
-                     unsigned char TCRITLSB){
-    setConfRegMCP9804(CONFMSB,CONFLSB);
-    setTempUpperRegMCP9804 ( TUPMSB , TUPLSB );
-    setTempLowerRegMCP9804 ( TLOWMSB , TLOWLSB );
-    setTempCriticRegMCP9804 ( TCRITMSB , TCRITLSB );
+void initRegMCP9804(unsigned char CONFMSB,
+        unsigned char CONFLSB,
+        unsigned char TUPMSB,
+        unsigned char TUPLSB,
+        unsigned char TLOWMSB,
+        unsigned char TLOWLSB,
+        unsigned char TCRITMSB,
+        unsigned char TCRITLSB) {
+    setConfRegMCP9804(CONFMSB, CONFLSB);
+    setTempUpperRegMCP9804(TUPMSB, TUPLSB);
+    setTempLowerRegMCP9804(TLOWMSB, TLOWLSB);
+    setTempCriticRegMCP9804(TCRITMSB, TCRITLSB);
 }
 
-int ReadTempAmbMCP9804 (void){
+int ReadTempAmbMCP9804(void) {
     int TempAmbMSB;
     int TempAmbLSB;
     int Temperature;
@@ -77,39 +73,38 @@ int ReadTempAmbMCP9804 (void){
     MasterWriteI2C(0x30);
     MasterWriteI2C(0x05);
     StartI2C();
-    MasterWriteI2C(0x31);//AckI2C1();
+    MasterWriteI2C(0x31); //AckI2C1();
 
     TempAmbMSB = MasterReadI2C();
     AckI2C();
-    IdleI2C();//AckI2C1();
+    IdleI2C(); //AckI2C1();
 
     TempAmbLSB = MasterReadI2C();
     NotAckI2C();
     IdleI2C();
-    
+
     CloseI2C();
 
     //Convert the temperature data
     //First Check flag bits
-    if ((TempAmbMSB & 0x80) == 0x80){
+    if ((TempAmbMSB & 0x80) == 0x80) {
         //TA ？ TCRIT
     }
-    if ((TempAmbMSB & 0x40) == 0x40){
+    if ((TempAmbMSB & 0x40) == 0x40) {
         //TA > TUPPER
     }
-    if ((TempAmbMSB & 0x20) == 0x20){
+    if ((TempAmbMSB & 0x20) == 0x20) {
         //TA < TLOWER
     }
     TempAmbMSB = TempAmbMSB & 0x1F; //Clear flag bits
-    if ((TempAmbMSB & 0x10) == 0x10){ //TA < 0°C
+    if ((TempAmbMSB & 0x10) == 0x10) { //TA < 0°C
         TempAmbMSB = TempAmbMSB & 0x0F;
         //Clear SIGN
         Temperature = 256 - (TempAmbMSB * 16 + TempAmbLSB / 16);
-    }
-    else {
+    } else {
         //TA  ？ 0°C
         Temperature = (TempAmbMSB * 16 + TempAmbLSB / 16);
     }
     //Temperature = Ambient Temperature (°C)
-    return(Temperature);
+    return (Temperature);
 }

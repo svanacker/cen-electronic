@@ -25,9 +25,9 @@
 void setInitialPosition(unsigned int color);
 
 /**
-* Do the homologation.
-* @param homologationIndex the index of strategy
-*/
+ * Do the homologation.
+ * @param homologationIndex the index of strategy
+ */
 void homologation(unsigned int homologationIndex, unsigned int color);
 
 #endif

@@ -14,8 +14,8 @@
  * @param inputStream the pointer on inputStream (POO simulation)
  * @return true if the char is equivalent to 1, false in case of 0 or true in case of != 0 || != 1, but writes an error
  */
- bool readBool(InputStream* inputStream);
- 
+bool readBool(InputStream* inputStream);
+
 /**
  * Read a char with filtering.
  * TODO : To Review
@@ -86,31 +86,31 @@ signed long readSignedHex4(InputStream* inputStream);
 long readHex6(InputStream* inputStream);
 
 /**
-* Read a Hex6 and returns signed value.
-* @param inputStream the pointer on inputStream (POO simulation)
-* @return the long value  converted from hexadecimal
-*/
+ * Read a Hex6 and returns signed value.
+ * @param inputStream the pointer on inputStream (POO simulation)
+ * @return the long value  converted from hexadecimal
+ */
 signed long readSignedHex4(InputStream* inputStream);
 
 /**
-* Read an hexadecimal value from an inputStream (2 hex char as "1D") and transform it to a float.
-* @param inputStream the pointer on inputStream (POO simulation)
-* @param digitPrecision how many digit we want. If digitPrecision = 2, the readed value will be divided by 100.0f
-*/
+ * Read an hexadecimal value from an inputStream (2 hex char as "1D") and transform it to a float.
+ * @param inputStream the pointer on inputStream (POO simulation)
+ * @param digitPrecision how many digit we want. If digitPrecision = 2, the readed value will be divided by 100.0f
+ */
 float readHexFloat2(InputStream* inputStream, unsigned int digitPrecision);
 
 /**
-* Read an hexadecimal value from an inputStream (4 hex char as "051D") and transform it to a float.
-* @param inputStream the pointer on inputStream (POO simulation)
-* @param digitPrecision how many digit we want. If digitPrecision = 2, the readed value will be divided by 100.0f
-*/
+ * Read an hexadecimal value from an inputStream (4 hex char as "051D") and transform it to a float.
+ * @param inputStream the pointer on inputStream (POO simulation)
+ * @param digitPrecision how many digit we want. If digitPrecision = 2, the readed value will be divided by 100.0f
+ */
 float readHexFloat4(InputStream* inputStream, unsigned int digitPrecision);
 
 /**
-* Read an hexadecimal value from an inputStream (4 hex char as "BD051D") and transform it to a float.
-* @param inputStream the pointer on inputStream (POO simulation)
-* @param digitPrecision how many digit we want. If digitPrecision = 2, the readed value will be divided by 100.0f
-*/
+ * Read an hexadecimal value from an inputStream (4 hex char as "BD051D") and transform it to a float.
+ * @param inputStream the pointer on inputStream (POO simulation)
+ * @param digitPrecision how many digit we want. If digitPrecision = 2, the readed value will be divided by 100.0f
+ */
 float readHexFloat6(InputStream* inputStream, unsigned int digitPrecision);
 
 /**

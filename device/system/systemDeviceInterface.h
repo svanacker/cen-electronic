@@ -44,9 +44,9 @@
 #define COMMAND_RESET              'R'
 
 /**
-* Get the system device interface.
-* @return a pointer on the system device Interface.
-*/
+ * Get the system device interface.
+ * @return a pointer on the system device Interface.
+ */
 DeviceInterface* getSystemDeviceInterface(void);
 
 #endif

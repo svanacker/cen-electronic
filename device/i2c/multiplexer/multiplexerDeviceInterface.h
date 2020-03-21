@@ -15,8 +15,8 @@
 #define COMMAND_MULTIPLEXER_DEBUG               'd'
 
 /**
-* Interface for Multiplexer Device.
-*/
+ * Interface for Multiplexer Device.
+ */
 DeviceInterface* getMultiplexerDeviceInterface(void);
 
 #endif

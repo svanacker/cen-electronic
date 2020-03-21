@@ -29,8 +29,7 @@ void printGameStrategyContextPoint(OutputStream* outputStream, Point* point, cha
         appendStringTableData(outputStream, "NULL", GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
         appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
         appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
-    }
-    else {
+    } else {
         appendStringTableData(outputStream, pointNameX, GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
         appendDecfTableData(outputStream, point->x, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
         appendStringTableData(outputStream, "mm", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
@@ -43,14 +42,13 @@ void printGameStrategyContextPoint(OutputStream* outputStream, Point* point, cha
     }
 }
 
-void printGameStrategyContextLocation(OutputStream* outputStream, Location* location, char* locationPropertyName, char* locationNameX, char* locationNameY, char* locationName ) {
+void printGameStrategyContextLocation(OutputStream* outputStream, Location* location, char* locationPropertyName, char* locationNameX, char* locationNameY, char* locationName) {
     if (location == NULL) {
         appendStringTableData(outputStream, locationPropertyName, GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
         appendStringTableData(outputStream, "NULL", GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
         appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
         appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
-    }
-    else {
+    } else {
         appendStringTableData(outputStream, locationNameX, GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
         appendDecfTableData(outputStream, location->x, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
         appendStringTableData(outputStream, "mm", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
@@ -100,8 +98,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     appendStringTableData(outputStream, "Strategy->Name", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
     if (context->gameStrategy != NULL) {
         appendStringTableData(outputStream, context->gameStrategy->name, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
-    }
-    else {
+    } else {
         appendStringTableData(outputStream, "NULL", GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     }
     appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
@@ -202,8 +199,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
         appendSpace(outputStream);
         unsigned int charCount = appendLocationLinkedPath(outputStream, context->nearestLocation);
         appendSpaces(outputStream, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH - charCount);
-    }
-    else {
+    } else {
         appendStringTableData(outputStream, "NULL", GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     }
     appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
@@ -214,8 +210,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     GameTarget* currentTarget = context->currentTarget;
     if (currentTarget != NULL && currentTarget->startLocation != NULL) {
         appendFixedCharArrayTableData(outputStream, &(currentTarget->startLocation->name), GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
-    }
-    else {
+    } else {
         appendStringTableData(outputStream, "NULL", GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     }
     appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
@@ -225,8 +220,7 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     appendStringTableData(outputStream, "currentTarget->endLocation", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
     if (currentTarget != NULL && currentTarget->endLocation != NULL) {
         appendFixedCharArrayTableData(outputStream, &(currentTarget->endLocation->name), GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
-    }
-    else {
+    } else {
         appendStringTableData(outputStream, "NULL", GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     }
     appendStringTableData(outputStream, "-", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);

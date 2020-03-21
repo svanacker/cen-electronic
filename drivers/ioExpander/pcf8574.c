@@ -37,7 +37,7 @@ void writePCF8574(I2cBusConnection* i2cBusConnection, unsigned char outData) {
     WaitI2cBusConnection(i2cBusConnection);
     portableMasterStartI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress); // send write address
     WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, outData); // write new outputs to buffer

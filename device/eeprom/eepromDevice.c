@@ -15,11 +15,14 @@
 
 #include "../../device/device.h"
 
-static Eeprom* eeprom_;
+// FORWARD DECLARATION
+Eeprom* getEepromFromDeviceDescriptor(void);
 
 void _deviceEepromCheckInitialized() {
+    Eeprom* eeprom_ = getEepromFromDeviceDescriptor();
     if (eeprom_ == NULL) {
         writeError(EEPROM_NULL);
+        return;
     }
     if (!isEepromInitialized(eeprom_)) {
         writeError(EEPROM_NOT_INITIALIZED);
@@ -39,29 +42,26 @@ bool isEepromDeviceOk(void) {
 }
 
 void deviceEepromHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+    Eeprom* eeprom_ = getEepromFromDeviceDescriptor();
     _deviceEepromCheckInitialized();
     if (commandHeader == COMMAND_RELOAD_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_RELOAD_EEPROM);
         eeprom_->eepromLoad(eeprom_);
-    }
-    else if (commandHeader == COMMAND_DUMP_TO_FILE_EEPROM) {
+    } else if (commandHeader == COMMAND_DUMP_TO_FILE_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_DUMP_TO_FILE_EEPROM);
         eeprom_->eepromDump(eeprom_);
-    }
-    else if (commandHeader == COMMAND_DUMP_TO_LOG_OUTPUT_STREAM_EEPROM) {
+    } else if (commandHeader == COMMAND_DUMP_TO_LOG_OUTPUT_STREAM_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_DUMP_TO_LOG_OUTPUT_STREAM_EEPROM);
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         dumpEepromToOutputStream(eeprom_, debugOutputStream, 0, eeprom_->maxIndex);
-    }
-	else if (commandHeader == COMMAND_DUMP_PARTIAL_CONTENT_TO_LOG_OUTPUT_STREAM_EEPROM) {
-		ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_DUMP_PARTIAL_CONTENT_TO_LOG_OUTPUT_STREAM_EEPROM);
-		unsigned long startAddress = readHex4(inputStream);
-		checkIsSeparator(inputStream);
-		unsigned long length = readHex4(inputStream);
-		OutputStream* debugOutputStream = getInfoOutputStreamLogger();
-		dumpEepromToOutputStream(eeprom_, debugOutputStream, startAddress, startAddress + length);
-	}
-    else if (commandHeader == COMMAND_FORMAT_EEPROM) {
+    } else if (commandHeader == COMMAND_DUMP_PARTIAL_CONTENT_TO_LOG_OUTPUT_STREAM_EEPROM) {
+        ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_DUMP_PARTIAL_CONTENT_TO_LOG_OUTPUT_STREAM_EEPROM);
+        unsigned long startAddress = readHex4(inputStream);
+        checkIsSeparator(inputStream);
+        unsigned long length = readHex4(inputStream);
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
+        dumpEepromToOutputStream(eeprom_, debugOutputStream, startAddress, startAddress + length);
+    } else if (commandHeader == COMMAND_FORMAT_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_FORMAT_EEPROM);
         unsigned long startAddress = readHex4(inputStream);
         checkIsSeparator(inputStream);
@@ -69,42 +69,36 @@ void deviceEepromHandleRawData(unsigned char commandHeader, InputStream* inputSt
         checkIsSeparator(inputStream);
         unsigned char clearValue = readHex2(inputStream);
         clearEeprom(eeprom_, startAddress, length, clearValue);
-    }
-    else if (commandHeader == COMMAND_READ_BYTE_EEPROM) {
+    } else if (commandHeader == COMMAND_READ_BYTE_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_BYTE_EEPROM);
         unsigned long address = readHex4(inputStream);
         unsigned char value = eeprom_->eepromReadChar(eeprom_, address);
         appendHex2(outputStream, value);
-    }
-    else if (commandHeader == COMMAND_READ_INT_EEPROM) {
+    } else if (commandHeader == COMMAND_READ_INT_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_INT_EEPROM);
         unsigned long address = readHex4(inputStream);
         int value = eepromReadInt(eeprom_, address);
         appendHex4(outputStream, value);
-    }
-    else if (commandHeader == COMMAND_READ_FLOAT_EEPROM) {
+    } else if (commandHeader == COMMAND_READ_FLOAT_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_FLOAT_EEPROM);
         unsigned long address = readHex4(inputStream);
         checkIsSeparator(inputStream);
         unsigned char digitPrecision = readHex2(inputStream);
         float value = eepromReadUnsignedFloat(eeprom_, address, digitPrecision);
         appendHexFloat4(outputStream, value, digitPrecision);
-    }
-    else if (commandHeader == COMMAND_WRITE_BYTE_EEPROM) {
+    } else if (commandHeader == COMMAND_WRITE_BYTE_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_BYTE_EEPROM);
         unsigned long address = readHex4(inputStream);
         checkIsSeparator(inputStream);
         unsigned char data = readHex2(inputStream);
         eeprom_->eepromWriteChar(eeprom_, address, data);
-    }
-    else if (commandHeader == COMMAND_WRITE_INT_EEPROM) {
+    } else if (commandHeader == COMMAND_WRITE_INT_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_INT_EEPROM);
         unsigned long address = readHex4(inputStream);
         checkIsSeparator(inputStream);
         int data = readHex4(inputStream);
         eepromWriteInt(eeprom_, address, data);
-    }
-    else if (commandHeader == COMMAND_WRITE_FLOAT_EEPROM) {
+    } else if (commandHeader == COMMAND_WRITE_FLOAT_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_FLOAT_EEPROM);
         unsigned long address = readHex4(inputStream);
         checkIsSeparator(inputStream);
@@ -112,8 +106,7 @@ void deviceEepromHandleRawData(unsigned char commandHeader, InputStream* inputSt
         checkIsSeparator(inputStream);
         unsigned char digitPrecision = readHex2(inputStream);
         eepromWriteFloat(eeprom_, address, (float) data, digitPrecision);
-    }
-    else if (commandHeader == COMMAND_READ_BLOCK_EEPROM) {
+    } else if (commandHeader == COMMAND_READ_BLOCK_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_READ_BLOCK_EEPROM);
         unsigned long address = readHex4(inputStream);
         int index;
@@ -124,8 +117,7 @@ void deviceEepromHandleRawData(unsigned char commandHeader, InputStream* inputSt
             }
             appendHex2(outputStream, value);
         }
-    }
-    else if (commandHeader == COMMAND_WRITE_BLOCK_EEPROM) {
+    } else if (commandHeader == COMMAND_WRITE_BLOCK_EEPROM) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_WRITE_BLOCK_EEPROM);
         unsigned long address = readHex4(inputStream);
         unsigned char data;
@@ -135,8 +127,7 @@ void deviceEepromHandleRawData(unsigned char commandHeader, InputStream* inputSt
             data = readHex2(inputStream);
             eeprom_->eepromWriteChar(eeprom_, address + index, data);
         }
-    }
-    else if (commandHeader == COMMAND_INTENSIVE_TEST) {
+    } else if (commandHeader == COMMAND_INTENSIVE_TEST) {
         ackCommand(outputStream, EEPROM_DEVICE_HEADER, COMMAND_INTENSIVE_TEST);
         unsigned long address = readHex4(inputStream);
         checkIsSeparator(inputStream);
@@ -151,7 +142,7 @@ void deviceEepromHandleRawData(unsigned char commandHeader, InputStream* inputSt
         // Reads
         for (index = 0; index < length; index++) {
             unsigned char value = (unsigned char) eeprom_->eepromReadChar(eeprom_, address + index);
-            if (value != (unsigned char)index) {
+            if (value != (unsigned char) index) {
                 errorCount++;
             }
         }
@@ -159,14 +150,20 @@ void deviceEepromHandleRawData(unsigned char commandHeader, InputStream* inputSt
     }
 }
 
-static DeviceDescriptor descriptor = {
-    .deviceInit = &deviceEepromInit,
-    .deviceShutDown = &deviceEepromShutDown,
-    .deviceIsOk = &isEepromDeviceOk,
-    .deviceHandleRawData = &deviceEepromHandleRawData,
-};
+static DeviceDescriptor descriptor;
+
+Eeprom* getEepromFromDeviceDescriptor(void) {
+    return (Eeprom*) descriptor.object;
+}
 
 DeviceDescriptor* getEepromDeviceDescriptor(Eeprom* eepromParam) {
-    eeprom_ = eepromParam;
+    initDeviceDescriptor(&descriptor,
+            &deviceEepromInit,
+            &deviceEepromShutDown,
+            &isEepromDeviceOk,
+            &deviceEepromHandleRawData,
+            (int*) eepromParam);
+
     return &descriptor;
 }
+

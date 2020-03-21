@@ -10,10 +10,10 @@
 #include "../../../motion/pid/pidMotion.h"
 
 /**
-* Returns a descriptor around extended motion (bspline).
-* @param eeprom_ the eeprom to load the default speed and acceleration values
-* @return a descriptor for motion device
-*/
+ * Returns a descriptor around extended motion (bspline).
+ * @param eeprom_ the eeprom to load the default speed and acceleration values
+ * @return a descriptor for motion device
+ */
 DeviceDescriptor* getExtendedMotionDeviceDescriptor(PidMotion* pidMotion);
 
 #endif

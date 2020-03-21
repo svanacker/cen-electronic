@@ -35,8 +35,7 @@ unsigned int portableMasterWriteI2C(I2cBusConnection* i2cBusConnection, unsigned
     }
     if (i2cBus == NULL) {
         return MasterWriteI2C1(data);
-    }
-    else {
+    } else {
         I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->port);
         return I2CSendByte(i2cModule, data);
     }
@@ -49,8 +48,7 @@ unsigned char portableMasterReadI2C(I2cBusConnection* i2cBusConnection) {
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
     if (i2cBus == NULL) {
         return MasterReadI2C1();
-    }
-    else {
+    } else {
         if (i2cBus->error != ERROR_NONE) {
             return 0x00;
         }
@@ -67,11 +65,11 @@ unsigned char portableMasterReadI2C(I2cBusConnection* i2cBusConnection) {
                 }
             }
             I2C1STATbits.I2COV = 0;
-            return(I2C1RCV);
-        }
-    #if defined _I2C2
+            return (I2C1RCV);
+        }#if defined _I2C2
         else if (portIndex == I2C_BUS_PORT_2) {
-            TODO : Throw Not Implemented
+TODO:
+            Throw Not Implemented
             I2C2CONbits.RCEN = 1;
             while (I2C2CONbits.RCEN) {
                 count++;
@@ -83,12 +81,11 @@ unsigned char portableMasterReadI2C(I2cBusConnection* i2cBusConnection) {
             }
             I2C2STATbits.I2COV = 0;
             return (I2C2RCV);
-        }
-    #endif
-    #if defined _I2C3
+        }#endif
+#if defined _I2C3
         else if (portIndex == I2C_BUS_PORT_3) {
             I2C3CONbits.RCEN = 1;
-            while(I2C3CONbits.RCEN) {
+            while (I2C3CONbits.RCEN) {
                 count++;
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
                     i2cBusConnection->error = I2C_TOO_MUCH_LOOP_MASTER_READ_I2C_ERROR;
@@ -98,24 +95,23 @@ unsigned char portableMasterReadI2C(I2cBusConnection* i2cBusConnection) {
             }
             I2C3STATbits.I2COV = 0;
             return (I2C3RCV);
-        }
-    #endif
-    #if defined _I2C4
+        }#endif
+#if defined _I2C4
         else if (portIndex == I2C_BUS_PORT_4) {
             I2C4CONbits.RCEN = 1;
-            while(I2C4CONbits.RCEN) {
+            while (I2C4CONbits.RCEN) {
                 count++;
                 if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
                     i2cBusConnection->error = I2C_TOO_MUCH_LOOP_MASTER_READ_I2C_ERROR;
                     writeError(I2C_TOO_MUCH_LOOP_MASTER_READ_I2C_ERROR);
                     break;
                 }
-                
+
             }
             I2C4STATbits.I2COV = 0;
             return (I2C4RCV);
         }
-    #endif
+#endif
     }
     return 0;
 }
@@ -123,30 +119,26 @@ unsigned char portableMasterReadI2C(I2cBusConnection* i2cBusConnection) {
 void portableMasterCloseI2C(I2cBus* i2cBus) {
     if (i2cBus == NULL) {
         CloseI2C1();
-    }
-    else {
+    } else {
         if (i2cBus->error != ERROR_NONE) {
             return;
         }
         unsigned portIndex = i2cBus->port;
         if (portIndex == I2C_BUS_PORT_1) {
             CloseI2C1();
-        }
-    #if defined _I2C2
+        }#if defined _I2C2
         else if (portIndex == I2C_BUS_PORT_2) {
             CloseI2C2();
-        }
-    #endif
-    #if defined _I2C3
+        }#endif
+#if defined _I2C3
         else if (portIndex == I2C_BUS_PORT_3) {
             // TODO : Throw Not Implemented
             // I2C3CONCLR = _I2C3CON_ON_MASK,
             // DisableIntSI2C3,
             // DisableIntMI2C3,
             // DisableIntBI2C3
-        }
-    #endif
-    #if defined _I2C4
+        }#endif
+#if defined _I2C4
         else if (portIndex == I2C_BUS_PORT_4) {
             // TODO : Throw Not Implemented
             // I2C4CONCLR = _I2C4CON_ON_MASK,
@@ -155,7 +147,7 @@ void portableMasterCloseI2C(I2cBus* i2cBus) {
             // mI2C1BIntEnable(0)
         }
     }
-    #endif
+#endif
 }
 
 void portableMasterWaitSendI2C(I2cBusConnection* i2cBusConnection) {
@@ -174,8 +166,7 @@ void portableMasterWaitSendI2C(I2cBusConnection* i2cBusConnection) {
             }
         }
         return;
-    }
-    else {
+    } else {
         if (i2cBus->error != ERROR_NONE) {
             return;
         }
@@ -188,40 +179,37 @@ void portableMasterWaitSendI2C(I2cBusConnection* i2cBusConnection) {
                     break;
                 }
             }
+        }#if defined _I2C2
+        else if (portIndex == I2C_BUS_PORT_2) {
+            while (I2C2CONbits.SEN) {
+                count++;
+                if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
+                    writeError(I2C_TOO_MUCH_LOOP_MASTER_WAIT_SEND_I2C_ERROR);
+                    break;
+                }
+            }
+        }#endif
+#if defined _I2C3
+        else if (portIndex == I2C_BUS_PORT_3) {
+            while (I2C3CONbits.SEN) {
+                count++;
+                if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
+                    writeError(I2C_TOO_MUCH_LOOP_MASTER_WAIT_SEND_I2C_ERROR);
+                    break;
+                }
+            }
+        }#endif
+#if defined _I2C4
+        else if (portIndex == I2C_BUS_PORT_4) {
+            while (I2C4CONbits.SEN) {
+                count++;
+                if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
+                    writeError(I2C_TOO_MUCH_LOOP_MASTER_WAIT_SEND_I2C_ERROR);
+                    break;
+                }
+            }
+            return;
         }
-        #if defined _I2C2
-            else if (portIndex == I2C_BUS_PORT_2) {
-                while (I2C2CONbits.SEN) {
-                    count++;
-                    if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
-                        writeError(I2C_TOO_MUCH_LOOP_MASTER_WAIT_SEND_I2C_ERROR);
-                        break;
-                    }
-                }
-            }
-        #endif
-        #if defined _I2C3
-            else if (portIndex == I2C_BUS_PORT_3) {
-                while (I2C3CONbits.SEN) {
-                    count++;
-                    if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
-                        writeError(I2C_TOO_MUCH_LOOP_MASTER_WAIT_SEND_I2C_ERROR);
-                        break;
-                    }
-                }
-            }
-        #endif
-        #if defined _I2C4
-            else if (portIndex == I2C_BUS_PORT_4) {
-                while (I2C4CONbits.SEN) {
-                    count++;
-                    if (count > I2C_MAX_INSTRUCTION_COUNT_WHILE) {
-                        writeError(I2C_TOO_MUCH_LOOP_MASTER_WAIT_SEND_I2C_ERROR);
-                        break;
-                    }
-                }
-                return;
-            }
-        #endif
+#endif
     }
 }

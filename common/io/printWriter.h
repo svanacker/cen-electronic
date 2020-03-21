@@ -40,31 +40,31 @@ unsigned int appendBoolAsString(OutputStream* outputStream, bool b);
 void appendSeparator(OutputStream* outputStream);
 
 /**
-* Append a space to the outputStream.
-* @param outputStream the pointer on outputStream (POO simulation)
-*/
+ * Append a space to the outputStream.
+ * @param outputStream the pointer on outputStream (POO simulation)
+ */
 void appendSpace(OutputStream* outputStream);
 
 /**
-* Append by repeating chars to the outputStream.
-* @param outputStream the pointer on outputStream (POO simulation)
-* @param c the char to repeat
-* @param count how many char we repeat
-*/
+ * Append by repeating chars to the outputStream.
+ * @param outputStream the pointer on outputStream (POO simulation)
+ * @param c the char to repeat
+ * @param count how many char we repeat
+ */
 unsigned int appendRepeatedChars(OutputStream* outputStream, unsigned char c, int count);
 
 /**
-* Append by repeating '-' to the outputStream.
-* @param outputStream the pointer on outputStream (POO simulation)
-* @param count how many dash we repeat
-*/
+ * Append by repeating '-' to the outputStream.
+ * @param outputStream the pointer on outputStream (POO simulation)
+ * @param count how many dash we repeat
+ */
 unsigned int appendDashes(OutputStream* outputStream, int count);
 
 /**
-* Append a certain amount of spaces (use of table aligment).
-* @param outputStream the pointer on outputStream (POO simulation)
-* @param count how many spaces we want to append
-*/
+ * Append a certain amount of spaces (use of table aligment).
+ * @param outputStream the pointer on outputStream (POO simulation)
+ * @param count how many spaces we want to append
+ */
 unsigned int appendSpaces(OutputStream* outputStream, int count);
 
 /**
@@ -86,11 +86,11 @@ unsigned int appendStringLN(OutputStream* outputStream, const char* s);
 unsigned int appendFixedCharArray(OutputStream* outputStream, FixedCharArray* s);
 
 /**
-* Append a char array with a specific length but encoded in hexadecimal.
-* @param outputStream the pointer on outputStream (POO simulation)
-* @param s the pointer on the char array
-* @return how many chars were written
-*/
+ * Append a char array with a specific length but encoded in hexadecimal.
+ * @param outputStream the pointer on outputStream (POO simulation)
+ * @param s the pointer on the char array
+ * @return how many chars were written
+ */
 unsigned int appendHexFixedCharArray(OutputStream* outputStream, FixedCharArray* s);
 
 /**
@@ -182,11 +182,11 @@ void appendHex8(OutputStream* outputStream, signed long value);
 // Hex - Float
 
 /**
-* Append a float value into hexadecimal value (2 chars).
-* @param outputStream the pointer on outputStream (POO simulation)
-* @param value the float value
-* @param digitPrecision how many digit we would like to have
-*/
+ * Append a float value into hexadecimal value (2 chars).
+ * @param outputStream the pointer on outputStream (POO simulation)
+ * @param value the float value
+ * @param digitPrecision how many digit we would like to have
+ */
 void appendHexFloat2(OutputStream* outputStream, float value, unsigned int digitPrecision);
 
 /**
@@ -198,11 +198,11 @@ void appendHexFloat2(OutputStream* outputStream, float value, unsigned int digit
 void appendHexFloat4(OutputStream* outputStream, float value, unsigned int digitPrecision);
 
 /**
-* Append a float value into hexadecimal value (6 chars).
-* @param outputStream the pointer on outputStream (POO simulation)
-* @param value the float value
-* @param digitPrecision how many digit we would like to have
-*/
+ * Append a float value into hexadecimal value (6 chars).
+ * @param outputStream the pointer on outputStream (POO simulation)
+ * @param value the float value
+ * @param digitPrecision how many digit we would like to have
+ */
 void appendHexFloat6(OutputStream* outputStream, float value, unsigned int digitPrecision);
 
 /**
@@ -261,11 +261,11 @@ void appendStringAndHex2(OutputStream* stream, const char* s, unsigned char valu
 void appendStringAndHex2LN(OutputStream* stream, const char* s, unsigned char value);
 
 /**
-* Append a string followed by a bool value.
-* @param outputStream the pointer on outputStream (POO simulation)
-* @param s the string to write
-* @param value the value to write
-*/
+ * Append a string followed by a bool value.
+ * @param outputStream the pointer on outputStream (POO simulation)
+ * @param s the string to write
+ * @param value the value to write
+ */
 void appendStringAndBool(OutputStream* outputStream, const char* s, bool value);
 
 /**

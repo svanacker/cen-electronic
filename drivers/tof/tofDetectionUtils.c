@@ -19,8 +19,8 @@ bool isTofDistanceInRange(TofSensor* tofSensor) {
 
     // distance != 0 (means tof problem while measuring)
     // distance <= threshold
-    return (distance != 0 
-            && tofSensor->thresholdMinDistanceMM < distance 
+    return (distance != 0
+            && tofSensor->thresholdMinDistanceMM < distance
             && distance < tofSensor->thresholdMaxDistanceMM);
 }
 
@@ -31,30 +31,30 @@ bool isTofDistanceInRange(TofSensor* tofSensor) {
  */
 void tofComputeTofPointOfView(TofSensor* tofSensor, Point* robotCentralPoint, float robotOrientation, Point* resultPoint) {
     // We compute the real point of the tofSensor by taking into account
-// - The position (polar coordinates) of the tofSensor
-// - The distance to the center of the Robot
+    // - The position (polar coordinates) of the tofSensor
+    // - The distance to the center of the Robot
     computeDirectionPoint(robotCentralPoint,
-        resultPoint,
-        tofSensor->distanceFromRobotCenter,
-        robotOrientation + 
-        tofSensor->angleFromRobotCenterRadian
-        );
+            resultPoint,
+            tofSensor->distanceFromRobotCenter,
+            robotOrientation +
+            tofSensor->angleFromRobotCenterRadian
+            );
 }
 
 void tofComputePoint(TofSensor* tofSensor,
-                     Point* tofPointOfView,
-                     float pointOfViewAngleRadian,
-                     float distance, 
-                     float coneAngle,
-                     Point* resultPoint) {
+        Point* tofPointOfView,
+        float pointOfViewAngleRadian,
+        float distance,
+        float coneAngle,
+        Point* resultPoint) {
     // we compute the projection of the point along the point of view angle
     // But from the point of view of the tofSensor
     computeDirectionPoint(tofPointOfView,
-        resultPoint,
-        (float)distance,
-        pointOfViewAngleRadian
-        + tofSensor->orientationRadian
-        + coneAngle);
+            resultPoint,
+            (float) distance,
+            pointOfViewAngleRadian
+            + tofSensor->orientationRadian
+            + coneAngle);
 
 }
 
@@ -66,30 +66,30 @@ bool tofComputeDetectedPointIfAny(TofSensor* tofSensor, Point* pointOfView, floa
     }
     if (!isTofDistanceInRange(tofSensor)) {
         // we do not provide any point
-        return false;      
+        return false;
     }
-    
+
     // We compute the real point of the tofSensor by taking into account
     // - The position (polar coordinates) of the tofSensor
     // - The distance to the center of the Robot
-    Point tofPointOfView;    
+    Point tofPointOfView;
     tofComputeTofPointOfView(tofSensor, pointOfView, pointOfViewAngleRadian, &tofPointOfView);
-    
+
     // we compute the projection of the point along the point of view angle
     // But from the point of view of the tofSensor
     tofComputePoint(tofSensor,
-                            &tofPointOfView, 
-                            pointOfViewAngleRadian + tofSensor->orientationRadian,
-                            (float) distance,
-                            // We could not know the real angle of the tof in VL530X
-                            // In that case, we consider that the point is forward and has no coneAngle (0° and not between -15° and +15°)
-                            0.0f,
-                            pointToUpdateIfAny);
-    
+            &tofPointOfView,
+            pointOfViewAngleRadian + tofSensor->orientationRadian,
+            (float) distance,
+            // We could not know the real angle of the tof in VL530X
+            // In that case, we consider that the point is forward and has no coneAngle (0° and not between -15° and +15°)
+            0.0f,
+            pointToUpdateIfAny);
+
     return true;
 }
 
 bool isTofSensorBackwardOriented(TofSensor* tofSensor) {
-    return (tofSensor->orientationRadian > (PI / 2.0f) || 
+    return (tofSensor->orientationRadian > (PI / 2.0f) ||
             tofSensor->orientationRadian < (-PI / 2.0f));
 }

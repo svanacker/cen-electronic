@@ -6,26 +6,24 @@
 HANDLE initServerPipe(LPCWSTR pipeName) {
     printf("Create the Server Pipe '%ls' ... ", pipeName);
     HANDLE result = CreateNamedPipe(pipeName,
-        PIPE_ACCESS_DUPLEX,
-        PIPE_TYPE_BYTE | PIPE_READMODE_BYTE /* | PIPE_NOWAIT */,
-        // Only xx instance
-        2,
-        // outBufferSize
-        // TODO : Specify the buffer sizes !
-        100,
-        // inBufferSize
-        100,
-        // default time out, in milliseconds
-        0,
-        NULL);
+            PIPE_ACCESS_DUPLEX,
+            PIPE_TYPE_BYTE | PIPE_READMODE_BYTE /* | PIPE_NOWAIT */,
+            // Only xx instance
+            2,
+            // outBufferSize
+            // TODO : Specify the buffer sizes !
+            100,
+            // inBufferSize
+            100,
+            // default time out, in milliseconds
+            0,
+            NULL);
     int lastError = GetLastError();
-    if (lastError != 0)
-    {
+    if (lastError != 0) {
         printf("KO : lastError=%d.\r\n", GetLastError());
         getchar();
         return result;
-    }
-    else {
+    } else {
         printf("OK !\r\n");
     }
 

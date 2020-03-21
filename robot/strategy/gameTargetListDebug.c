@@ -38,7 +38,7 @@ void printGameTargetListHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "status", TARGET_LIST_STATUS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Computed. ", TARGET_LIST_COMPUTED_OPPORTUNITY_FACTOR_LENGTH);
     appendEndOfTableColumn(outputStream, TARGET_LIST_LAST_COLUMN_LENGTH);
-    
+
     // Line 2
     appendStringHeader(outputStream, "", TARGET_LIST_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TARGET_LIST_NAME_COLUMN_LENGTH);
@@ -74,15 +74,13 @@ void printGameTargetLine(OutputStream* outputStream, unsigned int index, GameTar
     // Start Location
     if (target->startLocation != NULL) {
         appendFixedCharArrayTableData(outputStream, &(target->startLocation->name), TARGET_LIST_LOCATION_START_NAME_COLUMN_LENGTH);
-    }
-    else {
+    } else {
         appendStringTableData(outputStream, "NULL", TARGET_LIST_LOCATION_START_NAME_COLUMN_LENGTH);
     }
     // End location
     if (target->endLocation != NULL) {
         appendFixedCharArrayTableData(outputStream, &(target->endLocation->name), TARGET_LIST_LOCATION_END_NAME_COLUMN_LENGTH);
-    }
-    else {
+    } else {
         appendStringTableData(outputStream, "NULL", TARGET_LIST_LOCATION_END_NAME_COLUMN_LENGTH);
     }
     appendDecfTableData(outputStream, target->potentialGain, TARGET_LIST_POTENTIAL_GAIN_COLUMN_LENGTH);
@@ -96,7 +94,7 @@ void printGameTargetLine(OutputStream* outputStream, unsigned int index, GameTar
 
 void printGameTargetListTable(GameTargetList* gameTargetList, OutputStream* outputStream) {
     unsigned int i;
-    
+
     unsigned int size = gameTargetList->size;
     println(outputStream);
     appendStringAndDec(outputStream, "targetHandledCount:", gameTargetList->targetHandledCount);

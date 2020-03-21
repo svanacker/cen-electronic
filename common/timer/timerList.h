@@ -14,7 +14,7 @@ typedef struct {
     /** Is the timer List already in an interruption (to avoid to use markTimer for example) */
     bool working;
     /** An array of pointer on timer pointer. */
-    Timer (*timers)[];
+    Timer(*timers)[];
     /** the size of the list. */
     unsigned char size;
     /** the max size of the list.*/
@@ -28,7 +28,7 @@ typedef struct {
  * @param timerListArray on pointer on a array of timer
  * @param timerListSize the size of the timerListArray param.
  */
-void initTimerList(Timer (*timerListArray)[], unsigned char timerListSize);
+void initTimerList(Timer(*timerListArray)[], unsigned char timerListSize);
 
 /**
  * Creates a timer and adds it to list with a frequency given by timeDiviser.
@@ -39,10 +39,10 @@ void initTimerList(Timer (*timerListArray)[], unsigned char timerListSize);
  * @return the  a pointer on the timer Struct (POO simulation)
  */
 Timer* addTimer(int timerCode,
-                unsigned long timeDiviser,
-                interruptTimerCallbackFunc* callback,
-                char* timerName,
-                int* object);
+        unsigned long timeDiviser,
+        interruptTimerCallbackFunc* callback,
+        char* timerName,
+        int* object);
 
 /**
  * Get the device descriptor of index.

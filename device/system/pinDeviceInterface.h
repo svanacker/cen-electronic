@@ -11,9 +11,9 @@
 #define COMMAND_SET_PIN_VALUE        'V'
 
 /**
-* Get the pin device interface.
-* @return the pointer on device Interface.
-*/
+ * Get the pin device interface.
+ * @return the pointer on device Interface.
+ */
 DeviceInterface* getPinDeviceInterface();
 
 #endif

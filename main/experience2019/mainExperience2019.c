@@ -50,6 +50,7 @@
 static RobotConfig robotConfig;
 static ElectronLauncher2019 launcher;
 static EndMatch endMatch;
+
 /**
  * @private
  */
@@ -59,7 +60,7 @@ void initMainBoardDevicesDescriptor() {
     mainBoardCommonAddDevices(&robotConfig);
     mainBoardCommonLcdAddDevices();
     mainExperience2019TofAddDevices();
-    
+
     // 2019 specific
     addLocalDevice(getElectronLauncher2019DeviceInterface(), getElectronLauncher2019DeviceDescriptor(&launcher));
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor(&endMatch));
@@ -78,19 +79,19 @@ void initMainBoardDriverDataDispatcherList(void) {
  */
 void mainBoardMainPhase1(void) {
     setBoardName("EXPERIENCE 2019");
- 
+
     // CONFIG
     initRobotConfigPic32(&robotConfig, ROBOT_TYPE_EXPERIENCE_2019);
-    
+
     // BASE LOGS
     mainBoardCommonInitLogs();
-    
+
     // LCD
     mainBoardCommonLcdInit(&robotConfig);
 
     // SERIAL
     mainBoardCommonInitSerialList();
-    mainBoardCommonDebugOpenSerialLink(); 
+    mainBoardCommonDebugOpenSerialLink();
 }
 
 /**
@@ -98,21 +99,21 @@ void mainBoardMainPhase1(void) {
  */
 void mainBoardMainPhase2(void) {
     mainBoardCommonMainInit(&robotConfig);
-    
-   
+
+
     mainBoardCommonInitBusList();
     mainBoardCommonInitTimerList();
     mainBoardCommonInitCommonDrivers();
 
     TofSensorList* tofSensorList = mainExperience2019TofInitDrivers(mainBoardCommonGetAlternativeI2cBus());
-    
+
     // 2019 specific
     initElectronLauncher2019(&launcher,
-                             &endMatch,
-                             &robotConfig,
-                             mainBoardCommonGetServoList(),
-                             tofSensorList);
-    
+            &endMatch,
+            &robotConfig,
+            mainBoardCommonGetServoList(),
+            tofSensorList);
+
     initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
 }
 
@@ -125,10 +126,10 @@ int main(void) {
     mainBoardMainPhase1();
     mainBoardMainPhase2();
     mainBoardMainPhase3();
-    
+
     while (true) {
         mainBoardCommonHandleStreamInstruction();
-        
+
         handleElectronLauncherActions(&launcher);
     }
 }

@@ -16,14 +16,12 @@ int deviceAirConditioningGetInterface(char commandHeader, DeviceInterfaceMode mo
             setArgumentUnsignedHex2(0, "powerState");
         }
         return commandLengthValueForMode(mode, 2, 0);
-    }
-    else if (AIR_CONDITIONING_COMMAND_ON == commandHeader) {
+    } else if (AIR_CONDITIONING_COMMAND_ON == commandHeader) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("On");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (AIR_CONDITIONING_COMMAND_OFF == commandHeader) {
+    } else if (AIR_CONDITIONING_COMMAND_OFF == commandHeader) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Off");
         }

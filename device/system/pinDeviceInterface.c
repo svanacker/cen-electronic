@@ -19,14 +19,14 @@ int devicePinGetInterface(char header, int mode, bool fillDeviceArgumentList) {
         if (fillDeviceArgumentList) {
             setFunction("setPin", 2, 0);
             setArgumentUnsignedHex2(0, "pinIxx");
-            setArgumentUnsignedHex2(1, "value"); 
+            setArgumentUnsignedHex2(1, "value");
         }
         return commandLengthValueForMode(mode, 4, 0);
     } else if (header == COMMAND_GET_PIN_VALUE) {
         if (mode == DEVICE_MODE_INPUT) {
             if (fillDeviceArgumentList) {
                 setFunction("getPin", 1, 1);
-                setArgumentUnsignedHex2(0, "pinIdx"); 
+                setArgumentUnsignedHex2(0, "pinIdx");
                 setResultUnsignedHex2(0, "value");
             }
             return commandLengthValueForMode(mode, 2, 2);

@@ -44,19 +44,19 @@
  */
 #define DISTRIBUTOR_LOAD_NEXT_BALL_COMMAND         'n'
 
- /**
+/**
  * 1. Prepare the launcher
  * 2. Rotate the distributor which lead to load the ball in the launcher
  * 3. Send the ball
  */
 #define LAUNCHER_LOAD_AND_SEND_BALL_COMMAND      'N'
 
- /**
-  * Do 8x the same sequence
-  * 1. Prepare the launcher
-  * 2. Rotate the distributor which lead to load the ball in the launcher
-  * 3. Send the ball
-  */
+/**
+ * Do 8x the same sequence
+ * 1. Prepare the launcher
+ * 2. Rotate the distributor which lead to load the ball in the launcher
+ * 3. Send the ball
+ */
 #define LAUNCHER_LOAD_AND_SEND_UNICOLOR_BALL_LIST         'U'
 
 /**

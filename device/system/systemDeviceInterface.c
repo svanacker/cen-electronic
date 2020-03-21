@@ -17,8 +17,7 @@ int deviceSystemGetInterface(unsigned char commandHeader, DeviceInterfaceMode mo
             setFunctionNoArgumentAndNoResult("getBoardName");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // lastError
+    }// lastError
     else if (commandHeader == COMMAND_GET_LAST_ERROR) {
         if (fillDeviceArgumentList) {
             setFunction("getLastError", 0, 1);
@@ -31,16 +30,13 @@ int deviceSystemGetInterface(unsigned char commandHeader, DeviceInterfaceMode mo
             setFunctionNoArgumentAndNoResult("clearLastError");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-
-    // DeviceList
+    }// DeviceList
     else if (commandHeader == COMMAND_DEVICE_LIST) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("deviceList");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // Ping
+    }// Ping
     else if (commandHeader == COMMAND_PING) {
         if (fillDeviceArgumentList) {
             setFunction("ping", 1, 1);
@@ -48,57 +44,49 @@ int deviceSystemGetInterface(unsigned char commandHeader, DeviceInterfaceMode mo
             setResultUnsignedHex2(0, "pingIndex");
         }
         return commandLengthValueForMode(mode, 2, 2);
-    }
-    // wait
+    }// wait
     else if (commandHeader == COMMAND_WAIT) {
         if (fillDeviceArgumentList) {
             setFunction("wait", 1, 0);
-            setArgumentUnsignedHex4(0, "ms");                
+            setArgumentUnsignedHex4(0, "ms");
         }
         return commandLengthValueForMode(mode, 4, 0);
-    }
-    // Read Core Timer
+    }// Read Core Timer
     else if (commandHeader == COMMAND_READ_CORE_TIMER) {
         if (fillDeviceArgumentList) {
             setFunction("Read Core Timer", 0, 1);
-            setResultUnsignedHex8(0, "Core Timer Counter");                
+            setResultUnsignedHex8(0, "Core Timer Counter");
         }
         return commandLengthValueForMode(mode, 0, 8);
-    }
-    // usage
+    }// usage
     else if (commandHeader == COMMAND_USAGE) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("usage");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_USAGE_PROBLEM) {
+    } else if (commandHeader == COMMAND_USAGE_PROBLEM) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("usage (only Problems)");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // Usage Specific
+    }// Usage Specific
     else if (commandHeader == COMMAND_USAGE_SPECIFIC_DEVICE) {
         if (fillDeviceArgumentList) {
             setFunction("usageSpecificDevice", 1, 0);
             setArgumentUnsignedChar1(0, "deviceHeaderChar");
         }
         return commandLengthValueForMode(mode, 1, 0);
-    }
-	else if (commandHeader == COMMAND_CLS) {
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("clearScreen");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	}
-	else if (commandHeader == COMMAND_RESET) {
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("reset MicroController");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	}
-    // Notification
+    } else if (commandHeader == COMMAND_CLS) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("clearScreen");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    } else if (commandHeader == COMMAND_RESET) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("reset MicroController");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }// Notification
     else if (commandHeader == COMMAND_NOTIFICATION) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("notification");

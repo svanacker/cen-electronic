@@ -71,8 +71,7 @@ void deviceStrategyHandleRawData(unsigned char commandHeader, InputStream* input
         appendSeparator(outputStream);
         appendHexFloat4(outputStream, context->opponentRobotPosition->y, POSITION_DIGIT_MM_PRECISION);
 
-    }
-    else if (commandHeader == COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION) {
+    } else if (commandHeader == COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION) {
 
         // data
         float x = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
@@ -86,8 +85,7 @@ void deviceStrategyHandleRawData(unsigned char commandHeader, InputStream* input
         updatePathsAvailability(context);
 
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_SET_OPPONENT_ROBOT_POSITION);
-    }
-    else if (commandHeader == COMMAND_STRATEGY_SHOW_TOF_LIST_WITH_PROJECTION) {
+    } else if (commandHeader == COMMAND_STRATEGY_SHOW_TOF_LIST_WITH_PROJECTION) {
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_SHOW_TOF_LIST_WITH_PROJECTION);
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
@@ -95,23 +93,19 @@ void deviceStrategyHandleRawData(unsigned char commandHeader, InputStream* input
         Point* robotPosition = context->robotPosition;
         float robotAngleRadian = context->robotAngleRadian;
         tofSensorList->tofSensorListDetectionTableDebug(debugOutputStream, tofSensorList, robotPosition, robotAngleRadian);
-    }
-
-    // Debug
+    }// Debug
     else if (commandHeader == COMMAND_STRATEGY_DEBUG) {
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_DEBUG);
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         printGameStrategyContext(debugOutputStream, context);
-    }
-	// List Strategies
-	else if (commandHeader == COMMAND_STRATEGY_LIST_DEBUG) {
-		OutputStream* debugOutputStream = getInfoOutputStreamLogger();
-		ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_LIST_DEBUG);
+    }// List Strategies
+    else if (commandHeader == COMMAND_STRATEGY_LIST_DEBUG) {
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
+        ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_LIST_DEBUG);
         printGameStrategyTableList(debugOutputStream);
-	}
-	// Specific Strategy
-	else if (commandHeader == COMMAND_CURRENT_STRATEGY_ITEM_LIST_DEBUG) {
+    }// Specific Strategy
+    else if (commandHeader == COMMAND_CURRENT_STRATEGY_ITEM_LIST_DEBUG) {
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_CURRENT_STRATEGY_ITEM_LIST_DEBUG);
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         GameStrategy* gameStrategy = context->gameStrategy;
@@ -122,8 +116,7 @@ void deviceStrategyHandleRawData(unsigned char commandHeader, InputStream* input
         }
         // Index are 0-based
         printGameStrategyTable(debugOutputStream, gameStrategy);
-	}
-    // next step
+    }// next step
     else if (commandHeader == COMMAND_STRATEGY_NEXT_STEP) {
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         // response
@@ -132,8 +125,7 @@ void deviceStrategyHandleRawData(unsigned char commandHeader, InputStream* input
         // do the job synchronously for actions, and asynchronously for move (ask the MOTOR_BOARD)
         bool hasDoneSomeAction = nextStep(context);
         appendBool(outputStream, hasDoneSomeAction);
-    }
-    // ROBOT POSITION
+    }// ROBOT POSITION
     else if (commandHeader == COMMAND_STRATEGY_GET_ROBOT_POSITION) {
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_GET_ROBOT_POSITION);
@@ -147,8 +139,7 @@ void deviceStrategyHandleRawData(unsigned char commandHeader, InputStream* input
         appendSeparator(outputStream);
         // angle in decideg
         appendHexFloat4(outputStream, radToDeg(context->robotAngleRadian), ANGLE_DIGIT_DEGREE_PRECISION);
-    }
-    else if (commandHeader == COMMAND_STRATEGY_SET_ROBOT_POSITION) {
+    } else if (commandHeader == COMMAND_STRATEGY_SET_ROBOT_POSITION) {
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_SET_ROBOT_POSITION);
         // x
@@ -163,8 +154,7 @@ void deviceStrategyHandleRawData(unsigned char commandHeader, InputStream* input
         context->robotAngleRadian = degToRad(readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION));
         // Must call the motor Board to synchronized the both positions !
         updateRobotPositionFromMainBoardToMotorBoard(context);
-    }
-    else if (commandHeader == COMMAND_STRATEGY_SET_ROBOT_POSITION_AS_FIRST_LOCATION_OF_PATH_INDEX) {
+    } else if (commandHeader == COMMAND_STRATEGY_SET_ROBOT_POSITION_AS_FIRST_LOCATION_OF_PATH_INDEX) {
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_SET_ROBOT_POSITION_AS_FIRST_LOCATION_OF_PATH_INDEX);
         unsigned pathIndex = readHex2(inputStream);
@@ -177,8 +167,7 @@ void deviceStrategyHandleRawData(unsigned char commandHeader, InputStream* input
         // Must call the motor Board to synchronized the both positions !
         updateRobotPositionFromMainBoardToMotorBoard(context);
 #endif // !_MSC_VER
-    }
-    // DO ALL TARGET ACTION ITEM OF AN ACTION
+    }// DO ALL TARGET ACTION ITEM OF AN ACTION
     else if (commandHeader == COMMAND_TARGET_ACTION_DO_ALL_ITEMS) {
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_TARGET_ACTION_DO_ALL_ITEMS);
@@ -191,35 +180,29 @@ void deviceStrategyHandleRawData(unsigned char commandHeader, InputStream* input
         unsigned char targetActionIndex = readHex2(inputStream);
         GameTargetAction* gameTargetAction = getGameTargetAction(&(gameTarget->actionList), targetActionIndex);
 
-        doGameTargetAction(gameTargetAction, (int*)context);
-    }
-    
-    // SCORE
+        doGameTargetAction(gameTargetAction, (int*) context);
+    }// SCORE
     else if (commandHeader == COMMAND_STRATEGY_GET_GLOBAL_SCORE) {
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_STRATEGY_GET_GLOBAL_SCORE);
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         appendHex4(outputStream, context->endMatch->scoreToShow);
-    }
-    // TARGET 
+    }// TARGET 
     else if (commandHeader == COMMAND_TARGET_LIST_DEBUG) {
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_TARGET_LIST_DEBUG);
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         GameTargetList* gameTargetList = getGameTargetList();
         printGameTargetListTable(gameTargetList, debugOutputStream);
-    }
-    else if (commandHeader == COMMAND_TARGET_NEXT) {
+    } else if (commandHeader == COMMAND_TARGET_NEXT) {
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_TARGET_NEXT);
         GameStrategyContext* context = getStrategyDeviceGameStrategyContext();
         GameTarget* gameTarget = findNextTarget(context);
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         if (gameTarget != NULL) {
             appendString(debugOutputStream, gameTarget->name);
-        }
-        else {
+        } else {
             appendString(debugOutputStream, "TARGET IS NULL !");
         }
-    }
-    else if (commandHeader == COMMAND_TARGET_SET_STATUS) {
+    } else if (commandHeader == COMMAND_TARGET_SET_STATUS) {
         ackCommand(outputStream, STRATEGY_DEVICE_HEADER, COMMAND_TARGET_SET_STATUS);
         // target Index
         unsigned char targetIndex = readHex2(inputStream);
@@ -245,8 +228,8 @@ DeviceDescriptor* getStrategyDeviceDescriptor(GameStrategyContext* gameStrategyC
 }
 
 /**
-* @private.
-*/
+ * @private.
+ */
 GameStrategyContext* getStrategyDeviceGameStrategyContext(void) {
-    return (GameStrategyContext*)(descriptor.object);
+    return (GameStrategyContext*) (descriptor.object);
 }

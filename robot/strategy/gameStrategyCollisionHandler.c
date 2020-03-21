@@ -58,17 +58,17 @@ bool isPathAvailable(GameStrategyContext* gameStrategyContext, PathData* pathDat
     float angle1 = getPathStartAngleRadian(pathData);
     float angle2 = getPathEndAngleRadian(pathData);
     parameterBSplineWithDistanceAndAngle(curve,
-                                         pathData->location1->x,
-                                         pathData->location1->y,
-                                         angle1, 
-                                         pathData->location2->x,
-                                         pathData->location2->y,
-                                         angle2,
-                                         pathData->controlPointDistance1, 
-                                         pathData->controlPointDistance2,
-                                         curve->accelerationFactor,
-                                         curve->speedFactor,
-                                         false);
+            pathData->location1->x,
+            pathData->location1->y,
+            angle1,
+            pathData->location2->x,
+            pathData->location2->y,
+            angle2,
+            pathData->controlPointDistance1,
+            pathData->controlPointDistance2,
+            curve->accelerationFactor,
+            curve->speedFactor,
+            false);
 
     Point p;
     Point* opponentRobotPosition = gameStrategyContext->opponentRobotPosition;

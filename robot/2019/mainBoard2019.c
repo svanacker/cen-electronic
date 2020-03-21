@@ -65,25 +65,24 @@ bool startupCheckList2019(StartMatch* startMatch) {
     ServoList* servoList = gameStrategyContext.servoList;
     arm2019On(servoList, FORK_2019_LEFT_INDEX);
     arm2019On(servoList, FORK_2019_RIGHT_INDEX);
-    
+
     moveElevatorScanAtValue(servoList, 1300, false);
-    
+
     timerDelayMilliSeconds(200);
-    
+
     moveElevatorMiddle(servoList, false);
-    
+
     arm2019Off(servoList, FORK_2019_LEFT_INDEX);
     arm2019Off(servoList, FORK_2019_RIGHT_INDEX);
 
     return true;
 }
 
-
 Navigation* initNavigation2019(void) {
     // Navigation
-    initLocationList(&locationList, (Location(*)[]) &locationListArray, STRATEGY_2019_NAVIGATION_LOCATION_LIST_ARRAY_LENGTH);
-    initPathList(&pathList, (PathData(*)[]) &pathListArray, STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH);
-    initOutgoingPathList(&tmpOutgoingPathList, (OutgoingPathData(*)[]) &tmpOutgoingPathListtArray, STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH);
+    initLocationList(&locationList, (Location(*)[]) & locationListArray, STRATEGY_2019_NAVIGATION_LOCATION_LIST_ARRAY_LENGTH);
+    initPathList(&pathList, (PathData(*)[]) & pathListArray, STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH);
+    initOutgoingPathList(&tmpOutgoingPathList, (OutgoingPathData(*)[]) & tmpOutgoingPathListtArray, STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH);
 
     initNavigation(&navigation, &locationList, &pathList, &tmpOutgoingPathList);
 
@@ -100,11 +99,11 @@ GameStrategyContext* initGameStrategyContext2019(RobotConfig* robotConfig, EndMa
 GameBoard* initGameBoard2019(GameStrategyContext* gameStrategyContextParam) {
     initFirstTimeBSplineCurve(&gameBoardCurve);
     initGameBoard(&gameBoard,
-        &gameBoardCurve,
-        &gameBoardElementList,
-        (GameBoardElement(*)[]) &gameBoardElementListArray,
-        MAIN_BOARD_2019_GAME_BOARD_PRINT_ELEMENT_ARRAY_LENGTH,
-        gameStrategyContextParam);
+            &gameBoardCurve,
+            &gameBoardElementList,
+            (GameBoardElement(*)[]) & gameBoardElementListArray,
+            MAIN_BOARD_2019_GAME_BOARD_PRINT_ELEMENT_ARRAY_LENGTH,
+            gameStrategyContextParam);
 
     addGameBoardElements2019(&gameBoardElementList);
 
@@ -115,7 +114,7 @@ void mainBoardCommonStrategyMainEndInit2019(GameStrategyContext* gameStrategyCon
     ServoList* servoList = gameStrategyContextParam->servoList;
     appendStringCRLF(getDebugOutputStreamLogger(), "updateServoProperties2019");
     updateServoProperties2019(servoList);
-    
+
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "fork2019Init");
     fork2019Init(servoList);

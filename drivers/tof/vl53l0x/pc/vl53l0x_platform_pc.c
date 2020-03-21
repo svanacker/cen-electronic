@@ -11,10 +11,10 @@
 
 // PRIMITIVES
 
-int32_t VL53L0X_write_multi(uint8_t deviceAddress, uint8_t index, uint8_t  *pdata, int32_t count) {
+int32_t VL53L0X_write_multi(uint8_t deviceAddress, uint8_t index, uint8_t *pdata, int32_t count) {
     return VL53L0X_ERROR_NONE;
 }
 
-int32_t VL53L0X_read_multi(uint8_t deviceAddress,  uint8_t index, uint8_t  *pdata, int32_t count) {
-  return VL53L0X_ERROR_NONE;
+int32_t VL53L0X_read_multi(uint8_t deviceAddress, uint8_t index, uint8_t *pdata, int32_t count) {
+    return VL53L0X_ERROR_NONE;
 }

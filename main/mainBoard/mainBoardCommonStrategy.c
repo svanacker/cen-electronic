@@ -95,23 +95,22 @@ void updateNewPositionFromNotification(InputStream* inputStream) {
     float angleDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
     checkIsSeparator(inputStream);
     float speed = readHexFloat4(inputStream, SPEED_DIGIT_MMSEC_PRECISION);
-    
+
     gameStrategyContext->robotPosition->x = x;
     gameStrategyContext->robotPosition->y = y;
     gameStrategyContext->robotAngleRadian = degToRad(angleDegree);
     gameStrategyContext->robotSpeed = speed;
-    
+
     /*
     printPoint(getDebugOutputStreamLogger(), gameStrategyContext->robotPosition, "");
     println(getDebugOutputStreamLogger());
-    */
+     */
 }
-
 
 void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, const unsigned char commandHeader, InputStream* notificationInputStream) {
     // append(getDebugOutputStreamLogger(), device->deviceInterface->deviceHeader);
     // println(getDebugOutputStreamLogger());
-  
+
     if (device->deviceInterface->deviceHeader == TRAJECTORY_DEVICE_HEADER) {
         if (commandHeader == NOTIFY_TRAJECTORY_CHANGED) {
             updateNewPositionFromNotification(notificationInputStream);
@@ -121,22 +120,20 @@ void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, con
             // WE DO NOT MODIFY the Trajectory Type, The master data management of 
             // This data must be either the MAIN_BOARD or the MOTOR_BOARD on a MOTION_DEVICE_HEADER 
             // and not on a TRAJECTORY_DEVICE_HEADER
-            
+
             // gameStrategyContext->trajectoryType = trajectoryType;
             mainBoardCommonUpdateTofMaxDistanceMM(gameStrategyContext, 200.0f, 800.0f);
-            
+
             if (isLoggerDebugEnabled()) {
                 appendStringCRLF(getDebugOutputStreamLogger(), "Traj. Dev. Notif. !");
             }
-        }
-        else {
+        } else {
             writeError(NOTIFICATION_BAD_DEVICE_COMMAND_HANDLER_NOT_HANDLE);
             appendString(getAlwaysOutputStreamLogger(), "header");
             append(getAlwaysOutputStreamLogger(), commandHeader);
             println(getAlwaysOutputStreamLogger());
         }
-    }
-    else {
+    } else {
         writeError(NOTIFICATION_BAD_DEVICE);
     }
 }
@@ -154,21 +151,19 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const u
             // FAKE DATA To Align with TrajectoryDevice
             checkIsSeparator(notificationInputStream);
             checkIsChar(notificationInputStream, 'F');
-            
+
             gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
 
             if (isLoggerDebugEnabled()) {
                 appendStringCRLF(getDebugOutputStreamLogger(), "Motion Dev. Notif. !");
             }
-        }
-        else {
+        } else {
             writeError(NOTIFICATION_BAD_DEVICE_COMMAND_HANDLER_NOT_HANDLE);
             appendString(getAlwaysOutputStreamLogger(), "header");
             append(getAlwaysOutputStreamLogger(), commandHeader);
             println(getAlwaysOutputStreamLogger());
         }
-    }
-    else {
+    } else {
         writeError(NOTIFICATION_BAD_DEVICE);
     }
 }
@@ -182,19 +177,18 @@ GameStrategyContext* mainBoardCommonStrategyMainInitDrivers(RobotConfig* robotCo
 
     gameStrategyContext = initGameStrategyContext2020(robotConfig, endMatch, tofSensorList, servoList);
     gameBoard = initGameBoard2020(gameStrategyContext);
-    
+
     return gameStrategyContext;
 }
 
-void mainBoardCommonStrategyMainEndInit(void) {      
+void mainBoardCommonStrategyMainEndInit(void) {
     // Update this on the MOTOR BOARD to synchronize the position !
     appendStringLN(getDebugOutputStreamLogger(), "Update Robot Position MainBoard->Motor Board");
     updateRobotPositionFromMainBoardToMotorBoard(gameStrategyContext);
-    
+
     appendStringLN(getDebugOutputStreamLogger(), "mainBoardCommonStrategyMainEndInit2019");
     mainBoardCommonStrategyMainEndInit2020(gameStrategyContext);
 }
-
 
 void mainBoardCommonStrategyHandleStreamInstruction(void) {
     StartMatch* startMatch = mainBoardCommonMatchGetStartMatch();
@@ -202,7 +196,7 @@ void mainBoardCommonStrategyHandleStreamInstruction(void) {
     // Tof / Collision management
     TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
     handleTofSensorList(gameStrategyContext, startMatch, tofSensorList, gameBoard);
-    
+
     // Motion Management
     updateIfNeededRobotPositionFromMotorBoardToMainBoard(gameStrategyContext);
 }
@@ -210,17 +204,16 @@ void mainBoardCommonStrategyHandleStreamInstruction(void) {
 void mainBoardCommonStrategyMainLoop(void) {
     StartMatch* startMatch = mainBoardCommonMatchGetStartMatch();
     EndMatch* endMatch = mainBoardCommonMatchGetEndMatch();
-    
+
     // Check just before
     if (startMatch->startupCheckListFunction == NULL) {
         writeError(ROBOT_START_MATCH_CHECKLIST_NOT_DEFINED);
-    }
-    else {
+    } else {
         if (!startMatch->startupCheckListFunction(startMatch)) {
             writeError(ROBOT_START_MATCH_CHECKLIST_ERROR);
         }
     }
-    
+
     // Wait the start of the robot
     loopUntilStart(startMatch);
 
@@ -228,7 +221,7 @@ void mainBoardCommonStrategyMainLoop(void) {
         if (!startMatch->matchHandleInstructionFunction(startMatch)) {
             break;
         }
-        
+
         // Protection against the start before the match
         if (gameStrategyContext->loopTargetAndActions) {
             nextTargetOrNextStep(gameStrategyContext);

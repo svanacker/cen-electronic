@@ -44,28 +44,23 @@ void deviceElectronLauncher2019HandleRawData(unsigned char commandHeader, InputS
     if (commandHeader == COMMAND_ELECTRON_LAUNCHER_2019_DEBUG) {
         ackCommand(outputStream, ELECTRON_LAUNCHER_2019_DEVICE_HEADER, COMMAND_ELECTRON_LAUNCHER_2019_DEBUG);
         electronLauncher2019Debug(launcher, getDebugOutputStreamLogger());
-    }
-    // LAUNCH
+    }// LAUNCH
     else if (commandHeader == COMMAND_ELECTRON_LAUNCHER_2019_LAUNCH) {
         ackCommand(outputStream, ELECTRON_LAUNCHER_2019_DEVICE_HEADER, COMMAND_ELECTRON_LAUNCHER_2019_LAUNCH);
         electronLauncher2019Launch(launcher);
-    }
-    // SHOW
+    }// SHOW
     else if (commandHeader == COMMAND_ELECTRON_LAUNCHER_2019_SHOW) {
         ackCommand(outputStream, ELECTRON_LAUNCHER_2019_DEVICE_HEADER, COMMAND_ELECTRON_LAUNCHER_2019_SHOW);
         electronLauncher2019Show(launcher);
-    }
-    // INIT
+    }// INIT
     else if (commandHeader == COMMAND_ELECTRON_LAUNCHER_2019_INIT) {
         ackCommand(outputStream, ELECTRON_LAUNCHER_2019_DEVICE_HEADER, COMMAND_ELECTRON_LAUNCHER_2019_INIT);
         electronLauncher2019Reset(launcher);
-    }
-    // SIMULATE ROBOT PLACED
+    }// SIMULATE ROBOT PLACED
     else if (commandHeader == COMMAND_ELECTRON_LAUNCHER_2019_SIMULATE_ROBOT_PLACED) {
         ackCommand(outputStream, ELECTRON_LAUNCHER_2019_DEVICE_HEADER, COMMAND_ELECTRON_LAUNCHER_2019_SIMULATE_ROBOT_PLACED);
         electronLauncher2019SimulateRobotPlaced(launcher);
-    }
-    // SIMULATE ROBOT MOVED
+    }// SIMULATE ROBOT MOVED
     else if (commandHeader == COMMAND_ELECTRON_LAUNCHER_2019_SIMULATE_ROBOT_PLACED_AND_MOVED) {
         ackCommand(outputStream, ELECTRON_LAUNCHER_2019_DEVICE_HEADER, COMMAND_ELECTRON_LAUNCHER_2019_SIMULATE_ROBOT_PLACED_AND_MOVED);
         electronLauncher2019SimulateRobotPlacedAndMoved(launcher);
@@ -78,7 +73,6 @@ static DeviceDescriptor descriptor = {
     .deviceIsOk = &deviceElectronLauncher2019IsOk,
     .deviceHandleRawData = &deviceElectronLauncher2019HandleRawData,
 };
-
 
 DeviceDescriptor* getElectronLauncher2019DeviceDescriptor(ElectronLauncher2019* launcherParam) {
     launcher = launcherParam;

@@ -34,14 +34,13 @@ int trajectoryGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode
             setFunctionNoArgumentAndNoResult(GET_DEBUG_ABS_POS_STRING);
         }
         return commandLengthValueForMode(mode, 0, 0);
-	}
-	else if (commandHeader == COMMAND_TRAJECTORY_DEBUG_CODERS) {
-		// Same return in case of input / output
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("Debug Coders History");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	} else if (commandHeader == COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION) {
+    } else if (commandHeader == COMMAND_TRAJECTORY_DEBUG_CODERS) {
+        // Same return in case of input / output
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Debug Coders History");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    } else if (commandHeader == COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION) {
         if (fillDeviceArgumentList) {
             setFunction(SET_ABS_POS_STRING, 5, 0);
             setArgumentFloatHex6(0, X_MM);
@@ -51,37 +50,34 @@ int trajectoryGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode
             setArgumentUnsignedHex4(4, ANGLE_1_10_DEG);
         }
         return commandLengthValueForMode(mode, 18, 0);
-	} else if (commandHeader == COMMAND_TRAJECTORY_ADJUST_X) {
+    } else if (commandHeader == COMMAND_TRAJECTORY_ADJUST_X) {
         if (fillDeviceArgumentList) {
             setFunction("Adjust X", 1, 1);
             setArgumentFloatHex6(0, X_MM);
             setResultUnsignedChar1(0, "Done or not");
         }
         return commandLengthValueForMode(mode, 6, 1);
-	} else if (commandHeader == COMMAND_TRAJECTORY_ADJUST_Y) {
+    } else if (commandHeader == COMMAND_TRAJECTORY_ADJUST_Y) {
         if (fillDeviceArgumentList) {
             setFunction("Adjust Y", 1, 1);
             setArgumentFloatHex6(0, X_MM);
             setResultUnsignedChar1(0, "Done or not");
         }
         return commandLengthValueForMode(mode, 6, 1);
-    }
-    // NOTIFY PARAMETERS
+    }// NOTIFY PARAMETERS
     else if (commandHeader == COMMAND_TRAJECTORY_NOTIFY_OFF) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Notify Off");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_TRAJECTORY_NOTIFY_ON) {
+    } else if (commandHeader == COMMAND_TRAJECTORY_NOTIFY_ON) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Notify On");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_TRAJECTORY_NOTIFY_SET_PARAMETERS) {
+    } else if (commandHeader == COMMAND_TRAJECTORY_NOTIFY_SET_PARAMETERS) {
         if (fillDeviceArgumentList) {
-            setFunction("Notify Set Param", 3, 0);  
+            setFunction("Notify Set Param", 3, 0);
             setArgumentFloatHex4(0, "Dist (mm)");
             setArgumentSeparator(1);
             setArgumentFloatHex4(2, "Angle (deciDegree)");

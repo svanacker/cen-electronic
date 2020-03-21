@@ -44,8 +44,7 @@
 void setInitialPosition(unsigned int color) {
     if (color) {
         trajectoryDriverSetAbsolutePosition(ROBOT_POSITION_VIOLET_X, ROBOT_POSITION_VIOLET_Y, ROBOT_POSITION_VIOLET_ANGLE);
-    }
-    else {
+    } else {
         trajectoryDriverSetAbsolutePosition(ROBOT_POSITION_RED_X, ROBOT_POSITION_RED_Y, ROBOT_POSITION_RED_ANGLE);
     }
 }
@@ -58,14 +57,13 @@ bool spline(int color, float x, float y, float angle, float dist0, float dist1, 
         return motionDriverBSplineAbsolute(x, y, angle, dist0, dist1, accelerationFactor, speedFactor);
     } else {
         return motionDriverBSplineAbsolute(x, GAME_BOARD_HEIGHT - y, 1800.0f - angle, dist0, dist1, accelerationFactor, speedFactor);
-    }    
+    }
 }
 
 bool left(int color, float angle) {
     if (color) {
         return motionDriverLeft(angle);
-    }
-    else {
+    } else {
         return motionDriverRight(angle);
     }
 }
@@ -73,8 +71,7 @@ bool left(int color, float angle) {
 bool right(int color, float angle) {
     if (color) {
         return motionDriverRight(angle);
-    }
-    else {
+    } else {
         return motionDriverLeft(angle);
     }
 }
@@ -83,8 +80,7 @@ bool armDown(int color, int index) {
     bool result;
     if (color) {
         result = armDriver2012Down(index);
-    }
-    else {
+    } else {
         result = armDriver2012Down(index);
     }
     delaymSec(500);
@@ -96,8 +92,7 @@ bool armUp(int color, int index) {
     bool result;
     if (color) {
         result = armDriver2012Up(index);
-    }
-    else {
+    } else {
         result = armDriver2012Up(index);
     }
     delaymSec(500);
@@ -141,7 +136,7 @@ void cleanLintel1Second(int color) {
 
 void backToReadyForLintel1(int color) {
     spline(color, X_LINTEL_LEFT, 0x02A0, ANGLE_90, 0xF0, 0xF0, MOTION_SPEED_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL);
-}    
+}
 
 void takeLintelLeft(int color) {
     spline(color, X_LINTEL_LEFT, 0x055C, ANGLE_90, 0x0D, 0x46, MOTION_SPEED_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL);
@@ -187,7 +182,7 @@ void homologation2(int color) {
 
 void homologation3(int color) {
     // Send the opponentRobot position if it has the information.        
-    strategyBoard();    
+    strategyBoard();
     return;
 
     /*
@@ -208,7 +203,7 @@ void homologation3(int color) {
             frontBottle2ToBottle2(color);
             break;
     }
-    */
+     */
 }
 
 // ----------------------------------------------------------- Homologation 4 ---------------------------------------------------------
@@ -365,12 +360,12 @@ void homologation7(int color) {
             takeBullion1(color);
             break;
         case 2:
-            cleanLintel1First( color);
+            cleanLintel1First(color);
             break;
         case 3:
             cleanLintel1Second(color);
             break;
-        case 4:    
+        case 4:
             backToReadyForLintel1(color);
             break;
         case 5: // Open arm
@@ -407,23 +402,17 @@ void homologation(unsigned int homologationIndex, unsigned int color) {
     }
     if (homologationIndex == 1) {
         homologation1(color);
-    }
-    else if (homologationIndex == 2) {
+    } else if (homologationIndex == 2) {
         homologation2(color);
-    }
-    else if (homologationIndex == 3) {
+    } else if (homologationIndex == 3) {
         homologation3(color);
-    }
-    else if (homologationIndex == 4) {
+    } else if (homologationIndex == 4) {
         homologation4(color);
-    }
-    else if (homologationIndex == 5) {
+    } else if (homologationIndex == 5) {
         homologation5_Totem(color);
-    }
-    else if (homologationIndex == 6) {
+    } else if (homologationIndex == 6) {
         homologation6(color);
-    }
-    else if (homologationIndex == 7) {
+    } else if (homologationIndex == 7) {
         homologation7(color);
     }
 }

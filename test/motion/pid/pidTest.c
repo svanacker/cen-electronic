@@ -29,7 +29,7 @@ bool motionEndInfoEquals(MotionEndInfo* motionEndInfo1, MotionEndInfo* motionEnd
     result &= floatEquals(motionEndInfo1->uIntegral, motionEndInfo2->uIntegral);
     return result;
 }
-*/
+ */
 
 bool motionEquals(Motion* motion1, Motion* motion2) {
     bool result;

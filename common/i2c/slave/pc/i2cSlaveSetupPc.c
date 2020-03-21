@@ -43,14 +43,14 @@ void i2cSlaveInitialize(I2cBusConnection* i2cBusConnection) {
 
     // Thread : master => slave
     i2cBusConnectionPc->masterToSlaveThreadHandle = createStandardThread(
-        masterToSlaveCallback,    // thread proc
-        (LPVOID)i2cBusConnection,    // thread parameter 
-        &(i2cBusConnectionPc->masterToSlaveThreadId));      // returns thread ID 
+            masterToSlaveCallback, // thread proc
+            (LPVOID) i2cBusConnection, // thread parameter 
+            &(i2cBusConnectionPc->masterToSlaveThreadId)); // returns thread ID 
 
     // Thread : slave => master
     i2cBusConnectionPc->slaveToMasterThreadHandle = createStandardThread(
-        slaveToMasterCallback,    // thread proc
-        (LPVOID)i2cBusConnection,    // thread parameter 
-        &(i2cBusConnectionPc->slaveToMasterThreadId));      // returns thread ID 
+            slaveToMasterCallback, // thread proc
+            (LPVOID) i2cBusConnection, // thread parameter 
+            &(i2cBusConnectionPc->slaveToMasterThreadId)); // returns thread ID 
 }
 

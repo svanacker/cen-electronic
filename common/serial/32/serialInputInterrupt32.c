@@ -32,7 +32,7 @@ void handleUartInterrupt(UART_MODULE uart, Buffer* buffer) {
         }
     }
     // We don't care about TX interrupt
-    if ( INTGetFlag(INT_SOURCE_UART_TX(uart)) ) {
+    if (INTGetFlag(INT_SOURCE_UART_TX(uart))) {
         INTClearFlag(INT_SOURCE_UART_TX(uart));
     }
 }

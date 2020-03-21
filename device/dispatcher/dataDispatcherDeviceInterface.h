@@ -10,8 +10,8 @@
 #define COMMAND_DISPATCHER_LIST          'L'
 
 /**
-* Get the data dispatcher device interface.
-*/
+ * Get the data dispatcher device interface.
+ */
 DeviceInterface* getDataDispatcherDeviceInterface(void);
 
 #endif

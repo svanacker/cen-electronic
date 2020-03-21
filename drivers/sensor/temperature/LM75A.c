@@ -13,7 +13,7 @@
  */
 I2cBusConnection* _LM75A_getI2cBusConnection(Temperature* temperature) {
     I2cBusConnection* result = (I2cBusConnection*) temperature->object;
-    
+
     return result;
 }
 

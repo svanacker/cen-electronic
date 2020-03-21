@@ -52,10 +52,10 @@ typedef void ServoUpdateConfigFunction(Servo* servo);
 typedef void ServoInternalPwmFunction(Servo* servo, unsigned int dutyms);
 
 /**
-* Defines the structure to manages Servos.
+ * Defines the structure to manages Servos.
  * Be careful to NOT change any record of this struct after Initialization 
  * to avoid some hazardous problem !!
-*/
+ */
 struct Servo {
     /** The type of servo. */
     enum ServoType servoType;
@@ -66,8 +66,8 @@ struct Servo {
      */
     unsigned int internalServoIndex;
     /**
-    * Name of the servo so that we can easily understand the target of the servo.
-    */
+     * Name of the servo so that we can easily understand the target of the servo.
+     */
     char* name;
     /** If we use it, in PIC, some PWM use UART, so we don't activate them always
      * This property must NOT be used  */
@@ -102,18 +102,18 @@ struct Servo {
 // POSITION
 
 /**
-* Middle position for a servo
-*/
+ * Middle position for a servo
+ */
 #define PWM_SERVO_MIDDLE_POSITION        1500
 
 /**
-* Left position (around 45° / middle position).
-*/
+ * Left position (around 45° / middle position).
+ */
 #define PWM_SERVO_LEFT_POSITION          1000
 
 /**
-* Right position (around 45° / middle position).
-*/
+ * Right position (around 45° / middle position).
+ */
 #define PWM_SERVO_RIGHT_POSITION         2000
 
 // SPEED
@@ -136,25 +136,25 @@ struct Servo {
 
 // INIT
 
-void initServo(Servo* servo, 
-                enum ServoType servoType,
-                unsigned int internalServoIndex,
-                char* name,
-                ServoTypeInitFunction* typeInitFunction,
-                ServoInitFunction* initFunction,
-                ServoUpdateConfigFunction* updateConfigFunction,
-                ServoInternalPwmFunction* internalPwmFunction,
-                int* object);
+void initServo(Servo* servo,
+        enum ServoType servoType,
+        unsigned int internalServoIndex,
+        char* name,
+        ServoTypeInitFunction* typeInitFunction,
+        ServoInitFunction* initFunction,
+        ServoUpdateConfigFunction* updateConfigFunction,
+        ServoInternalPwmFunction* internalPwmFunction,
+        int* object);
 
 // INTERFACE
 
 /**
-* Do a pwm servo on a specified servo
-* @param speed the speed to reach the targetPosition
-* @param targetPosition duration of pwm to 1 typical value between
-* PWM_SERVO_LEFT_POSITION and PWM_SERVO_RIGHT_POSITION 
-* @param wait indicates if we compute the needed time and we wait before going further
-*/
+ * Do a pwm servo on a specified servo
+ * @param speed the speed to reach the targetPosition
+ * @param targetPosition duration of pwm to 1 typical value between
+ * PWM_SERVO_LEFT_POSITION and PWM_SERVO_RIGHT_POSITION 
+ * @param wait indicates if we compute the needed time and we wait before going further
+ */
 void pwmServo(Servo* servo, unsigned int newSpeed, int newTargetPosition, bool wait);
 
 /**
@@ -199,8 +199,8 @@ unsigned int pwmServoReadTargetPosition(Servo* servo);
 // COMPUTATION
 
 /**
-* Returns how milli seconds should the servo to reach the new position under load
-*/
+ * Returns how milli seconds should the servo to reach the new position under load
+ */
 unsigned int pwmServoComputeTimeMilliSecondsToReachTargetPosition(Servo* servo, unsigned int targetPosition);
 
 #endif

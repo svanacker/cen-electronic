@@ -11,7 +11,7 @@
 /**
  * Update the status of the currentValues for the detection of an acceleration too high
  */
-void updateEndDetectionStatusRegisterAccelerationTooHigh (MotionEndDetectionParameter* endDetectionParameter, MotionInstruction* motionInstruction, PidComputationInstructionValues* currentValues) {
+void updateEndDetectionStatusRegisterAccelerationTooHigh(MotionEndDetectionParameter* endDetectionParameter, MotionInstruction* motionInstruction, PidComputationInstructionValues* currentValues) {
     float absCurrentAcceleration = fabsf(currentValues->currentAcceleration);
 
     RobotKinematics* robotKinematics = getRobotKinematics();
@@ -25,8 +25,8 @@ void updateEndDetectionStatusRegisterAccelerationTooHigh (MotionEndDetectionPara
 }
 
 /**
-* Update the status of the currentValues for the detection of a speed too low compared to the expected speed
-*/
+ * Update the status of the currentValues for the detection of a speed too low compared to the expected speed
+ */
 void updateEndDetectionStatusRegisterSpeedTooLow(MotionEndDetectionParameter* endDetectionParameter, MotionInstruction* motionInstruction, PidComputationInstructionValues* currentValues) {
     float absNormalSpeed = fabsf(currentValues->normalSpeed);
     if (absNormalSpeed < endDetectionParameter->speedMinThreshold) {
@@ -41,8 +41,8 @@ void updateEndDetectionStatusRegisterSpeedTooLow(MotionEndDetectionParameter* en
 }
 
 /**
-* Update the status of the currentValues for the detection of a u too high compared to the expected speed.
-*/
+ * Update the status of the currentValues for the detection of a u too high compared to the expected speed.
+ */
 void updateEndDetectionStatusRegisterUTooHigh(MotionEndDetectionParameter* endDetectionParameter, MotionInstruction* motionInstruction, PidComputationInstructionValues* currentValues) {
     float absNormalU = fabsf(currentValues->normalU);
     if (absNormalU < endDetectionParameter->uMinThresholdValue) {
@@ -67,13 +67,13 @@ void updateEndDetectionStatusRegister(PidMotion* pidMotion, PidMotionDefinition*
 
     // Acceleration too high
     updateEndDetectionStatusRegisterAccelerationTooHigh(endDetectionParameter, thetaMotionInstruction, thetaCurrentValues);
-    updateEndDetectionStatusRegisterAccelerationTooHigh(endDetectionParameter,alphaMotionInstruction, alphaCurrentValues);
+    updateEndDetectionStatusRegisterAccelerationTooHigh(endDetectionParameter, alphaMotionInstruction, alphaCurrentValues);
 
     // Speed too slow
-    updateEndDetectionStatusRegisterSpeedTooLow(endDetectionParameter,thetaMotionInstruction, thetaCurrentValues);
-    updateEndDetectionStatusRegisterSpeedTooLow(endDetectionParameter,alphaMotionInstruction, alphaCurrentValues);
+    updateEndDetectionStatusRegisterSpeedTooLow(endDetectionParameter, thetaMotionInstruction, thetaCurrentValues);
+    updateEndDetectionStatusRegisterSpeedTooLow(endDetectionParameter, alphaMotionInstruction, alphaCurrentValues);
 
     // U too high
-    updateEndDetectionStatusRegisterUTooHigh(endDetectionParameter,thetaMotionInstruction, thetaCurrentValues);
-    updateEndDetectionStatusRegisterUTooHigh(endDetectionParameter,alphaMotionInstruction, alphaCurrentValues);
+    updateEndDetectionStatusRegisterUTooHigh(endDetectionParameter, thetaMotionInstruction, thetaCurrentValues);
+    updateEndDetectionStatusRegisterUTooHigh(endDetectionParameter, alphaMotionInstruction, alphaCurrentValues);
 }

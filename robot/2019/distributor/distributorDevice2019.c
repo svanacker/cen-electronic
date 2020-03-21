@@ -52,53 +52,44 @@ void deviceDistributor2019HandleRawData(unsigned char commandHeader, InputStream
     if (commandHeader == COMMAND_2019_DISTRIBUTOR_PREPARE_TAKE) {
         ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_PREPARE_TAKE);
         distributor2019PrepareTake(servoList);
-    }
-    // Take
+    }// Take
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_TAKE) {
         ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_TAKE);
         unsigned int side = readHex(inputStream);
         distributor2019Take(servoList, tofSensorList, side);
-    }
-    // Only the Height
+    }// Only the Height
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_TAKE_HEIGHT) {
         ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_TAKE_HEIGHT);
         moveElevatorBottom(servoList, tofSensorList);
-    }
-    // DROP
-    // Fake Accelerator Drop
+    }// DROP
+        // Fake Accelerator Drop
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_FAKE_INIT) {
         ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_ACCELERATOR_FAKE_INIT);
         accelerator2019FakeInit(servoList);
-    }
-    // Prepare Fork Accelerator Drop
+    }// Prepare Fork Accelerator Drop
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_PREPARE_DROP) {
         ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_ACCELERATOR_PREPARE_DROP);
         accelerator2019PrepareDrop(servoList);
-    }
-    // Fake Move Forward
+    }// Fake Move Forward
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_FAKE_MOVE_FORWARD) {
         ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_ACCELERATOR_FAKE_MOVE_FORWARD);
         accelerator2019FakeMoveForward();
-    }
-    // Fork Accelerator Drop
+    }// Fork Accelerator Drop
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_DROP) {
         ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_ACCELERATOR_DROP);
         unsigned int firstSideToRelease = readHex(inputStream);
         if (firstSideToRelease == FORK_2019_LEFT_INDEX) {
             accelerator2019Drop(servoList, FORK_2019_LEFT_INDEX, FORK_2019_RIGHT_INDEX);
-        }
-        else {
+        } else {
             accelerator2019Drop(servoList, FORK_2019_RIGHT_INDEX, FORK_2019_LEFT_INDEX);
         }
-    }
-    // Complete Sequence
+    }// Complete Sequence
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_COMPLETE_SEQUENCE) {
         ackCommand(outputStream, DISTRIBUTOR_2019_DEVICE_HEADER, COMMAND_2019_DISTRIBUTOR_ACCELERATOR_COMPLETE_SEQUENCE);
         unsigned int firstSideToRelease = readHex(inputStream);
         if (firstSideToRelease == FORK_2019_LEFT_INDEX) {
             accelerator2019CompleteSequence(servoList, FORK_2019_LEFT_INDEX, FORK_2019_RIGHT_INDEX);
-        }
-        else {
+        } else {
             accelerator2019CompleteSequence(servoList, FORK_2019_RIGHT_INDEX, FORK_2019_LEFT_INDEX);
         }
     }
@@ -111,7 +102,6 @@ static DeviceDescriptor descriptor = {
     .deviceIsOk = &deviceDistributor2019IsOk,
     .deviceHandleRawData = &deviceDistributor2019HandleRawData,
 };
-
 
 DeviceDescriptor* getDistributor2019DeviceDescriptor(ServoList* servoListParam, TofSensorList* tofSensorListParam) {
     servoList = servoListParam;

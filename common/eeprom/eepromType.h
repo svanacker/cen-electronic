@@ -7,10 +7,10 @@
  * Type of Eeprom.
  */
 enum EepromType {
-	/**
-	* In Memory.
-	*/
-	EEPROM_TYPE_MEMORY,
+    /**
+     * In Memory.
+     */
+    EEPROM_TYPE_MEMORY,
     /** 
      * Hardware Eeprom (Ex : 24C12).
      */

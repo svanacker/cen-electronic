@@ -14,8 +14,8 @@
 #define MECHANICAL_BOARD_1_PC_DELAY_CONSOLE_ANALYZE_MILLISECONDS    1
 
 /**
-* Start Point to emulate the mechanical Board 1 PC.
-*/
+ * Start Point to emulate the mechanical Board 1 PC.
+ */
 void runMechanicalBoard1PC(bool singleMode);
 
 // Dispatchers

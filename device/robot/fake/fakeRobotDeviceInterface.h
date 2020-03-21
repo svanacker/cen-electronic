@@ -11,9 +11,9 @@
 #define COMMAND_FAKE_ROBOT_SET_POSITION           'w'
 
 /**
-* Get the Fake Robot device interface.
-* @return a pointer on the system device Interface.
-*/
+ * Get the Fake Robot device interface.
+ * @return a pointer on the system device Interface.
+ */
 DeviceInterface* getFakeRobotDeviceInterface(void);
 
 #endif

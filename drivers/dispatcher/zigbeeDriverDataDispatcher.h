@@ -9,13 +9,13 @@
 #define ZIGBEE_DRIVER_BUFFER_LENGTH        16
 
 /**
-* Add the zigbee driver data dispatcher to the list
-*/
+ * Add the zigbee driver data dispatcher to the list
+ */
 void addZigbeeDriverDataDispatcher(DriverDataDispatcher* dispatcher,
         const char* dispatcherName,
         InputStream* zigbeeInputStream,
         OutputStream* zigbeeOutputStream,
         char* addressString
-);
+        );
 
 #endif

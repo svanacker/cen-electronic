@@ -6,8 +6,8 @@
 #include "pathList.h"
 
 /**
-* Print the list of path as table.
-*/
+ * Print the list of path as table.
+ */
 void printPathListTable(OutputStream* outputStream, PathList* pathList);
 
 // TESTS DATA

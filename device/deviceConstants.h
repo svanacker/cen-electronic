@@ -142,6 +142,9 @@
 /** Time of flight device. */
 #define TOF_DEVICE_HEADER                          '['
 
+/** Array of Led. */
+#define LED_DEVICE_HEADER                          '>'
+
 #define COLOR_SENSOR_DEVICE_HEADER                 '*'
 
 /** TODO */

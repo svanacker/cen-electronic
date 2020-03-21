@@ -25,8 +25,8 @@
 #define COMMAND_SET_ROBOT_TYPE                                     'T'
 
 /**
-* Interface for Device "RobotKinematics"
-*/
+ * Interface for Device "RobotKinematics"
+ */
 DeviceInterface* getRobotKinematicsDeviceInterface();
 
 #endif

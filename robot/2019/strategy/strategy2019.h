@@ -14,23 +14,23 @@
 #define STRATEGY_2019_NAVIGATION_PATH_LIST_ARRAY_LENGTH            500
 
 /**
-* Init all elements for 2019.
-*/
+ * Init all elements for 2019.
+ */
 void initStrategy2019(GameStrategyContext* gameStrategyContext);
 
 Location* addLocationWithColors2019(enum TeamColor teamColor, Navigation* navigation, char* name, char* label, float x, float y);
 
 PathData* addNavigationPathWithColor2019(
-    enum TeamColor teamColor,
-    Navigation* navigation,
-    Location* location1,
-    Location* location2,
-    float cost,
-    float controlPointDistance1,
-    float controlPointDistance2,
-    float angle1,
-    float angle2,
-    float accelerationFactor,
-    float speedFactor);
+        enum TeamColor teamColor,
+        Navigation* navigation,
+        Location* location1,
+        Location* location2,
+        float cost,
+        float controlPointDistance1,
+        float controlPointDistance2,
+        float angle1,
+        float angle2,
+        float accelerationFactor,
+        float speedFactor);
 
 #endif

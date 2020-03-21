@@ -23,11 +23,11 @@ struct DriverDataDispatcher;
  * @return true if the transmitDataFunction was ok, false else
  */
 typedef bool driverDataDispatcherTransmitDataFunction(struct DriverDataDispatcher* dispatcher,
-                                                        Buffer* requestBuffer,
-                                                        Buffer* responseBuffer,
-                                                        int dataToTransferCount,
-                                                        int dataToReceiveCount
-                                                        );
+        Buffer* requestBuffer,
+        Buffer* responseBuffer,
+        int dataToTransferCount,
+        int dataToReceiveCount
+        );
 
 /**
  * Structure defining a driverDataDispatcher with his associated transmitMode.

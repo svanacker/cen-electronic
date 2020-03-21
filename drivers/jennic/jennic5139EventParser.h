@@ -73,21 +73,21 @@ void initJennicEventList();
  * @param jennicEvent the event to add.
  */
 void addJennicEvent(JennicEvent* jennicEvent,
-                     char* eventCommand,
-                     char* argument0,
-                     char* argument1,
-                     char* argument2,
-                     char payLoadArgumentIndex,
-                    JennicEventFunction* onEvent);
+        char* eventCommand,
+        char* argument0,
+        char* argument1,
+        char* argument2,
+        char payLoadArgumentIndex,
+        JennicEventFunction* onEvent);
 /**
  * Handle the next Jennic char and try to detect some input (EVENT, DATA ...)
  */
 void handleJennicNextChar(char c);
 
 /**
-* Get a buffer from the router arround in data. 
-* The inData is a result of raw data parsing from the Jennic AT Commands.
-*/
+ * Get a buffer from the router arround in data. 
+ * The inData is a result of raw data parsing from the Jennic AT Commands.
+ */
 Buffer* getJennicInDataBuffer();
 
 // DEBUG

@@ -17,8 +17,7 @@ int devicePcGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, 
             setFunctionNoArgumentAndNoResult("pipe List Table");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_LOAD_COMMAND_FILE) {
+    } else if (commandHeader == COMMAND_LOAD_COMMAND_FILE) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Load Command File");
         }

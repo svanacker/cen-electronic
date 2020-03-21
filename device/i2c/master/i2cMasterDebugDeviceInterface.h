@@ -29,8 +29,8 @@
 #define COMMAND_I2C_MASTER_DEBUG_NACK                        'k'
 
 /**
-* Get the I2C debug device interface.
-*/
+ * Get the I2C debug device interface.
+ */
 DeviceInterface* getI2cMasterDebugDeviceInterface();
 
 #endif

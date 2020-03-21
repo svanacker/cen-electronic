@@ -23,8 +23,7 @@
 bool tofSensorStartPc(TofSensor* tofSensor, bool restart, bool debug) {
     if (restart) {
         appendStringLN(getDebugOutputStreamLogger(), "TOF SENSOR RESTART");
-    }
-    else {
+    } else {
         tofSensor->startResult = TOF_SENSOR_START_RESULT_OK;
     }
     return true;
@@ -34,13 +33,13 @@ bool tofSensorStartPc(TofSensor* tofSensor, bool restart, bool debug) {
  *
  */
 GameStrategyContext* getTofSensorGameStrategyContext(TofSensor* tofSensor) {
-    return (GameStrategyContext*)tofSensor->object;
+    return (GameStrategyContext*) tofSensor->object;
 }
 
 /**
-* Tof POO Implementation for PC
-* @private
-*/
+ * Tof POO Implementation for PC
+ * @private
+ */
 unsigned int tofSensorGetDistanceMMPc(TofSensor* tofSensor) {
     if (!tofSensor->enabled) {
         return 0;
@@ -48,7 +47,7 @@ unsigned int tofSensorGetDistanceMMPc(TofSensor* tofSensor) {
     FakeRobot* fakeRobot = getFakeRobotInstance();
 
     GameStrategyContext* gameStrategyContext = getTofSensorGameStrategyContext(tofSensor);
-    
+
     Point* robotPosition = gameStrategyContext->robotPosition;
     float robotAngle = gameStrategyContext->robotAngleRadian;
 
@@ -65,7 +64,7 @@ unsigned int tofSensorGetDistanceMMPc(TofSensor* tofSensor) {
             tofComputePoint(tofSensor, robotPosition, robotAngle, distance, coneAngle, &resultPoint);
             // If we detect the fakeRobot
             if (isInCircle2(fakeRobot->x, fakeRobot->y, fakeRobot->radius, resultPoint.x, resultPoint.y)) {
-                tofSensor->lastDistanceMM = (unsigned int)distance;
+                tofSensor->lastDistanceMM = (unsigned int) distance;
                 found = true;
                 break;
             }
@@ -80,8 +79,8 @@ unsigned int tofSensorGetDistanceMMPc(TofSensor* tofSensor) {
 void initTofSensorPc(TofSensor* tofSensor, int* object) {
     tofSensor->type = TOF_SENSOR_TYPE_PC;
     tofSensor->beamAngleRadian = degToRad(TOF_PC_BEAM_ANGLE_DEGREE);
-    initTofSensor(tofSensor, 
-                 &tofSensorStartPc,
-                 &tofSensorGetDistanceMMPc,
-                 object);
+    initTofSensor(tofSensor,
+            &tofSensorStartPc,
+            &tofSensorGetDistanceMMPc,
+            object);
 }

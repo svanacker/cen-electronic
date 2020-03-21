@@ -49,9 +49,8 @@ void toggleLedYellow() {
 
 void toggleLedBlue() {
     jennic5139LocalLight(JENNIC_LED_BLUE, ledBlueOn);
-    ledBlueOn = !ledBlueOn;    
+    ledBlueOn = !ledBlueOn;
 }
-
 
 void clearLedStatus() {
     jennic5139SetAllPinOutput();
@@ -101,8 +100,7 @@ void showStartupStatus() {
     if (hasErrorDuringStartup) {
         // startup error
         jennic5139LocalLight(JENNIC_LED_RED, true);
-    }
-    else {
+    } else {
         // green led
         jennic5139LocalLight(JENNIC_LED_GREEN, true);
     }
@@ -117,8 +115,6 @@ static OutputStream* debugOutputStream;
 /** Contains the buffer used to build command to the jennic. */
 static char commandBufferArray[JENNIC_DRIVER_COMMAND_BUFFER_LENGTH];
 static Buffer commandBuffer;
-
-
 
 bool internalCopyFromZigbeeToDebugRetainingData(bool handleZigbeeStream) {
     bool result = false;
@@ -157,7 +153,7 @@ void waitAndCopyFromZigbeeToDebug(int loopCount, int mSecDelay, bool handleZigbe
  * zigbeeCommand buffer.
  */
 void printBufferToDebugAndZigbee() {
-    while(!isBufferEmpty(&commandBuffer)) {
+    while (!isBufferEmpty(&commandBuffer)) {
         unsigned char c = bufferReadChar(&commandBuffer);
         append(debugOutputStream, c);
         append(zigbeeOutputStream, c);
@@ -172,13 +168,12 @@ void printBufferToDebugAndZigbee() {
 void sendJennic5139CommandFromBuffer() {
     // to ensure that the jennic is ready
     delaymSec(20);
-    appendString(debugOutputStream, "\nSENDING CMD : "); 
+    appendString(debugOutputStream, "\nSENDING CMD : ");
     printBufferToDebugAndZigbee();
     appendString(debugOutputStream, "WAIT ... : ");
     if (ledCommand) {
         waitAndCopyFromZigbeeToDebug(1, 10, false);
-    }
-    else {
+    } else {
         waitAndCopyFromZigbeeToDebug(NUMBER_OF_READ_BETWEEN_INSTRUCTION, 10, true);
     }
     showJennicError();
@@ -193,9 +188,9 @@ OutputStream* getCommandOutputStream() {
 }
 
 /**
-* @private
-* Append a command string to the command buffer
-*/
+ * @private
+ * Append a command string to the command buffer
+ */
 void appendCmdString(char* text) {
     appendString(&(commandBuffer.outputStream), text);
 }
@@ -259,7 +254,7 @@ void sendJennic5139DataBuffer(InputStream* inputStream, char* macAddress, int fl
     appendCmdDec(flags);
 
     appendCmdEnd();
-    
+
     sendJennic5139CommandFromBuffer();
 }
 
@@ -286,10 +281,10 @@ void changeJennic5139Power(signed int powerDB, unsigned int moduleType) {
  * CFG,x07FFF800,10,8,2,0\n
  */
 void initJennic5139Configuration(char* channelMask,
-                                 int childrenCount,
-                                 int maxEndDeviceChildrenCount,
-                                 int maxFailureBeforeOrphaning,
-                                 int timeOutPeriod) {
+        int childrenCount,
+        int maxEndDeviceChildrenCount,
+        int maxFailureBeforeOrphaning,
+        int timeOutPeriod) {
     appendCmdString(JENNIC_CMD_CFG);
     appendComma();
 
@@ -333,11 +328,11 @@ void initJennic5139Configuration(char* channelMask,
  * 0-255
  */
 void configureNetworkParameters(unsigned int pingPeriod,
-                                unsigned char sleepCycleBetweenPings,
-                                unsigned long scanSleep,
-                                unsigned long pollPeriod,
-                                unsigned char maxNumberOfHopsForBroadcast
-) {
+        unsigned char sleepCycleBetweenPings,
+        unsigned long scanSleep,
+        unsigned long pollPeriod,
+        unsigned char maxNumberOfHopsForBroadcast
+        ) {
     appendCmdString(JENNIC_CMD_CONFIGURE_NETWORK_PARAMETERS);
     appendComma();
 
@@ -364,13 +359,11 @@ void configureNetworkParameters(unsigned int pingPeriod,
  */
 void configureDefaultNetworkParameters() {
     configureNetworkParameters(PING_PERIOD_SECONDS,
-                                SLEEP_CYCLES_BETWEEN_PINGS,
-                                SCAN_SLEEP,
-                                POLL_PERIOD,
-                                MAX_NUMBER_HOPS_FOR_BROADCAST);
+            SLEEP_CYCLES_BETWEEN_PINGS,
+            SCAN_SLEEP,
+            POLL_PERIOD,
+            MAX_NUMBER_HOPS_FOR_BROADCAST);
 }
-
-
 
 /**
  * @private
@@ -380,7 +373,7 @@ void configureDefaultNetworkParameters() {
 void initJennic5139Init(char* panId, int channelId, char* applicationId, int restoreContext, int routing) {
     appendCmdString(JENNIC_CMD_INI);
     appendComma();
-    
+
     appendCmdString(panId);
     appendComma();
 
@@ -416,12 +409,12 @@ void initJennic5139Init(char* panId, int channelId, char* applicationId, int res
  * Set to 0 to disable auto-polling
  *
  * @param maxNumberOfHopsForBroadcast : Max. number of hops for broadcast 0-255
- */ 
-void jennic5139ConfigureNetworkParameters(unsigned int pingPeriod, 
-                                            unsigned char sleepCyclesBetweenPings,
-                                            unsigned long scanSleep,
-                                            unsigned long pollPeriod,
-                                            unsigned char maxNumberOfHopsForBroadcast);
+ */
+void jennic5139ConfigureNetworkParameters(unsigned int pingPeriod,
+        unsigned char sleepCyclesBetweenPings,
+        unsigned long scanSleep,
+        unsigned long pollPeriod,
+        unsigned char maxNumberOfHopsForBroadcast);
 
 /**
  * @private
@@ -442,7 +435,7 @@ void initJennic5139Start(int nodeType) {
 void jennic5139CommonStartupBegin() {
     hasErrorDuringStartup = false;
     jennicStartup = true;
-    clearLedStatus();    
+    clearLedStatus();
 }
 
 void jennic5139CommonStartupEnd() {
@@ -459,17 +452,17 @@ void initJennic5139Coordinater() {
             MAX_END_DEVICE_CHILDREN,
             MAX_FAILURE_BEFORE_ORPHANING,
             TIME_OUT_PERIOD);
-    
+
     configureDefaultNetworkParameters();
 
     initJennic5139Init(DEFAULT_PAN_ID,
-                       CHANNEL_ID_AUTO,
-                       DEFAULT_APPLICATION_ID,
-                       RESTORE_CONTEXT_DISABLED, 
-                       ROUTING_ON);
+            CHANNEL_ID_AUTO,
+            DEFAULT_APPLICATION_ID,
+            RESTORE_CONTEXT_DISABLED,
+            ROUTING_ON);
 
 
-     initJennic5139Start(NODE_TYPE_COORDINATER);
+    initJennic5139Start(NODE_TYPE_COORDINATER);
 
     // Change power to max
     changeJennic5139Power(JENNIC_CHANGE_POWER_DECIBEL_MAX, JENNIC_CHANGE_POWER_HIGH_POWER_MODULE);
@@ -490,10 +483,10 @@ void initJennic5139Router() {
     configureDefaultNetworkParameters();
 
     initJennic5139Init(NO_PAN_ID_TO_DEFINED, // because coordinater defined it !
-                       CHANNEL_ID_AUTO,
-                       DEFAULT_APPLICATION_ID,
-                       RESTORE_CONTEXT_DISABLED, 
-                       ROUTING_ON);
+            CHANNEL_ID_AUTO,
+            DEFAULT_APPLICATION_ID,
+            RESTORE_CONTEXT_DISABLED,
+            ROUTING_ON);
 
     initJennic5139Start(NODE_TYPE_ROUTER);
 
@@ -517,7 +510,7 @@ void jennic5139LocalLight(char* pinMask, bool on) {
         appendString(getCommandOutputStream(), pinMask);
         appendCmdEnd();
     } else {
-        appendCmdString(",x");    
+        appendCmdString(",x");
         appendString(getCommandOutputStream(), pinMask);
         appendCmdString(",0");
         appendCmdEnd();
@@ -535,7 +528,7 @@ void jennic5139RemoteLight(char* jennicAddress, char* pinMask, bool on) {
     appendCmdString("32");
     appendCmdEnd();
     sendJennic5139CommandFromBuffer();
-    
+
     // Opens a communication channel in a tunnel set up using TCN. The TOP command must
     // be executed on the remote node, and sent to the node as a tunnelled command using TCM
     appendCmdString(JENNIC_TUNNEL_SEND_COMMAND);

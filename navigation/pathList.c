@@ -34,41 +34,40 @@ PathData* addPath(PathList* pathList) {
         PathData* pathData = getPath(pathList, size);
         pathList->size++;
         return pathData;
-    }
-    else {
+    } else {
         writeError(TOO_MUCH_PATHS);
         return NULL;
     }
 }
 
 PathData* addFilledPath(PathList* pathList,
-						LocationList* locationList,
-					    char* locationName1, char* locationName2, 
-						float cost, 
-						float controlPointDistance1, 
-                        float controlPointDistance2, 
-						float angleRadian1, 
-                        float angleRadian2,
-						unsigned char accelerationFactor, unsigned char speedFactor,
-						bool mustGoBackward) {
-	PathData* result = addPath(pathList);
+        LocationList* locationList,
+        char* locationName1, char* locationName2,
+        float cost,
+        float controlPointDistance1,
+        float controlPointDistance2,
+        float angleRadian1,
+        float angleRadian2,
+        unsigned char accelerationFactor, unsigned char speedFactor,
+        bool mustGoBackward) {
+    PathData* result = addPath(pathList);
 
-	Location* location1 = findLocationByStringName(locationList, locationName1);
-	result->location1 = location1;
+    Location* location1 = findLocationByStringName(locationList, locationName1);
+    result->location1 = location1;
 
-	Location* location2 = findLocationByStringName(locationList, locationName2);
-	result->location2 = location2;
+    Location* location2 = findLocationByStringName(locationList, locationName2);
+    result->location2 = location2;
 
-	result->cost = cost;
-	result->controlPointDistance1 = controlPointDistance1;
-	result->controlPointDistance2 = controlPointDistance2;
-	result->angleRadian1 = angleRadian1;
-	result->angleRadian2 = angleRadian2;
-	result->accelerationFactor = accelerationFactor;
-	result->speedFactor = speedFactor;
-	result->mustGoBackward = mustGoBackward;
+    result->cost = cost;
+    result->controlPointDistance1 = controlPointDistance1;
+    result->controlPointDistance2 = controlPointDistance2;
+    result->angleRadian1 = angleRadian1;
+    result->angleRadian2 = angleRadian2;
+    result->accelerationFactor = accelerationFactor;
+    result->speedFactor = speedFactor;
+    result->mustGoBackward = mustGoBackward;
 
-	return result;
+    return result;
 }
 
 PathData* getPath(PathList* pathList, unsigned int index) {
@@ -80,7 +79,7 @@ PathData* getPath(PathList* pathList, unsigned int index) {
         writeError(PATH_LIST_INDEX_OUT_OF_BOUNDS);
         return NULL;
     }
-    PathData* result = (PathData*)pathList->paths;
+    PathData* result = (PathData*) pathList->paths;
     // we don't need use sizeof because our pointer is a PathData* pointer, so the shift
     // is already of the structure, we just have to shift of index.
     result += index;

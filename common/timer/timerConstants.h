@@ -13,8 +13,8 @@
 #define SYSTEM_TIMER_DELAY_CODE                        2
 
 /**
-* Defines the index for the timer to check if robot has detect something.
-*/
+ * Defines the index for the timer to check if robot has detect something.
+ */
 #define ROBOT_OBSTACLE_TIMER_CODE                      3
 
 /** The code of the timer (used to update value of servo). */
@@ -30,13 +30,13 @@
 #define TIMER_STRATEGY_MOTION_HANDLER_UPDATE_ROBOT_POSITION           15
 
 /**
-* Defines the timer used by the PC to simulate the move of the Robot.
-*/
+ * Defines the timer used by the PC to simulate the move of the Robot.
+ */
 #define TIMER_MOTION_SIMULATION_PC                               17
 
 /**
-* Defines the index for the timer which detects end of the match.
-*/
+ * Defines the index for the timer which detects end of the match.
+ */
 #define END_MATCH_DETECTOR_TIMER_CODE                  20
 
 #define TIMER_SOFT_CLOCK_CODE                          96

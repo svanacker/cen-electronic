@@ -55,7 +55,7 @@
 typedef struct Launcher2018 Launcher2018;
 
 /** Encapsulates all information needed to launch balls */
-struct Launcher2018{
+struct Launcher2018 {
     /** To detect if the launcher position */
     IOExpander* ioExpander;
     /** To launch balls */
@@ -102,9 +102,9 @@ DeviceDescriptor* getLauncher2018DeviceDescriptor(Launcher2018* launcher2018);
  * @param relay
  */
 void initLauncher2018(Launcher2018* launcher2018,
-                      IOExpander* ioExpander,
-                      Relay* relay,
-                      DualHBridgeMotor* dualHBridgeMotor,
-                      TofSensorList* tofSensorList);
+        IOExpander* ioExpander,
+        Relay* relay,
+        DualHBridgeMotor* dualHBridgeMotor,
+        TofSensorList* tofSensorList);
 
 #endif

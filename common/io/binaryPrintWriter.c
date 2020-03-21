@@ -9,17 +9,17 @@
  * @private
  */
 unsigned int appendBinaryXX(OutputStream* outputStream, unsigned long value, unsigned length, unsigned groupBy) {
-	unsigned int result = 0;
-	int i;
+    unsigned int result = 0;
+    int i;
     for (i = length - 1; i >= 0; i--) {
         if ((i + 1) % groupBy == 0) {
             appendSpace(outputStream);
-			result++;
+            result++;
         }
         appendBool(outputStream, value & (1 << i));
-		result++;
+        result++;
     }
-	return result;
+    return result;
 }
 
 unsigned int appendBinary32(OutputStream* outputStream, unsigned long value, unsigned groupBy) {
@@ -27,9 +27,9 @@ unsigned int appendBinary32(OutputStream* outputStream, unsigned long value, uns
 }
 
 unsigned int appendBinary16(OutputStream* outputStream, unsigned int value, unsigned groupBy) {
-	return appendBinaryXX(outputStream, value, 16, groupBy);
+    return appendBinaryXX(outputStream, value, 16, groupBy);
 }
 
 unsigned int appendBinary8(OutputStream* outputStream, unsigned char value, unsigned groupBy) {
-	return appendBinaryXX(outputStream, value, 8, groupBy);
+    return appendBinaryXX(outputStream, value, 8, groupBy);
 }

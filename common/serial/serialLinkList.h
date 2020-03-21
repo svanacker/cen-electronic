@@ -4,11 +4,11 @@
 #include "serialLink.h"
 
 /**
-* The struct defining a list of serialLink.
-*/
+ * The struct defining a list of serialLink.
+ */
 typedef struct SerialLinkList {
     /** An array of pointer on serialLink. */
-    SerialLink (*links)[];
+    SerialLink(*links)[];
     /** the size of the list. */
     unsigned char size;
     /** the max size of the list. */
@@ -21,12 +21,12 @@ typedef struct SerialLinkList {
  * @param serialListArray the array of pointer serial Link to add.
  * @param serialListSize the size of the array of pointer to add.
  */
-void initSerialLinkList(SerialLink (*serialLinkListArray)[], unsigned char serialLinkListSize);
+void initSerialLinkList(SerialLink(*serialLinkListArray)[], unsigned char serialLinkListSize);
 
 /**
-* Get the list of serial Links.
-* @return the list of serial Links.
-*/
+ * Get the list of serial Links.
+ * @return the list of serial Links.
+ */
 SerialLinkList* getSerialLinkList(void);
 
 /**
@@ -36,10 +36,10 @@ SerialLinkList* getSerialLinkList(void);
 SerialLink* addSerialLink(void);
 
 /**
-* Get the serialLink with specific index.
-* @param index the index of the device
-* @return a pointer on the Device
-*/
+ * Get the serialLink with specific index.
+ * @param index the index of the device
+ * @return a pointer on the Device
+ */
 SerialLink* getSerialLink(int index);
 
 /** 
@@ -50,9 +50,9 @@ SerialLink* getSerialLink(int index);
 SerialLink* getSerialLinkBySerialPort(enum SerialPort serialPort);
 
 /**
-* Get the count of serialLink.
-* @result the count of serialLink
-*/
+ * Get the count of serialLink.
+ * @result the count of serialLink
+ */
 int getSerialLinkCount(void);
 
 #endif

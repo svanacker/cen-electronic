@@ -52,38 +52,32 @@ void deviceFork2019HandleRawData(unsigned char commandHeader, InputStream* input
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_BACK);
         unsigned int side = readHex(inputStream);
         moveForkBack(servoList, side, wait);
-    }
-    // Fork Single Puck
+    }// Fork Single Puck
     else if (commandHeader == COMMAND_2019_FORK_SIMPLE_PUCK) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_SIMPLE_PUCK);
         unsigned int side = readHex(inputStream);
         moveForkSimplePuck(servoList, side, wait);
-    }
-    // Fork Double Puck
+    }// Fork Double Puck
     else if (commandHeader == COMMAND_2019_FORK_DOUBLE_PUCK) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_DOUBLE_PUCK);
         unsigned int side = readHex(inputStream);
         moveForkDoublePuck(servoList, side, wait);
-        
-    }
-    // Fork Push Off
+
+    }// Fork Push Off
     else if (commandHeader == COMMAND_2019_FORK_PUSH_OFF) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_PUSH_OFF);
         unsigned int side = readHex(inputStream);
         moveForkPushOff(servoList, side, wait);
-    }
-    // Fork Push On
+    }// Fork Push On
     else if (commandHeader == COMMAND_2019_FORK_PUSH_ON) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_PUSH_ON);
         unsigned int side = readHex(inputStream);
         moveForkPushOn(servoList, side, wait);
-    }
-    // Init
+    }// Init
     else if (commandHeader == COMMAND_2019_FORK_INIT) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_INIT);
         fork2019Init(servoList);
-    }
-    // Scan
+    }// Scan
     else if (commandHeader == COMMAND_2019_FORK_SCAN) {
         ackCommand(outputStream, FORK_2019_DEVICE_HEADER, COMMAND_2019_FORK_SCAN);
         unsigned int retryCount = readHex(inputStream);
@@ -101,7 +95,6 @@ static DeviceDescriptor descriptor = {
     .deviceIsOk = &deviceFork2019IsOk,
     .deviceHandleRawData = &deviceFork2019HandleRawData,
 };
-
 
 DeviceDescriptor* getFork2019DeviceDescriptor(ServoList* servoListParam, TofSensorList* tofSensorListParam) {
     servoList = servoListParam;

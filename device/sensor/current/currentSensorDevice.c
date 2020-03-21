@@ -27,7 +27,7 @@ bool isCurrentSensorDeviceOk(void) {
     return true;
 }
 
-void deviceCurrentSensorHandleRawData(unsigned char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream){
+void deviceCurrentSensorHandleRawData(unsigned char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (header == COMMAND_READ_CURRENT_SENSOR) {
         ackCommand(outputStream, CURRENT_SENSOR_DEVICE_HEADER, COMMAND_READ_CURRENT_SENSOR);
         unsigned int value = (unsigned int) current->readSensorValue(current);

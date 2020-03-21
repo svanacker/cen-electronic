@@ -21,16 +21,16 @@ TimerList* getTimerList() {
     return &timerList;
 }
 
-void initTimerList(Timer (*timerListArray)[], unsigned char timerListSize) {
+void initTimerList(Timer(*timerListArray)[], unsigned char timerListSize) {
     timerList.timers = timerListArray;
     timerList.maxSize = timerListSize;
 }
 
 Timer* addTimer(int timerCode,
-                unsigned long timeDiviser,
-                interruptTimerCallbackFunc* callback,
-                char* timerName,
-                int* object) {
+        unsigned long timeDiviser,
+        interruptTimerCallbackFunc* callback,
+        char* timerName,
+        int* object) {
     if (timerList.maxSize == 0) {
         writeError(TIMERS_LIST_NOT_INITIALIZED);
         return NULL;
@@ -38,11 +38,11 @@ Timer* addTimer(int timerCode,
     unsigned char size = timerList.size;
 
     if (size < timerList.maxSize) {
-		Timer* result = getTimerByIndex(size);
-		if (result == NULL) {
-			writeError(TIMER_NULL);
-			return NULL;
-		}
+        Timer* result = getTimerByIndex(size);
+        if (result == NULL) {
+            writeError(TIMER_NULL);
+            return NULL;
+        }
         result->time = 0;
         result->markTime = 0;
         result->timerCode = timerCode;
@@ -55,22 +55,21 @@ Timer* addTimer(int timerCode,
         result->object = object;
         timerList.size++;
         return result;
-    }
-    else {
+    } else {
         writeError(TOO_MUCH_TIMERS);
         return NULL;
     }
 }
 
 Timer* getTimerByIndex(int index) {
-	if (timerList.maxSize == 0) {
-		writeError(TIMERS_LIST_NOT_INITIALIZED);
-		return NULL;
-	}
-	if (index < 0 || index >= timerList.maxSize) {
-		writeError(TIMERS_LIST_ILLEGAL_INDEX);
-		return NULL;
-	}
+    if (timerList.maxSize == 0) {
+        writeError(TIMERS_LIST_NOT_INITIALIZED);
+        return NULL;
+    }
+    if (index < 0 || index >= timerList.maxSize) {
+        writeError(TIMERS_LIST_ILLEGAL_INDEX);
+        return NULL;
+    }
 
     Timer* result = (Timer*) timerList.timers;
     result += index;
@@ -81,10 +80,10 @@ Timer* getTimerByCode(int timerCode) {
     int i;
     for (i = 0; i < timerList.size; i++) {
         Timer* timer = getTimerByIndex(i);
-		if (timer == NULL) {
-			writeError(TIMER_NULL);
-			return NULL;
-		}
+        if (timer == NULL) {
+            writeError(TIMER_NULL);
+            return NULL;
+        }
         if (timer->timerCode == timerCode) {
             return timer;
         }
@@ -100,13 +99,13 @@ void startTimerList(bool enabledAll) {
     _initTimers();
     timerList.started = true;
     if (enabledAll) {
-    int i;
+        int i;
         for (i = 0; i < timerList.size; i++) {
             Timer* timer = getTimerByIndex(i);
-		    if (timer == NULL) {
-			    writeError(TIMER_NULL);
-			    return;
-		    }
+            if (timer == NULL) {
+                writeError(TIMER_NULL);
+                return;
+            }
             startTimer(timer);
         }
     }
@@ -116,28 +115,28 @@ void stopTimerList() {
     int i;
     for (i = 0; i < timerList.size; i++) {
         Timer* timer = getTimerByIndex(i);
-		if (timer == NULL) {
-			writeError(TIMER_NULL);
-			return;
-		}
+        if (timer == NULL) {
+            writeError(TIMER_NULL);
+            return;
+        }
         stopTimer(timer);
     }
 }
 
 /**
-* @private 
-*/
+ * @private 
+ */
 void _internalUpdateTimerListValues(int incrementSinceLastCall) {
     timerList.working = true;
     if (timerList.size > 0) {
         int i = 0;
         for (i = 0; i < timerList.size; i++) {
             Timer* currentTimer = getTimerByIndex(i);
-			if (currentTimer == NULL) {
-				writeError(TIMER_NULL);
+            if (currentTimer == NULL) {
+                writeError(TIMER_NULL);
                 timerList.working = false;
                 return;
-			}
+            }
             bool enabled = currentTimer->enabled;
             if (!enabled) {
                 continue;

@@ -6,8 +6,8 @@
 #include "gameStrategyContext.h"
 
 /**
-* Print the context of the game Strategy.
-*/
+ * Print the context of the game Strategy.
+ */
 void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* context);
 
 #endif

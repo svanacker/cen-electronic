@@ -31,13 +31,13 @@ void initDriverDataDispatcherList(DriverDataDispatcher(*driverDataDispatcherList
 }
 
 DriverDataDispatcher* addDriverDataDispatcher(
-                            TransmitMode transmitMode,
-                            const char* name,
-                            const char* addressString,
-                            int address,
-                            InputStream* inputStream,
-                            OutputStream* outputStream,
-                            driverDataDispatcherTransmitDataFunction* driverDataDispatcherTransmitData) {
+        TransmitMode transmitMode,
+        const char* name,
+        const char* addressString,
+        int address,
+        InputStream* inputStream,
+        OutputStream* outputStream,
+        driverDataDispatcherTransmitDataFunction* driverDataDispatcherTransmitData) {
     if (dispatcherList.dispatchers == NULL) {
         writeError(DISPATCHERS_LIST_NOT_INITIALIZED);
         return NULL;
@@ -69,7 +69,7 @@ DriverDataDispatcher* getDriverDataDispatcherByIndex(int index) {
         writeError(DISPATCHERS_LIST_ILLEGAL_INDEX);
         return NULL;
     }
-    DriverDataDispatcher* result = (DriverDataDispatcher*)dispatcherList.dispatchers;
+    DriverDataDispatcher* result = (DriverDataDispatcher*) dispatcherList.dispatchers;
     // we don't need use sizeof because our pointer is a DriverDataDispatcher* pointer, so the shift
     // is already of the structure, we just have to shift of index.
     result += index;

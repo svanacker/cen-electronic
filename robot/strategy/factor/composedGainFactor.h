@@ -9,7 +9,6 @@
 #include "../gameTarget.h"
 #include "../gameTargetAction.h"
 
-
 /**
  * A Basic implementation of target gain which takes into account different sub
  * target gain factor strategy.
@@ -24,11 +23,11 @@ typedef struct ComposedGainFactor {
 } ComposedGainFactor;
 
 float getComposedGainFactor(ComposedGainFactor* composedGainFactor,
-                              GameTarget* target,
-                              GameTargetAction* targetAction,
-                              float distanceToTargetAction,
-                              float currentMatchingTime,
-                              float opponentRobotX,
-                              float opponentRobotY);
+        GameTarget* target,
+        GameTargetAction* targetAction,
+        float distanceToTargetAction,
+        float currentMatchingTime,
+        float opponentRobotX,
+        float opponentRobotY);
 
 #endif

@@ -47,8 +47,7 @@ void deviceMotionInit(void) {
         loadMotionParameters(eeprom_, true);
         // We store to do as it was already previously store !
         saveMotionParameters(eeprom_);
-    }
-    else {
+    } else {
         loadMotionParameters(eeprom_, false);
     }
 }
@@ -66,16 +65,16 @@ void internalNotify(OutputStream* notificationOutputStream, char statusHeader, c
     }
     append(notificationOutputStream, MOTION_DEVICE_HEADER);
     append(notificationOutputStream, statusHeader);
- 
+
     OutputStream* debugOutputStream = getInfoOutputStreamLogger();
     appendString(debugOutputStream, "Notification Output Stream Address : ");
     appendDec(debugOutputStream, notificationOutputStream->address);
     appendCRLF(debugOutputStream);
-    
+
     // send position
     notifyAbsolutePositionAndSpeedWithoutHeader(notificationOutputStream, true);
 
-    
+
     appendString(debugOutputStream, "Motion:");
     appendString(debugOutputStream, notifyString);
     appendString(debugOutputStream, ", t=");
@@ -117,123 +116,104 @@ void deviceMotionHandleRawData(unsigned char commandHeader,
 
         float distanceMM = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         forwardSimpleMM(pidMotion, distanceMM, notificationOutputStream);
-    }        // "backward" in millimeter
+    }// "backward" in millimeter
     else if (commandHeader == COMMAND_MOTION_BACKWARD_IN_MM) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_BACKWARD_IN_MM);
 
         float distanceMM = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         backwardSimpleMM(pidMotion, distanceMM, notificationOutputStream);
-    }
-    // ROTATION
-    // -> left
+    }// ROTATION
+        // -> left
     else if (commandHeader == COMMAND_MOTION_LEFT_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LEFT_IN_DECI_DEGREE);
 
         float leftDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
         leftSimpleDegree(pidMotion, leftDegree, notificationOutputStream);
-    }
-    else if (commandHeader == COMMAND_MOTION_LEFT_DEMI_QUADRANT) {
+    } else if (commandHeader == COMMAND_MOTION_LEFT_DEMI_QUADRANT) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LEFT_DEMI_QUADRANT);
 
         unsigned int demiQuadrantCount = readHex2(inputStream);
         leftSimpleDegree(pidMotion, demiQuadrantCount * 45.0f, notificationOutputStream);
-    }
-    // -> right
+    }// -> right
     else if (commandHeader == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_RIGHT_IN_DECI_DEGREE);
 
         float rightDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
         rightSimpleDegree(pidMotion, rightDegree, notificationOutputStream);
-    }
-    else if (commandHeader == COMMAND_MOTION_RIGHT_DEMI_QUADRANT) {
+    } else if (commandHeader == COMMAND_MOTION_RIGHT_DEMI_QUADRANT) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_RIGHT_DEMI_QUADRANT);
 
         unsigned int demiQuadrantCount = readHex2(inputStream);
         rightSimpleDegree(pidMotion, demiQuadrantCount * 45.0f, notificationOutputStream);
-    }
-    // ONE WHEEL
-    // -> left
+    }// ONE WHEEL
+        // -> left
     else if (commandHeader == COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE);
 
         float leftDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
         leftOneWheelSimpleDegree(pidMotion, leftDegree, notificationOutputStream);
-    }
-    // -> right
+    }// -> right
     else if (commandHeader == COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_RIGHT_ONE_WHEEL_IN_DECI_DEGREE);
 
         float rightDegree = readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION);
         rightOneWheelSimpleDegree(pidMotion, rightDegree, notificationOutputStream);
-    }
-    // STOP
+    }// STOP
         // stop/cancel motion
     else if (commandHeader == COMMAND_MOTION_STOP) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_STOP);
 
         stopPosition(pidMotion, false, notificationOutputStream);
-    }
-    else if (commandHeader == COMMAND_MOTION_CANCEL_ALL) {
+    } else if (commandHeader == COMMAND_MOTION_CANCEL_ALL) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_CANCEL_ALL);
-		clearPidMotion(pidMotion);
+        clearPidMotion(pidMotion);
         stopPosition(pidMotion, false, notificationOutputStream);
-    }
-	// OBSTACLE
+    }// OBSTACLE
     else if (commandHeader == COMMAND_MOTION_OBSTACLE) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_OBSTACLE);
         // TODO : A REVOIR
         stopPosition(pidMotion, true, notificationOutputStream);
-    }        // CALIBRATION
+    }// CALIBRATION
     else if (commandHeader == COMMAND_SQUARE_CALIBRATION) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_SQUARE_CALIBRATION);
         unsigned char type = readHex2(inputStream);
         checkIsSeparator(inputStream);
         float length = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         squareCalibration(pidMotion, type, length, notificationOutputStream);
-    }
-	// MODE
-	else if (commandHeader == COMMAND_MOTION_MODE_ADD) {
-		ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_MODE_ADD);
-		setMotionModeAdd(pidMotion);
-	}
-	else if (commandHeader == COMMAND_MOTION_MODE_REPLACE) {
-		ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_MODE_REPLACE);
-		setMotionModeReplace(pidMotion);
-	}
-	else if (commandHeader == COMMAND_MOTION_MODE_GET) {
-		ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_MODE_GET);
-		bool stacked = isStackMotionDefinitions(pidMotion);
-		appendBool(outputStream, stacked);
-	}
-    // NOTIFICATION GENERATION
-	else if (commandHeader == COMMAND_MOTION_NOTIFY_FAKE) {
-		ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_NOTIFY_FAKE);
-		char notificationTypeChar = readFilteredChar(inputStream);
+    }// MODE
+    else if (commandHeader == COMMAND_MOTION_MODE_ADD) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_MODE_ADD);
+        setMotionModeAdd(pidMotion);
+    } else if (commandHeader == COMMAND_MOTION_MODE_REPLACE) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_MODE_REPLACE);
+        setMotionModeReplace(pidMotion);
+    } else if (commandHeader == COMMAND_MOTION_MODE_GET) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_MODE_GET);
+        bool stacked = isStackMotionDefinitions(pidMotion);
+        appendBool(outputStream, stacked);
+    }// NOTIFICATION GENERATION
+    else if (commandHeader == COMMAND_MOTION_NOTIFY_FAKE) {
+        ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_NOTIFY_FAKE);
+        char notificationTypeChar = readFilteredChar(inputStream);
         if (notificationTypeChar == NOTIFY_MOTION_STATUS_BLOCKED) {
             notifyBlocked(notificationOutputStream);
-        }
-        else if (notificationTypeChar == NOTIFY_MOTION_STATUS_FAILED) {
+        } else if (notificationTypeChar == NOTIFY_MOTION_STATUS_FAILED) {
             notifyFailed(notificationOutputStream);
-        }
-        else if (notificationTypeChar == NOTIFY_MOTION_STATUS_MOVING) {
+        } else if (notificationTypeChar == NOTIFY_MOTION_STATUS_MOVING) {
             notifyMoving(notificationOutputStream);
-        }
-        else if (notificationTypeChar == NOTIFY_MOTION_STATUS_OBSTACLE) {
+        } else if (notificationTypeChar == NOTIFY_MOTION_STATUS_OBSTACLE) {
             notifyObstacle(notificationOutputStream);
-        }
-        else if (notificationTypeChar == NOTIFY_MOTION_STATUS_REACHED) {
+        } else if (notificationTypeChar == NOTIFY_MOTION_STATUS_REACHED) {
             notifyReached(notificationOutputStream);
-        }
-        else if (notificationTypeChar == NOTIFY_MOTION_STATUS_SHOCKED) {
+        } else if (notificationTypeChar == NOTIFY_MOTION_STATUS_SHOCKED) {
             notifyShocked(notificationOutputStream);
-        }
-        else {
+        } else {
             OutputStream* debugOutputStream = getErrorOutputStreamLogger();
             appendString(debugOutputStream, "Unknown notification Type : ");
             append(debugOutputStream, notificationTypeChar);
             appendCRLF(debugOutputStream);
         }
-	}
+    }
 }
 
 static DeviceDescriptor descriptor = {
@@ -244,6 +224,6 @@ static DeviceDescriptor descriptor = {
 };
 
 DeviceDescriptor* getMotionDeviceDescriptor(PidMotion* pidMotionParam) {
-	pidMotion = pidMotionParam;
+    pidMotion = pidMotionParam;
     return &descriptor;
 }

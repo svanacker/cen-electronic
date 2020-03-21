@@ -26,8 +26,7 @@ void loopUntilStart(StartMatch* startMatch) {
         appendString(getAlwaysOutputStreamLogger(), "OK");
         println(getAlwaysOutputStreamLogger());
         markStartMatch(startMatch->endMatch);
-    }
-    else {
+    } else {
         appendString(getAlwaysOutputStreamLogger(), "GO !");
         println(getAlwaysOutputStreamLogger());
     }
@@ -43,12 +42,12 @@ bool isMatchStarted(StartMatch* startMatch) {
 }
 
 void initStartMatch(StartMatch* startMatch,
-                    RobotConfig* robotConfig,
-                    EndMatch* endMatch,
-                    StartupCheckListFunction* startupCheckListFunction,
-                    IsMatchStartedFunction* isMatchStartedFunctionParam,
-                    LoopUntilStartHandleFunction* loopUntilStartHandleFunction,
-                    MatchHandleInstructionFunction* matchHandleInstructionFunction) {
+        RobotConfig* robotConfig,
+        EndMatch* endMatch,
+        StartupCheckListFunction* startupCheckListFunction,
+        IsMatchStartedFunction* isMatchStartedFunctionParam,
+        LoopUntilStartHandleFunction* loopUntilStartHandleFunction,
+        MatchHandleInstructionFunction* matchHandleInstructionFunction) {
     startMatch->robotConfig = robotConfig;
     startMatch->endMatch = endMatch;
     startMatch->startupCheckListFunction = startupCheckListFunction;

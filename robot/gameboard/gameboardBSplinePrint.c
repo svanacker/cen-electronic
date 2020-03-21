@@ -6,8 +6,8 @@
 #include "../../motion/extended/bspline.h"
 
 /**
-* BSpline print function.
-*/
+ * BSpline print function.
+ */
 void bSplinePrint(GameBoard* gameBoard, BSplineCurve* bSplineCurve, unsigned char c) {
     Point p;
     float t;

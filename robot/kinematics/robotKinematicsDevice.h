@@ -8,9 +8,9 @@
 #include "../../robot/config/robotConfig.h"
 
 /**
-* Returns a descriptor on the kinematics Information.
-* @return the descriptor of the device.
-*/
+ * Returns a descriptor on the kinematics Information.
+ * @return the descriptor of the device.
+ */
 DeviceDescriptor* getRobotKinematicsDeviceDescriptor(Eeprom* eeprom_);
 
 #endif

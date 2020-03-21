@@ -3,14 +3,14 @@
 #include <stdbool.h>
 
 void initMultiplexer(Multiplexer* multiplexer,
-                    MultiplexerInitFunction* multiplexerInit,
-                    MultiplexerReadChannelsMaskFunction* multiplexerReadChannelsMask,
-                    MultiplexerWriteChannelsMaskFunction* multiplexerWriteChannelsMask,
-                    MultiplexerGetChannelEnableFunction* multiplexerGetChannelEnable,
-                    MultiplexerSetChannelEnableFunction* multiplexerSetChannelEnable,
-                   unsigned int channelCount,
-                   bool useChannelMasksCache,
-                   int* object) {
+        MultiplexerInitFunction* multiplexerInit,
+        MultiplexerReadChannelsMaskFunction* multiplexerReadChannelsMask,
+        MultiplexerWriteChannelsMaskFunction* multiplexerWriteChannelsMask,
+        MultiplexerGetChannelEnableFunction* multiplexerGetChannelEnable,
+        MultiplexerSetChannelEnableFunction* multiplexerSetChannelEnable,
+        unsigned int channelCount,
+        bool useChannelMasksCache,
+        int* object) {
     multiplexer->multiplexerInit = multiplexerInit;
     multiplexer->multiplexerReadChannelsMask = multiplexerReadChannelsMask;
     multiplexer->multiplexerWriteChannelsMask = multiplexerWriteChannelsMask;

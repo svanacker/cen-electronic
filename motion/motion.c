@@ -50,7 +50,7 @@ void handleInstructionAndMotion(PidMotion* pidMotion, OutputStream* notification
     updateCoders();
     updateTrajectory();
 
-	// Get the current Motion Definition
+    // Get the current Motion Definition
     PidMotionDefinition* currentMotionDefinition = pidMotionGetCurrentMotionDefinition(pidMotion);
     if (currentMotionDefinition == NULL) {
         return;
@@ -70,8 +70,8 @@ void handleInstructionAndMotion(PidMotion* pidMotion, OutputStream* notification
         // resets all current values
         clearPidTime();
         clearPidComputationValues(&(pidMotion->computationValues));
-        
-        currentMotionDefinition->state = PID_MOTION_DEFINITION_STATE_ACTIVE; 
+
+        currentMotionDefinition->state = PID_MOTION_DEFINITION_STATE_ACTIVE;
     }
 
     // OPTIONAL
@@ -93,8 +93,7 @@ void handleInstructionAndMotion(PidMotion* pidMotion, OutputStream* notification
         notifyReached(notificationOutputStream);
         stopPosition(pidMotion, false, notificationOutputStream);
         switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
-    }
-    else if (motionType == DETECTED_MOTION_TYPE_POSITION_SHOCK_WHEELS) {
+    } else if (motionType == DETECTED_MOTION_TYPE_POSITION_SHOCK_WHEELS) {
         notifyShocked(notificationOutputStream);
         stopPosition(pidMotion, false, notificationOutputStream);
         switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
@@ -106,25 +105,24 @@ void handleInstructionAndMotion(PidMotion* pidMotion, OutputStream* notification
         notifyObstacle(notificationOutputStream);
         stopPosition(pidMotion, false, notificationOutputStream);
         switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
-    }
-    else if (motionType == DETECTED_MOTION_TYPE_POSITION_FAILED) {
+    } else if (motionType == DETECTED_MOTION_TYPE_POSITION_FAILED) {
         notifyFailed(notificationOutputStream);
         stopPosition(pidMotion, false, notificationOutputStream);
         switchToNextMotionDefinitionIfAny(pidMotion, currentMotionDefinition);
     }
-	if (notificationOutputStream != NULL) {
-		notificationOutputStream->flush(notificationOutputStream);
-	}
+    if (notificationOutputStream != NULL) {
+        notificationOutputStream->flush(notificationOutputStream);
+    }
 }
 
 void handleAndWaitFreeMotion(PidMotion* pidMotion, OutputStream* notificationOutputStream) {
     while (true) {
         handleInstructionAndMotion(pidMotion, notificationOutputStream);
-        enum DetectedMotionType motionType = pidMotion->computationValues.detectedMotionType; 
+        enum DetectedMotionType motionType = pidMotion->computationValues.detectedMotionType;
         // POSITION_BLOCKED_WHEELS is not necessary because we block the position after
-        if (motionType == DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH 
-         || motionType == DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN
-         || motionType == DETECTED_MOTION_TYPE_POSITION_OBSTACLE) {
+        if (motionType == DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH
+                || motionType == DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN
+                || motionType == DETECTED_MOTION_TYPE_POSITION_OBSTACLE) {
             // if (value == NO_POSITION_TO_REACH || value == POSITION_OBSTACLE) {
             OutputStream* logStream = getDebugOutputStreamLogger();
             appendString(logStream, "handleAndWaitFreeMotion->break=");

@@ -20,6 +20,6 @@ unsigned int appendTrajectoryTypeAsString(OutputStream* outputStream, enum Traje
  * @param columnSize
  * @return 
  */
-unsigned int addTrajectoryTypeTableData(OutputStream* outputStream,  enum TrajectoryType trajectoryType, int columnSize);
+unsigned int addTrajectoryTypeTableData(OutputStream* outputStream, enum TrajectoryType trajectoryType, int columnSize);
 
 #endif

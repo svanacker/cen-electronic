@@ -35,7 +35,7 @@ void test_memoryEeprom(void) {
 
     // read test
     highValue = eepromMemoryTest.eepromReadChar(&eepromMemoryTest, 5);
-    lowValue= eepromMemoryTest.eepromReadChar(&eepromMemoryTest, 6);
+    lowValue = eepromMemoryTest.eepromReadChar(&eepromMemoryTest, 6);
 
     TEST_ASSERT_EQUAL(0x56, highValue);
     TEST_ASSERT_EQUAL(0x78, lowValue);

@@ -18,8 +18,8 @@ typedef struct AccelerometerData {
     unsigned char zRawLowValue;
     unsigned char xRawHighValue;
     unsigned char yRawHighValue;
-    unsigned char zRawHighValue;   
-    
+    unsigned char zRawHighValue;
+
     int xRawValue;
     int yRawValue;
     int zRawValue;
@@ -93,17 +93,17 @@ struct Accelerometer {
  * @param debugConfig debug the general configuration of the accelerometer
  * @param debugValues to see the values of accelerometer but in a readable format
  */
-void initAccelerometer(Accelerometer* accelerometer, 
-                       AccelerometerData* accelerometerData,
-                       AccelerometerGetSampleCountFunction* getSampleCount,
-                       AccelerometerReadLastSampleFunction* readLastSample,
-                       // THRESHOLD
-                       AccelerometerGetThresholdMilliGFunction* getThresholdMillig,
-                       AccelerometerSetThresholdMilliGFunction* setThresholdMillig,
-                       // DEBUG
-                       AccelerometerDebugConfigFunction* debugConfig,
-                       AccelerometerDebugValuesFunction* debugValues,
-                       int* object
+void initAccelerometer(Accelerometer* accelerometer,
+        AccelerometerData* accelerometerData,
+        AccelerometerGetSampleCountFunction* getSampleCount,
+        AccelerometerReadLastSampleFunction* readLastSample,
+        // THRESHOLD
+        AccelerometerGetThresholdMilliGFunction* getThresholdMillig,
+        AccelerometerSetThresholdMilliGFunction* setThresholdMillig,
+        // DEBUG
+        AccelerometerDebugConfigFunction* debugConfig,
+        AccelerometerDebugValuesFunction* debugValues,
+        int* object
         );
 
 #endif

@@ -15,7 +15,7 @@ unsigned int appendTrajectoryTypeAsString(OutputStream* outputStream, enum Traje
     return appendString(outputStream, "UNKNOWN TRAJECTORY TYPE");
 }
 
-unsigned int addTrajectoryTypeTableData(OutputStream* outputStream,  enum TrajectoryType trajectoryType, int columnSize) {
+unsigned int addTrajectoryTypeTableData(OutputStream* outputStream, enum TrajectoryType trajectoryType, int columnSize) {
     appendTableSeparator(outputStream);
     appendSpace(outputStream);
     unsigned int length = appendTrajectoryTypeAsString(outputStream, trajectoryType);

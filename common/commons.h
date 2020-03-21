@@ -3,33 +3,33 @@
 
 // For Visual Studio - Emulation Program
 #ifdef _MSC_VER
-    #define PC_COMPILER
+#define PC_COMPILER
 #endif
 
 #ifdef __32MX795F512H__
-    #define PROG_32
+#define PROG_32
 #endif
 
 #ifdef __dsPIC30F4013__
-    #define PROG_30
+#define PROG_30
 #endif
 
 // Detects if there is a problem : not in 30F mode, neither 32, neither PC
 #ifndef PROG_30
-    #ifndef PROG_32
-        #ifndef PC_COMPILER
+#ifndef PROG_32
+#ifndef PC_COMPILER
 #error "Must not Compile because target (30, 32 or PC) is not defined"
-        #endif
-    #endif
+#endif
+#endif
 #endif
 
 #define _SUPPRESS_PLIB_WARNING
 #define _DISABLE_OPENADC10_CONFIGPORT_WARNING
 
 #ifdef PROG_32
-    #define QUARTZ_FREQUENCY    8000000L
-    #define CLOCK_PLL           20
-    #define FOSC                (QUARTZ_FREQUENCY * CLOCK_PLL / 2)
+#define QUARTZ_FREQUENCY    8000000L
+#define CLOCK_PLL           20
+#define FOSC                (QUARTZ_FREQUENCY * CLOCK_PLL / 2)
 #endif
 
 // TODO ; Change for 32 !!

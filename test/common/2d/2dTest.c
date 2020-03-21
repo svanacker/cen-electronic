@@ -97,7 +97,7 @@ void test_scale(void) {
     scale(&p0, 5.0f);
     TEST_ASSERT_FLOAT_WITHIN(UNITY_FLOAT_PRECISION,5.0f, p0.x);
     TEST_ASSERT_FLOAT_WITHIN(UNITY_FLOAT_PRECISION,10.0f, p0.y);
-    */
+     */
 }
 
 void test_rotate(void) {

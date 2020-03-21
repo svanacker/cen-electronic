@@ -26,8 +26,8 @@ struct IOExpanderList {
  * @param ioExpanderListSize the size of the array of IOExpander
  */
 void initIOExpanderList(IOExpanderList* ioExpanderList,
-                       IOExpander(*ioExpanderArray)[],
-                       unsigned int ioExpanderListSize);
+        IOExpander(*ioExpanderArray)[],
+        unsigned int ioExpanderListSize);
 
 /**
  * Get an IO Expander by his index.

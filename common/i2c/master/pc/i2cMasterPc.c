@@ -79,7 +79,7 @@ unsigned char portableMasterReadI2C(I2cBusConnection* i2cBusConnection) {
     }
 
     unsigned char result = readCharFromPipe(pipe);
-    
+
     return result;
 }
 

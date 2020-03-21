@@ -83,9 +83,8 @@ void internalSavePidParameter(PidMotion* pidMotion, unsigned int pidIndex, unsig
     Eeprom* _eeprom = pidMotion->pidPersistenceEeprom;
     // Compute the real index
     unsigned long realDataEepromIndex = EEPROM_PID_PARAMETERS_START_INDEX + (realIndex * EEPROM_PID_PARAMETERS_VALUE_LENGTH);
-	eepromWriteFloat (_eeprom, realDataEepromIndex, value, PID_VALUE_DIGIT_PRECISION);
+    eepromWriteFloat(_eeprom, realDataEepromIndex, value, PID_VALUE_DIGIT_PRECISION);
 }
-
 
 /**
  * @private
@@ -101,8 +100,7 @@ float internalLoadPidParameter(PidMotion* pidMotion, unsigned int pidIndex, unsi
     float result;
     if (loadDefaultValue) {
         result = PID_PARAMETERS_EEPROM_DEFAULT_VALUES[realIndex];
-    }
-    else {
+    } else {
         Eeprom* _eeprom = pidMotion->pidPersistenceEeprom;
         unsigned long realDataEepromIndex = EEPROM_PID_PARAMETERS_START_INDEX + (realIndex * EEPROM_PID_PARAMETERS_VALUE_LENGTH);
         result = eepromReadUnsignedFloat(_eeprom, realDataEepromIndex, PID_VALUE_DIGIT_PRECISION);
@@ -133,7 +131,7 @@ void loadPidParameters(PidMotion* pidMotion, bool loadDefaultValues) {
         localPidParameter->maxIntegral = internalLoadPidParameter(pidMotion, pidIndex, PID_PARAMETERS_EEPROM_INDEX_MI, loadDefaultValues);
         localPidParameter->enabled = true;
     }
-    
+
     // Load Motion End Detection Parameter : detail Phase And Aggregation Phase
     MotionEndDetectionParameter* motionEndDetectionParameter = &(pidMotion->globalParameters.motionEndDetectionParameter);
     loadMotionEndDetectionParameters(motionEndDetectionParameter, pidMotion->pidPersistenceEeprom, loadDefaultValues);
@@ -156,7 +154,7 @@ void savePidParameters(PidMotion* pidMotion) {
         internalSavePidParameter(pidMotion, pidIndex, PID_PARAMETERS_EEPROM_INDEX_KD, localPidParameter->d);
         internalSavePidParameter(pidMotion, pidIndex, PID_PARAMETERS_EEPROM_INDEX_MI, localPidParameter->maxIntegral);
     }
-    
+
     MotionEndDetectionParameter* motionEndDetectionParameter = &(pidMotion->globalParameters.motionEndDetectionParameter);
     saveMotionEndDetectionParameters(motionEndDetectionParameter, pidMotion->pidPersistenceEeprom);
 }

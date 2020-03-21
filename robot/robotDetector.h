@@ -46,84 +46,84 @@
 // GLOBAL
 
 /**
-* Get the last notify obstacle.
-*/
+ * Get the last notify obstacle.
+ */
 unsigned int getLastNotifyObstacleTime();
 
 void setLastNotifyObstacleTime(unsigned int value);
 
-void clearObstacle( void );
+void clearObstacle(void);
 
 // LASER INTERFACE
 
 /**
-* Change the width of rotation for the laser.
-* @param maxLeft 
-* @param maxRight
-*/
+ * Change the width of rotation for the laser.
+ * @param maxLeft 
+ * @param maxRight
+ */
 void setMaxLeftAndRight(unsigned int maxLeft, unsigned int maxRight);
 
 /**
-* Get the real angle with the robot.
-*/
+ * Get the real angle with the robot.
+ */
 signed int getAngleInDegreeWithRobot();
 
 /**
-* Returns if the laser is Enabled or not.
-*/
+ * Returns if the laser is Enabled or not.
+ */
 unsigned char isRobotDetectorEnabled();
 
 /**
-* Enable or disable robot detector.
-*/
-void setRobotDetectorEnabled (unsigned char value);
+ * Enable or disable robot detector.
+ */
+void setRobotDetectorEnabled(unsigned char value);
 
 /**
-* Get the position with the last position.
-*/
+ * Get the position with the last position.
+ */
 int getLastLaserServoPosition(void);
 
 /**
-* Get the difference between last right position and left position to determine a width of detection.
-* With trigonometric function, we can determine further the distance of the object.
-*/
+ * Get the difference between last right position and left position to determine a width of detection.
+ * With trigonometric function, we can determine further the distance of the object.
+ */
 int getLastLaserServoWidth(void);
 
 /**
-* Set the speed of detection
-* @param value speed of detection.
-*/
-void setRobotDetectorSpeed( char value);
+ * Set the speed of detection
+ * @param value speed of detection.
+ */
+void setRobotDetectorSpeed(char value);
 
 
 // SONAR Interface
 
 /**
-* Try to detects the robot, and return OBSTACLE or NO_OBSTACLE.
-*/
+ * Try to detects the robot, and return OBSTACLE or NO_OBSTACLE.
+ */
 unsigned char hasRobotObstacle(void);
 
 /**
-* Get the average value of last ranging.
-*/
+ * Get the average value of last ranging.
+ */
 unsigned int getAverageRangingValue(void);
 
 /**
-* Prints the distances found by the sonar
-*/
-void printDistances( void );
+ * Prints the distances found by the sonar
+ */
+void printDistances(void);
 
 // DEVICE INTERFACE
 
 /**
-* Returns a descriptor on the robot detector device.
-*/
+ * Returns a descriptor on the robot detector device.
+ */
 DeviceDescriptor getRobotDetectorDeviceDescriptor();
 
 /**
-* Init the device
-*/
-void initRobotDetector( void );
+ * Init the device
+ */
+void initRobotDetector(void);
 
 #endif
 

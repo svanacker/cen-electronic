@@ -5,9 +5,9 @@
 #include "../../device/deviceConstants.h"
 
 /**
-* Command header for test.
-* The test is an addition between 2 values.
-*/
+ * Command header for test.
+ * The test is an addition between 2 values.
+ */
 #define COMMAND_TEST 'w'
 
 /**
@@ -27,8 +27,8 @@
 #define COMMAND_GENERATE_NOTIFY_TEST 'g'
 
 /**
-* Notify from the slave to the master and test it.
-*/
+ * Notify from the slave to the master and test it.
+ */
 #define NOTIFY_TEST 'n'
 
 /** 
@@ -38,9 +38,9 @@
 #define COMMAND_DEBUG_TEST  'd'
 
 /**
-* Interface for Test Device.
-* @return the interface for Test Device
-*/
+ * Interface for Test Device.
+ * @return the interface for Test Device
+ */
 DeviceInterface* getTestDeviceInterface();
 
 #endif

@@ -8,11 +8,9 @@ void arm2020(ServoList* servoList, unsigned char leftRightCenter) {
     Servo* servo = getServo(servoList, ARM_2020_SERVO_INDEX);
     if (leftRightCenter == 0x00) {
         pwmServo(servo, ARM_2020_ARM_SPEED_FACTOR, ARM_2020_ARM_SERVO_MIDDLE, false);
-    }
-    else if (leftRightCenter == 0x01) {
+    } else if (leftRightCenter == 0x01) {
         pwmServo(servo, ARM_2020_ARM_SPEED_FACTOR, ARM_2020_ARM_SERVO_LEFT, false);
-    }
-    else if (leftRightCenter == 0x02) {
+    } else if (leftRightCenter == 0x02) {
         pwmServo(servo, ARM_2020_ARM_SPEED_FACTOR, ARM_2020_ARM_SERVO_RIGHT, false);
     }
 }
@@ -26,7 +24,7 @@ void arm2020FlagDown(ServoList* servoList) {
 
 void arm2020FlagUp(ServoList* servoList) {
     Servo* servo = getServo(servoList, ARM_2020_FLAG_SERVO_INDEX);
-    pwmServo(servo, ARM_2020_FLAG_SPEED_FACTOR, ARM_2020_FLAG_UP, false);    
+    pwmServo(servo, ARM_2020_FLAG_SPEED_FACTOR, ARM_2020_FLAG_UP, false);
 }
 
 // HOOK

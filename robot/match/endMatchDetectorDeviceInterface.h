@@ -7,19 +7,19 @@
 // Commands
 
 /**
-* Defines the command send to debug the End Match Detector Device
-*/
+ * Defines the command send to debug the End Match Detector Device
+ */
 #define COMMAND_END_MATCH_DETECTOR_DEBUG        'd'
 
 
 /**
-* Defines the command send to notify the end of the match
-*/
+ * Defines the command send to notify the end of the match
+ */
 #define COMMAND_SHOW_MATCH_ENDED                'm'
 
 /**
-* Define the command sent to read how much time there still is.
-*/
+ * Define the command sent to read how much time there still is.
+ */
 #define COMMAND_GET_TIME_LEFT                   't'
 
 /**
@@ -28,8 +28,8 @@
 #define COMMAND_SET_CURRENT_TIME_IN_SECOND      'S'
 
 /**
-* Define the command used to set the new match duration
-*/
+ * Define the command used to set the new match duration
+ */
 #define COMMAND_SET_MATCH_DURATION              'M'
 
 // Notifications

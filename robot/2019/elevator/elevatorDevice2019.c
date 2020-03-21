@@ -46,37 +46,30 @@ void deviceElevator2019HandleRawData(unsigned char commandHeader, InputStream* i
         ackCommand(outputStream, ELEVATOR_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_VALUE);
         unsigned int servoValue = readHex4(inputStream);
         moveElevatorAtValue(servoList, servoValue, wait);
-    }
-    // -> Bottom
+    }// -> Bottom
     else if (commandHeader == COMMAND_2019_ELEVATOR_BOTTOM) {
         ackCommand(outputStream, ELEVATOR_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_BOTTOM);
         moveElevatorBottom(servoList, wait);
-    }
-    else if (commandHeader == COMMAND_2019_ELEVATOR_DISTRIBUTOR_SCAN) {
+    } else if (commandHeader == COMMAND_2019_ELEVATOR_DISTRIBUTOR_SCAN) {
         ackCommand(outputStream, ELEVATOR_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_DISTRIBUTOR_SCAN);
         moveElevatorDistributorScan(servoList, wait);
-    }
-    // -> Position to take the Goldenium
+    }// -> Position to take the Goldenium
     else if (commandHeader == COMMAND_2019_ELEVATOR_GOLDENIUM_POSITION) {
         ackCommand(outputStream, ELEVATOR_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_GOLDENIUM_POSITION);
         moveElevatorToTakeGoldenium(servoList, wait);
-    }
-    // -> Position to scan the Goldenium
+    }// -> Position to scan the Goldenium
     else if (commandHeader == COMMAND_2019_ELEVATOR_SCAN_GOLDENIUM_POSITION) {
         ackCommand(outputStream, ELEVATOR_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_SCAN_GOLDENIUM_POSITION);
         moveElevatorToScanGoldenium(servoList, wait);
-    }
-    // -> Init Position
+    }// -> Init Position
     else if (commandHeader == COMMAND_2019_ELEVATOR_INIT_POSITION) {
         ackCommand(outputStream, ELEVATOR_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_INIT_POSITION);
         moveElevatorInitPosition(servoList, wait);
-    }
-    // -> Accelerator Second Release
+    }// -> Accelerator Second Release
     else if (commandHeader == COMMAND_2019_ELEVATOR_ACCELERATOR_SECOND_DROP) {
         ackCommand(outputStream, ELEVATOR_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_ACCELERATOR_SECOND_DROP);
         moveElevatorAcceleratorSecondDrop(servoList, wait);
-    }
-    // -> Up
+    }// -> Up
     else if (commandHeader == COMMAND_2019_ELEVATOR_UP) {
         ackCommand(outputStream, ELEVATOR_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_UP);
         moveElevatorUp(servoList, wait);
@@ -86,18 +79,15 @@ void deviceElevator2019HandleRawData(unsigned char commandHeader, InputStream* i
         ackCommand(outputStream, ELEVATOR_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_SCAN_VALUE);
         unsigned int servoValue = readHex4(inputStream);
         moveElevatorScanAtValue(servoList, servoValue, wait);
-    }
-    // -> Left
+    }// -> Left
     else if (commandHeader == COMMAND_2019_ELEVATOR_LEFT) {
         ackCommand(outputStream, ELEVATOR_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_LEFT);
         moveElevatorLeft(servoList, wait);
-    }
-    // -> Middle
+    }// -> Middle
     else if (commandHeader == COMMAND_2019_ELEVATOR_MIDDLE) {
         ackCommand(outputStream, ELEVATOR_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_MIDDLE);
         moveElevatorMiddle(servoList, wait);
-    }
-    // -> Right
+    }// -> Right
     else if (commandHeader == COMMAND_2019_ELEVATOR_RIGHT) {
         ackCommand(outputStream, ELEVATOR_2019_DEVICE_HEADER, COMMAND_2019_ELEVATOR_RIGHT);
         moveElevatorRight(servoList, wait);
@@ -110,7 +100,6 @@ static DeviceDescriptor descriptor = {
     .deviceIsOk = &deviceElevator2019IsOk,
     .deviceHandleRawData = &deviceElevator2019HandleRawData,
 };
-
 
 DeviceDescriptor* getElevator2019DeviceDescriptor(ServoList* servoListParam) {
     servoList = servoListParam;

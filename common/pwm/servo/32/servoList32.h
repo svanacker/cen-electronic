@@ -23,20 +23,20 @@ Servo* addServo32(ServoList* servoList, unsigned int internalServoIndex, char* s
 /**
  * Add the Hardwared Servo from the microcontroller 1, 2 and 5 to the servo List.
  */
-void addServos_1_2_5(ServoList* servoList, 
-                         char* nameServo1,
-                         char* nameServo2,
-                         char* nameServo5);
+void addServos_1_2_5(ServoList* servoList,
+        char* nameServo1,
+        char* nameServo2,
+        char* nameServo5);
 
 /**
  * Add the Hardware Servo from the microcontroller 1, 2, 3, 4 and 5
  * to the servo List.
  */
 void addServos_1_2_3_4_5(ServoList* servoList,
-                         char* nameServo1,
-                         char* nameServo2,
-                         char* nameServo3,
-                         char* nameServo4,
-                         char* nameServo5);
+        char* nameServo1,
+        char* nameServo2,
+        char* nameServo3,
+        char* nameServo4,
+        char* nameServo5);
 
 #endif

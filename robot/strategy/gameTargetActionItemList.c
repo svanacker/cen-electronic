@@ -16,28 +16,26 @@ void clearTargetActionItemList(GameTargetActionItemList* targetActionItemList) {
     for (i = 0; i < size; i++) {
         GameTargetActionItem* targetActionItem = targetActionItemList->items[i];
         clearGameTargetActionItem(targetActionItem);
-    }    
+    }
     targetActionItemList->size = 0;
 }
 
-
 void addTargetActionItem(GameTargetActionItemList* targetActionItemList,
-                     GameTargetActionItem* targetActionItem,
-                     GameTargetActionFunction* actionItemFunction,
-                     char* name
-//                      float timeToAchieve,
-) {
+        GameTargetActionItem* targetActionItem,
+        GameTargetActionFunction* actionItemFunction,
+        char* name
+        //                      float timeToAchieve,
+        ) {
     unsigned char size = targetActionItemList->size;
     if (size < MAX_TARGET_ACTION_ITEM) {
         targetActionItem->actionItemFunction = actionItemFunction;
         targetActionItem->name = name;
-//      targetActionItem->timeToAchieve = timeToAchieve;
+        //      targetActionItem->timeToAchieve = timeToAchieve;
         targetActionItem->status = ACTION_ITEM_STATUS_TODO;
         targetActionItem->enabled = true;
         targetActionItemList->items[size] = targetActionItem;
         targetActionItemList->size++;
-    }
-    else {
+    } else {
         writeError(TOO_MUCH_TARGET_ACTION_ITEM);
     }
 }
@@ -100,8 +98,7 @@ bool doGameTargetActionItem(GameTargetActionItem* gameTargetActionItem, int* con
     bool succeed = doFunction(context);
     if (succeed) {
         gameTargetActionItem->status = ACTION_ITEM_STATUS_DONE;
-    }
-    else {
+    } else {
         gameTargetActionItem->status = ACTION_ITEM_STATUS_ERROR;
     }
     return succeed;

@@ -13,19 +13,19 @@ void clearPidComputationValues(PidComputationValues* pidComputationValues) {
     pidComputationValues->bSplineThetaXAxisError = 0.0f;
     pidComputationValues->lastPidTimeInSecond = 0.0f;
     pidComputationValues->pidTimeInSecond = 0.0f;
-    
+
     clearPidComputationInstructionValues(&(pidComputationValues->values[THETA]));
     clearPidComputationInstructionValues(&(pidComputationValues->values[ALPHA]));
 }
 
 void setDetectedMotionType(PidComputationValues* pidComputationValues, enum DetectedMotionType detectedMotionType) {
     if (detectedMotionType != pidComputationValues->detectedMotionType) {
-        
+
         OutputStream* outputStream = getDebugOutputStreamLogger();
         appendDetectedMotionTypeAsString(outputStream, pidComputationValues->detectedMotionType);
         appendString(outputStream, "->");
         appendDetectedMotionTypeAsString(outputStream, detectedMotionType);
-        
+
         pidComputationValues->detectedMotionType = detectedMotionType;
         println(outputStream);
     }

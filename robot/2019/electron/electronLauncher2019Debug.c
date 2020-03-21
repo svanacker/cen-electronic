@@ -22,32 +22,23 @@
 unsigned int printElectronLauncherState(OutputStream* outputStream, enum ElectronLauncher2019State state) {
     if (state == LAUNCHER_STATE_UNKNOWN) {
         return appendString(outputStream, "UNKNOWN");
-    }
-    else if (state == LAUNCHER_STATE_INITIALIZED) {
+    } else if (state == LAUNCHER_STATE_INITIALIZED) {
         return appendString(outputStream, "INITIALIZED");
-    }
-    else if (state == LAUNCHER_STATE_SEARCH_ROBOT_PLACED) {
+    } else if (state == LAUNCHER_STATE_SEARCH_ROBOT_PLACED) {
         return appendString(outputStream, "SEARCH ROBOT PLACED");
-    }
-    else if (state == LAUNCHER_STATE_ROBOT_PLACED) {
+    } else if (state == LAUNCHER_STATE_ROBOT_PLACED) {
         return appendString(outputStream, "ROBOT PLACED");
-    }
-    else if (state == LAUNCHER_STATE_SEARCH_ROBOT_MOVED) {
+    } else if (state == LAUNCHER_STATE_SEARCH_ROBOT_MOVED) {
         return appendString(outputStream, "SEARCH ROBOT MOVED");
-    }
-    else if (state == LAUNCHER_STATE_ROBOT_MOVED) {
+    } else if (state == LAUNCHER_STATE_ROBOT_MOVED) {
         return appendString(outputStream, "ROBOT MOVED");
-    }
-    else if (state == LAUNCHER_STATE_TO_LAUNCH) {
+    } else if (state == LAUNCHER_STATE_TO_LAUNCH) {
         return appendString(outputStream, "TO LAUNCH");
-    }
-    else if (state == LAUNCHER_STATE_LAUNCHED) {
+    } else if (state == LAUNCHER_STATE_LAUNCHED) {
         return appendString(outputStream, "LAUNCHED");
-    }
-    else if (state == LAUNCHER_STATE_SHOW_REMAINING_TIME) {
+    } else if (state == LAUNCHER_STATE_SHOW_REMAINING_TIME) {
         return appendString(outputStream, "SHOW REMAINING TIME");
-    }
-    else {
+    } else {
         return appendString(outputStream, "???");
     }
 }
@@ -58,7 +49,6 @@ unsigned int addLauncherStateTypeTableData(OutputStream* outputStream, enum Elec
     unsigned int length = printElectronLauncherState(outputStream, state);
     return length + appendSpaces(outputStream, columnSize - length) + 2;
 }
-
 
 void printElectronLauncher2019TableHeader(OutputStream* outputStream) {
     println(outputStream);
@@ -93,8 +83,7 @@ void electronLauncher2019Debug(ElectronLauncher2019* launcher, OutputStream* out
     if (tofSensor != NULL) {
         unsigned int distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
         appendDecTableData(outputStream, distanceMM, ELECTRON_LAUNCHER_2019_VALUE_COLUMN_LENGTH);
-    }
-    else {
+    } else {
         appendStringTableData(outputStream, "TOF NULL", ELECTRON_LAUNCHER_2019_VALUE_COLUMN_LENGTH);
     }
     appendStringTableData(outputStream, "mm", ELECTRON_LAUNCHER_2019_UNIT_COLUMN_LENGTH);
@@ -133,12 +122,12 @@ void electronLauncher2019Debug(ElectronLauncher2019* launcher, OutputStream* out
     appendDecTableData(outputStream, ELECTRON_LAUNCHER_2019_CHECK_COUNT, ELECTRON_LAUNCHER_2019_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "-", ELECTRON_LAUNCHER_2019_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, ELECTRON_LAUNCHER_2019_LAST_COLUMN);
-    */
+     */
     appendStringTableData(outputStream, "RobotMovedDetectionCount - Threshold", ELECTRON_LAUNCHER_2019_KEY_COLUMN_LENGTH);
     appendDecTableData(outputStream, ELECTRON_LAUNCHER_2019_THRESHOLD_COUNT, ELECTRON_LAUNCHER_2019_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "-", ELECTRON_LAUNCHER_2019_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, ELECTRON_LAUNCHER_2019_LAST_COLUMN);
-    
+
     appendStringTableData(outputStream, "RobotMovedDetectionCount - Measured", ELECTRON_LAUNCHER_2019_KEY_COLUMN_LENGTH);
     appendDecTableData(outputStream, launcher->robotMovedDetectionCount, ELECTRON_LAUNCHER_2019_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "-", ELECTRON_LAUNCHER_2019_UNIT_COLUMN_LENGTH);

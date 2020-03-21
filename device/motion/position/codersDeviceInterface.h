@@ -20,8 +20,8 @@
 #define COMMAND_DEBUG_PRINT_SAMPLE_WHEEL_POSITION     'P'
 
 /**
-* Get the coders interface
-*/
+ * Get the coders interface
+ */
 DeviceInterface* getCodersDeviceInterface();
 
 #endif

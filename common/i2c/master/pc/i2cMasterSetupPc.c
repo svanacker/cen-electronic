@@ -36,16 +36,16 @@ if (i2cMasterBusPc == NULL) {
     delaymSec(200);
     i2cMasterBusPc->slavePipeHandle = initClientPipe(i2cPipeSlaveName);
 }
-*/
+ */
 
 void i2cMasterInitialize(I2cBus* i2cBus) {
-/*
-    I2cMasterBusPc* i2cMasterBusPc = getMasterI2cBusPc(i2cBus);
-    if (i2cMasterBusPc == NULL) {
-        appendString(getErrorOutputStreamLogger(), "i2cBus->object must be initialized by calling i2cMasterBusPcInitialize first !");
-        return;
-    }
-    */
+    /*
+        I2cMasterBusPc* i2cMasterBusPc = getMasterI2cBusPc(i2cBus);
+        if (i2cMasterBusPc == NULL) {
+            appendString(getErrorOutputStreamLogger(), "i2cBus->object must be initialized by calling i2cMasterBusPcInitialize first !");
+            return;
+        }
+     */
 }
 
 void i2cMasterFinalize(I2cBus* i2cBus) {
@@ -58,5 +58,5 @@ void i2cMasterFinalize(I2cBus* i2cBus) {
     if (i2cMasterBusPc->slavePipeHandle != NULL) {
         CloseHandle(i2cMasterBusPc->slavePipeHandle);
     }
-    */
+     */
 }

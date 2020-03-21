@@ -23,7 +23,7 @@ DeviceList* getDeviceList() {
     return &deviceList;
 }
 
-void initDeviceList(Device (*deviceListArray)[], unsigned char deviceListSize) {
+void initDeviceList(Device(*deviceListArray)[], unsigned char deviceListSize) {
     // TODO : Check Illegal Arguments
     deviceList.devices = deviceListArray;
     deviceList.size = 0;
@@ -77,7 +77,7 @@ Device* addUartRemoteDevice(DeviceInterface* deviceInterface, unsigned char seri
 Device* addUartRemoteDeviceWithNotification(DeviceInterface* deviceInterface, unsigned char serialIndex, DeviceHandleNotificationFunction* notificationFunction) {
     Device* result = addDevice(deviceInterface, NULL, TRANSMIT_UART, serialIndex, NULL);
     result->deviceHandleNotification = notificationFunction;
-    
+
     return result;
 }
 

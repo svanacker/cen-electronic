@@ -30,58 +30,58 @@
 #include "../../robot/kinematics/robotKinematics.h"
 
 void updateSimpleSplineWithDistance(BSplineCurve* curve,
-									float destX, float destY, 
-                                    float destAngle, 
-                                    float distance1, float distance2, 
-                                    float accelerationFactor, float speedFactor,
-                                    bool relative) {
+        float destX, float destY,
+        float destAngle,
+        float distance1, float distance2,
+        float accelerationFactor, float speedFactor,
+        bool relative) {
 
     Position* position = getPosition();
 
     parameterBSplineWithDistanceAndAngle(curve, position->pos.x, position->pos.y, position->orientation,
-                                                destX, destY, destAngle,
-                                                distance1, distance2,
-                                                accelerationFactor, speedFactor,
-                                                relative);
+            destX, destY, destAngle,
+            distance1, distance2,
+            accelerationFactor, speedFactor,
+            relative);
 }
 
 /**
-* Computes the best speed for the bspline, and take into consideration the derivative value (to avoid a too big speed)
-*/
+ * Computes the best speed for the bspline, and take into consideration the derivative value (to avoid a too big speed)
+ */
 float computeBestSpeedForBSpline(BSplineCurve* curve, float speed) {
     float result = (speed * curve->speedFactor) * MOTION_SPEED_FACTOR_MAX;
-    
+
     return result;
 }
 
 /**
-* Computes the best acceleration for the bspline, and take into consideration the derivative value (to avoid a too big acceleration)
-*/
+ * Computes the best acceleration for the bspline, and take into consideration the derivative value (to avoid a too big acceleration)
+ */
 float computeBestAccelerationForBSpline(BSplineCurve* curve, float a) {
     float result = (a * curve->accelerationFactor) * MOTION_ACCELERATION_FACTOR_MAX;
     return result;
 }
 
 void gotoSpline(PidMotion* pidMotion,
-					  float destX, float destY,
-                      float destAngle, 
-                      float controlPointDistance1, float controlPointDistance2,
-                      float accelerationFactor, float speedFactor,
-                      bool relative,
-					  OutputStream* notificationOutputStream) {
+        float destX, float destY,
+        float destAngle,
+        float controlPointDistance1, float controlPointDistance2,
+        float accelerationFactor, float speedFactor,
+        bool relative,
+        OutputStream* notificationOutputStream) {
     // Takes the new motion Definition to write
-	PidMotionDefinition* motionDefinition = pidMotionGetNextToWritePidMotionDefinition(pidMotion);
+    PidMotionDefinition* motionDefinition = pidMotionGetNextToWritePidMotionDefinition(pidMotion);
     motionDefinition->notificationOutputStream = notificationOutputStream;
-	motionDefinition->motionType = MOTION_TYPE_BSPLINE;
-	BSplineCurve* curve = &(motionDefinition->curve);
-    
+    motionDefinition->motionType = MOTION_TYPE_BSPLINE;
+    BSplineCurve* curve = &(motionDefinition->curve);
+
     updateSimpleSplineWithDistance(curve,
-									destX, destY,
-                                    destAngle,
-                                    controlPointDistance1, controlPointDistance2,
-                                    accelerationFactor, speedFactor,
-                                    relative);
-	
+            destX, destY,
+            destAngle,
+            controlPointDistance1, controlPointDistance2,
+            accelerationFactor, speedFactor,
+            relative);
+
     float nextPositionEquivalent = curve->curveLength;
 
     // determine the type of motion
@@ -94,11 +94,11 @@ void gotoSpline(PidMotion* pidMotion,
     float bestSpeed = computeBestSpeedForBSpline(curve, motionParameter->speed);
 
     setNextPosition(motionDefinition, THETA, motionParameterType, nextPositionEquivalent, bestA, bestSpeed);
-    
+
     // Does nothing as we just use THETA in Spline Mode
     setNextPosition(motionDefinition, ALPHA, motionParameterType, 0.0f, motionParameter->a, motionParameter->speed);
 
-	motionDefinition->computeU = &bSplineMotionUCompute;
+    motionDefinition->computeU = &bSplineMotionUCompute;
     motionDefinition->state = PID_MOTION_DEFINITION_STATE_SET;
 }
 

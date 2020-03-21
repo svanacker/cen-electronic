@@ -28,66 +28,66 @@
 #define PID_PARAMETER_LAST_COLUMN_LENGTH                      5
 
 /**
-* Private.
-*/
+ * Private.
+ */
 void printPidParameterTableHeader(OutputStream* outputStream) {
-	println(outputStream);
-	appendTableHeaderSeparatorLine(outputStream);
+    println(outputStream);
+    appendTableHeaderSeparatorLine(outputStream);
     // First Header Line
-	appendStringHeader(outputStream, "PID", PID_PARAMETER_PID_INDEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "PID", PID_PARAMETER_PID_TYPE_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Prop.", PID_PARAMETER_P_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Int.", PID_PARAMETER_I_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Deriv.", PID_PARAMETER_D_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Max Int.", PID_PARAMETER_MI_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Prop.", PID_PARAMETER_P_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Int.", PID_PARAMETER_I_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Deriv.", PID_PARAMETER_D_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Max Int.", PID_PARAMETER_MI_HEX_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, PID_PARAMETER_LAST_COLUMN_LENGTH);
-    
+    appendStringHeader(outputStream, "PID", PID_PARAMETER_PID_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "PID", PID_PARAMETER_PID_TYPE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Prop.", PID_PARAMETER_P_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Int.", PID_PARAMETER_I_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Deriv.", PID_PARAMETER_D_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Max Int.", PID_PARAMETER_MI_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Prop.", PID_PARAMETER_P_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Int.", PID_PARAMETER_I_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Deriv.", PID_PARAMETER_D_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Max Int.", PID_PARAMETER_MI_HEX_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, PID_PARAMETER_LAST_COLUMN_LENGTH);
+
     // Second Header Line
-	appendStringHeader(outputStream, "Idx", PID_PARAMETER_PID_INDEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Type", PID_PARAMETER_PID_TYPE_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "(Dec).", PID_PARAMETER_P_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "(Dec)", PID_PARAMETER_I_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "(Dec)", PID_PARAMETER_D_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "(Dec)", PID_PARAMETER_MI_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "(Hex)", PID_PARAMETER_P_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "(Hex)", PID_PARAMETER_I_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "(Hex)", PID_PARAMETER_D_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "(Hex)", PID_PARAMETER_MI_HEX_COLUMN_LENGTH);
-    
-	appendEndOfTableColumn(outputStream, PID_PARAMETER_LAST_COLUMN_LENGTH);
-	appendTableHeaderSeparatorLine(outputStream);
+    appendStringHeader(outputStream, "Idx", PID_PARAMETER_PID_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Type", PID_PARAMETER_PID_TYPE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Dec).", PID_PARAMETER_P_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Dec)", PID_PARAMETER_I_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Dec)", PID_PARAMETER_D_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Dec)", PID_PARAMETER_MI_DEC_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Hex)", PID_PARAMETER_P_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Hex)", PID_PARAMETER_I_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Hex)", PID_PARAMETER_D_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(Hex)", PID_PARAMETER_MI_HEX_COLUMN_LENGTH);
+
+    appendEndOfTableColumn(outputStream, PID_PARAMETER_LAST_COLUMN_LENGTH);
+    appendTableHeaderSeparatorLine(outputStream);
 }
 
 /**
  * @private
  */
 void printPidParameterLine(OutputStream* outputStream, PidMotion* pidMotion, unsigned int pidTypeIndex) {
-    PidParameter* localPidParameter= getPidParameterByIndex(pidMotion, pidTypeIndex);
-	appendDecTableData(outputStream, pidTypeIndex, PID_PARAMETER_PID_INDEX_COLUMN_LENGTH);
+    PidParameter* localPidParameter = getPidParameterByIndex(pidMotion, pidTypeIndex);
+    appendDecTableData(outputStream, pidTypeIndex, PID_PARAMETER_PID_INDEX_COLUMN_LENGTH);
     enum PidType pidType = pidTypeValueOf(pidTypeIndex);
-	addPidTypeTableData(outputStream, pidType, PID_PARAMETER_PID_TYPE_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, localPidParameter->p, PID_PARAMETER_P_DEC_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, localPidParameter->i, PID_PARAMETER_I_DEC_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, localPidParameter->d, PID_PARAMETER_D_DEC_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, localPidParameter->maxIntegral, PID_PARAMETER_MI_DEC_COLUMN_LENGTH);
+    addPidTypeTableData(outputStream, pidType, PID_PARAMETER_PID_TYPE_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, localPidParameter->p, PID_PARAMETER_P_DEC_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, localPidParameter->i, PID_PARAMETER_I_DEC_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, localPidParameter->d, PID_PARAMETER_D_DEC_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, localPidParameter->maxIntegral, PID_PARAMETER_MI_DEC_COLUMN_LENGTH);
 
-	appendHexFloat4TableData(outputStream, localPidParameter->p, PID_VALUE_DIGIT_PRECISION, PID_PARAMETER_P_HEX_COLUMN_LENGTH);
+    appendHexFloat4TableData(outputStream, localPidParameter->p, PID_VALUE_DIGIT_PRECISION, PID_PARAMETER_P_HEX_COLUMN_LENGTH);
     appendHexFloat4TableData(outputStream, localPidParameter->i, PID_VALUE_DIGIT_PRECISION, PID_PARAMETER_I_HEX_COLUMN_LENGTH);
     appendHexFloat4TableData(outputStream, localPidParameter->d, PID_VALUE_DIGIT_PRECISION, PID_PARAMETER_D_HEX_COLUMN_LENGTH);
     appendHexFloat4TableData(outputStream, localPidParameter->maxIntegral, PID_VALUE_DIGIT_PRECISION, PID_PARAMETER_MI_HEX_COLUMN_LENGTH);
 
-	appendEndOfTableColumn(outputStream, PID_PARAMETER_LAST_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, PID_PARAMETER_LAST_COLUMN_LENGTH);
 }
 
 void printAllPidParametersTable(OutputStream* outputStream, PidMotion* pidMotion) {
-	printPidParameterTableHeader(outputStream);
+    printPidParameterTableHeader(outputStream);
     enum PidType pidType;
     for (pidType = 0; pidType < PID_TYPE_COUNT; pidType++) {
         printPidParameterLine(outputStream, pidMotion, pidType);
     }
-	appendTableHeaderSeparatorLine(outputStream);
+    appendTableHeaderSeparatorLine(outputStream);
 }

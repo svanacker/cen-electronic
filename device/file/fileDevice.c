@@ -33,9 +33,9 @@ void deviceFileHandleRawData(char commandHeader, InputStream* inputStream, Outpu
     if (commandHeader == COMMAND_CREATE_FILE_SYSTEM) {
         ackCommand(outputStream, FILE_DEVICE_HEADER, COMMAND_CREATE_FILE_SYSTEM);
         FATFS fs;
-        FIL fil;       /* File object */
-        FRESULT res;   /* API result code */
-        UINT bw = 0;       /* Bytes written */
+        FIL fil; /* File object */
+        FRESULT res; /* API result code */
+        UINT bw = 0; /* Bytes written */
 
         // Register work area (do not care about error)
         res = f_mount(&fs, "", 0);
@@ -53,7 +53,7 @@ void deviceFileHandleRawData(char commandHeader, InputStream* inputStream, Outpu
             // Write a message
             f_write(&fil, "Hello, World!\r\n", 15, &bw);
         }
-        
+
         if (bw != 15) {
             // Close the file
             f_close(&fil);
@@ -61,8 +61,7 @@ void deviceFileHandleRawData(char commandHeader, InputStream* inputStream, Outpu
         f_close(&fil);
         // Unregister work area
         // f_mount(0, "", 0);
-    }
-    else if (commandHeader == COMMAND_GET_FREE_SPACE) {
+    } else if (commandHeader == COMMAND_GET_FREE_SPACE) {
         ackCommand(outputStream, FILE_DEVICE_HEADER, COMMAND_GET_FREE_SPACE);
         FATFS fs;
         FATFS* fsPointer;
@@ -70,7 +69,7 @@ void deviceFileHandleRawData(char commandHeader, InputStream* inputStream, Outpu
 
         fsPointer = &fs;
         f_mount(fsPointer, "", 0);
-        
+
 
         char str[12];
 
@@ -88,11 +87,10 @@ void deviceFileHandleRawData(char commandHeader, InputStream* inputStream, Outpu
         // appendHex4(outputStream, 0);
 
         // f_mount(0, "", 0);
-    }
-    else if (commandHeader == COMMAND_SHOW_LIST_FILE) {
+    } else if (commandHeader == COMMAND_SHOW_LIST_FILE) {
         ackCommand(outputStream, FILE_DEVICE_HEADER, COMMAND_SHOW_LIST_FILE);
-        DIR dj;         // Directory search object
-        FILINFO fno;    // File information
+        DIR dj; // Directory search object
+        FILINFO fno; // File information
         FRESULT result;
 
         FATFS fs;
@@ -106,7 +104,7 @@ void deviceFileHandleRawData(char commandHeader, InputStream* inputStream, Outpu
             appendString(getErrorOutputStreamLogger(), fno.fname[0]);
             fr = f_findnext(&dj, &fno);               // Search for next item
         }
-        */
+         */
         for (;;) {
             result = f_readdir(&dj, &fno); /* Read a directory item */
             if (result || !fno.fname[0]) break; /* Error or end of dir */
@@ -114,8 +112,7 @@ void deviceFileHandleRawData(char commandHeader, InputStream* inputStream, Outpu
             if (fno.fattrib & AM_DIR) {
                 appendString(getErrorOutputStreamLogger(), "DIR:"); // is Directory  
                 appendStringCRLF(getErrorOutputStreamLogger(), fno.fname); // is Directory  
-            }
-            else {
+            } else {
                 appendString(getErrorOutputStreamLogger(), "FILE:"); // is Directory  
                 // char* pointer = &(fno.fname);
                 // appendStringCRLF(getErrorOutputStreamLogger(), pointer); // is Directory  

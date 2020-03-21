@@ -92,9 +92,9 @@ void navigationTestSuite(void) {
 }
 
 void initNavigationTest(void) {
-    initLocationList(&locationList, (Location(*)[]) &locationListArray, NAVIGATION_LOCATION_LIST_TEST_ARRAY_LENGTH);
-    initPathList(&pathList, (PathData(*)[]) &pathListArray, NAVIGATION_PATH_LIST_TEST_ARRAY_LENGTH);
-    initOutgoingPathList(&tmpOutgoingPathList, (OutgoingPathData(*)[]) &tmpOutgoingPathListArray, BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
+    initLocationList(&locationList, (Location(*)[]) & locationListArray, NAVIGATION_LOCATION_LIST_TEST_ARRAY_LENGTH);
+    initPathList(&pathList, (PathData(*)[]) & pathListArray, NAVIGATION_PATH_LIST_TEST_ARRAY_LENGTH);
+    initOutgoingPathList(&tmpOutgoingPathList, (OutgoingPathData(*)[]) & tmpOutgoingPathListArray, BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
 
     initNavigation(&navigation, &locationList, &pathList, &tmpOutgoingPathList);
 }

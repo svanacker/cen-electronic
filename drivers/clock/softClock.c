@@ -8,10 +8,10 @@
 #include "../../common/timer/timerList.h"
 
 /**
-* @see clock.h
-* @private
-* @param clockParam the clock
-*/
+ * @see clock.h
+ * @private
+ * @param clockParam the clock
+ */
 ClockData* _readSoftClock(Clock* clockParam) {
     return &(clockParam->clockData);
 }

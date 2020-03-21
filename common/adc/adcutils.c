@@ -15,32 +15,32 @@ int getANXCount() {
 }
 
 /**
-* Private.
-*/
+ * Private.
+ */
 void printAdcListHeader(OutputStream* outputStream) {
-	println(outputStream);
-	appendTableHeaderSeparatorLine(outputStream);
-	appendStringHeader(outputStream, "idx", ADC_DEBUG_IDX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Hex Value", ADC_DEBUG_HEX_VALUE_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Value (mV)", ADC_DEBUG_VALUE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, 0);
-	appendTableHeaderSeparatorLine(outputStream);
+    println(outputStream);
+    appendTableHeaderSeparatorLine(outputStream);
+    appendStringHeader(outputStream, "idx", ADC_DEBUG_IDX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Hex Value", ADC_DEBUG_HEX_VALUE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Value (mV)", ADC_DEBUG_VALUE_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, 0);
+    appendTableHeaderSeparatorLine(outputStream);
 }
 
 void printAdc(OutputStream* outputStream, int index, int value) {
-	appendDecTableData(outputStream, index, ADC_DEBUG_IDX_COLUMN_LENGTH);
-	appendHex4TableData(outputStream, value, ADC_DEBUG_HEX_VALUE_COLUMN_LENGTH);
-	appendDecTableData(outputStream, value, ADC_DEBUG_VALUE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, 0);
+    appendDecTableData(outputStream, index, ADC_DEBUG_IDX_COLUMN_LENGTH);
+    appendHex4TableData(outputStream, value, ADC_DEBUG_HEX_VALUE_COLUMN_LENGTH);
+    appendDecTableData(outputStream, value, ADC_DEBUG_VALUE_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, 0);
 }
 
 void printAdcList(OutputStream* outputStream) {
-	printAdcListHeader(outputStream);
+    printAdcListHeader(outputStream);
     int i;
     int anxCount = getANXCount();
     for (i = 1; i <= anxCount; i++) {
         int value = getANX(i);
         printAdc(outputStream, i, value);
     }
-	appendTableHeaderSeparatorLine(outputStream);
+    appendTableHeaderSeparatorLine(outputStream);
 }

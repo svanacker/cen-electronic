@@ -6,7 +6,7 @@
 /**
  * Structure to store flags about end detection for each pid time and for each instruction type.
  * This helps the different detectors (blocked, reached, shocked) to rely on same precomputed data.
-*/
+ */
 typedef struct MotionEndDetectionStatusRegister {
     /**
      * Abs value of acceleration (so deceleration which is a negative acceleration) is too high than expected.
@@ -18,7 +18,7 @@ typedef struct MotionEndDetectionStatusRegister {
      * Abs value of speed (even if we go backward).
      * We detect it when we fabsf(currentSpeed) / fabsf(normalSpeed) > factor
      * This often say that we are blocked
-    */
+     */
     bool absSpeedTooLowThanExpected : 1;
     /**
      * Abs value of tension (U) is too high than expected.

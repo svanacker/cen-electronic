@@ -14,9 +14,8 @@
 #define    GetPeripheralClock()        (GetSystemClock()/(1 << OSCCONbits.PBDIV))
 #define    GetInstructionClock()        (GetSystemClock())
 
-
 void delayUs(void) {
-       
+
 }
 
 void delay100us(char uSecond) {
@@ -45,64 +44,54 @@ void delaymSec(unsigned int mSecond) {
     }
 }
 
-int main(void)
-    {
-    PORTSetPinsDigitalOut(IOPORT_F,BIT_3);
-    PORTSetPinsDigitalOut(IOPORT_C,BIT_14); 
-    PORTSetPinsDigitalOut(IOPORT_D,BIT_11);
-    PORTSetPinsDigitalIn(IOPORT_B,BIT_2|BIT_3|BIT_4|BIT_5);
-while (1)
-{
+int main(void) {
+    PORTSetPinsDigitalOut(IOPORT_F, BIT_3);
+    PORTSetPinsDigitalOut(IOPORT_C, BIT_14);
+    PORTSetPinsDigitalOut(IOPORT_D, BIT_11);
+    PORTSetPinsDigitalIn(IOPORT_B, BIT_2 | BIT_3 | BIT_4 | BIT_5);
+    while (1) {
 
-    if ((PORTBbits.RB2)>0)  
-    {
-        PORTSetBits(IOPORT_C, BIT_14);
-        PORTClearBits(IOPORT_D, BIT_11);
-        PORTClearBits(IOPORT_F,BIT_3);
-    }
-    else {
-        PORTClearBits(IOPORT_C, BIT_14);
-        PORTClearBits(IOPORT_D, BIT_11);
-        PORTClearBits(IOPORT_F,BIT_3);
-    }
+        if ((PORTBbits.RB2) > 0) {
+            PORTSetBits(IOPORT_C, BIT_14);
+            PORTClearBits(IOPORT_D, BIT_11);
+            PORTClearBits(IOPORT_F, BIT_3);
+        } else {
+            PORTClearBits(IOPORT_C, BIT_14);
+            PORTClearBits(IOPORT_D, BIT_11);
+            PORTClearBits(IOPORT_F, BIT_3);
+        }
 
-    if ((PORTBbits.RB3)>0)  
-    {
-        PORTClearBits(IOPORT_C, BIT_14);
-        PORTSetBits(IOPORT_D, BIT_11);
-        PORTClearBits(IOPORT_F,BIT_3);
-    }
-    else {
-        PORTClearBits(IOPORT_C, BIT_14);
-        PORTClearBits(IOPORT_D, BIT_11);
-        PORTClearBits(IOPORT_F,BIT_3);
-    }
+        if ((PORTBbits.RB3) > 0) {
+            PORTClearBits(IOPORT_C, BIT_14);
+            PORTSetBits(IOPORT_D, BIT_11);
+            PORTClearBits(IOPORT_F, BIT_3);
+        } else {
+            PORTClearBits(IOPORT_C, BIT_14);
+            PORTClearBits(IOPORT_D, BIT_11);
+            PORTClearBits(IOPORT_F, BIT_3);
+        }
 
-    if ((PORTBbits.RB4)>0)  
-    {
-        PORTClearBits(IOPORT_C, BIT_14);
-        PORTClearBits(IOPORT_D, BIT_11);
-        PORTSetBits(IOPORT_F,BIT_3);
-    }
-    else {
-        PORTClearBits(IOPORT_C, BIT_14);
-        PORTClearBits(IOPORT_D, BIT_11);
-        PORTClearBits(IOPORT_F,BIT_3);
-    }
+        if ((PORTBbits.RB4) > 0) {
+            PORTClearBits(IOPORT_C, BIT_14);
+            PORTClearBits(IOPORT_D, BIT_11);
+            PORTSetBits(IOPORT_F, BIT_3);
+        } else {
+            PORTClearBits(IOPORT_C, BIT_14);
+            PORTClearBits(IOPORT_D, BIT_11);
+            PORTClearBits(IOPORT_F, BIT_3);
+        }
 
-    if ((PORTBbits.RB5)>0)  
-    {
-        PORTSetBits(IOPORT_C, BIT_14);
-        PORTSetBits(IOPORT_D, BIT_11);
-        PORTSetBits(IOPORT_F,BIT_3);
-    }
-    else {
-        PORTClearBits(IOPORT_C, BIT_14);
-        PORTClearBits(IOPORT_D, BIT_11);
-        PORTClearBits(IOPORT_F,BIT_3);
-    }
+        if ((PORTBbits.RB5) > 0) {
+            PORTSetBits(IOPORT_C, BIT_14);
+            PORTSetBits(IOPORT_D, BIT_11);
+            PORTSetBits(IOPORT_F, BIT_3);
+        } else {
+            PORTClearBits(IOPORT_C, BIT_14);
+            PORTClearBits(IOPORT_D, BIT_11);
+            PORTClearBits(IOPORT_F, BIT_3);
+        }
 
-    }    
+    }
     return (0);
 
 }

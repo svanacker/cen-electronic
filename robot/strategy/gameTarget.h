@@ -18,12 +18,12 @@ typedef struct GameTarget {
     char* name;
     // Returns the gain when reaching a such target.
     float potentialGain;
-	// Returns the real gain that we actually have
-	float gain;
+    // Returns the real gain that we actually have
+    float gain;
     // Returns the current estimation (by calling computeBestNextTarget before)
     float currentComputedOpportunityFactor;
     // availability status of the target
-    enum GameTargetStatus status;    
+    enum GameTargetStatus status;
     // Returns the start Location (for the beginning of actions) 
     Location* startLocation;
     // Returns the end Location (for the end of actions)
@@ -38,8 +38,8 @@ typedef struct GameTarget {
 void clearGameTarget(GameTarget* target);
 
 /**
-* Update the status of the target. 
-*/
+ * Update the status of the target. 
+ */
 void updateTargetStatus(GameTarget* target);
 
 #endif

@@ -17,14 +17,14 @@ typedef struct {
 } I2cMasterInputStream;
 
 /**
-* Init an inputStream around i2c with an address.
-* @param 
-* @param i2cInputBuffer the buffer to read from i2c slave
-* @param inputStream a structure to initialize
-*/
+ * Init an inputStream around i2c with an address.
+ * @param 
+ * @param i2cInputBuffer the buffer to read from i2c slave
+ * @param inputStream a structure to initialize
+ */
 void initMasterI2cInputStream(I2cMasterInputStream* i2cMasterInputStream,
-                                 I2cBusConnection* i2cBusConnection,
-                              Buffer* i2cInputBuffer,
-                              InputStream* inputStream);
+        I2cBusConnection* i2cBusConnection,
+        Buffer* i2cInputBuffer,
+        InputStream* inputStream);
 
 #endif

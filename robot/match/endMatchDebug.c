@@ -14,8 +14,8 @@
 #define END_MATCH_LAST_COLUMN_LENGTH		    10
 
 /**
-* @private.
-*/
+ * @private.
+ */
 void printEndOfMatchTableHeader(OutputStream* outputStream) {
     println(outputStream);
     appendTableHeaderSeparatorLine(outputStream);
@@ -45,8 +45,7 @@ void printEndOfMatchTable(OutputStream* outputStream, EndMatch* endMatch) {
     if (remainingTime == INT32_MAX) {
         appendStringTableData(outputStream, "+INFINITY", END_MATCH_VALUE_DEC_COLUMN_LENGTH);
         appendStringTableData(outputStream, "+INFINITY", END_MATCH_VALUE_HEX_COLUMN_LENGTH);
-    }
-    else {
+    } else {
         appendDecTableData(outputStream, remainingTime, END_MATCH_VALUE_DEC_COLUMN_LENGTH);
         appendHex2TableData(outputStream, remainingTime, END_MATCH_VALUE_HEX_COLUMN_LENGTH);
     }

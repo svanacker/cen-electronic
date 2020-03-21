@@ -8,10 +8,10 @@
 #include "../common/io/outputStream.h"
 
 /**
-* Print the list of location as table.
-* @param outputStream the stream to show information
-* @param locationList the pointer on the struct (POO Programming)
-*/
+ * Print the list of location as table.
+ * @param outputStream the stream to show information
+ * @param locationList the pointer on the struct (POO Programming)
+ */
 void printLocationListTable(OutputStream* outputStream, LocationList* locationList);
 
 // TESTS DATA
@@ -19,8 +19,8 @@ void printLocationListTable(OutputStream* outputStream, LocationList* locationLi
 void addLocationListTestsData(LocationList* locationList);
 
 /**
-* Append the list of Name of location linked with next pointer (until the point is null).
-*/
+ * Append the list of Name of location linked with next pointer (until the point is null).
+ */
 unsigned int appendLocationLinkedPath(OutputStream* outputStream, Location* startPoint);
 
 #endif

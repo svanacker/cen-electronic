@@ -7,12 +7,14 @@
 #include "../../common/error/error.h"
 
 // TODO => Replace by unity
+
 bool floatEquals(float value1, float value2) {
     // FIXME : Take care about precision
     return value1 == value2;
 }
 
 // TODO => Replace by unity
+
 bool floatEqualsZero(float value1) {
     return (value1 >= -0.00001f && value1 <= 0.00001f);
 }
@@ -24,8 +26,7 @@ bool isFloatNegative(float value) {
 long absLong(signed long value) {
     if (value < 0L) {
         return -value;
-    }
-    else {
+    } else {
         return value;
     }
 }
@@ -33,11 +34,9 @@ long absLong(signed long value) {
 signed long limitLong(signed long value, long maxValue) {
     if (value > maxValue) {
         return maxValue;
-    }
-    else if (value < -maxValue) {
+    } else if (value < -maxValue) {
         return -maxValue;
-    }
-    else {
+    } else {
         return value;
     }
 }
@@ -48,11 +47,9 @@ float limitFloat(float value, float maxValue) {
     }
     if (value > maxValue) {
         return maxValue;
-    }
-    else if (value < -maxValue) {
+    } else if (value < -maxValue) {
         return -maxValue;
-    }
-    else {
+    } else {
         return value;
     }
 }
@@ -60,11 +57,9 @@ float limitFloat(float value, float maxValue) {
 signed int compareFloat(float a, float b) {
     if (a > b) {
         return 1;
-    }
-    else if (a < b) {
+    } else if (a < b) {
         return -1;
-    }
-    else {
+    } else {
         return 0;
     }
 }
@@ -72,11 +67,9 @@ signed int compareFloat(float a, float b) {
 signed int getSign(float a) {
     if (a < 0) {
         return -1;
-    }
-    else if (a > 0) {
+    } else if (a > 0) {
         return 1;
-    }
-    else {
+    } else {
         return 0;
     }
 }
@@ -100,14 +93,13 @@ float mod2PI(float value) {
     if (result < -PI) {
         // We use a while loop, because it's very rare that value is less than -2PI,
         // and we avoid modulo !
-        do  {
+        do {
             result += _2_PI;
         } while (result < -PI);
-    }
-    else if (result > PI) {
+    } else if (result > PI) {
         // We use a while loop, because it's very rare that value is less than -2PI,
         // and we avoid modulo !
-        do  {
+        do {
             result -= _2_PI;
         } while (result > PI);
     }
@@ -122,8 +114,7 @@ float modPI(float value) {
         do {
             result += PI;
         } while (result < -PI);
-    }
-    else if (result > PI) {
+    } else if (result > PI) {
         // We use a while loop, because it's very rare that value is less than -2PI,
         // and we avoid modulo !
         do {
@@ -134,6 +125,7 @@ float modPI(float value) {
 }
 
 // TODO : Better checksum algorithm
+
 int stringChecksum(char* string) {
     int result = 0;
     while (*string) {
@@ -143,6 +135,7 @@ int stringChecksum(char* string) {
 }
 
 // Angle Functions
+
 float radToDeg(float radians) {
     return radians * _180_DIVIDE_PI;
 }

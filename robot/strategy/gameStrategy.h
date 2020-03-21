@@ -32,10 +32,10 @@ void clearGameStrategy(GameStrategy* gameStrategy);
 /**
  * Add a strategy item to the list.
  * @param strategyItem the strategy item to add to the list
- */ 
+ */
 void addGameStrategyItem(GameStrategy* gameStrategy,
-                         GameStrategyItem* strategyItem,
-                        GameTarget* target);
+        GameStrategyItem* strategyItem,
+        GameTarget* target);
 
 /**
  * Get the strategy at index.

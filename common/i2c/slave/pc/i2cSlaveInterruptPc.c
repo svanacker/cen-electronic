@@ -46,8 +46,7 @@ void sendI2CDataToMaster(I2cBusConnection* i2cBusConnection) {
 
         // To Remove
         printf("%c", c);
-    }
-    else {
+    } else {
         // In this case, we must NOT add '\0' to the debug buffer (we will not see anything !)
         // In PC, the system is not the same than with interrupt, because we add something in a pipe
         // and on real I2C, value is just read on the fly, but not stored !
@@ -65,8 +64,7 @@ void handleI2CDataFromMaster(I2cBusConnection* i2cBusConnection) {
             i2cAddressDefinedFlag = false;
             i2cReadFlag = false;
             return;
-        }
-        else if (ASCII_ETX == data) {
+        } else if (ASCII_ETX == data) {
             i2cStartFlag = false;
             i2cAddressDefinedFlag = false;
             i2cReadFlag = false;
@@ -75,13 +73,13 @@ void handleI2CDataFromMaster(I2cBusConnection* i2cBusConnection) {
         if (!i2cStartFlag) {
             return;
         }
-        
+
         // Data here are real data (not start / stop or the address)
         if (!i2cAddressDefinedFlag) {
 
             // We don't care about write Address or Read address
             if (i2cBusConnection->i2cAddress == (data & 0xFE)) {
-                
+
                 i2cAddressDefinedFlag = true;
                 // Read I2C Flag is activated when the last bit is activated
                 i2cReadFlag = data & 0x01;
@@ -103,7 +101,7 @@ DWORD WINAPI masterToSlaveCallback(LPVOID lpvParam) {
     printf("PC : I2C Master -> Slave listening !\r\n");
     while (true) {
         delayMicroSecs(1);
-        I2cBusConnection* i2cBusConnection = (I2cBusConnection*)lpvParam;
+        I2cBusConnection* i2cBusConnection = (I2cBusConnection*) lpvParam;
         handleI2CDataFromMaster(i2cBusConnection);
     }
     printf("masterToSlaveCallback exiting.\n");
@@ -115,7 +113,7 @@ DWORD WINAPI slaveToMasterCallback(LPVOID lpvParam) {
     printf("PC : I2 Slave -> Master listening !\r\n");
     while (true) {
         delayMicroSecs(1);
-        I2cBusConnection* i2cBusConnection = (I2cBusConnection*)lpvParam;
+        I2cBusConnection* i2cBusConnection = (I2cBusConnection*) lpvParam;
         sendI2CDataToMaster(i2cBusConnection);
     }
     printf("slaveToMasterCallback exiting.\n");

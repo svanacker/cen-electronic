@@ -19,19 +19,19 @@ float computeTheta(float left, float right);
 float computeAlpha(float left, float right);
 
 /**
-* Compute the Left value from the theta/alpha values calculated by the pid.
-* @param theta value is the average length of the robot (average of the left and right)
-* @param alpha value is the average angle of the robot (difference between left and right)
-* @return left the left value (in pulse) of the left wheel
-*/
+ * Compute the Left value from the theta/alpha values calculated by the pid.
+ * @param theta value is the average length of the robot (average of the left and right)
+ * @param alpha value is the average angle of the robot (difference between left and right)
+ * @return left the left value (in pulse) of the left wheel
+ */
 float computeLeft(float theta, float alpha);
 
 /**
-* Compute the Left value from the theta/alpha values calculated by the pid.
-* @param theta value is the average length of the robot (average of the left and right)
-* @param alpha value is the average angle of the robot (difference between left and right)
-* @return left the left value (in pulse) of the left wheel
-*/
+ * Compute the Left value from the theta/alpha values calculated by the pid.
+ * @param theta value is the average length of the robot (average of the left and right)
+ * @param alpha value is the average angle of the robot (difference between left and right)
+ * @return left the left value (in pulse) of the left wheel
+ */
 float computeRight(float theta, float alpha);
 
 #endif

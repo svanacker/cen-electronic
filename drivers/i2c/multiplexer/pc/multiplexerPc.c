@@ -32,21 +32,20 @@ void multiplexerPcSetChannelEnable(Multiplexer* multiplexer, unsigned int channe
     if (value) {
         // Set the bit
         *(multiplexer->object) |= (1UL << channelIndex);
-    }
-    else {
+    } else {
         // Clear the bit
         *(multiplexer->object) &= ~(1UL << channelIndex);
     }
 }
 
 void initMultiplexerPc(Multiplexer* multiplexer, int* multiplexerValue) {
-    initMultiplexer(multiplexer, 
-                   &multiplexerPcInit,
-                   &multiplexerPcReadChannelsMask,
-                   &multiplexerPcWriteChannelsMask,
-                   &multiplexerPcReadGetChannelEnable,
-                   &multiplexerPcSetChannelEnable,
-                   MULTIPLEXER_CHANNEL_COUNT,
-                   true,
-                   multiplexerValue);
+    initMultiplexer(multiplexer,
+            &multiplexerPcInit,
+            &multiplexerPcReadChannelsMask,
+            &multiplexerPcWriteChannelsMask,
+            &multiplexerPcReadGetChannelEnable,
+            &multiplexerPcSetChannelEnable,
+            MULTIPLEXER_CHANNEL_COUNT,
+            true,
+            multiplexerValue);
 }

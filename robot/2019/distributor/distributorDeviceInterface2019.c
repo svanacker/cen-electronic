@@ -17,53 +17,46 @@ int deviceDistributor2019GetInterface(unsigned char commandHeader, DeviceInterfa
             setFunctionNoArgumentAndNoResult("Prepare Take Distributor");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // -> Elevator Height to Take
+    }// -> Elevator Height to Take
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_TAKE_HEIGHT) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Move to the height to take Dist Puck");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // -> Take
+    }// -> Take
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_TAKE) {
         if (fillDeviceArgumentList) {
             setFunction("Take 2 Pucks on Distributor", 1, 0);
             setArgumentUnsignedChar1(0, "Side (1=L, 2=R)");
         }
         return commandLengthValueForMode(mode, 1, 0);
-    }
-    // ACCELERATOR
-    // -> Fake Init
+    }// ACCELERATOR
+        // -> Fake Init
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_FAKE_INIT) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Fake Init");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // -> Prepare Drop
+    }// -> Prepare Drop
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_PREPARE_DROP) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Prepare Drop");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // -> Fake Move Forward
+    }// -> Fake Move Forward
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_FAKE_MOVE_FORWARD) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Fake Move Forward");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // -> Drop
+    }// -> Drop
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_DROP) {
         if (fillDeviceArgumentList) {
             setFunction("Accelerator Drop", 1, 0);
             setArgumentUnsignedChar1(0, "First side to release (1=L, 2=R)");
         }
         return commandLengthValueForMode(mode, 1, 0);
-    }
-    // -> Complete Sequence
+    }// -> Complete Sequence
     else if (commandHeader == COMMAND_2019_DISTRIBUTOR_ACCELERATOR_COMPLETE_SEQUENCE) {
         if (fillDeviceArgumentList) {
             setFunction("Accelerator Complete Sequence", 1, 0);
@@ -71,7 +64,7 @@ int deviceDistributor2019GetInterface(unsigned char commandHeader, DeviceInterfa
         }
         return commandLengthValueForMode(mode, 1, 0);
     }
-    
+
 
     return DEVICE_HEADER_NOT_HANDLED;
 }

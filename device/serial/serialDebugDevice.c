@@ -49,19 +49,16 @@ void deviceSerialDebugHandleRawData(unsigned char commandHeader, InputStream* in
         enum SerialPort serialPort = (enum SerialPort) readHex2(inputStream);
         SerialLink* serialLink = getSerialLinkBySerialPort(serialPort);
         printSerialLinkBuffer(getInfoOutputStreamLogger(), serialLink);
-    }
-    else if (commandHeader == COMMAND_SERIAL_CLEAR) {
+    } else if (commandHeader == COMMAND_SERIAL_CLEAR) {
         enum SerialPort serialPort = (enum SerialPort) readHex2(inputStream);
         SerialLink* serialLink = getSerialLinkBySerialPort(serialPort);
         clearSerialLinkBuffer(serialLink);
         // We ack at the end because we just clear the buffer !
         ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_CLEAR);
-    }
-    else if (commandHeader == COMMAND_SERIAL_LIST) {
+    } else if (commandHeader == COMMAND_SERIAL_LIST) {
         ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_LIST);
-        printSerialLinkList(getInfoOutputStreamLogger());         
-    }
-    // OUTPUT
+        printSerialLinkList(getInfoOutputStreamLogger());
+    }// OUTPUT
     else if (commandHeader == COMMAND_SERIAL_CHAR_OUTPUT) {
         ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_CHAR_OUTPUT);
         enum SerialPort serialPort = (enum SerialPort) readHex2(inputStream);
@@ -73,8 +70,7 @@ void deviceSerialDebugHandleRawData(unsigned char commandHeader, InputStream* in
         OutputStream* bufferOutputStream = getOutputStream(outputBuffer);
         append(bufferOutputStream, c);
         copyInputToOutputStream(&(outputBuffer->inputStream), streamLink->outputStream, NULL, COPY_ALL);
-    }
-    else if (commandHeader == COMMAND_SERIAL_CHAR_ARRAY_OUTPUT) {
+    } else if (commandHeader == COMMAND_SERIAL_CHAR_ARRAY_OUTPUT) {
         ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_CHAR_ARRAY_OUTPUT);
         enum SerialPort serialPort = (enum SerialPort) readHex2(inputStream);
         SerialLink* serialLink = getSerialLinkBySerialPort(serialPort);
@@ -90,8 +86,7 @@ void deviceSerialDebugHandleRawData(unsigned char commandHeader, InputStream* in
                 copyInputToOutputStream(&(outputBuffer->inputStream), streamLink->outputStream, NULL, COPY_ALL);
             }
         }
-    }
-    // INPUT
+    }// INPUT
     else if (commandHeader == COMMAND_SERIAL_CHAR_INPUT) {
         ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_CHAR_INPUT);
         enum SerialPort serialPort = (enum SerialPort) readHex2(inputStream);
@@ -102,8 +97,7 @@ void deviceSerialDebugHandleRawData(unsigned char commandHeader, InputStream* in
         Buffer* inputBuffer = streamLink->inputBuffer;
         OutputStream* bufferOutputStream = getOutputStream(inputBuffer);
         append(bufferOutputStream, c);
-    }
-    else if (commandHeader == COMMAND_SERIAL_CHAR_ARRAY_INPUT) {
+    } else if (commandHeader == COMMAND_SERIAL_CHAR_ARRAY_INPUT) {
         ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_CHAR_ARRAY_INPUT);
         enum SerialPort serialPort = (enum SerialPort) readHex2(inputStream);
         SerialLink* serialLink = getSerialLinkBySerialPort(serialPort);
@@ -121,13 +115,14 @@ void deviceSerialDebugHandleRawData(unsigned char commandHeader, InputStream* in
     }
 }
 
-static DeviceDescriptor descriptor = {
-    .deviceInit = &deviceSerialDebugInit,
-    .deviceShutDown = &deviceSerialDebugShutDown,
-    .deviceIsOk = &deviceSerialDebugIsOk,
-    .deviceHandleRawData = &deviceSerialDebugHandleRawData,
-};
+static DeviceDescriptor descriptor;
 
 DeviceDescriptor* getSerialDebugDeviceDescriptor(void) {
+    initDeviceDescriptor(&descriptor,
+            &deviceSerialDebugInit,
+            &deviceSerialDebugShutDown,
+            &deviceSerialDebugIsOk,
+            &deviceSerialDebugHandleRawData,
+            NULL);
     return &descriptor;
 }

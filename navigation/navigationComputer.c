@@ -2,7 +2,6 @@
 #include "locationListComputer.h"
 #include "outgoingPathList.h"
 
-
 void updateOutgoingPaths(Navigation* navigation, Location* location) {
     clearOutgoingPathList(navigation->tmpOutgoingPaths);
     int i;
@@ -25,7 +24,6 @@ void updateOutgoingPaths(Navigation* navigation, Location* location) {
 void setTmpCost(Location* location, float cost) {
     location->computedCost = cost;
 }
-
 
 float computeBestPath(Navigation* navigation, Location* start, Location* end) {
     LocationList* locationList = navigation->locationList;

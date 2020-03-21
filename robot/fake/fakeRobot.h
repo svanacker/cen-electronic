@@ -25,24 +25,24 @@ typedef struct FakeRobot {
 } FakeRobot;
 
 /**
-* Init the fake robot structure.
-*/
+ * Init the fake robot structure.
+ */
 void initFakeRobot(float x, float y, float angleRadian, float radius);
 
 /**
-* Simulate the continous move of the robot.
-* TODO
-*/
+ * Simulate the continous move of the robot.
+ * TODO
+ */
 void moveFakeRobotForward(FakeRobot* fakeRobot);
 
 /**
-* 
-*/
+ * 
+ */
 void gotoNextTarget(FakeRobot* fakeRobot);
 
 /**
-* Returns the singleton of fake Robot
-*/
+ * Returns the singleton of fake Robot
+ */
 FakeRobot* getFakeRobotInstance(void);
 
 #endif

@@ -19,6 +19,7 @@
 #include "../../../robot/2020/strategy/strategy2020.h"
 
 // FAKE ROBOT : TODO : Move it outside 2020
+
 void fakeRobotPrint2020(GameBoard* gameBoard, int* element) {
     setGameBoardCurrentColor(gameBoard, CONSOLE_COLOR_YELLOW);
     FakeRobot* fakeRobot = getFakeRobotInstance();
@@ -29,6 +30,7 @@ void fakeRobotPrint2020(GameBoard* gameBoard, int* element) {
 // 2020 ELEMENTS
 
 // AREA
+
 void windowExclusion2020Print(GameBoard* gameBoard, int* element) {
     // Do nothing
 }

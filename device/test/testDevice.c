@@ -28,7 +28,7 @@ void notifyTest(OutputStream* outputStream, unsigned char notifyArgument) {
     appendString(debugOutputStream, "Notification Output Stream Address : ");
     appendDec(debugOutputStream, outputStream->address);
     appendCRLF(debugOutputStream);
- 
+
     append(outputStream, TEST_DEVICE_HEADER);
     append(outputStream, NOTIFY_TEST);
     appendHex2(outputStream, notifyArgument);
@@ -43,11 +43,9 @@ void deviceTestHandleRawData(unsigned char header, InputStream* inputStream, Out
         ackCommand(outputStream, TEST_DEVICE_HEADER, COMMAND_TEST);
         // data
         appendHex2(outputStream, result);
-    }
-    else if (header == COMMAND_SIMPLE_TEST) {
+    } else if (header == COMMAND_SIMPLE_TEST) {
         ackCommand(outputStream, TEST_DEVICE_HEADER, COMMAND_SIMPLE_TEST);
-    }
-    else if (header == COMMAND_HEAVY_TEST) {
+    } else if (header == COMMAND_HEAVY_TEST) {
         int arg1 = readHex2(inputStream);
         int arg2 = readHex2(inputStream);
         int arg3 = readHex4(inputStream);
@@ -65,28 +63,29 @@ void deviceTestHandleRawData(unsigned char header, InputStream* inputStream, Out
         ackCommand(outputStream, TEST_DEVICE_HEADER, COMMAND_HEAVY_TEST);
         // data
         appendHex6(outputStream, result);
-    }
-    else if (header == COMMAND_DEBUG_TEST) {
+    } else if (header == COMMAND_DEBUG_TEST) {
         ackCommand(outputStream, TEST_DEVICE_HEADER, COMMAND_DEBUG_TEST);
         appendString(getErrorOutputStreamLogger(), "TEST->DEBUG !");
-    }
-    else if (header == COMMAND_GENERATE_NOTIFY_TEST) {
+    } else if (header == COMMAND_GENERATE_NOTIFY_TEST) {
         ackCommand(outputStream, TEST_DEVICE_HEADER, COMMAND_GENERATE_NOTIFY_TEST);
         unsigned char value = readHex2(inputStream);
-        
+
         // TODO : Find the right OutputStream corresponding to the device : I2C / UART
         notifyTest(notificationOutputStream, value);
     }
 }
 
-static DeviceDescriptor descriptor = {
-    .deviceInit = &deviceTestInit,
-    .deviceShutDown = &deviceTestShutDown,
-    .deviceIsOk = &deviceTestIsOk,
-    .deviceHandleRawData = &deviceTestHandleRawData
-};
+static DeviceDescriptor descriptor;
 
 DeviceDescriptor* getTestDeviceDescriptor(void) {
+    initDeviceDescriptor(&descriptor,
+            &deviceTestInit,
+            &deviceTestShutDown,
+            &deviceTestIsOk,
+            &deviceTestHandleRawData,
+            NULL);
+
     return &descriptor;
 }
+
 

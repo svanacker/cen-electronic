@@ -23,8 +23,8 @@ I2cBusConnection* getMultiplexerI2cBusConnection(Multiplexer* multiplexer);
  * transparently
  * @param multiplexer
  */
-void initMultiplexerTca9548A(Multiplexer* multiplexer, 
-                             I2cBusConnection* i2cConnection,
-                             bool useChannelMasksCache);
+void initMultiplexerTca9548A(Multiplexer* multiplexer,
+        I2cBusConnection* i2cConnection,
+        bool useChannelMasksCache);
 
 #endif

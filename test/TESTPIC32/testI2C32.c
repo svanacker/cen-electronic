@@ -22,7 +22,6 @@
 
 #define BRG_VAL 0xc6    //100khz
 
-
 void delaymSec(unsigned int mSecond) {
     unsigned int i;
     while (mSecond != 0) {
@@ -36,45 +35,53 @@ void delaymSec(unsigned int mSecond) {
     }
 }
 
-int main(void){
+int main(void) {
 
-    OpenI2C1( I2C_ON, BRG_VAL );    //Enable I2C channel
-
-
-while (1)
+    OpenI2C1(I2C_ON, BRG_VAL); //Enable I2C channel
 
 
-{
-StartI2C1();//Send the Start Bit
-IdleI2C1();//Wait to complete
-MasterWriteI2C1(0x50 );
-MasterWriteI2C1('m' );IdleI2C1();
-MasterWriteI2C1('6' );IdleI2C1();
-MasterWriteI2C1('0' );IdleI2C1();
-MasterWriteI2C1('6' );IdleI2C1();
-MasterWriteI2C1('0' );IdleI2C1();
-StopI2C1();//Send the Stop condition
-IdleI2C1();//Wait to complete
+    while (1) {
+        StartI2C1(); //Send the Start Bit
+        IdleI2C1(); //Wait to complete
+        MasterWriteI2C1(0x50);
+        MasterWriteI2C1('m');
+        IdleI2C1();
+        MasterWriteI2C1('6');
+        IdleI2C1();
+        MasterWriteI2C1('0');
+        IdleI2C1();
+        MasterWriteI2C1('6');
+        IdleI2C1();
+        MasterWriteI2C1('0');
+        IdleI2C1();
+        StopI2C1(); //Send the Stop condition
+        IdleI2C1(); //Wait to complete
 
 
-delaymSec(1000);
+        delaymSec(1000);
 
-StartI2C1();//Send the Start Bit
-IdleI2C1();//Wait to complete
-MasterWriteI2C1(0x50 );
-MasterWriteI2C1('n' );IdleI2C1();
-StopI2C1();//Send the Stop cond
-delaymSec(1000);
+        StartI2C1(); //Send the Start Bit
+        IdleI2C1(); //Wait to complete
+        MasterWriteI2C1(0x50);
+        MasterWriteI2C1('n');
+        IdleI2C1();
+        StopI2C1(); //Send the Stop cond
+        delaymSec(1000);
 
-StartI2C1();//Send the Start Bit
-IdleI2C1();//Wait to complete
-MasterWriteI2C1(0x50 );
-MasterWriteI2C1('m' );IdleI2C1();
-MasterWriteI2C1('E' );IdleI2C1();
-MasterWriteI2C1('0' );IdleI2C1();
-MasterWriteI2C1('E' );IdleI2C1();
-MasterWriteI2C1('0' );IdleI2C1();
-StopI2C1();//Send the Stop cond
-delaymSec(1000);
-}
+        StartI2C1(); //Send the Start Bit
+        IdleI2C1(); //Wait to complete
+        MasterWriteI2C1(0x50);
+        MasterWriteI2C1('m');
+        IdleI2C1();
+        MasterWriteI2C1('E');
+        IdleI2C1();
+        MasterWriteI2C1('0');
+        IdleI2C1();
+        MasterWriteI2C1('E');
+        IdleI2C1();
+        MasterWriteI2C1('0');
+        IdleI2C1();
+        StopI2C1(); //Send the Stop cond
+        delaymSec(1000);
+    }
 }

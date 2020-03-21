@@ -15,20 +15,19 @@
 #define LASER_SERVO_INDEX_1 1
 #define LASER_SERVO_INDEX_2 4
 
-
 /**
  * Structures which stores each element related to beacon detection system.
  */
 typedef struct {
     /** enabled or not the rotation. */
-    bool enabled;    
+    bool enabled;
 
     /** The lasers instances. */
     Laser lasers[LASER_COUNT];
-    
+
     /** Distance between beacons. */
     float distanceBetweenBeacon;
-    
+
     /** Position of opponent robot. */
     Point opponentRobotPosition;
 
@@ -39,19 +38,19 @@ typedef struct {
     float lastDetectionTime;
 
     /** 
-    * Time in milliseconds we consider that we do not send the position (because the last
-    * detection is too old (it's a risk to send obsolete Information).
-    */
+     * Time in milliseconds we consider that we do not send the position (because the last
+     * detection is too old (it's a risk to send obsolete Information).
+     */
     float obsoleteDetectionTimeThreshold;
 
     /**
-    * Time in milliseconds period to notify the robot position via the zigbee.
+     * Time in milliseconds period to notify the robot position via the zigbee.
      */
     float notifyTimeDelay;
 
     /**
-    * last Notification time.
-    */
+     * last Notification time.
+     */
     float lastNotifyTime;
 } BeaconSystem;
 
@@ -63,18 +62,18 @@ Point* getOpponentRobotPosition();
 
 
 /**
-* Init all the laser beacon detection system.
-*/
+ * Init all the laser beacon detection system.
+ */
 void initLaserBeacon();
 
 /**
-* Stop the laser beacon detection system.
-*/
+ * Stop the laser beacon detection system.
+ */
 void stopLaserBeacon();
 
 /**
-* Enabled or not the detection by the lasers and the rotation via servo.
-*/
+ * Enabled or not the detection by the lasers and the rotation via servo.
+ */
 void setBeaconSystemEnabled(bool enabled);
 
 /**
@@ -95,9 +94,9 @@ void setDistanceBetweenBeacon(float aDistanceBetweenBeacon);
 float getDistanceBetweenBeacon();
 
 /** 
-* Time in milliseconds we consider that we do not send the position (because the last
-* detection is too old (it's a risk to send obsolete Information).
-*/
+ * Time in milliseconds we consider that we do not send the position (because the last
+ * detection is too old (it's a risk to send obsolete Information).
+ */
 float getObsoleteDetectionTimeThreshold();
 
 void setObsoleteDetectionTimeThreshold(float obsoleteDetectionTimeThreshold);
@@ -110,9 +109,9 @@ void setNotifyTimeDelay(float notifyTimeDelay);
 float getNotifyTimeDelay();
 
 /**
-* Notify the robot position.
-* @return true if the method add data to be sent by the zigbee
-*/
+ * Notify the robot position.
+ * @return true if the method add data to be sent by the zigbee
+ */
 bool notifyRobotPositionIfNecessary();
 
 /**

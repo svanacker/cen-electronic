@@ -13,8 +13,8 @@ struct Navigation;
 typedef struct Navigation Navigation;
 
 /**
-* Contains all elements used by the system to find the paths. 
-*/
+ * Contains all elements used by the system to find the paths. 
+ */
 struct Navigation {
     // All points
     LocationList* locationList;
@@ -56,15 +56,15 @@ Location* addNavigationLocation(Navigation* navigation, char* name, char* label,
  * Add the path to the navigation graph.
  */
 PathData* addNavigationPath(Navigation* navigation,
-    Location* location1,
-    Location* location2,
-    float cost,
-    float controlPointDistance1,
-    float controlPointDistance2,
-    float angle1,
-    float angle2,
-    float accelerationFactor,
-    float speedFactor);
+        Location* location1,
+        Location* location2,
+        float cost,
+        float controlPointDistance1,
+        float controlPointDistance2,
+        float angle1,
+        float angle2,
+        float accelerationFactor,
+        float speedFactor);
 
 // TEMPORARY PATHS
 

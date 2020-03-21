@@ -8,11 +8,11 @@
 //#include "pin.h"
 
 void initDualHBridge(DualHBridgeMotor* dualHBridgeMotor,
-    dualHBridgeMotorInitFunction* dualHBridgeMotorInit,
-    dualHBridgeMotorReadValueFunction* dualHBridgeMotorReadValue,
-    dualHBridgeMotorWriteValueFunction* dualHBridgeMotorWriteValue,
-    dualHBridgeMotorGetSoftwareRevisionFunction* dualHBridgeMotorGetSoftwareRevision,    
-    int* object) {
+        dualHBridgeMotorInitFunction* dualHBridgeMotorInit,
+        dualHBridgeMotorReadValueFunction* dualHBridgeMotorReadValue,
+        dualHBridgeMotorWriteValueFunction* dualHBridgeMotorWriteValue,
+        dualHBridgeMotorGetSoftwareRevisionFunction* dualHBridgeMotorGetSoftwareRevision,
+        int* object) {
     dualHBridgeMotor->dualHBridgeMotorInit = dualHBridgeMotorInit;
     dualHBridgeMotor->dualHBridgeMotorReadValue = dualHBridgeMotorReadValue;
     dualHBridgeMotor->dualHBridgeMotorWriteValue = dualHBridgeMotorWriteValue;
@@ -46,7 +46,7 @@ void interruptMotorTimerCallbackFunc(Timer* timer) {
         if (pin1Stop != NO_ACTION) {
             
         }
-        */
+         */
     }
 }
 
@@ -55,9 +55,9 @@ void initDualHBridgeTimer(DualHBridgeMotor* dualHBridgeMotor) {
     // Avoid to add several timer of the same nature
     if (motorTimer == NULL) {
         addTimer(MOTOR_TIMER_CODE,
-                 TIME_DIVIDER_10_HERTZ,
-                 &interruptMotorTimerCallbackFunc,
-                 "MOTOR", 
+                TIME_DIVIDER_10_HERTZ,
+                &interruptMotorTimerCallbackFunc,
+                "MOTOR",
                 (int*) dualHBridgeMotor);
     }
 }

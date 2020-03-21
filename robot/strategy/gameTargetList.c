@@ -22,7 +22,7 @@ void clearGameTargets() {
     for (i = 0; i < size; i++) {
         GameTarget* target = targets.targets[i];
         clearGameTarget(target);
-    }    
+    }
     targets.size = 0;
     targets.targetHandledCount = 0;
 }
@@ -49,8 +49,7 @@ void addGameTarget(GameTarget* target, char* targetName, float potentialGain, Lo
         target->endLocation = endLocation;
         targets.targets[size] = target;
         targets.size++;
-    }
-    else {
+    } else {
         writeError(TOO_MUCH_TARGETS);
     }
 }
@@ -70,7 +69,7 @@ bool containsAvailableTarget() {
         GameTarget* target = targets.targets[i];
         if (target->status == TARGET_AVAILABLE) {
             return true;
-        }    
+        }
     }
     return false;
 }

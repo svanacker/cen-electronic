@@ -55,8 +55,8 @@ void _flushJennic5139(OutputStream* outputStream) {
 }
 
 void initZigbeeOutputStream(OutputStream* outputStream,
-                                Buffer* jennic5139Buffer,
-                                char* jennicAddress) {
+        Buffer* jennic5139Buffer,
+        char* jennicAddress) {
     outputStream->openOutputStream = _jennic5139OpenOutputStream;
     outputStream->closeOutputStream = _jennic5139CloseOutputStream;
     outputStream->writeChar = _writeCharJennic5139;

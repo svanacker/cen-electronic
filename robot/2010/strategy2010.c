@@ -1,6 +1,6 @@
 /**
-* Strategy for 2010 edition of robot cup.
-*/
+ * Strategy for 2010 edition of robot cup.
+ */
 #include "strategy2010.h"
 
 #include "../../common/delay/delay30F.h"
@@ -35,7 +35,6 @@
 /** Time to down the sensor */
 #define DOWN_SENSOR_TIME_MS 300
 
-
 void unLoadTomatoeAndCorn() {
 
 }
@@ -50,17 +49,17 @@ void goStartPoint() {
     /*
     forwardSimpleMMAndWait(622);
     rightSimpleMilliDegreeAndWait(15920 * getMatchSide());
-    */
+     */
     forwardSimpleMMAndWait(415);
     rightSimpleMilliDegreeAndWait(60998 * getMatchSide());
 }
 
 void unLoadFromLastPoint() {
     leftSimpleDegreeAndWait(61 * getMatchSide());
-    forwardSimpleMMAndWait(150);    
+    forwardSimpleMMAndWait(150);
     handleAndWaitMSec(2000);
     backwardSimpleMMAndWait(100);
-//    setTomatoeEnabled(0);
+    //    setTomatoeEnabled(0);
     if (isRobotMustStop()) {
         return;
     }
@@ -68,9 +67,9 @@ void unLoadFromLastPoint() {
     unLoadTomatoeAndCorn();
 }
 
-void homologation2010() {            
+void homologation2010() {
     goStartPoint();
-    
+
     setTomatoeEnabled(1);
 
     // Go at the LAST_POINT
@@ -88,20 +87,19 @@ unsigned char takeCornIfNotBlack(int plierIndex) {
     unsigned detected = isMetalDetected(plierIndex);
     upSensor(plierIndex);
     if (!detected) {
-//        setTomatoeEnabled(1);
+        //        setTomatoeEnabled(1);
         forwardSimpleMMAndWait(DISTANCE_SENSOR_PLIER);
-//        setTomatoeEnabled(0);
+        //        setTomatoeEnabled(0);
         if (isRobotMustStop()) {
             return CORN_BLACK_NOT_TAKEN;
         }
 
         takeAndLoadCorn(plierIndex);
 
-//        setTomatoeEnabled(1);
+        //        setTomatoeEnabled(1);
 
         return CORN_WHITE_TAKEN;
-    }
-    else {
+    } else {
         upPlier(plierIndex);
         notifyReached();
         return CORN_BLACK_NOT_TAKEN;
@@ -109,10 +107,10 @@ unsigned char takeCornIfNotBlack(int plierIndex) {
 }
 
 /**
-* Detect a corn, take if white, and go forward if specified
-* Returns distance
-* @param forward if we go forward after
-*/
+ * Detect a corn, take if white, and go forward if specified
+ * Returns distance
+ * @param forward if we go forward after
+ */
 signed long goDetectCornAndTakeLeftAndRight(unsigned char forward, unsigned char takeRight) {
     if (isRobotMustStop()) {
         return 0;
@@ -130,7 +128,7 @@ signed long goDetectCornAndTakeLeftAndRight(unsigned char forward, unsigned char
     unsigned char wasTaken = takeCornIfNotBlack(leftPlierIndex);
     if (!forward) {
         return result;
-    }    
+    }
     if (wasTaken == CORN_WHITE_TAKEN) {
         result += DISTANCE_SENSOR_PLIER;
         // We have advance of DISTANCE_SENSOR_PLIER
@@ -142,19 +140,16 @@ signed long goDetectCornAndTakeLeftAndRight(unsigned char forward, unsigned char
                 result += DISTANCE_SENSOR_PLIER;
                 // right has been taken : go to the next left - SENSOR_PLIER
                 result += forwardSimpleMMAndWait(DISTANCE_BETWEEN_CORN_LEFT_RIGHT_MM - DISTANCE_SENSOR_PLIER);
-            }
-            else {
+            } else {
                 // right has not been taken : go to the next left 
                 result += forwardSimpleMMAndWait(DISTANCE_BETWEEN_CORN_LEFT_RIGHT_MM);
             }
-        }
-        // we don't take the right
+        }// we don't take the right
         else {
             // go to the next plier
             result += forwardSimpleMMAndWait(DISTANCE_TO_NEXT_CORN_IF_TAKEN);
         }
-    }
-    // we do not take the left
+    }// we do not take the left
     else {
         if (takeRight) {
             result += forwardSimpleMMAndWait(DISTANCE_BETWEEN_CORN_LEFT_RIGHT_MM);
@@ -163,24 +158,21 @@ signed long goDetectCornAndTakeLeftAndRight(unsigned char forward, unsigned char
                 result += DISTANCE_SENSOR_PLIER;
                 // right has been taken : go to the next left - SENSOR_PLIER
                 result += forwardSimpleMMAndWait(DISTANCE_BETWEEN_CORN_LEFT_RIGHT_MM - DISTANCE_SENSOR_PLIER);
-            }
-            else {
+            } else {
                 // right has not been taken : go to the next left 
                 result += forwardSimpleMMAndWait(DISTANCE_BETWEEN_CORN_LEFT_RIGHT_MM);
             }
-        }
-        else {
+        } else {
             // we do not take the right
             result += forwardSimpleMMAndWait(DISTANCE_BETWEEN_CORN_MM);
         }
     }
-    
+
     return result;
 }
 
-
 void goNextCorn() {
-// TODO
+    // TODO
 }
 
 void strategy2() {
@@ -190,7 +182,7 @@ void strategy2() {
 
     int i = 0;
     signed long distance = 0;
-    for (i = 0; i < CORN_TO_TAKE_COUNT; i ++) {
+    for (i = 0; i < CORN_TO_TAKE_COUNT; i++) {
         distance += goDetectCornAndTakeLeftAndRight(i < CORN_TO_TAKE_COUNT - 1, i == 2 || i == 3);
     }
     forwardSimpleMMAndWait(DISTANCE_CENTER_LAST_POINT - DISTANCE_TO_FIRST_CORN - distance);
@@ -207,11 +199,9 @@ void strategy2() {
 void strategy2010(unsigned char strategyIndex) {
     if (strategyIndex == STRATEGY_HOMOLOGATION) {
         homologation2010();
-    }
-    else if (strategyIndex == STRATEGY_2) {
+    } else if (strategyIndex == STRATEGY_2) {
         strategy2();
-    }
-    else {
+    } else {
         writeString("UNKNOWN STRATEGY !");
     }
 }

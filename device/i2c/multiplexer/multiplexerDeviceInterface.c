@@ -29,8 +29,7 @@ int deviceMultiplexerGetInterface(unsigned char commandHeader, DeviceInterfaceMo
             setArgumentUnsignedHex2(2, "Channels Mask");
         }
         return commandLengthValueForMode(mode, 5, 0);
-    }
-    else if (commandHeader == COMMAND_MULTIPLEXER_READ_SINGLE_CHANNEL) {
+    } else if (commandHeader == COMMAND_MULTIPLEXER_READ_SINGLE_CHANNEL) {
         if (fillDeviceArgumentList) {
             setFunction("Read Single Channel", 3, 1);
             setArgumentUnsignedHex2(0, "Multiplexer Index");
@@ -40,16 +39,14 @@ int deviceMultiplexerGetInterface(unsigned char commandHeader, DeviceInterfaceMo
             setResultUnsignedChar1(0, "Value (bool)");
         }
         return commandLengthValueForMode(mode, 5, 1);
-    }
-    else if (commandHeader == COMMAND_MULTIPLEXER_READ_CHANNELS_MASK) {
+    } else if (commandHeader == COMMAND_MULTIPLEXER_READ_CHANNELS_MASK) {
         if (fillDeviceArgumentList) {
             setFunction("Read Channel Mask", 1, 1);
             setArgumentUnsignedHex2(0, "Multiplexer Index");
             setResultUnsignedHex2(0, "Channels Mask");
         }
         return commandLengthValueForMode(mode, 2, 2);
-    }
-    else if (commandHeader == COMMAND_MULTIPLEXER_DEBUG) {
+    } else if (commandHeader == COMMAND_MULTIPLEXER_DEBUG) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Debug as Table");
         }

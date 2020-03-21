@@ -18,8 +18,8 @@ void initBSplineCurveData(BSplinePointData* pointData, float x, float y) {
     pointData->point.y = y;
 }
 
-void resetBSplineCurve(BSplineCurve* bSplineCurve, 
-                      float p0x, float p0y, bool backward) {
+void resetBSplineCurve(BSplineCurve* bSplineCurve,
+        float p0x, float p0y, bool backward) {
     bSplineCurve->p0.x = p0x;
     bSplineCurve->p0.y = p0y;
 
@@ -32,11 +32,11 @@ void resetBSplineCurve(BSplineCurve* bSplineCurve,
     bSplineCurve->p3.x = 0.0f;
     bSplineCurve->p3.y = 0.0f;
 
-//    initBSplineCurveData(&(bSplineCurve->lastPointData), p0x, p0y);
-//    initBSplineCurveData(&(bSplineCurve->tempPointData), p0x, p0y);
+    //    initBSplineCurveData(&(bSplineCurve->lastPointData), p0x, p0y);
+    //    initBSplineCurveData(&(bSplineCurve->tempPointData), p0x, p0y);
 
     bSplineCurve->curveLength = 0.0f;
-    
+
     bSplineCurve->speedFactor = MOTION_SPEED_FACTOR_0;
     bSplineCurve->accelerationFactor = MOTION_ACCELERATION_FACTOR_0;
 
@@ -56,7 +56,7 @@ void computeBSplinePoint(BSplineCurve* bSplineCurve, float t, Point* resultPoint
     float _3_t_l_t2 = 3.0f * t * l_t2;
     float _3_t2_l_t = 3.0f * t2 * l_t;
 
-    Point* p0 = &(bSplineCurve->p0); 
+    Point* p0 = &(bSplineCurve->p0);
     Point* p1 = &(bSplineCurve->p1);
     Point* p2 = &(bSplineCurve->p2);
     Point* p3 = &(bSplineCurve->p3);
@@ -86,8 +86,8 @@ void computeBSplineDerivativeComponents(BSplineCurve* bSplineCurve, float t, Poi
     Point* p2 = &(bSplineCurve->p2);
     Point* p3 = &(bSplineCurve->p3);
 
-    derivativeResult->x = 3.0f * ( (- p0->x * l_t2) - (p1->x * l_t * _3t_1) - (p2->x * t * _3t_2) + (p3->x * t2) );
-    derivativeResult->y = 3.0f * ( (- p0->y * l_t2) - (p1->y * l_t * _3t_1) - (p2->y * t * _3t_2) + (p3->y * t2) );
+    derivativeResult->x = 3.0f * ((-p0->x * l_t2) - (p1->x * l_t * _3t_1) - (p2->x * t * _3t_2) + (p3->x * t2));
+    derivativeResult->y = 3.0f * ((-p0->y * l_t2) - (p1->y * l_t * _3t_1) - (p2->y * t * _3t_2) + (p3->y * t2));
 }
 
 void computeBSplineAccelerationComponent(BSplineCurve* bSplineCurve, float t, Point* accelerationResult) {
@@ -95,7 +95,7 @@ void computeBSplineAccelerationComponent(BSplineCurve* bSplineCurve, float t, Po
     Point* p1 = &(bSplineCurve->p1);
     Point* p2 = &(bSplineCurve->p2);
     Point* p3 = &(bSplineCurve->p3);
-    
+
     // Formula of acceleration for cubic curve is available here :
     // https://en.wikipedia.org/wiki/B%C3%A9zier_curve
     accelerationResult->x = 6.0f * (1.0f - t) * (p2->x - 2.0f * p1->x + p0->x) + 6.0f * t * (p3->x - 2.0f * p2->x + p1->x);
@@ -118,7 +118,7 @@ float computeBSplineOrientationWithDerivative(BSplineCurve* bSplineCurve, float 
 
     // note that the atan2 is atan2(y, x) and not atan2(x, y)
     float result = atan2f(derivativeResult.y, derivativeResult.x);
-    
+
     // TODO : There is a big problem if diffY = 0 and diffX = 0 because it is undefined !
 
     // There is another method to compute the tangent of a bezier curve
@@ -131,7 +131,7 @@ float computeBSplineAccelerationNormalVector(BSplineCurve* bSplineCurve, float t
     Point accelerationResult;
 
     computeBSplineAccelerationComponent(bSplineCurve, t, &accelerationResult);
-    
+
     // TODO
 
     return 0.0f;
@@ -147,24 +147,24 @@ float computeBSplineCurvature(BSplineCurve* bSplineCurve, float t) {
 
     float dx = p.x;
     float dy = p.y;
-    
+
     float ddx = a.x;
     float ddy = a.y;
-    
+
     float numerator = dx * ddy - ddx * dy;
-    float denominator = powf(dx*dx + dy*dy, 1.5);
-    
+    float denominator = powf(dx * dx + dy*dy, 1.5);
+
     return numerator / denominator;
 }
 
 float computeNormalAccelerationAtCenter(BSplineCurve* bSplineCurve, float t) {
     float speed = computeBSplineSpeed(bSplineCurve, t);
     float radius = computeBSplineCurveRadius(bSplineCurve, t);
-    
+
     if (radius == 0.0f) {
         return 0.0f;
     }
-    
+
     return speed * speed / radius;
 }
 
@@ -207,8 +207,8 @@ float computeBSplineArcLength(BSplineCurve* bSplineCurve, float timeIncrement) {
 }
 
 float computeTimeWithInterpolation(BSplinePointData* beforePointData,
-                                   BSplinePointData* afterPointData,
-                                   float length) {
+        BSplinePointData* afterPointData,
+        float length) {
     // the length of curve between the origin of the curve and the previous computed Point
     float lengthBefore = beforePointData->length;
     float lengthAfter = afterPointData->length;
@@ -231,8 +231,8 @@ float computeTimeWithInterpolationAndDichotomy(BSplineCurve* bSplineCurve, BSpli
     float deltaTime = 0.001f;
     while (true) {
         computeBSplineCurveRadius(bSplineCurve, beforePointData->time + deltaTime);
-        
-        
+
+
     }
 }
 
@@ -249,13 +249,12 @@ float computeBSplineTimeAtDistance(BSplineCurve* bSplineCurve, float distance) {
     return 1.0f;
 }
 
-
 void parameterBSplineWithDistanceAndAngle(BSplineCurve* curve,
-    float sourceX, float sourceY, float sourceAngleRadian,
-    float destX, float destY, float destAngleRadian,
-    float distance1, float distance2,
-    float accelerationFactor, float speedFactor,
-    bool relative) {
+        float sourceX, float sourceY, float sourceAngleRadian,
+        float destX, float destY, float destAngleRadian,
+        float distance1, float distance2,
+        float accelerationFactor, float speedFactor,
+        bool relative) {
 
     // If the distance of the control point is negative, we considerer that we go
     // back
@@ -300,8 +299,7 @@ void parameterBSplineWithDistanceAndAngle(BSplineCurve* curve,
         rotate(point, sourceAngleRadian, (destX), (destY));
         point->x += sourceX;
         point->y += sourceY;
-    }
-    else {
+    } else {
         // P2
         point = &(curve->p2);
         point->x = (destX - dca2);
@@ -321,13 +319,13 @@ float computeBSplineCurveRadius(BSplineCurve* curve, float time) {
     computeBSplinePoint(curve, time - incrementTime, &p1);
     computeBSplinePoint(curve, time, &p2);
     computeBSplinePoint(curve, time + incrementTime, &p3);
-    
+
     bool isCurve = computeRotationCenteredPoint(&p1, &p2, &p3, &centerPointOfRotation);
     if (!isCurve) {
         // We go forward, so no difference between the wheels
         return 0.0f;
     }
-    
+
     return distanceBetweenPoints(&p2, &centerPointOfRotation);
 }
 
@@ -336,8 +334,8 @@ float computeSpeedFactorToCenterDueToCurve(BSplineCurve* curve, float time, floa
     if (fabs(radius) < 0.001f) {
         // No radius => the speed factor is the same
         return 1.0f;
-    } 
-    
+    }
+
     // The speed of a point on a circle is 2 * PI * R / T
     // The radius for one on the point (the most excentric point compared to the 
     // center of the point is (radius + distanceToCurve) and the other is (radius - distanceToCurve).
@@ -345,11 +343,11 @@ float computeSpeedFactorToCenterDueToCurve(BSplineCurve* curve, float time, floa
     // The real speed of the most excentric is (distanceToCurve + R) * 2 * PI
     // So the speed Factor due to the curve is  : 2 * PI * (R + distanceToCurve)  / 2 * PI * R
     // = 1 + distanceToCurve / radius
-    return 1 + (distanceToCurve / radius); 
+    return 1 + (distanceToCurve / radius);
 }
 
 float computeAccelerationFactorToCenterDueToCurve(BSplineCurve* curve, float time, float speedFactor) {
     // The acceleration Factor is the speedFactor^2
-    
+
     return speedFactor * speedFactor;
 }

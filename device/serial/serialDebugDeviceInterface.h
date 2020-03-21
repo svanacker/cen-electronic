@@ -25,8 +25,8 @@
 #define COMMAND_SERIAL_CHAR_ARRAY_INPUT       'I'
 
 /**
-* Get the serial debug device interface.
-*/
+ * Get the serial debug device interface.
+ */
 DeviceInterface* getSerialDebugDeviceInterface(void);
 
 #endif

@@ -6,10 +6,10 @@
 #include "../../../common/io/buffer.h"
 
 /**
-* Wrap all useful information when handling
-* I2C Slave Interruption Data
-*/
-typedef struct I2cSlaveLink{
+ * Wrap all useful information when handling
+ * I2C Slave Interruption Data
+ */
+typedef struct I2cSlaveLink {
     /** The address to read. */
     char readAddress;
     /** The address to write. */
@@ -25,28 +25,28 @@ typedef struct I2cSlaveLink{
 // --- INPUT STREAM ---
 
 /**
-* Init an inputStream around i2c with an address.
-* @param inputStream a structure to initialize
-* @param i2cBuffer an internal i2cBuffer 
-* @param i2cAddress the address to respond to i2c request
-*/
-void openSlaveI2cInputStream(I2cBus* i2cBus, 
-                            InputStream* inputStream,
-                            Buffer* i2cInputBuffer,
-                            unsigned char i2cAddress);
+ * Init an inputStream around i2c with an address.
+ * @param inputStream a structure to initialize
+ * @param i2cBuffer an internal i2cBuffer 
+ * @param i2cAddress the address to respond to i2c request
+ */
+void openSlaveI2cInputStream(I2cBus* i2cBus,
+        InputStream* inputStream,
+        Buffer* i2cInputBuffer,
+        unsigned char i2cAddress);
 
 // --- OUTPUT STREAM ---
 
 /**
-* Open a link (input/output) around i2c with an address.
-* @param outputStream a structure to initialize
-* @param i2cBuffer an internal i2cBuffer 
-* @param i2cAddress the address to respond to i2c request
-*/
+ * Open a link (input/output) around i2c with an address.
+ * @param outputStream a structure to initialize
+ * @param i2cBuffer an internal i2cBuffer 
+ * @param i2cAddress the address to respond to i2c request
+ */
 void openSlaveI2cOutputStream(
-                        I2cBus* i2cBus,
-                        OutputStream* outputStream,
-                         Buffer* i2cBuffer,
-                         unsigned char i2cWriteAddress);
+        I2cBus* i2cBus,
+        OutputStream* outputStream,
+        Buffer* i2cBuffer,
+        unsigned char i2cWriteAddress);
 
 #endif

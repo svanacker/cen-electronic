@@ -258,22 +258,22 @@ void motorBoardWaitForInstruction(void) {
 
     // Analyse from the ConsoleBuffer
     handleStreamInstruction(
-        &consoleInputBuffer,
-        &consoleOutputBuffer,
-        &consoleOutputStream,
-        &consoleOutputStream,
-        &filterRemoveCRLF,
-        NULL);
+            &consoleInputBuffer,
+            &consoleOutputBuffer,
+            &consoleOutputStream,
+            &consoleOutputStream,
+            &filterRemoveCRLF,
+            NULL);
 
     if (!singleModeActivated) {
         // Analyse data from the I2C
         handleStreamInstruction(
-            &i2cSlaveInputBuffer,
-            &i2cSlaveOutputBuffer,
-            NULL,
-            NULL,
-            &filterRemoveCRLF,
-            NULL);
+                &i2cSlaveInputBuffer,
+                &i2cSlaveOutputBuffer,
+                NULL,
+                NULL,
+                &filterRemoveCRLF,
+                NULL);
     }
 
     // TODO : FIX
@@ -286,7 +286,7 @@ void runMotorBoardPC(bool singleMode) {
 
     singleModeActivated = singleMode;
     setBoardName(MOTOR_BOARD_PC_NAME);
-	setConsoleSizeAndBuffer(CONSOLE_CHARS_WIDTH, CONSOLE_CHARS_HEIGHT, CONSOLE_BUFFER_WIDTH, CONSOLE_BUFFER_HEIGHT);
+    setConsoleSizeAndBuffer(CONSOLE_CHARS_WIDTH, CONSOLE_CHARS_HEIGHT, CONSOLE_BUFFER_WIDTH, CONSOLE_BUFFER_HEIGHT);
     moveConsole(HALF_SCREEN_WIDTH, 0, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT / 2);
 
     // We use http://patorjk.com/software/taag/#p=testall&v=2&f=Acrobatic&t=MOTOR%20BOARD%20PC
@@ -297,54 +297,54 @@ void runMotorBoardPC(bool singleMode) {
     printf("| |  | | |_| || || |_| |  _ <   | |_) | |_| / ___ \\|  _ <| |_| |  |  __/| |___ \r\n");
     printf("|_|  |_|\\___/ |_| \\___/|_| \\_\\  |____/ \\___/_/   \\_|_| \\_|____/   |_|    \\____|\r\n");
 
-    initLogs(LOG_LEVEL_DEBUG, (LogHandler(*)[]) &logHandlerListArray, MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    initLogs(LOG_LEVEL_DEBUG, (LogHandler(*)[]) & logHandlerListArray, MOTOR_BOARD_PC_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
     initConsoleInputStream(&consoleInputStream);
     initConsoleOutputStream(&consoleOutputStream);
     addConsoleLogHandler(LOG_LEVEL_DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
 
-	initSerialLinkList((SerialLink(*)[]) &serialLinkListArray, MOTOR_BOARD_PC_SERIAL_LINK_LIST_LENGTH);
+    initSerialLinkList((SerialLink(*)[]) & serialLinkListArray, MOTOR_BOARD_PC_SERIAL_LINK_LIST_LENGTH);
 
-    initTimerList((Timer(*)[]) &timerListArray, MOTOR_BOARD_PC_TIMER_LENGTH);
+    initTimerList((Timer(*)[]) & timerListArray, MOTOR_BOARD_PC_TIMER_LENGTH);
 
-    initBuffer(&consoleInputBuffer, (char(*)[]) &consoleInputBufferArray, MOTOR_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH, "inputConsoleBuffer", "IN");
-    initBuffer(&consoleOutputBuffer, (char(*)[]) &consoleOutputBufferArray, MOTOR_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH, "outputConsoleBuffer", "IN");
+    initBuffer(&consoleInputBuffer, (char(*)[]) & consoleInputBufferArray, MOTOR_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH, "inputConsoleBuffer", "IN");
+    initBuffer(&consoleOutputBuffer, (char(*)[]) & consoleOutputBufferArray, MOTOR_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH, "outputConsoleBuffer", "IN");
 
     // Dispatchers
-    initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH);
+    initDriverDataDispatcherList((DriverDataDispatcher(*)[]) & driverDataDispatcherListArray, MOTOR_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH);
     addLocalDriverDataDispatcher();
 
     // I2c Bus List & Connection List
-    initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MOTOR_BOARD_PC_I2C_BUS_LIST_LENGTH);
-    initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MOTOR_BOARD_PC_I2C_BUS_CONNECTION_LIST_LENGTH);
+    initI2cBusList((I2cBus(*)[]) & i2cBusListArray, MOTOR_BOARD_PC_I2C_BUS_LIST_LENGTH);
+    initI2cBusConnectionList((I2cBusConnection(*)[]) & i2cBusConnectionListArray, MOTOR_BOARD_PC_I2C_BUS_CONNECTION_LIST_LENGTH);
 
     if (!singleModeActivated) {
         // Motor
         motorI2cBus = addI2cBus(I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
-        
+
         motorI2cBusConnection = addI2cBusConnection(motorI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS, false);
         motorI2cBusConnection->i2cBus = motorI2cBus;
         motorI2cBusConnectionPc.i2cPipeMasterName = MAIN_BOARD_TO_MOTOR_BOARD_PC_PIPE_I2C_MASTER_NAME;
         motorI2cBusConnectionPc.i2cPipeSlaveName = MOTOR_BOARD_PC_PIPE_I2C_SLAVE_NAME;
         motorI2cBusConnection->object = &motorI2cBusConnectionPc;
-		openSlaveI2cStreamLink(&i2cSlaveStreamLink,
-            &i2cSlaveInputBuffer,
-            (char(*)[]) &i2cSlaveInputBufferArray,
-            MOTOR_BOARD_PC_IN_BUFFER_LENGTH,
-            &i2cSlaveOutputBuffer,
-            (char(*)[]) &i2cSlaveOutputBufferArray,
-            MOTOR_BOARD_PC_OUT_BUFFER_LENGTH,
-            motorI2cBusConnection
-        );
+        openSlaveI2cStreamLink(&i2cSlaveStreamLink,
+                &i2cSlaveInputBuffer,
+                (char(*)[]) & i2cSlaveInputBufferArray,
+                MOTOR_BOARD_PC_IN_BUFFER_LENGTH,
+                &i2cSlaveOutputBuffer,
+                (char(*)[]) & i2cSlaveOutputBufferArray,
+                MOTOR_BOARD_PC_OUT_BUFFER_LENGTH,
+                motorI2cBusConnection
+                );
 
         // I2C Debug
         initI2CDebugBuffers(&i2cSlaveDebugInputBuffer,
-            (char(*)[]) &i2cSlaveDebugInputBufferArray,
-            MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_IN_BUFFER_LENGTH,
-            &i2cSlaveDebugOutputBuffer,
-            (char(*)[]) &i2cSlaveDebugOutputBufferArray,
-            MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH);
+                (char(*)[]) & i2cSlaveDebugInputBufferArray,
+                MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_IN_BUFFER_LENGTH,
+                &i2cSlaveDebugOutputBuffer,
+                (char(*)[]) & i2cSlaveDebugOutputBufferArray,
+                MOTOR_BOARD_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH);
     }
-    
+
     // Eeprom
     initEepromPc(&eeprom, "MOTOR_BOARD_PC_EEPROM");
     // initEepromMemory(&eeprom, (char(*)[]) &memoryEepromArray, MOTOR_BOARD_PC_MEMORY_EEPROM_LENGTH);
@@ -357,28 +357,28 @@ void runMotorBoardPC(bool singleMode) {
 
     // Battery
     initBattery(&battery, getBatteryVoltage);
-	
+
     // Clock
     initSoftClock(&clock);
 
-	// Pid Motion
-	initPidMotion(&pidMotion, 
-                  &dualHBridgeMotor,
-                  &eeprom,
-                 (PidMotionDefinition(*)[]) &motionDefinitionArray,
-                  MOTOR_BOARD_PC_PID_MOTION_INSTRUCTION_COUNT);
+    // Pid Motion
+    initPidMotion(&pidMotion,
+            &dualHBridgeMotor,
+            &eeprom,
+            (PidMotionDefinition(*)[]) & motionDefinitionArray,
+            MOTOR_BOARD_PC_PID_MOTION_INSTRUCTION_COUNT);
 
     // Relay
     initRelayPc(&relay, &relayValue);
 
     // Devices
-    initDeviceList((Device(*)[]) &deviceListArray, MOTOR_BOARD_PC_DEVICE_LIST_LENGTH);
+    initDeviceList((Device(*)[]) & deviceListArray, MOTOR_BOARD_PC_DEVICE_LIST_LENGTH);
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
-	addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor());
+    addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor());
     addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(motorI2cBusConnection));
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-	addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
+    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
 
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getBatteryDeviceInterface(), getBatteryDeviceDescriptor(&battery));
@@ -392,8 +392,8 @@ void runMotorBoardPC(bool singleMode) {
     addLocalDevice(getCodersDeviceInterface(), getCodersDeviceDescriptor());
     addLocalDevice(getTrajectoryDeviceInterface(), getTrajectoryDeviceDescriptor());
     addLocalDevice(getMotionDeviceInterface(), getMotionDeviceDescriptor(&pidMotion));
-	addLocalDevice(getExtendedMotionDeviceInterface(), getExtendedMotionDeviceDescriptor(&pidMotion));
-	addLocalDevice(getMotionSimulationDeviceInterface(), getMotionSimulationDeviceDescriptor());
+    addLocalDevice(getExtendedMotionDeviceInterface(), getExtendedMotionDeviceDescriptor(&pidMotion));
+    addLocalDevice(getMotionSimulationDeviceInterface(), getMotionSimulationDeviceDescriptor());
     addLocalDevice(getPcDeviceInterface(), getPcDeviceDescriptor(getOutputStream(&consoleInputBuffer)));
 
     // COLOR

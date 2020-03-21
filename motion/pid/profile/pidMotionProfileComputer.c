@@ -38,7 +38,7 @@ void computeMotionInstruction(MotionInstruction* inst) {
         inst->p1 = inst->t1 * (inst->initialSpeed + inst->speed) / 2.0f;
 
         // decelerationTime (time to go from speed to endSpeed)
-        float decelerationTime = fabsf((inst->speed - inst->endSpeed ) / inst->a);
+        float decelerationTime = fabsf((inst->speed - inst->endSpeed) / inst->a);
         float decelerationDistance = decelerationTime * (inst->speed + inst->endSpeed) / 2.0f;
 
         // Distance during constant speed (P1 -> P2) = totalDistance - accelerationDistance - decelerationDistance
@@ -52,12 +52,11 @@ void computeMotionInstruction(MotionInstruction* inst) {
             // T = D / V
             inst->t2 = inst->t1 + fabsf(distanceAtConstantSpeed / inst->speed);
             inst->p2 = inst->p1 + distanceAtConstantSpeed;
-        }        
-        else {
+        } else {
             // the p1 position is greater than the final Position / 2 => TRIANGLE : we do not reach the max speed
             inst->profileType = PROFILE_TYPE_TRIANGLE;
             float numerator = fabsf(distanceAtConstantSpeed)*(inst->initialSpeed + inst->endSpeed)
-                             + inst->speed * (2.0f * inst->nextPosition - inst->t1 * inst->initialSpeed - decelerationTime * inst->endSpeed);
+                    + inst->speed * (2.0f * inst->nextPosition - inst->t1 * inst->initialSpeed - decelerationTime * inst->endSpeed);
             inst->speedMax = (float) (sqrt(fabsf(numerator) / (inst->t1 + decelerationTime)));
             // speedmax must be of the same sign of speed, and sqrt always returns a value > 0    
             if (inst->speedMax * inst->speed < 0) {
@@ -70,7 +69,7 @@ void computeMotionInstruction(MotionInstruction* inst) {
             inst->t2 = inst->t1;
             inst->p2 = inst->p1;
 
-            decelerationTime = fabsf((inst->speedMax - inst->endSpeed ) / inst->a);
+            decelerationTime = fabsf((inst->speedMax - inst->endSpeed) / inst->a);
         }
         // In every case
         // inst->nextPosition = p3
@@ -87,16 +86,16 @@ void computeMotionInstruction(MotionInstruction* inst) {
     }
 }
 
-void setNextPosition(PidMotionDefinition* motionDefinition, 
-		enum InstructionType instructionType,
+void setNextPosition(PidMotionDefinition* motionDefinition,
+        enum InstructionType instructionType,
         enum MotionParameterType motionParameterType,
         float pNextPosition,
         float pa,
         float pSpeed) {
-	if (motionDefinition == NULL) {
-		writeError(MOTION_DEFINITION_NULL);
-		return;
-	}
+    if (motionDefinition == NULL) {
+        writeError(MOTION_DEFINITION_NULL);
+        return;
+    }
     MotionInstruction* localInst = &(motionDefinition->inst[instructionType]);
 
     localInst->nextPosition = pNextPosition;
@@ -106,13 +105,11 @@ void setNextPosition(PidMotionDefinition* motionDefinition,
     if (pNextPosition > 0.001f) {
         localInst->a = pa;
         localInst->speed = pSpeed;
-    } 
-    // Acceleration and speed becomes negative
+    }// Acceleration and speed becomes negative
     else if (pNextPosition < -0.001f) {
         localInst->a = -pa;
         localInst->speed = -pSpeed;
-    } 
-    // pNextPosition == 0.0f Don't change the position
+    }// pNextPosition == 0.0f Don't change the position
     else {
         if (motionParameterType == MOTION_PARAMETER_TYPE_MAINTAIN_POSITION) {
             localInst->a = pa;
@@ -124,7 +121,7 @@ void setNextPosition(PidMotionDefinition* motionDefinition,
         }
     }
     computeMotionInstruction(localInst);
-    
+
     // When using classic motion, we compute a U value with alpha/theta (2 main parameters), and not with spline (3 values)
     motionDefinition->computeU = &simpleMotionUCompute;
 }

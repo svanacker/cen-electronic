@@ -14,8 +14,8 @@
 void startMatchPc(void);
 
 /**
-* To detect on a file if the match is started or not.
-*/
+ * To detect on a file if the match is started or not.
+ */
 bool isMatchStartedPc(StartMatch* startMatch);
 
 #endif

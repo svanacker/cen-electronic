@@ -15,32 +15,32 @@ typedef bool ioExpanderInitFunction(IOExpander* ioExpander);
 // ALL BITS
 
 /**
-* Read all values of the IO.
-* @return the value of the IO Expander
-*/
+ * Read all values of the IO.
+ * @return the value of the IO Expander
+ */
 typedef unsigned char ioExpanderReadValueFunction(IOExpander* ioExpander);
 
 /**
-* Write a value to drive the ioExpander as Output for all ios.
-*/
+ * Write a value to drive the ioExpander as Output for all ios.
+ */
 typedef void ioExpanderWriteValueFunction(IOExpander* ioExpander, unsigned char value);
 
 // SINGLE BIT 
 
 /**
-* Read if the IO is on or off for the specified io
-* @return the value of the IO Expander
-*/
+ * Read if the IO is on or off for the specified io
+ * @return the value of the IO Expander
+ */
 typedef bool ioExpanderReadSingleValueFunction(IOExpander* ioExpander, unsigned int ioIndex);
 
 /**
-* Write a value to drive the ioExpander as Output for a single io.
-*/
+ * Write a value to drive the ioExpander as Output for a single io.
+ */
 typedef void ioExpanderWriteSingleValueFunction(IOExpander* ioExpander, unsigned int ioIndex, bool value);
 
 /**
-* Defines the contract IO Expander like PCF8574.
-*/
+ * Defines the contract IO Expander like PCF8574.
+ */
 struct IOExpander {
     /** The function which must be used to init the io */
     ioExpanderInitFunction* ioExpanderInit;
@@ -64,12 +64,12 @@ struct IOExpander {
  * Init the wrapper around IO Expander. 
  */
 void initIOExpander(IOExpander* ioExpander,
-               ioExpanderInitFunction* ioExpanderInit,
-               ioExpanderReadValueFunction* ioExpanderReadValue,
-               ioExpanderWriteValueFunction* ioExpanderWriteValue,
-               ioExpanderReadSingleValueFunction* ioExpanderReadSingleValue,
-               ioExpanderWriteSingleValueFunction* ioExpanderWriteSingleValue,
-               unsigned int count,
-               int* object);
+        ioExpanderInitFunction* ioExpanderInit,
+        ioExpanderReadValueFunction* ioExpanderReadValue,
+        ioExpanderWriteValueFunction* ioExpanderWriteValue,
+        ioExpanderReadSingleValueFunction* ioExpanderReadSingleValue,
+        ioExpanderWriteSingleValueFunction* ioExpanderWriteSingleValue,
+        unsigned int count,
+        int* object);
 
 #endif

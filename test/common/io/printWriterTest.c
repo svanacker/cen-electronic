@@ -54,7 +54,7 @@ void printWriterTestSuite(void) {
 }
 
 void initBufferForPrintWriterTest(void) {
-    initBuffer(&bufferTest, (char(*)[]) &bufferArrayTest, TEST_BUFFER_SIZE, "printWriter", "printWriterTestType");
+    initBuffer(&bufferTest, (char(*)[]) & bufferArrayTest, TEST_BUFFER_SIZE, "printWriter", "printWriterTestType");
     outputStream = getOutputStream(&bufferTest);
 }
 
@@ -62,7 +62,7 @@ void initBufferForPrintWriterTest(void) {
 
 void test_append_simple(void) {
     initBufferForPrintWriterTest();
-    
+
     append(outputStream, 'a');
 
     char actual = bufferReadChar(&bufferTest);
@@ -115,7 +115,7 @@ void test_appendString(void) {
 void test_appendCharArray(void) {
     initBufferForPrintWriterTest();
     FixedCharArray s = "HELL";
-	appendHexFixedCharArray(outputStream, &s);
+    appendHexFixedCharArray(outputStream, &s);
     // HELL in hexadecimal becomes : "48454C4C4F
     bool actual = isBufferEqualsToString(&bufferTest, "48454C4C");
     TEST_ASSERT_TRUE(actual);
@@ -125,12 +125,12 @@ void test_appendCharArray(void) {
 
 void test_printBuffer(void) {
     // Buffer 1
-    initBuffer(&bufferTest, (char(*)[]) &bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
+    initBuffer(&bufferTest, (char(*)[]) & bufferArrayTest, TEST_BUFFER_SIZE, "nameTest", "typeTest");
     OutputStream* outputStream1 = getOutputStream(&bufferTest);
     appendString(outputStream1, "HELLO");
 
     // Buffer 2
-    initBuffer(&bufferTest2, (char(*)[]) &bufferArrayTest2, TEST_BUFFER_SIZE, "nameTest2", "typeTest2");
+    initBuffer(&bufferTest2, (char(*)[]) & bufferArrayTest2, TEST_BUFFER_SIZE, "nameTest2", "typeTest2");
     OutputStream* outputStream2 = getOutputStream(&bufferTest2);
 
     // Copy from Buffer 1 to Buffer 2

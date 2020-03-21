@@ -9,9 +9,9 @@
 #define SOFT_CLOCK_UPDATE_TIME_DIVISER     TIME_DIVIDER_1_HERTZ
 
 /**
-* Initializes a clock object which is updatable by soft (no RTC embedded).
-* @param clock a pointer on the clock structure.
-*/
+ * Initializes a clock object which is updatable by soft (no RTC embedded).
+ * @param clock a pointer on the clock structure.
+ */
 void initSoftClock(Clock* clock);
 
 #endif

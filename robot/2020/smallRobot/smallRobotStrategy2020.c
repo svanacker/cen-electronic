@@ -130,7 +130,7 @@ void initSmallRobotPaths2020(GameStrategyContext* gameStrategyContext) {
         deciDegreeToRad(ACCELERATOR_FRONT_DECI_DEG),
         aFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_ACCELERATION_FACTOR,
         speedFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_SPEED_FACTOR);
-*/
+     */
 }
 
 void initSmallRobotTargets2020(GameStrategyContext* gameStrategyContext) {
@@ -145,7 +145,7 @@ void initSmallRobotTargets2020(GameStrategyContext* gameStrategyContext) {
     addGameTarget(&smallDistributorLine1Target, "SMALL_DIST_1_TARGET", SCORE_POINT_2019_ADD_ATOM_ACCELERATOR, smallDistributorLine1Location, weighingMachineDropLocation);
     addGameTarget(&bigDistributorLine3RediumGreeniumTarget, "BIG_DIST_RED_TARGET_3", 10.0f, bigDistributorLine3Location, rediumGreeniumDropLocation);
     addGameTarget(&bigDistributorLine2BlueiumGreeniumTarget, "BIG_DIST_RED_TARGET_2", 5.0f, bigDistributorLine2Location, blueiumGreeniumDropLocation);
-    */
+     */
 }
 
 void initSmallRobotTargetActions2020(GameStrategyContext* gameStrategyContext) {
@@ -153,7 +153,7 @@ void initSmallRobotTargetActions2020(GameStrategyContext* gameStrategyContext) {
     /*
     addTargetPrepareAction(&(acceleratorTarget.actionList), &acceleratorPrepareTargetAction, smallRobotStartAreaLocation, ACCELERATOR_ARM_ON_ACTION_TIME_TO_ACHIEVE, &acceleratorPrepareTargetActionItemList);
     addTargetDropAction(&(acceleratorTarget.actionList), &acceleratorDropTargetAction, acceleratorFrontLocation, ACCELERATOR_ARM_OFF_ACTION_TIME_TO_ACHIEVE, &acceleratorDropTargetActionItemList);
-    */
+     */
 }
 
 void initSmallRobotTargetActionsItems2020(GameStrategyContext* gameStrategyContext) {
@@ -185,5 +185,5 @@ void initSmallRobotStrategies2020(GameStrategyContext* gameStrategyContext) {
     addGameStrategy(&smallRobotStrategy1Accelerator, SMALL_ROBOT_STRATEGY_1_ACCELERATOR, "ACCELERATOR");
     addGameStrategy(&smallRobotStrategy2AcceleratorTakeGoldenium, SMALL_ROBOT_STRATEGY_2_ACCELERATOR_TAKE_GOLDENIUM, "ACC / TAKE GOLD");
     addGameStrategy(&smallRobotStrategy3AcceleratorTakeDropGoldenium, SMALL_ROBOT_STRATEGY_3_ACCELERATOR_TAKE_DROP_GOLDENIUM, "ACC / TAKE DROP GOLD");
-    */
+     */
 }

@@ -5,7 +5,7 @@
 
 /**
  * Common action for both robot which will handle them both.
-*/
+ */
 bool acceleratorDrop(int* context, const char* logName);
 
 #endif

@@ -14,10 +14,9 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
-
 void initIOExpanderList(IOExpanderList* ioExpanderList,
-                       IOExpander(*ioExpanderArray)[],
-                       unsigned int ioExpanderListSize) {
+        IOExpander(*ioExpanderArray)[],
+        unsigned int ioExpanderListSize) {
     if (ioExpanderArray == NULL) {
         writeError(IO_EXPANDER_LIST_NOT_INITIALIZED);
     }
@@ -30,14 +29,14 @@ IOExpander* getIOExpanderByIndex(IOExpanderList* ioExpanderList, unsigned int in
         writeError(IO_EXPANDER_LIST_NOT_INITIALIZED);
         return NULL;
     }
-	if (index < 0 || index >= ioExpanderList->size) {
-		writeError(IO_EXPANDER_LIST_ILLEGAL_INDEX);
-		return NULL;
-	}
+    if (index < 0 || index >= ioExpanderList->size) {
+        writeError(IO_EXPANDER_LIST_ILLEGAL_INDEX);
+        return NULL;
+    }
     IOExpander* result = (IOExpander*) ioExpanderList->ioExpanderArray;
-	// we don't need use sizeof because our pointer is a IOExpander pointer, so the shift
-	// is already of the structure, we just have to shift of index.
-	result += index;
+    // we don't need use sizeof because our pointer is a IOExpander pointer, so the shift
+    // is already of the structure, we just have to shift of index.
+    result += index;
 
-	return result;
+    return result;
 }

@@ -19,15 +19,15 @@
 #define EEPROM_BLOCK_COUNT			        8
 
 void initEeprom(Eeprom* eeprom_,
-                enum EepromType eepromType,
-                long maxIndex,
-                EepromWriteCharFunction* eepromWriteChar,
-                EepromReadCharFunction* eepromReadChar,
-                EepromWriteBlockFunction* eepromWriteBlock,
-                EepromReadBlockFunction* eepromReadBlock,
-                EepromLoadFunction* eepromLoadFunction,
-                EepromDumpFunction* eepromDumpFunction,
-                void* object) {
+        enum EepromType eepromType,
+        long maxIndex,
+        EepromWriteCharFunction* eepromWriteChar,
+        EepromReadCharFunction* eepromReadChar,
+        EepromWriteBlockFunction* eepromWriteBlock,
+        EepromReadBlockFunction* eepromReadBlock,
+        EepromLoadFunction* eepromLoadFunction,
+        EepromDumpFunction* eepromDumpFunction,
+        void* object) {
     if (eeprom_ == NULL) {
         writeError(EEPROM_NULL);
         return;
@@ -44,6 +44,10 @@ void initEeprom(Eeprom* eeprom_,
 }
 
 unsigned int eepromReadInt(Eeprom* eeprom_, unsigned int index) {
+    if (eeprom_ == NULL) {
+        writeError(EEPROM_NULL);
+        return 0;
+    }
     // We use Big Endian format !
     unsigned int msb = eeprom_->eepromReadChar(eeprom_, index);
     unsigned int lsb = eeprom_->eepromReadChar(eeprom_, index + 1);
@@ -53,6 +57,10 @@ unsigned int eepromReadInt(Eeprom* eeprom_, unsigned int index) {
 }
 
 unsigned long eepromReadLong(Eeprom* eeprom_, unsigned long index) {
+    if (eeprom_ == NULL) {
+        writeError(EEPROM_NULL);
+        return 0L;
+    }
     // We use Big Endian format !
     unsigned long b0 = eeprom_->eepromReadChar(eeprom_, index);
     unsigned long b1 = eeprom_->eepromReadChar(eeprom_, index + 1);
@@ -64,11 +72,16 @@ unsigned long eepromReadLong(Eeprom* eeprom_, unsigned long index) {
 }
 
 float eepromReadUnsignedFloat(Eeprom* eeprom_, unsigned long index, unsigned int digitPrecision) {
+    if (eeprom_ == NULL) {
+        writeError(EEPROM_NULL);
+        return 0.0f;
+    }
+
     unsigned long longValue = eepromReadLong(eeprom_, index);
-    float result = (float)longValue;
+    float result = (float) longValue;
     if (longValue > 0x80000000) {
         longValue -= 0x80000000;
-        result = -((float)longValue);
+        result = -((float) longValue);
     }
 
     // we store it as a long value) excluding digit after comma (but we multiply it before)
@@ -81,12 +94,20 @@ float eepromReadUnsignedFloat(Eeprom* eeprom_, unsigned long index, unsigned int
 }
 
 void eepromWriteInt(Eeprom* eeprom_, unsigned long index, unsigned int value) {
+    if (eeprom_ == NULL) {
+        writeError(EEPROM_NULL);
+        return;
+    }
     // We use Big Endian format !
     eeprom_->eepromWriteChar(eeprom_, index, value >> 8);
     eeprom_->eepromWriteChar(eeprom_, index + 1, value & 0xFF);
 }
 
 void eepromWriteLong(Eeprom* eeprom_, unsigned long index, unsigned long value) {
+    if (eeprom_ == NULL) {
+        writeError(EEPROM_NULL);
+        return;
+    }
     // We use Big Endian format !
     eeprom_->eepromWriteChar(eeprom_, index, (value >> 24) & 0xFF);
     eeprom_->eepromWriteChar(eeprom_, index + 1, (value >> 16) & 0xFF);
@@ -95,6 +116,10 @@ void eepromWriteLong(Eeprom* eeprom_, unsigned long index, unsigned long value) 
 }
 
 void eepromWriteFloat(Eeprom* eeprom_, unsigned long index, float value, unsigned int digitPrecision) {
+    if (eeprom_ == NULL) {
+        writeError(EEPROM_NULL);
+        return;
+    }
     bool negative = false;
     if (value < -0.000001f) {
         negative = true;
@@ -122,6 +147,10 @@ long getMaxIndex(Eeprom* eeprom_) {
 }
 
 bool isEepromInitialized(Eeprom* eeprom_) {
+    if (eeprom_ == NULL) {
+        writeError(EEPROM_NULL);
+        return false;
+    }
     if (eeprom_->eepromWriteChar == NULL || eeprom_->eepromReadChar == NULL) {
         return false;
     }
@@ -129,6 +158,10 @@ bool isEepromInitialized(Eeprom* eeprom_) {
 }
 
 void printEepromBlock(Eeprom* eeprom_, OutputStream* outputStream, long index, unsigned int length, Buffer* buffer) {
+    if (eeprom_ == NULL) {
+        writeError(EEPROM_NULL);
+        return;
+    }
     eeprom_->eepromReadBlock(eeprom_, index, length, buffer);
     unsigned long i;
     for (i = 0; i < length; i++) {
@@ -138,6 +171,10 @@ void printEepromBlock(Eeprom* eeprom_, OutputStream* outputStream, long index, u
 }
 
 void clearEeprom(Eeprom* eeprom_, unsigned long startIndex, unsigned int length, unsigned char clearValue) {
+    if (eeprom_ == NULL) {
+        writeError(EEPROM_NULL);
+        return;
+    }
     unsigned long i;
     for (i = startIndex; i < startIndex + length; i++) {
         eeprom_->eepromWriteChar(eeprom_, i, clearValue);
@@ -145,48 +182,51 @@ void clearEeprom(Eeprom* eeprom_, unsigned long startIndex, unsigned int length,
 }
 
 void dumpEepromToOutputStream(Eeprom* eeprom_, OutputStream* outputStream, unsigned long startIndex, unsigned long maxIndex) {
+    if (eeprom_ == NULL) {
+        writeError(EEPROM_NULL);
+        return;
+    }
     unsigned long i;
-    
+
     const unsigned int WIDTH = EEPROM_BLOCK_COUNT * 4;
 
-	// Table Header
-	println(outputStream);
-	appendTableHeaderSeparatorLine(outputStream);
+    // Table Header
+    println(outputStream);
+    appendTableHeaderSeparatorLine(outputStream);
     addEepromTypeTableData(outputStream, eeprom_->eepromType, 0);
     println(outputStream);
-	appendTableHeaderSeparatorLine(outputStream);
-	appendTableHeaderSeparatorLine(outputStream);
-	appendStringHeader(outputStream, "addr", EEPROM_ADDRESS_LENGTH);
-	appendStringHeader(outputStream, "Block 0", EEPROM_BLOCK_4_VALUE_LENGTH);
-	appendStringHeader(outputStream, "Block 1", EEPROM_BLOCK_4_VALUE_LENGTH);
-	appendStringHeader(outputStream, "Block 2", EEPROM_BLOCK_4_VALUE_LENGTH);
-	appendStringHeader(outputStream, "Block 3", EEPROM_BLOCK_4_VALUE_LENGTH);
-	appendTableSeparator(outputStream);
-	println(outputStream);
-	appendTableHeaderSeparatorLine(outputStream);
+    appendTableHeaderSeparatorLine(outputStream);
+    appendTableHeaderSeparatorLine(outputStream);
+    appendStringHeader(outputStream, "addr", EEPROM_ADDRESS_LENGTH);
+    appendStringHeader(outputStream, "Block 0", EEPROM_BLOCK_4_VALUE_LENGTH);
+    appendStringHeader(outputStream, "Block 1", EEPROM_BLOCK_4_VALUE_LENGTH);
+    appendStringHeader(outputStream, "Block 2", EEPROM_BLOCK_4_VALUE_LENGTH);
+    appendStringHeader(outputStream, "Block 3", EEPROM_BLOCK_4_VALUE_LENGTH);
+    appendTableSeparator(outputStream);
+    println(outputStream);
+    appendTableHeaderSeparatorLine(outputStream);
 
-	unsigned long rowIndex = 0;
+    unsigned long rowIndex = 0;
     for (i = startIndex; i < maxIndex; i++) {
         char c = eeprom_->eepromReadChar(eeprom_, i);
-		unsigned int columnIndex = (i % WIDTH);
-		if (columnIndex == 0) {
-			// address
-			appendHex6TableData(outputStream, i, EEPROM_ADDRESS_LENGTH);
+        unsigned int columnIndex = (i % WIDTH);
+        if (columnIndex == 0) {
+            // address
+            appendHex6TableData(outputStream, i, EEPROM_ADDRESS_LENGTH);
         }
-		if ((i % EEPROM_BLOCK_COUNT) == 0) {
-			appendHex2TableData(outputStream, c, 3);
-		}
-		else {
-			appendHex2(outputStream, c);
-			appendSpace(outputStream);
-		}
-		if (columnIndex == WIDTH - 1) {
-			rowIndex++;
-			appendTableSeparator(outputStream);
-			println(outputStream);
-			if ((rowIndex % EEPROM_BLOCK_COUNT) == 0) {
-				appendTableHeaderSeparatorLine(outputStream);
-			}
-		}
-	}
+        if ((i % EEPROM_BLOCK_COUNT) == 0) {
+            appendHex2TableData(outputStream, c, 3);
+        } else {
+            appendHex2(outputStream, c);
+            appendSpace(outputStream);
+        }
+        if (columnIndex == WIDTH - 1) {
+            rowIndex++;
+            appendTableSeparator(outputStream);
+            println(outputStream);
+            if ((rowIndex % EEPROM_BLOCK_COUNT) == 0) {
+                appendTableHeaderSeparatorLine(outputStream);
+            }
+        }
+    }
 }

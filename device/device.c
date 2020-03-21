@@ -31,8 +31,7 @@ bool initDevice(const Device* device) {
 
         if (result) {
             appendString(logStream, "OK");
-        }
-        else {
+        } else {
             appendString(logStream, "KO (");
             appendDec(logStream, getLastError());
             append(logStream, ')');

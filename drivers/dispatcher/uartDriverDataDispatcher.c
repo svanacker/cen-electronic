@@ -35,13 +35,13 @@ DriverDataDispatcher* addUartDriverDataDispatcher(
     OutputStream* outputStream = streamLink->outputStream;
 
     DriverDataDispatcher* result = addDriverDataDispatcher(
-                                        TRANSMIT_UART,
-                                        dispatcherName,
-                                        NULL,
-                                        targetUartIndex,
-                                        inputStream,
-                                        outputStream,
-                                        remoteDriverDataDispatcherTransmit);
+            TRANSMIT_UART,
+            dispatcherName,
+            NULL,
+            targetUartIndex,
+            inputStream,
+            outputStream,
+            remoteDriverDataDispatcherTransmit);
 
     // Clear previous data to avoid buffer from the other board
     // TODO : Check if we must to this at this time

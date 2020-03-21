@@ -237,11 +237,10 @@ bool tofSensorStartVL53L0X(TofSensor* tofSensor, bool restart, bool debug) {
             // Start via XSHUT pin to high
             hardRestartIOExpander->ioExpanderWriteSingleValue(hardRestartIOExpander, tofSensor->hardwareRestartIOExpanderIoIndex, true);
             timerDelayMilliSeconds(30);
-            
+
             // Execute after the HARD RESET the standard start
             return tofStart(tofSensor);
-        }
-        else {
+        } else {
             // For the "Soft" restart, the connection is already set, but we need to use
             // The multiplexer ...
             tofSensorSelectRightI2cBusConnection(tofSensor, tofSensor->targetAddress, debug);

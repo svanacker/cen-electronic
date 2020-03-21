@@ -44,13 +44,10 @@
 // *****************************************************************************
 
 
-static const char* myHelloStr1="   PIC32...on LCD   Cybernetique en Nord        With              By Jerome    \n";
-
-
-
+static const char* myHelloStr1 = "   PIC32...on LCD   Cybernetique en Nord        With              By Jerome    \n";
 
 void delayUs(void) {
-       
+
 }
 
 void delay100us(char uSecond) {
@@ -79,43 +76,38 @@ void delaymSec(unsigned int mSecond) {
     }
 }
 
-void w_com (char com){
-    PORTClearBits(IOPORT_F,RS|RW); 
-    PORTSetBits(IOPORT_F,E); 
+void w_com(char com) {
+    PORTClearBits(IOPORT_F, RS | RW);
+    PORTSetBits(IOPORT_F, E);
     PORTE = com;
     delay100us(10);
-    PORTClearBits(IOPORT_F,E); 
-    PORTSetBits(IOPORT_F,E);
+    PORTClearBits(IOPORT_F, E);
+    PORTSetBits(IOPORT_F, E);
 }
 
-void w_data (char data){
-    PORTClearBits(IOPORT_F,RW); 
-    PORTSetBits(IOPORT_F,RS); 
+void w_data(char data) {
+    PORTClearBits(IOPORT_F, RW);
+    PORTSetBits(IOPORT_F, RS);
     PORTE = data;
     delay100us(10);
-    PORTClearBits(IOPORT_F,E); 
-    PORTSetBits(IOPORT_F,E);
+    PORTClearBits(IOPORT_F, E);
+    PORTSetBits(IOPORT_F, E);
 }
 
-
-void w_text(const char *buffer)
-{
-    while(*buffer != '\n')
-    {
-        w_data( *buffer);
-        buffer++; 
+void w_text(const char *buffer) {
+    while (*buffer != '\n') {
+        w_data(*buffer);
+        buffer++;
     }
-  
+
 }
 
-
-int main(void)
-{     
-    PORTSetPinsDigitalOut(IOPORT_F,E|RS|RW);
-    PORTSetPinsDigitalOut(IOPORT_E,D0|D1|D2|D3|D4|D5|D6|D7);
+int main(void) {
+    PORTSetPinsDigitalOut(IOPORT_F, E | RS | RW);
+    PORTSetPinsDigitalOut(IOPORT_E, D0 | D1 | D2 | D3 | D4 | D5 | D6 | D7);
 
 
-    PORTClearBits(IOPORT_F, E|RS|RW);
+    PORTClearBits(IOPORT_F, E | RS | RW);
 
 
 

@@ -1,9 +1,9 @@
-void testPortA (void);
+void testPortA(void);
 
-void testPortB (void);
+void testPortB(void);
 
-void testPortC (void);
+void testPortC(void);
 
-void testPortD (void);
+void testPortD(void);
 
-void testPortF (void);
+void testPortF(void);

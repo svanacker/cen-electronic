@@ -17,11 +17,10 @@ int deviceMotionSimulationGetInterface(unsigned char commandHeader, DeviceInterf
             setResultUnsignedChar1(0, "simulateMotor");
             setResultUnsignedChar1(1, "simulateCoder");
             setResultUnsignedChar1(2, "simulatePosition");
-            
+
         }
         return commandLengthValueForMode(mode, 0, 3);
-    }
-    else if (commandHeader == COMMAND_MOTION_SIMULATION_SET) {
+    } else if (commandHeader == COMMAND_MOTION_SIMULATION_SET) {
         if (fillDeviceArgumentList) {
             setFunction("setMotionSimulation", 3, 0);
             setArgumentUnsignedChar1(0, "simulateMotor");

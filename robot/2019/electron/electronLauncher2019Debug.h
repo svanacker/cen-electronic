@@ -11,8 +11,8 @@ unsigned int printElectronLauncherState(OutputStream* outputStream, enum Electro
 unsigned int addLauncherStateTypeTableData(OutputStream* outputStream, enum ElectronLauncher2019State state, int columnSize);
 
 /**
-* Debug the launcher
-*/
+ * Debug the launcher
+ */
 void electronLauncher2019Debug(ElectronLauncher2019* launcher, OutputStream* outputStream);
 
 

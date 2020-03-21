@@ -2,8 +2,45 @@
 #define PIN_H
 
 #include <stdbool.h>
+#include <stdlib.h>
 
+#include "../../common/error/error.h"
 #include "outputStream.h"
+
+// forward declaration
+struct PinList;
+typedef struct PinList PinList;
+
+/**
+ * Get the pin value for the index.
+ * @param pinList the encapsulation of the list of pin
+ * @param the index of the pin
+ * true if the pin is on, false if the pin is off
+ */
+typedef bool GetPinValueFunction(PinList* pinList, int pinIndex);
+
+/**
+ * Set the value for the pin Index (see pin.h)
+ * @param pinList the encapsulation of the list of pin
+ * @param the index of the pin
+ * @param pinValue the new value of the pin
+ */
+typedef void SetPinValueFunction(PinList* pinList, int pinIndex, bool pinValue);
+
+/**
+ * Initialise a pin List for Pc.
+ * @param pinList pointer on pinList object (POO Paradigm)
+ */
+void initPinList(PinList* pinList, GetPinValueFunction* getPinValueFunction, SetPinValueFunction* setPinValueFunction, int* object);
+
+struct PinList {
+    /** The function which must be called to get the status of a pin. */
+    GetPinValueFunction* getPinValueFunction;
+    /** The function which must be called to set a pin. */
+    SetPinValueFunction* setPinValueFunction;
+    /** pointer on other object (useful PC Implementation for example).*/
+    int* object;
+};
 
 // PIC32 Definition : http://ww1.microchip.com/downloads/en/devicedoc/60001156j.pdf
 
@@ -108,24 +145,20 @@
 #define PIN_MAX_INDEX        PIN_INDEX_RF8
 
 /**
- * Get the pin value for the index.
+ * Returns the value of the pin Index (see pin.h)
+ * @param pinList the encapsulation of the list of pin
  * @param the index of the pin
- * true if the pin is on, false if the pin is off
+ * @return 
  */
-bool getPinValue(int pinIndex);
+bool getPinValue(PinList* pinList, int pinIndex);
 
 /**
  * Set the value for the pin Index (see pin.h)
+ * @param pinList the encapsulation of the list of pin
  * @param the index of the pin
  * @param pinValue the new value of the pin
  */
-void setPinValue(int pinIndex, bool pinValue);
-
-/**
- * Print All Pin Values.
- * @param outputStream the stream in which we write all values
- */
-void printAllPinValues(OutputStream* outputStream);
+void setPinValue(PinList* pinList, int pinIndex, bool pinValue);
 
 #endif
 

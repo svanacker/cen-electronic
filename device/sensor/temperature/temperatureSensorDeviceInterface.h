@@ -7,19 +7,19 @@
 // List of TEMPERATURE SENSOR COMMAND HEADER
 
 /**
-* Defines the header to read the temperature sensor
-*/
+ * Defines the header to read the temperature sensor
+ */
 
 #define COMMAND_READ_TEMPERATURE_SENSOR         'r'
 
 /**
-* Defines the header to set the temperature sensor Alert 
-*/
+ * Defines the header to set the temperature sensor Alert 
+ */
 #define COMMAND_SET_TEMPERATURE_SENSOR_ALERT    'w'
 
 /**
-* Interface for Device.
-*/
+ * Interface for Device.
+ */
 DeviceInterface* getTemperatureSensorDeviceInterface(void);
 
 #endif    

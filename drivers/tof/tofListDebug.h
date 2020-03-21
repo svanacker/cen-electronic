@@ -58,15 +58,15 @@
 void printTofSensorDetectionTable(OutputStream* outputStream, TofSensorList* tofSensorList, Point* pointOfView, float pointOfViewAngleRadian);
 
 /**
-* Default Print function of the Config Table List.
-* Could be override / configure for specific Tof
-*/
+ * Default Print function of the Config Table List.
+ * Could be override / configure for specific Tof
+ */
 void printTofSensorConfigTable(OutputStream* outputStream, TofSensorList* tofSensorList);
 
 /**
-* Default Print function of the Network Table List.
-* Could be override / configure for specific Tof
-*/
+ * Default Print function of the Network Table List.
+ * Could be override / configure for specific Tof
+ */
 void printTofSensorNetworkTable(OutputStream* outputStream, TofSensorList* tofSensorList);
 
 #endif

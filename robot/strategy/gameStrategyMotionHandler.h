@@ -7,8 +7,8 @@
 #include "gameStrategyContext.h"
 
 /**
-* Initialize the motion part of the GameStrategyContext*.
-*/
+ * Initialize the motion part of the GameStrategyContext*.
+ */
 void initGameStrategyMotionHandler(GameStrategyContext* gameStrategyContext);
 
 /**
@@ -17,10 +17,10 @@ void initGameStrategyMotionHandler(GameStrategyContext* gameStrategyContext);
 bool motionFollowPath(GameStrategyContext* gmeStrategyContext, PathData* pathData);
 
 /**
-* Ask to do a small rotation to ensure that the robot will restart the next move with the right angle
-* @param pathData the next pathData that the robot has to do
-* @return true if the robot has really moved, false else
-*/
+ * Ask to do a small rotation to ensure that the robot will restart the next move with the right angle
+ * @param pathData the next pathData that the robot has to do
+ * @return true if the robot has really moved, false else
+ */
 bool motionRotateToFollowPath(GameStrategyContext* gmeStrategyContext, PathData* pathData);
 
 // COMBINAISON Of Rotate / Follow

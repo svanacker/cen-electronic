@@ -19,13 +19,13 @@ typedef struct MotionSimulationParameter {
  */
 MotionSimulationParameter* getMotionSimulationParameter();
 
-void simulateBSplineAbsolute(GameStrategyContext* gameStrategyContext, 
-                             float destX,
-                             float destY,
-                             float angleRadian,
-                             float dist0,
-                             float dist1,
-                             float accelerationFactor, float speedFactor);
+void simulateBSplineAbsolute(GameStrategyContext* gameStrategyContext,
+        float destX,
+        float destY,
+        float angleRadian,
+        float dist0,
+        float dist1,
+        float accelerationFactor, float speedFactor);
 
 void initMotionSimulation(GameStrategyContext* gameStrategyContext);
 

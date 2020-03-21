@@ -62,11 +62,10 @@ enum ElectronLauncher2019State {
     LAUNCHER_STATE_TO_LAUNCH = 6,
     // The launcher was launched
     LAUNCHER_STATE_LAUNCHED = 7,
-    
+
     // SHOW REMAINING TIME
     LAUNCHER_STATE_SHOW_REMAINING_TIME = 8
 };
-
 
 /**
  * The struct defining the electron Launcher.
@@ -99,23 +98,23 @@ typedef struct {
 } ElectronLauncher2019;
 
 /**
-* Initialize the Electron Launcher 2019 and add a timer to check every 100 ms
-*/
+ * Initialize the Electron Launcher 2019 and add a timer to check every 100 ms
+ */
 void initElectronLauncher2019(ElectronLauncher2019* launcher,
-                              EndMatch* endMatch,
-                              RobotConfig* robotConfig,
-                              ServoList* servoList,
-                              TofSensorList* tofSensorList);
+        EndMatch* endMatch,
+        RobotConfig* robotConfig,
+        ServoList* servoList,
+        TofSensorList* tofSensorList);
 
 /**
-* Main method which must be called in the main processing loop so that
-* we could manage the state and find actions to do.
-*/
+ * Main method which must be called in the main processing loop so that
+ * we could manage the state and find actions to do.
+ */
 void handleElectronLauncherActions(ElectronLauncher2019* launcher);
 
 /**
-* Handle all Change of state to be able to debug the workflow.
-*/
+ * Handle all Change of state to be able to debug the workflow.
+ */
 void updateElectronLauncherState(ElectronLauncher2019* launcher, enum ElectronLauncher2019State newState);
 
 // ACTIONS

@@ -27,7 +27,7 @@
  * to PC and PIC Implementation
  */
 
- // 2019
+// 2019
 #define MAIN_BOARD_2019_GAME_BOARD_PRINT_ELEMENT_ARRAY_LENGTH    30
 
 /**
@@ -37,10 +37,10 @@
  */
 bool startupCheckList2019(StartMatch* startMatch);
 
-GameStrategyContext* initGameStrategyContext2019(RobotConfig* robotConfig, 
-                                                 EndMatch* endMatch,
-                                                 TofSensorList* tofSensorList,
-                                                 ServoList* servoList);
+GameStrategyContext* initGameStrategyContext2019(RobotConfig* robotConfig,
+        EndMatch* endMatch,
+        TofSensorList* tofSensorList,
+        ServoList* servoList);
 
 Navigation* initNavigation2019(void);
 

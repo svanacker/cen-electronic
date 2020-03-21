@@ -15,9 +15,9 @@ typedef struct ColorSensor ColorSensor;
 typedef bool colorSensorInitFunction(ColorSensor* colorSensor);
 
 /**
-* Read the color (RGB) value of the specified color Sensor.
-* @return the value of the colorSensor
-*/
+ * Read the color (RGB) value of the specified color Sensor.
+ * @return the value of the colorSensor
+ */
 typedef Color* colorSensorReadValueFunction(ColorSensor* colorSensor);
 
 /**
@@ -26,8 +26,8 @@ typedef Color* colorSensorReadValueFunction(ColorSensor* colorSensor);
 typedef enum ColorType colorSensorFindColorTypeFunction(ColorSensor* colorSensor);
 
 /**
-* Defines the contract for switch robot configuration.
-*/
+ * Defines the contract for switch robot configuration.
+ */
 struct ColorSensor {
     /** The function which must be used to init the color Sensor */
     colorSensorInitFunction* colorSensorInit;
@@ -44,11 +44,11 @@ struct ColorSensor {
 /** 
  * Init the wrapper around Color Sensor. 
  */
-void initColorSensor(ColorSensor* colorSensor, 
-               colorSensorInitFunction* colorSensorInit,
-               colorSensorReadValueFunction* colorSensorReadValue,
-               colorSensorFindColorTypeFunction* colorSensorFindColorType,
-               Color* color,
-               int* object);
+void initColorSensor(ColorSensor* colorSensor,
+        colorSensorInitFunction* colorSensorInit,
+        colorSensorReadValueFunction* colorSensorReadValue,
+        colorSensorFindColorTypeFunction* colorSensorFindColorType,
+        Color* color,
+        int* object);
 
 #endif

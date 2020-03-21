@@ -21,15 +21,15 @@ Accelerometer* getAccelerometerDeviceAccelerometer(void);
 
 // DEVICE INTERFACE
 
-void initAccelerometerDevice( void ) {
+void initAccelerometerDevice(void) {
 
 }
 
-void stopAccelerometerDevice( void ) {
+void stopAccelerometerDevice(void) {
 
 }
 
-bool isAccelerometerDeviceOk ( void ) {
+bool isAccelerometerDeviceOk(void) {
     return true;
 }
 
@@ -41,8 +41,7 @@ void deviceAccelerometerHandleRawData(unsigned char commandHeader, InputStream* 
         Accelerometer* accelerometer = getAccelerometerDeviceAccelerometer();
         unsigned int sampleCount = accelerometer->getSampleCount(accelerometer);
         appendHex4(outputStream, sampleCount);
-    }
-    // DATA
+    }// DATA
     else if (commandHeader == COMMAND_ACCELEROMETER_GET_SAMPLE_RAW_DATA) {
         ackCommand(outputStream, ACCELEROMETER_DEVICE_HEADER, COMMAND_ACCELEROMETER_GET_SAMPLE_RAW_DATA);
 
@@ -54,8 +53,7 @@ void deviceAccelerometerHandleRawData(unsigned char commandHeader, InputStream* 
         appendHex4(outputStream, accelerometerData->yRawValue);
         appendSeparator(outputStream);
         appendHex4(outputStream, accelerometerData->zRawValue);
-    }
-    else if (commandHeader == COMMAND_ACCELEROMETER_GET_SAMPLE_DATA_MILLIG_G) {
+    } else if (commandHeader == COMMAND_ACCELEROMETER_GET_SAMPLE_DATA_MILLIG_G) {
         ackCommand(outputStream, ACCELEROMETER_DEVICE_HEADER, COMMAND_ACCELEROMETER_GET_SAMPLE_DATA_MILLIG_G);
 
         Accelerometer* accelerometer = getAccelerometerDeviceAccelerometer();
@@ -66,33 +64,29 @@ void deviceAccelerometerHandleRawData(unsigned char commandHeader, InputStream* 
         appendHex4(outputStream, accelerometerData->milligYValue);
         appendSeparator(outputStream);
         appendHex4(outputStream, accelerometerData->milligZValue);
-    }
-    // TRESHOLD
+    }// TRESHOLD
     else if (commandHeader == COMMAND_ACCELEROMETER_GET_THRESHOLD) {
         ackCommand(outputStream, ACCELEROMETER_DEVICE_HEADER, COMMAND_ACCELEROMETER_GET_THRESHOLD);
 
         Accelerometer* accelerometer = getAccelerometerDeviceAccelerometer();
         unsigned int threshold = accelerometer->getThresholdMillig(accelerometer);
         appendHex4(outputStream, threshold);
-    }
-    else if (commandHeader == COMMAND_ACCELEROMETER_SET_THRESHOLD) {
+    } else if (commandHeader == COMMAND_ACCELEROMETER_SET_THRESHOLD) {
         ackCommand(outputStream, ACCELEROMETER_DEVICE_HEADER, COMMAND_ACCELEROMETER_SET_THRESHOLD);
 
         Accelerometer* accelerometer = getAccelerometerDeviceAccelerometer();
         unsigned int threshold = readHex4(inputStream);
         accelerometer->setThresholdMillig(accelerometer, threshold);
-    }
-    // DEBUG
+    }// DEBUG
     else if (commandHeader == COMMAND_ACCELEROMETER_DEBUG_CONFIG) {
         ackCommand(outputStream, ACCELEROMETER_DEVICE_HEADER, COMMAND_ACCELEROMETER_DEBUG_CONFIG);
-        
+
         Accelerometer* accelerometer = getAccelerometerDeviceAccelerometer();
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
         accelerometer->debugConfig(debugOutputStream, accelerometer);
-    }
-    else if (commandHeader == COMMAND_ACCELEROMETER_DEBUG_VALUES) {
+    } else if (commandHeader == COMMAND_ACCELEROMETER_DEBUG_VALUES) {
         ackCommand(outputStream, ACCELEROMETER_DEVICE_HEADER, COMMAND_ACCELEROMETER_DEBUG_VALUES);
-        
+
         Accelerometer* accelerometer = getAccelerometerDeviceAccelerometer();
         accelerometer->readLastSample(accelerometer);
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
@@ -113,5 +107,5 @@ DeviceDescriptor* getAccelerometerDeviceDescriptor(Accelerometer* accelerometer)
 }
 
 Accelerometer* getAccelerometerDeviceAccelerometer(void) {
-    return (Accelerometer*)(descriptor.object);
+    return (Accelerometer*) (descriptor.object);
 }

@@ -14,9 +14,8 @@
 #define    GetPeripheralClock()        (GetSystemClock()/(1 << OSCCONbits.PBDIV))
 #define    GetInstructionClock()        (GetSystemClock())
 
-
 void delayUs(void) {
-       
+
 }
 
 void delay100us(char uSecond) {
@@ -45,24 +44,22 @@ void delaymSec(unsigned int mSecond) {
     }
 }
 
-int main(void)
-    {
+int main(void) {
 
-    PORTSetPinsDigitalOut(IOPORT_F,BIT_3);
+    PORTSetPinsDigitalOut(IOPORT_F, BIT_3);
     PORTClearBits(IOPORT_F, BIT_3);
 
 
-    PORTSetPinsDigitalOut(IOPORT_C,BIT_14); 
+    PORTSetPinsDigitalOut(IOPORT_C, BIT_14);
     PORTClearBits(IOPORT_C, BIT_14);
 
-    PORTSetPinsDigitalOut(IOPORT_D,BIT_11);
+    PORTSetPinsDigitalOut(IOPORT_D, BIT_11);
     PORTClearBits(IOPORT_D, BIT_11);
 
 
-    while (1)
-        {
+    while (1) {
         delaymSec(1000);
-    
+
         PORTToggleBits(IOPORT_C, BIT_14);
 
         delaymSec(1000);
@@ -72,6 +69,6 @@ int main(void)
         delaymSec(1000);
 
         PORTToggleBits(IOPORT_F, BIT_3);
-        }
+    }
     return (0);
 }

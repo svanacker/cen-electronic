@@ -57,9 +57,9 @@ bool isEmptyLocationList(LocationList* locationList);
 Location* addNamedLocation(LocationList* locationList, enum LocationUsageType usageType, char* name, char* label, float x, float y);
 
 /**
-* Add a location to the list, but with a char pointer structure.
-* @param locationList the pointer on the struct (POO Programming)
-*/
+ * Add a location to the list, but with a char pointer structure.
+ * @param locationList the pointer on the struct (POO Programming)
+ */
 Location* addLocation(LocationList* locationList, enum LocationUsageType usageType, FixedCharArray* name, char* label, float x, float y);
 
 /**
@@ -106,8 +106,8 @@ bool containsLocation(LocationList* locationList, Location* location, bool handl
 unsigned int getLocationCount(LocationList* locationList);
 
 /**
-* Get how many location in the collection which are not already handled.
-*/
+ * Get how many location in the collection which are not already handled.
+ */
 unsigned int getLocationNotHandledCount(LocationList* locationList);
 
 // TEMPORARY LOCATIONS

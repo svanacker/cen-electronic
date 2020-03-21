@@ -18,20 +18,18 @@ int deviceRobotConfigGetInterface(unsigned char commandHeader, DeviceInterfaceMo
             setResultUnsignedHex4(0, "value");
         }
         return commandLengthValueForMode(mode, 0, 4);
-    }
-    else if (commandHeader == COMMAND_SET_CONFIG) {
+    } else if (commandHeader == COMMAND_SET_CONFIG) {
         if (fillDeviceArgumentList) {
             setFunction("setConfig", 1, 0);
             setArgumentUnsignedHex4(0, "value");
         }
         return commandLengthValueForMode(mode, 4, 0);
+    } else if (commandHeader == COMMAND_CONFIG_DEBUG) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("debug");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
     }
-	else if (commandHeader == COMMAND_CONFIG_DEBUG) {
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("debug");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	}
 
     return DEVICE_HEADER_NOT_HANDLED;
 }

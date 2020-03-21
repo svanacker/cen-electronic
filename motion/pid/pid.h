@@ -43,13 +43,13 @@
 void setEnabledPid(PidMotion* pidMotion, unsigned int pidIndex, bool enabled);
 
 /**
-* Sets the PID at the specified index.
-* @param pidIndex the index of the PID to set (between 0 and PID_COUNT)
-* @param p the P parameter
-* @param i the I parameter
-* @param d the D parameter
-* @param maxIntegral the bounds of the I term
-*/
+ * Sets the PID at the specified index.
+ * @param pidIndex the index of the PID to set (between 0 and PID_COUNT)
+ * @param p the P parameter
+ * @param i the I parameter
+ * @param d the D parameter
+ * @param maxIntegral the bounds of the I term
+ */
 void setPidParameter(PidMotion* pidMotion, unsigned int pidIndex, float p, float i, float d, float maxIntegral);
 
 /**
@@ -60,10 +60,10 @@ void setPidParameter(PidMotion* pidMotion, unsigned int pidIndex, float p, float
 PidParameter* getPidParameterByIndex(PidMotion* pidMotion, unsigned int pidTypeIndex);
 
 /**
-* Returns the PID at the specified index.
-* @param index the index of the PID to set (between 0 and PID_TYPE_COUNT)
-* @return the PID at the given index
-*/
+ * Returns the PID at the specified index.
+ * @param index the index of the PID to set (between 0 and PID_TYPE_COUNT)
+ * @return the PID at the given index
+ */
 PidParameter* getPidParameterByPidType(PidMotion* pidMotion, enum PidType pidType);
 
 /**

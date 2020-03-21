@@ -16,8 +16,8 @@
 static TestSuite mathTestSuite;
 
 /**
-* Test if there is no overflow using 16 bits with absLong function.
-*/
+ * Test if there is no overflow using 16 bits with absLong function.
+ */
 bool absLongTest(void) {
     signed long value = 40000;
     signed long absValue = absLong(value);
@@ -34,7 +34,7 @@ bool absLongTest(void) {
     appendString(getDebugOutputStreamLogger(), "RESULT=");
     appendDec(getDebugOutputStreamLogger(), absValue);
     appendCRLF(getDebugOutputStreamLogger());
-    */
+     */
 
 }
 
@@ -43,7 +43,7 @@ bool absLimitTest(void) {
     signed long limitValue = 40000;
 
     signed long result = limit(value1, limitValue);
-    
+
     appendCRLF(getDebugOutputStreamLogger());
     appendString(getDebugOutputStreamLogger(), "absLimitTest\n");
     appendString(getDebugOutputStreamLogger(), "NORMAL=");
@@ -60,7 +60,7 @@ bool absLimitTest(void) {
 bool absFloatTest(void) {
     signed long value = 40000.0;
     signed long absValue = fabsf(value);
-    
+
     appendCRLF(getDebugOutputStreamLogger());
     appendString(getDebugOutputStreamLogger(), "absFloatTest\n");
     appendString(getDebugOutputStreamLogger(), "NORMAL=");
@@ -77,7 +77,7 @@ bool absFloatTest(void) {
 bool convertFloatTest1(void) {
     signed long value = 40000;
     float result = (float) value;
-    
+
     appendCRLF(getDebugOutputStreamLogger());
     appendString(getDebugOutputStreamLogger(), "convertFloatTest1\n");
     appendString(getDebugOutputStreamLogger(), "NORMAL=40000.0000");
@@ -93,7 +93,7 @@ bool convertFloatTest1(void) {
 bool convertFloatTest2(void) {
     signed long value = -40000;
     float result = (float) value;
-    
+
     appendCRLF(getDebugOutputStreamLogger());
     appendString(getDebugOutputStreamLogger(), "convertFloatTest2\n");
     appendString(getDebugOutputStreamLogger(), "NORMAL=-40000.0000");
@@ -109,7 +109,7 @@ bool convertFloatTest2(void) {
 bool convertFloatTest3(void) {
     signed long value = -123456789;
     float result = (float) value;
-    
+
     appendCRLF(getDebugOutputStreamLogger());
     appendString(getDebugOutputStreamLogger(), "convertFloatTest2\n");
     appendString(getDebugOutputStreamLogger(), "NORMAL=-123456789.0000");

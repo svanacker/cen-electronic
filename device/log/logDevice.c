@@ -24,7 +24,7 @@ void deviceLogInit(void) {
 }
 
 void deviceLogShutDown(void) {
-} 
+}
 
 bool deviceLogIsOk(void) {
     return true;
@@ -35,8 +35,7 @@ void deviceLogHandleRawData(unsigned char header, InputStream* inputStream, Outp
         ackCommand(outputStream, LOG_DEVICE_HEADER, COMMAND_GET_LOG_COUNT);
         unsigned logCount = getLogHandlerCount(getLoggerInstance()->logHandlerList);
         appendHex2(outputStream, logCount);
-    }
-    else if (header == COMMAND_WRITE_HANDLER_LOG_LEVEL) {
+    } else if (header == COMMAND_WRITE_HANDLER_LOG_LEVEL) {
         // data
         ackCommand(outputStream, LOG_DEVICE_HEADER, COMMAND_WRITE_HANDLER_LOG_LEVEL);
 
@@ -45,35 +44,33 @@ void deviceLogHandleRawData(unsigned char header, InputStream* inputStream, Outp
 
         LogHandler* logHandler = getLogHandler(getLoggerInstance()->logHandlerList, logHandlerIndex);
         logHandler->logLevel = logLevel;
-    }
-    else if (header == COMMAND_WRITE_GLOBAL_LOG_LEVEL) {
+    } else if (header == COMMAND_WRITE_GLOBAL_LOG_LEVEL) {
         // data
         ackCommand(outputStream, LOG_DEVICE_HEADER, COMMAND_WRITE_GLOBAL_LOG_LEVEL);
         int logLevel = readHex2(inputStream);
 
         Logger* logger = getLoggerInstance();
         logger->globalLogLevel = logLevel;
-    }
-    else if (header == COMMAND_LOG_HANDLER_LIST) {
+    } else if (header == COMMAND_LOG_HANDLER_LIST) {
         ackCommand(outputStream, LOG_DEVICE_HEADER, COMMAND_LOG_HANDLER_LIST);
         printLogger(getInfoOutputStreamLogger());
-    }
-    else if (header == COMMAND_TEST_LOG) {
+    } else if (header == COMMAND_TEST_LOG) {
         ackCommand(outputStream, LOG_DEVICE_HEADER, COMMAND_TEST_LOG);
         int logLevel = readHex2(inputStream);
         // Get the outputStreamLogger with the right Level
         OutputStream* logOutputStream = getOutputStreamLogger(logLevel, getLoggerInstance()->defaultLogCategoryMask);
         appendString(logOutputStream, "LOG_TEST !");
-    }    
+    }
 }
 
-static DeviceDescriptor descriptor = {
-    .deviceInit = &deviceLogInit,
-    .deviceShutDown = &deviceLogShutDown,
-    .deviceIsOk = &deviceLogIsOk,
-    .deviceHandleRawData = &deviceLogHandleRawData,
-};
+static DeviceDescriptor descriptor;
 
 DeviceDescriptor* getLogDeviceDescriptor(void) {
+    initDeviceDescriptor(&descriptor,
+            &deviceLogInit,
+            &deviceLogShutDown,
+            &deviceLogIsOk,
+            &deviceLogHandleRawData,
+            NULL);
     return &descriptor;
 }

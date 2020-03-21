@@ -32,7 +32,7 @@ I2cMasterInputStream* _i2cMasterGetMasterInputStream(InputStream* inputStream) {
  */
 Buffer* _i2cMasterInputStreamGetBuffer(InputStream* inputStream) {
     I2cMasterInputStream* i2cMasterInputStream = _i2cMasterGetMasterInputStream(inputStream);
-    
+
     Buffer* result = i2cMasterInputStream->inputBuffer;
 
     return result;
@@ -43,7 +43,7 @@ Buffer* _i2cMasterInputStreamGetBuffer(InputStream* inputStream) {
  */
 I2cBusConnection* _i2cMasterInputStreamGetI2cBusConnection(InputStream* inputStream) {
     I2cMasterInputStream* i2cMasterInputStream = _i2cMasterGetMasterInputStream(inputStream);
-    
+
     I2cBusConnection* result = i2cMasterInputStream->i2cBusConnection;
 
     return result;
@@ -100,9 +100,9 @@ unsigned char _readCharI2C(InputStream* inputStream) {
 }
 
 void initMasterI2cInputStream(I2cMasterInputStream* i2cMasterInputStream,
-                              I2cBusConnection* i2cBusConnection,
-                                Buffer* i2cInputBuffer,
-                                InputStream* inputStream) {
+        I2cBusConnection* i2cBusConnection,
+        Buffer* i2cInputBuffer,
+        InputStream* inputStream) {
     i2cMasterInputStream->i2cBusConnection = i2cBusConnection;
     i2cMasterInputStream->inputStream = inputStream;
     i2cMasterInputStream->inputBuffer = i2cInputBuffer;

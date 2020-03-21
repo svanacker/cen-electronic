@@ -17,15 +17,14 @@ int deviceSonarGetInterface(char commandHeader, DeviceInterfaceMode mode, bool f
 
             setResultUnsignedHex4(0, "distCM_1");
             setResultSeparator(1);
-            
+
             setResultUnsignedHex4(2, "distCM_2");
             setResultSeparator(3);
-            
+
             setResultUnsignedHex4(4, "distCM_3");
         }
         return commandLengthValueForMode(mode, 2, 14);
-    }
-    else if (commandHeader == COMMAND_SONAR_CHANGE_ADDRESS) {
+    } else if (commandHeader == COMMAND_SONAR_CHANGE_ADDRESS) {
         if (fillDeviceArgumentList) {
             setFunction("sonarChangeAddress", 2, 0);
             setArgumentUnsignedHex2(0, "oldSonarAddress");

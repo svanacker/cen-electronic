@@ -18,8 +18,7 @@ int beaconReceiverDeviceGetInterface(unsigned char commandHeader, DeviceInterfac
             setResultUnsignedHex4(2, "y(mm)");
         }
         return commandLengthValueForMode(mode, 0, 9);
-    }
-    // setOpponentRobotPos
+    }// setOpponentRobotPos
     else if (commandHeader == COMMAND_SET_OPPONENT_ROBOT_POSITION_FROM_LASER_TO_RECEIVER) {
         if (fillDeviceArgumentList) {
             setFunction("setOpponentRobotPos", 3, 0);
@@ -28,23 +27,21 @@ int beaconReceiverDeviceGetInterface(unsigned char commandHeader, DeviceInterfac
             setArgumentUnsignedHex4(2, "y(mm)");
         }
         return commandLengthValueForMode(mode, 9, 0);
-    }
-    // init Router
+    }// init Router
     else if (commandHeader == COMMAND_INIT_JENNIC_AS_ROUTER) {
         // same output / input
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("initJennicAsRouter");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // Network status
+    }// Network status
     else if (commandHeader == COMMAND_GET_RECEIVER_NETWORK_STATUS) {
         if (fillDeviceArgumentList) {
             setFunction("getReceiverNetworkStatus", 0, 1);
             setResultUnsignedHex4(0, "status");
         }
         return commandLengthValueForMode(mode, 0, 2);
-     }   
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

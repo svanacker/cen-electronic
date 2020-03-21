@@ -31,7 +31,7 @@ void deviceTimerInit(void) {
 }
 
 void deviceTimerShutDown(void) {
-} 
+}
 
 bool deviceTimerIsOk(void) {
     return true;
@@ -48,14 +48,14 @@ void interruptDemoTimerCallbackFunc(Timer* timer) {
 
 Timer* addTimerDemo(void) {
     Timer* result = addTimer(DEMO_TIMER_CODE,
-             TIME_DIVIDER_1_HERTZ,
-             &interruptDemoTimerCallbackFunc,
-             "DEMO",
-             NULL);
-	// addTimer could return null if not enough timer => In this case, it will change setErrorCode, and return NULL
-	if (result != NULL) {
-	    result->enabled = true;
-	}
+            TIME_DIVIDER_1_HERTZ,
+            &interruptDemoTimerCallbackFunc,
+            "DEMO",
+            NULL);
+    // addTimer could return null if not enough timer => In this case, it will change setErrorCode, and return NULL
+    if (result != NULL) {
+        result->enabled = true;
+    }
     return result;
 }
 
@@ -63,13 +63,11 @@ void deviceTimerHandleRawData(unsigned char commandHeader, InputStream* inputStr
     if (commandHeader == COMMAND_TIMER_LIST) {
         printTimerList(getInfoOutputStreamLogger(), getTimerList());
         ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_LIST);
-    }    
-    else if (commandHeader == COMMAND_TIMER_COUNT) {
+    } else if (commandHeader == COMMAND_TIMER_COUNT) {
         ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_COUNT);
         unsigned timerCount = getTimerCount();
         appendHex2(outputStream, timerCount);
-    }
-    else if (commandHeader == COMMAND_TIMER_READ) {
+    } else if (commandHeader == COMMAND_TIMER_READ) {
         ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_READ);
         unsigned char timerIndex = readHex2(inputStream);
         Timer* timer = getTimerByIndex(timerIndex);
@@ -86,35 +84,31 @@ void deviceTimerHandleRawData(unsigned char commandHeader, InputStream* inputStr
         appendHex6(outputStream, timer->markTime);
         appendSeparator(outputStream);
         appendBool(outputStream, timer->enabled);
-    }
-    // Enable / Tisable
+    }// Enable / Tisable
     else if (commandHeader == COMMAND_TIMER_ENABLE_DISABLE) {
         unsigned char timerIndex = readHex2(inputStream);
         Timer* timer = getTimerByIndex(timerIndex);
-        
+
         checkIsSeparator(inputStream);
-        
+
         unsigned enableAsChar = readHex(inputStream);
         bool enabled = enableAsChar != 0;
         timer->enabled = enabled;
         ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_ENABLE_DISABLE);
-    }
-    // Mark
+    }// Mark
     else if (commandHeader == COMMAND_TIMER_MARK) {
         unsigned char timerIndex = readHex2(inputStream);
         Timer* timer = getTimerByIndex(timerIndex);
         unsigned long time = markTimer(timer);
         ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_MARK);
         appendHex6(outputStream, time);
-    }
-    else if (commandHeader == COMMAND_TIMER_TIME_SINCE_LAST_MARK) {
+    } else if (commandHeader == COMMAND_TIMER_TIME_SINCE_LAST_MARK) {
         unsigned char timerIndex = readHex2(inputStream);
         Timer* timer = getTimerByIndex(timerIndex);
         unsigned long value = getTimeSinceLastMark(timer);
         ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_TIME_SINCE_LAST_MARK);
         appendHex6(outputStream, value);
-    }
-    else if (commandHeader == COMMAND_TIMER_TIMEOUT) {
+    } else if (commandHeader == COMMAND_TIMER_TIMEOUT) {
         unsigned char timerIndex = readHex2(inputStream);
         checkIsSeparator(inputStream);
         unsigned long timeToCheck = (unsigned long) readHex6(inputStream);
@@ -124,19 +118,18 @@ void deviceTimerHandleRawData(unsigned char commandHeader, InputStream* inputStr
         appendHex2(outputStream, timerIndex);
         appendSeparator(outputStream);
         appendBool(outputStream, value);
-    }
-    // Demo
+    }// Demo
     else if (commandHeader == COMMAND_TIMER_DEMO) {
         Timer* timer = getTimerByCode(DEMO_TIMER_CODE);
         if (timer == NULL) {
             timer = addTimerDemo();
         }
-		// Timer could be null when adding the timerDemo because of limit, we don't want any crash !
-		if (timer != NULL) {
-			unsigned enableAsChar = readHex(inputStream);
-			bool enabled = enableAsChar != 0;
-			timer->enabled = enabled;
-		}
+        // Timer could be null when adding the timerDemo because of limit, we don't want any crash !
+        if (timer != NULL) {
+            unsigned enableAsChar = readHex(inputStream);
+            bool enabled = enableAsChar != 0;
+            timer->enabled = enabled;
+        }
         ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_DEMO);
     } else if (commandHeader == COMMAND_TIMER_DELAY_WAIT) {
         ackCommand(outputStream, TIMER_DEVICE_HEADER, COMMAND_TIMER_DELAY_WAIT);
@@ -145,13 +138,16 @@ void deviceTimerHandleRawData(unsigned char commandHeader, InputStream* inputStr
     }
 }
 
-static DeviceDescriptor descriptor = {
-    .deviceInit = &deviceTimerInit,
-    .deviceShutDown = &deviceTimerShutDown,
-    .deviceIsOk = &deviceTimerIsOk,
-    .deviceHandleRawData = &deviceTimerHandleRawData,
-};
+static DeviceDescriptor descriptor;
 
 DeviceDescriptor* getTimerDeviceDescriptor(void) {
+    initDeviceDescriptor(&descriptor,
+            &deviceTimerInit,
+            &deviceTimerShutDown,
+            &deviceTimerIsOk,
+            &deviceTimerHandleRawData,
+            NULL);
+
     return &descriptor;
 }
+

@@ -33,9 +33,9 @@
 #define COMMAND_TIMER_DELAY_WAIT       'W'
 
 /**
-* Get the timer device interface.
-* @return a pointer on the timer device Interface.
-*/
+ * Get the timer device interface.
+ * @return a pointer on the timer device Interface.
+ */
 DeviceInterface* getTimerDeviceInterface(void);
 
 #endif

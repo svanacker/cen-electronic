@@ -1,8 +1,8 @@
 #ifdef PROG_32
-    #include <peripheral/legacy/i2c_legacy.h>
+#include <peripheral/legacy/i2c_legacy.h>
 #endif
 #ifdef PROG_30
-    #include <i2c.h>
+#include <i2c.h>
 #endif
 
 #include "24c16.h"
@@ -27,16 +27,16 @@ I2cBusConnection* _24C16GetI2c(Eeprom* eeprom_) {
 }
 
 /**
-* @private
-* Calculate the chip address to select
-* @param index the index to calculate the chip Address
-* @return the chip address to select
-*/
-unsigned long get24C16BlockAddress (unsigned long index) {
+ * @private
+ * Calculate the chip address to select
+ * @param index the index to calculate the chip Address
+ * @return the chip address to select
+ */
+unsigned long get24C16BlockAddress(unsigned long index) {
     unsigned long blocAddress = ST24C16_ADDRESS_0;
 
     // step of 2 KBytes
-    if (index < 0x0800 ) {
+    if (index < 0x0800) {
     } else if (index < 0x1000) {
         blocAddress = ST24C16_ADDRESS_1;
     } else if (index < 0x1800) {
@@ -52,22 +52,22 @@ unsigned long get24C16BlockAddress (unsigned long index) {
     } else if (index < 0x4000) {
         blocAddress = ST24C16_ADDRESS_7;
     } else {
-       writeError(EEPROM_OUT_OF_BOUNDS);
+        writeError(EEPROM_OUT_OF_BOUNDS);
     }
     return blocAddress;
 }
 
 /**
-* @private
-* Calculate the address in the chip to select.
-* @param index the index to calculate the address
-* @return the address result
-*/
+ * @private
+ * Calculate the address in the chip to select.
+ * @param index the index to calculate the address
+ * @return the address result
+ */
 unsigned long get24C16Address(unsigned long index) {
     unsigned long address = index;
-    
+
     // step of 2 KBytes
-    if (index < 0x0800 ) {
+    if (index < 0x0800) {
     } else if (index < 0x1000) {
         address -= 0x0800;
     } else if (index < 0x1800) {
@@ -93,7 +93,7 @@ unsigned long get24C16Address(unsigned long index) {
  * @see eeprom.h
  * @private
  */
-void _writeEeprom24C16Char(Eeprom* eeprom_, unsigned long index, char value){
+void _writeEeprom24C16Char(Eeprom* eeprom_, unsigned long index, char value) {
     I2cBusConnection* i2cBusConnection = _24C16GetI2c(eeprom_);
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
     portableMasterWaitSendI2C(i2cBusConnection);
@@ -110,8 +110,8 @@ void _writeEeprom24C16Char(Eeprom* eeprom_, unsigned long index, char value){
     WaitI2C(i2cBus);
     portableStopI2C(i2cBusConnection);
     WaitI2C(i2cBus);
-    
-    delay100us(4);  // delay <=3 don't write correctly if we write several times
+
+    delay100us(4); // delay <=3 don't write correctly if we write several times
 }
 
 /**
@@ -119,12 +119,12 @@ void _writeEeprom24C16Char(Eeprom* eeprom_, unsigned long index, char value){
  * @see eeprom.h
  * @private
  */
-char _readEeprom24C16Char(Eeprom* eeprom_, unsigned long index){
+char _readEeprom24C16Char(Eeprom* eeprom_, unsigned long index) {
     I2cBusConnection* i2cBusConnection = _24C16GetI2c(eeprom_);
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
-    
+
     portableMasterWaitSendI2C(i2cBusConnection);
-     // Set the register command
+    // Set the register command
     int blockAddress = get24C16BlockAddress(index);
     int address = get24C16Address(index);
     i2cMasterWriteChar(i2cBusConnection, blockAddress, address);
@@ -150,10 +150,10 @@ char _readEeprom24C16Char(Eeprom* eeprom_, unsigned long index){
  * @see eeprom.h
  * @private
  */
-void _writeEeprom24C16Block (Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer) {
+void _writeEeprom24C16Block(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer) {
     I2cBusConnection* i2cBusConnection = _24C16GetI2c(eeprom_);
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
-    
+
     int blockAddress = get24C16BlockAddress(index);
     int address = get24C16Address(index);
     portableMasterWaitSendI2C(i2cBusConnection);
@@ -164,7 +164,7 @@ void _writeEeprom24C16Block (Eeprom* eeprom_, unsigned long index, unsigned int 
     portableMasterWriteI2C(i2cBusConnection, address);
     WaitI2C(i2cBus);
     int i;
-    for (i = 0; i <(length) ; i++) {
+    for (i = 0; i < (length); i++) {
         char c = bufferReadChar(buffer);
         portableMasterWriteI2C(i2cBusConnection, c);
         WaitI2C(i2cBus);
@@ -173,16 +173,15 @@ void _writeEeprom24C16Block (Eeprom* eeprom_, unsigned long index, unsigned int 
     WaitI2C(i2cBus);
 }
 
-
 /**
  * Implementation of the readBlock Function of the 24C16 chip.
  * @see eeprom.h
  * @private
  */
-void _readEeprom24C16Block(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer){
+void _readEeprom24C16Block(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer) {
     I2cBusConnection* i2cBusConnection = _24C16GetI2c(eeprom_);
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
-    
+
     // Set the register command
     int blockAddress = get24C16BlockAddress(index);
     int address = get24C16Address(index);
@@ -209,12 +208,11 @@ void _readEeprom24C16Block(Eeprom* eeprom_, unsigned long index, unsigned int le
     WaitI2C(i2cBus);
 }
 
-
 void dumpEepromToFile(Eeprom* eeprom_) {
     if (eeprom_ == NULL) {
         writeError(UNIMPLETEMENTED_EXCEPTION);
         return;
-    }  
+    }
 }
 
 void init24C16Eeprom(Eeprom* eeprom_, I2cBusConnection* i2cBusConnection) {

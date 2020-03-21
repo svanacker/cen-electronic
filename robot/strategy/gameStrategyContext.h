@@ -108,14 +108,14 @@ struct GameStrategyContext {
  * Initializes the Game Strategy Context.
  */
 void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
-                             RobotConfig* robotConfig,
-                             Navigation* navigation,
-                             EndMatch* endMatch,
-                             TofSensorList* tofSensorList,
-                             Point* robotPosition,
-                             Point* opponentRobotPosition,
-                             Point* lastObstaclePosition,
-                             ServoList* servoList);
+        RobotConfig* robotConfig,
+        Navigation* navigation,
+        EndMatch* endMatch,
+        TofSensorList* tofSensorList,
+        Point* robotPosition,
+        Point* opponentRobotPosition,
+        Point* lastObstaclePosition,
+        ServoList* servoList);
 
 
 

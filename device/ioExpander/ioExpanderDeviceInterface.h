@@ -15,8 +15,8 @@
 #define COMMAND_IO_EXPANDER_DEBUG               'd'
 
 /**
-* Interface for IO Device.
-*/
+ * Interface for IO Device.
+ */
 DeviceInterface* getIOExpanderDeviceInterface(void);
 
 #endif

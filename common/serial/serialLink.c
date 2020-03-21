@@ -14,9 +14,9 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
-SerialLink* openSerialLink( 
+SerialLink* openSerialLink(
         StreamLink* streamLink,
-        const char* serialName, 
+        const char* serialName,
         Buffer* inputBuffer,
         unsigned char (*inputBufferArray)[],
         unsigned int inputBufferLength,
@@ -40,15 +40,15 @@ SerialLink* openSerialLink(
 
     // Initializes All Buffers / Memory
     initStreamLink(streamLink,
-                    serialName,
-                    inputBuffer,
-                    inputBufferArray,
-                    inputBufferLength,
-                    outputBuffer,
-                    outputBufferArray,
-                    outputBufferLength,
-                    outputStream,
-                    speed);
+            serialName,
+            inputBuffer,
+            inputBufferArray,
+            inputBufferLength,
+            outputBuffer,
+            outputBufferArray,
+            outputBufferLength,
+            outputStream,
+            speed);
 
     return result;
 }

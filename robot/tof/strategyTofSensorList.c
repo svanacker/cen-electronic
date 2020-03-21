@@ -50,30 +50,29 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
         if (tofSensor->usageType != TOF_SENSOR_USAGE_TYPE_COLLISION) {
             continue;
         }
-        
+
         bool tofBackward = isTofSensorBackwardOriented(tofSensor);
-        
+
         // Don't manage Backward TofSensor if we go forward
         if (tofBackward && trajectoryType == TRAJECTORY_TYPE_FORWARD) {
             continue;
         }
-        
+
         // Don't manage Forward TofSensor if we go backward
         if (!tofBackward && trajectoryType == TRAJECTORY_TYPE_BACKWARD) {
             continue;
         }
-        
+
         tofSensor->tofGetDistanceMM(tofSensor);
         // If the last distance is not in the range
         if (isTofDistanceInRange(tofSensor)) {
             tofSensor->detectedCount++;
-        }
-        else {
+        } else {
             if (tofSensor->detectedCount > 0) {
                 tofSensor->detectedCount--;
             }
         }
-        
+
         if (tofSensor->detectedCount < tofSensor->detectionThreshold) {
             continue;
         }
@@ -83,11 +82,11 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
         Point* pointOfView = gameStrategyContext->robotPosition;
         float pointOfViewAngleRadian = gameStrategyContext->robotAngleRadian;
         bool detected = tofComputeDetectedPointIfAny(tofSensor, pointOfView, pointOfViewAngleRadian, &detectedPoint);
-        
+
         if (!detected) {
             continue;
         }
-        
+
         // We must know if it's in the gameboard
         if (isPointInTheCollisionArea(gameBoard, &detectedPoint)) {
 
@@ -96,8 +95,7 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
 #ifdef PC_COMPILER   
                 simulateMotionCancel(gameStrategyContext);
 #endif
-            }
-            else {
+            } else {
                 motionDriverCancel();
             }
             // We beep after to gain some ms !
@@ -125,9 +123,9 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
             printPoint(alwaysOutputStream, &detectedPoint, "");
             // Block the notification system !
             updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_NONE);
-            
+
             tofSensorListResetDetectionCount(tofSensorList);
-            
+
             // TODO 2018 : handleObstacle(gameStrategyContext);
             break;
         }

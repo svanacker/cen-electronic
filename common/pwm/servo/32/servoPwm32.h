@@ -30,6 +30,6 @@ void _internalUpdateConfigServo32(Servo* servo);
  * @param servo
  * @param dutyms
  */
-void _servoInternalPwm32 (Servo* servo, unsigned int dutyms);
+void _servoInternalPwm32(Servo* servo, unsigned int dutyms);
 
 #endif

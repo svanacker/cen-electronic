@@ -6,8 +6,8 @@
 #include "../../device/deviceDescriptor.h"
 
 /**
-* Returns a descriptor on the device for MD22.
-*/
+ * Returns a descriptor on the device for MD22.
+ */
 DeviceDescriptor* getMD22DeviceDescriptor(DualHBridgeMotor* dualHBrideMotorParam);
 
 #endif

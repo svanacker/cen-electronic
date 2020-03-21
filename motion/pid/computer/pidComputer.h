@@ -19,16 +19,16 @@
  * @param normalSpeed the normal speed which must be reached
  * @param error the error which must be stored into motionError
  */
-float computePidCorrection( PidComputationInstructionValues* computationInstructionValues,
-                            PidParameter* pidParameter,
-                            float normalSpeed,
-                            float error);
+float computePidCorrection(PidComputationInstructionValues* computationInstructionValues,
+        PidParameter* pidParameter,
+        float normalSpeed,
+        float error);
 
 /**
-* Computes the normal position / distance at time.
-* @param motionInstruction determines what was requested as motion
-* @param time pidTime used to know where the robot must be (in terms of alpha / theta) value.
-*/
+ * Computes the normal position / distance at time.
+ * @param motionInstruction determines what was requested as motion
+ * @param time pidTime used to know where the robot must be (in terms of alpha / theta) value.
+ */
 float computeNormalPosition(MotionInstruction* motionInstruction, float time);
 
 /**
@@ -39,17 +39,17 @@ float computeNormalPosition(MotionInstruction* motionInstruction, float time);
 float computeNormalSpeed(MotionInstruction* motionInstruction, float time);
 
 /**
-* Compute the normal acceleration at the specified pidTime
-* @param motionInstruction information about motion
-* @param time pidTime
-*/
+ * Compute the normal acceleration at the specified pidTime
+ * @param motionInstruction information about motion
+ * @param time pidTime
+ */
 float computeNormalAcceleration(MotionInstruction* inst, float time);
 
 /**
-* Get the normal voltage value at the speed defined by the parameter
-* @param normalSpeed the speed for which we want the normal voltage
-* TODO : Must be Test By Experimentation
-*/
+ * Get the normal voltage value at the speed defined by the parameter
+ * @param normalSpeed the speed for which we want the normal voltage
+ * TODO : Must be Test By Experimentation
+ */
 float getNormalU(float normalSpeed);
 
 // CONVERSION UTILS

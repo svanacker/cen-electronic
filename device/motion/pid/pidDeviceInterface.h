@@ -16,13 +16,13 @@
 #define COMMAND_SET_MOTION_PARAMETERS                'M'
 
 /**
-* Read some parameters for a specific PID
-*/
+ * Read some parameters for a specific PID
+ */
 #define COMMAND_GET_PID_PARAMETERS                   'p'
 
 /**
-* Set the some parameters for a specific PID.
-*/
+ * Set the some parameters for a specific PID.
+ */
 #define COMMAND_SET_PID_PARAMETERS                   'P'
 
 // PERSISTENCE
@@ -38,24 +38,24 @@
 #define COMMAND_SAVE_PID_PARAMETERS                 'S'
 
 /**
-* Send values to have information about profile at the begin of
-* trajectory compute.
-*/
+ * Send values to have information about profile at the begin of
+ * trajectory compute.
+ */
 #define COMMAND_GET_MOTION_DEFINITION_TRAJECTORY    't'
 
 /**
-* Send values to have statistical debug informations.
-*/
+ * Send values to have statistical debug informations.
+ */
 #define COMMAND_GET_COMPUTATION_VALUES_DATA_PID     'g'
 
 /**
-* Clear the history of computation Values.
-*/
+ * Clear the history of computation Values.
+ */
 #define COMMAND_CLEAR_COMPUTATION_VALUES_DATA_PID   'H'
 
 /**
-* This is interesting to be able to replay a set of data and check behaviour or new behaviour with new parameters.
-*/
+ * This is interesting to be able to replay a set of data and check behaviour or new behaviour with new parameters.
+ */
 #define COMMAND_SET_COMPUTATION_VALUES_DATA_PID     'G'
 
 // END DETECTION PARAMETER
@@ -65,18 +65,18 @@
 #define COMMAND_SET_END_DETECTION_PARAMETER_DETAIL  'U'
 
 /**
-* Get the Detection Motion Parameter.
-*/
+ * Get the Detection Motion Parameter.
+ */
 #define COMMAND_GET_END_DETECTION_PARAMETER_AGGREGATION         'e'
 
 /**
-* Change end Detection Motion Parameter.
-*/
+ * Change end Detection Motion Parameter.
+ */
 #define COMMAND_SET_END_DETECTION_PARAMETER_AGGREGATION         'E'
 
 /**
-* Get the PID device interface.
-*/
+ * Get the PID device interface.
+ */
 DeviceInterface* getPidDeviceInterface();
 
 #endif

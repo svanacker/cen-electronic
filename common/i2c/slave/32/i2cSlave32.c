@@ -29,8 +29,7 @@ unsigned char portableSlaveReadI2C(I2cBusConnection* i2cBusConnection) {
     if (i2cBus == NULL) {
         unsigned char result = SlaveReadI2C1();
         return result;
-    }
-    else {
+    } else {
         unsigned portIndex = i2cBus->port;
         I2C_MODULE i2cModule = getI2C_MODULE(portIndex);
         unsigned char result = I2CGetByte(i2cModule);
@@ -42,40 +41,35 @@ void portableSlaveWriteI2C(I2cBusConnection* i2cBusConnection, unsigned char c) 
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
     if (i2cBus == NULL) {
         SlaveWriteI2C1(c);
-    }
-    else {
+    } else {
         unsigned portIndex = i2cBus->port;
         if (portIndex == I2C_BUS_PORT_1) {
-            I2C1TRN = c;               // data transferred to I2C1TRN reg
-            I2C1CONbits.SCLREL = 1;    // Release the clock
-        }
-    #if defined _I2C2
+            I2C1TRN = c; // data transferred to I2C1TRN reg
+            I2C1CONbits.SCLREL = 1; // Release the clock
+        }#if defined _I2C2
         else if (portIndex == I2C_BUS_PORT_2) {
-            I2C2TRN = c;               // data transferred to I2C1TRN reg
-            I2C2CONbits.SCLREL = 1;    // Release the clock
-        }
-    #endif
-    #if defined _I2C3
+            I2C2TRN = c; // data transferred to I2C1TRN reg
+            I2C2CONbits.SCLREL = 1; // Release the clock
+        }#endif
+#if defined _I2C3
         else if (portIndex == I2C_BUS_PORT_3) {
-            I2C3TRN = c;               // data transferred to I2C1TRN reg
-            I2C3CONbits.SCLREL = 1;    // Release the clock
-        }
-    #endif
-    #if defined _I2C4
+            I2C3TRN = c; // data transferred to I2C1TRN reg
+            I2C3CONbits.SCLREL = 1; // Release the clock
+        }#endif
+#if defined _I2C4
         else if (portIndex == I2C_BUS_PORT_4) {
-            I2C4TRN = c;               // data transferred to I2C1TRN reg
-            I2C4CONbits.SCLREL = 1;    // Release the clock
+            I2C4TRN = c; // data transferred to I2C1TRN reg
+            I2C4CONbits.SCLREL = 1; // Release the clock
         }
     }
-    #endif
+#endif
 }
 
 void portableSlaveClockRelease(I2cBusConnection* i2cBusConnection) {
     I2cBus* i2cBus = i2cBusConnection->i2cBus;
     if (i2cBus == NULL) {
         I2C1CONbits.SCLREL = 1; // release the clock
-    }
-    else {
+    } else {
         unsigned portIndex = i2cBus->port;
         I2C_MODULE i2cModule = getI2C_MODULE(portIndex);
         I2CSlaveClockRelease(i2cModule);

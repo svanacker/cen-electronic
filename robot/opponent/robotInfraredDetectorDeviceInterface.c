@@ -11,7 +11,7 @@ unsigned int deviceRobotInfraredDetectorGetSoftwareRevision() {
     return 1;
 }
 
-int deviceRobotInfraredDetectorGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList ) {
+int deviceRobotInfraredDetectorGetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // command to ask
     if (commandHeader == COMMAND_INFRARED_DETECTOR_DETECTION) {
         if (fillDeviceArgumentList) {
@@ -20,22 +20,19 @@ int deviceRobotInfraredDetectorGetInterface(char commandHeader, DeviceInterfaceM
             setResultUnsignedHex2(0, "True/False");
         }
         return commandLengthValueForMode(mode, 2, 2);
-    }
-    else if (commandHeader == DETECTOR_ENABLE_NOTIFICATION_COMMAND) {
+    } else if (commandHeader == DETECTOR_ENABLE_NOTIFICATION_COMMAND) {
         if (fillDeviceArgumentList) {
             setFunction("enable Notification", 1, 0);
             setArgumentUnsignedHex2(0, "backward/forward");
         }
         return commandLengthValueForMode(mode, 2, 0);
-    }
-    else if (commandHeader == DETECTOR_DISABLE_NOTIFICATION_COMMAND) {
+    } else if (commandHeader == DETECTOR_DISABLE_NOTIFICATION_COMMAND) {
         if (fillDeviceArgumentList) {
             setFunction("disable Notification", 1, 0);
             setArgumentUnsignedHex2(0, "backward/forward");
         }
         return commandLengthValueForMode(mode, 2, 0);
-    }
-    // Notification !
+    }// Notification !
     else if (commandHeader == NOTIFY_INFRARED_DETECTOR_DETECTION) {
         if (fillDeviceArgumentList) {
             setFunction("notifyInfraredDetector", 0, 1);

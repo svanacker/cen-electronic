@@ -7,7 +7,7 @@
 
 void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
     if (!checkBufferNotNull(buffer)) {
-        return;    
+        return;
     }
     if (buffer == NULL) {
         println(outputStream);
@@ -40,8 +40,7 @@ void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
         if (c == 0) {
             // To avoid [00] on Console
             append(outputStream, '#');
-        }
-        else {
+        } else {
             append(outputStream, c);
         }
         sPointer++;

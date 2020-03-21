@@ -28,9 +28,9 @@
 // TOF CONFIG
 
 void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor,
-                              TofSensor* rightForkScanSensor,
-                              MultiplexerList* multiplexerList,
-                              IOExpanderList* ioExpanderList) {
+        TofSensor* rightForkScanSensor,
+        MultiplexerList* multiplexerList,
+        IOExpanderList* ioExpanderList) {
     if (leftForkScanSensor != NULL) {
         leftForkScanSensor->name = "FORK LEFT";
         leftForkScanSensor->enabled = true;
@@ -38,12 +38,12 @@ void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor,
         leftForkScanSensor->orientationRadian = 0.0f;
         leftForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_GOLDENIUM_DISTANCE_LEFT_MIN_THRESHOLD;
         leftForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_GOLDENIUM_DISTANCE_LEFT_MAX_THRESHOLD;
-        
+
         leftForkScanSensor->changeAddress = true;
         leftForkScanSensor->targetAddress = VL530X_ADDRESS_12;
         leftForkScanSensor->multiplexer = getMultiplexerByIndex(multiplexerList, 0);
         leftForkScanSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_4;
-        
+
         // RESTART
         leftForkScanSensor->hardwareRestartable = true;
         leftForkScanSensor->hardwareRestartIOExpander = getIOExpanderByIndex(ioExpanderList, FORK_2019_HARDWARE_IO_EXPANDER_INDEX);
@@ -53,11 +53,11 @@ void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor,
         rightForkScanSensor->name = "FORK RIGHT";
         rightForkScanSensor->enabled = true;
         rightForkScanSensor->usageType = TOF_SENSOR_USAGE_TYPE_ACTION;
-        
+
         rightForkScanSensor->orientationRadian = 0.0f;
         rightForkScanSensor->thresholdMinDistanceMM = FORK_2019_SCAN_GOLDENIUM_DISTANCE_RIGHT_MIN_THRESHOLD;
         rightForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_GOLDENIUM_DISTANCE_RIGHT_MAX_THRESHOLD;
-        
+
         rightForkScanSensor->changeAddress = true;
         rightForkScanSensor->targetAddress = VL530X_ADDRESS_11;
         rightForkScanSensor->multiplexer = getMultiplexerByIndex(multiplexerList, 0);
@@ -93,8 +93,7 @@ void forkScan2019ConfigTofListForDistributor(TofSensorList* tofSensorList) {
         enum RobotType robotType = getRobotType();
         if (robotType == ROBOT_TYPE_BIG) {
             rightForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_BIG_ROBOT_DISTRIBUTOR_DISTANCE_RIGHT_MAX_THRESHOLD;
-        }
-        else {
+        } else {
             rightForkScanSensor->thresholdMaxDistanceMM = FORK_2019_SCAN_SMALL_ROBOT_DISTRIBUTOR_DISTANCE_RIGHT_MAX_THRESHOLD;
         }
     }
@@ -103,9 +102,8 @@ void forkScan2019ConfigTofListForDistributor(TofSensorList* tofSensorList) {
 unsigned int getScanLeftServoValue(void) {
     if (getRobotType() == ROBOT_TYPE_BIG) {
         return FORK_2019_BIG_ROBOT_SCAN_LEFT_SERVO_VALUE;
-    }
-    else if (getRobotType() == ROBOT_TYPE_SMALL) {
-        return FORK_2019_SMALL_ROBOT_SCAN_LEFT_SERVO_VALUE;        
+    } else if (getRobotType() == ROBOT_TYPE_SMALL) {
+        return FORK_2019_SMALL_ROBOT_SCAN_LEFT_SERVO_VALUE;
     }
     return 1500;
 }
@@ -113,9 +111,8 @@ unsigned int getScanLeftServoValue(void) {
 unsigned int getScanMiddleServoValue(void) {
     if (getRobotType() == ROBOT_TYPE_BIG) {
         return FORK_2019_BIG_ROBOT_SCAN_MIDDLE_SERVO_VALUE;
-    }
-    else if (getRobotType() == ROBOT_TYPE_SMALL) {
-        return FORK_2019_SMALL_ROBOT_SCAN_MIDDLE_SERVO_VALUE;        
+    } else if (getRobotType() == ROBOT_TYPE_SMALL) {
+        return FORK_2019_SMALL_ROBOT_SCAN_MIDDLE_SERVO_VALUE;
     }
     return 1500;
 }
@@ -123,9 +120,8 @@ unsigned int getScanMiddleServoValue(void) {
 unsigned int getScanRightServoValue(void) {
     if (getRobotType() == ROBOT_TYPE_BIG) {
         return FORK_2019_BIG_ROBOT_SCAN_RIGHT_SERVO_VALUE;
-    }
-    else if (getRobotType() == ROBOT_TYPE_SMALL) {
-        return FORK_2019_SMALL_ROBOT_SCAN_RIGHT_SERVO_VALUE;        
+    } else if (getRobotType() == ROBOT_TYPE_SMALL) {
+        return FORK_2019_SMALL_ROBOT_SCAN_RIGHT_SERVO_VALUE;
     }
     return 1500;
 }
@@ -156,13 +152,11 @@ void moveElevatorRight(ServoList* servoList, bool wait) {
 unsigned int getElevatorScanHeightServoValue(void) {
     if (getRobotType() == ROBOT_TYPE_BIG) {
         return FORK_2019_BIG_ROBOT_ELEVATOR_DISTRIBUTOR_SCAN_SERVO_VALUE;
-    }
-    else if (getRobotType() == ROBOT_TYPE_SMALL) {
-        return FORK_2019_SMALL_ROBOT_ELEVATOR_DISTRIBUTOR_SCAN_SERVO_VALUE;        
+    } else if (getRobotType() == ROBOT_TYPE_SMALL) {
+        return FORK_2019_SMALL_ROBOT_ELEVATOR_DISTRIBUTOR_SCAN_SERVO_VALUE;
     }
     return 1500;
 }
-
 
 void moveElevatorDistributorScan(ServoList* servoList, bool wait) {
     Servo* servo = getServo(servoList, FORK_2019_ELEVATOR_SERVO_INDEX);
@@ -172,11 +166,9 @@ void moveElevatorDistributorScan(ServoList* servoList, bool wait) {
 bool forkScan(ServoList* servoList, TofSensorList* tofSensorList, unsigned retryCount, unsigned int leftRight) {
     if (leftRight == FORK_2019_LEFT_INDEX) {
         return forkScanFromLeftToRight(servoList, tofSensorList, retryCount);
-    }
-    else if (leftRight == FORK_2019_RIGHT_INDEX) {
+    } else if (leftRight == FORK_2019_RIGHT_INDEX) {
         return forkScanFromRightToLeft(servoList, tofSensorList, retryCount);
-    }
-    // Double Scan for small / Big Distributor
+    }// Double Scan for small / Big Distributor
     else {
         Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
         bool scanOk = forkScanFromLeftToRight(servoList, tofSensorList, retryCount);
@@ -213,7 +205,7 @@ bool internalForkScan(TofSensor* tofSensor) {
 }
 
 bool forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList, unsigned int retryCount) {
-    appendStringLN(getDebugOutputStreamLogger(),  "forkScanFromRightToLeft");
+    appendStringLN(getDebugOutputStreamLogger(), "forkScanFromRightToLeft");
 
     Servo* servo = getServo(servoList, FORK_2019_SCAN_SERVO_INDEX);
 
@@ -227,7 +219,7 @@ bool forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList,
         moveElevatorMiddle(servoList, true);
         return false;
     }
-    
+
     unsigned int retryIndex;
     for (retryIndex = 0; retryIndex < retryCount; retryIndex++) {
         moveElevatorRight(servoList, true);
@@ -249,8 +241,8 @@ bool forkScanFromRightToLeft(ServoList* servoList, TofSensorList* tofSensorList,
 }
 
 bool forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList, unsigned int retryCount) {
-    appendStringLN(getDebugOutputStreamLogger(),  "forkScanFromLeftToRight");
-    
+    appendStringLN(getDebugOutputStreamLogger(), "forkScanFromLeftToRight");
+
     // Avoid to do the scan if 
     TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, FORK_2019_LEFT_TOF_INDEX);
     if (tofSensor == NULL) {
@@ -275,7 +267,7 @@ bool forkScanFromLeftToRight(ServoList* servoList, TofSensorList* tofSensorList,
             // Scan several time
             if (internalForkScan(tofSensor)) {
                 if (getRobotType() == ROBOT_TYPE_BIG) {
-                    pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i + FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION, false);                    
+                    pwmServo(servo, FORK_2019_SCAN_SPEED_FACTOR, i + FORK_2019_SCAN_SERVO_DELTA_SERVO_POSITION, false);
                 }
                 return true;
             }

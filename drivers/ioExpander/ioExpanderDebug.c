@@ -22,8 +22,8 @@
 #define IO_EXPANDER_LAST_COLUMN		              0
 
 /**
-* Private.
-*/
+ * Private.
+ */
 void printIOExpanderDebugTableHeader(OutputStream* outputStream) {
     println(outputStream);
     appendTableHeaderSeparatorLine(outputStream);
@@ -53,7 +53,6 @@ void printIOExpanderDebugTableHeader(OutputStream* outputStream) {
     appendTableHeaderSeparatorLine(outputStream);
 }
 
-
 void printIOExpanderStatesTable(OutputStream* outputStream, IOExpanderList* ioExpanderList) {
     printIOExpanderDebugTableHeader(outputStream);
     int ioIndex;
@@ -63,7 +62,7 @@ void printIOExpanderStatesTable(OutputStream* outputStream, IOExpanderList* ioEx
         IOExpander* ioExpander = getIOExpanderByIndex(ioExpanderList, ioExpanderIndex);
         appendDecTableData(outputStream, ioExpanderIndex, IO_EXPANDER_INDEX_COLUMN_LENGTH);
         appendDecTableData(outputStream, ioExpander->count, IO_EXPANDER_COUNT_COLUMN_LENGTH);
-        
+
         I2cBusConnection* i2cBusConnection = NULL;
 #ifndef PC_COMPILER
         i2cBusConnection = getIOExpanderBusConnection(ioExpander);
@@ -71,8 +70,7 @@ void printIOExpanderStatesTable(OutputStream* outputStream, IOExpanderList* ioEx
         if (i2cBusConnection == NULL) {
             appendStringTableData(outputStream, "-", IO_EXPANDER_BUS_COLUMN_LENGTH);
             appendStringTableData(outputStream, "-", IO_EXPANDER_ADDRESS_COLUMN_LENGTH);
-        }
-        else {
+        } else {
             I2cBus* i2cBus = i2cBusConnection->i2cBus;
             const char* i2cPortAsString = getI2cPortAsString(i2cBus->port);
             appendStringTableData(outputStream, i2cPortAsString, IO_EXPANDER_BUS_COLUMN_LENGTH);

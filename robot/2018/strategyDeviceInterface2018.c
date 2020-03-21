@@ -12,30 +12,30 @@ const char* deviceStrategy2018GetName(void) {
 int deviceStrategy2018GetInterface(char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (commandHeader == STRATEGY_2018_DISTRIBUTOR_DEBUG_COMMAND) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Strategy 2018 Distributor Debug");;
+            setFunctionNoArgumentAndNoResult("Strategy 2018 Distributor Debug");
+            ;
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == STRATEGY_2018_GET_SCORE) {
+    } else if (commandHeader == STRATEGY_2018_GET_SCORE) {
         if (fillDeviceArgumentList) {
             setFunction("Strategy 2018 Distributor Debug", 0, 1);
             setResultUnsignedHex2(0, "score");
         }
         return commandLengthValueForMode(mode, 0, 2);
-    }
-    else if (commandHeader == STRATEGY_2018_READ_BALL_COLOR_TYPE) {
+    } else if (commandHeader == STRATEGY_2018_READ_BALL_COLOR_TYPE) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Strategy 2018 Read Color Type");;
+            setFunctionNoArgumentAndNoResult("Strategy 2018 Read Color Type");
+            ;
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }    
-    else if (commandHeader == STRATEGY_2018_UNICOLOR_COMMAND) {
+    } else if (commandHeader == STRATEGY_2018_UNICOLOR_COMMAND) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Strategy 2018 Unicolor");;
+            setFunctionNoArgumentAndNoResult("Strategy 2018 Unicolor");
+            ;
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-    
+
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

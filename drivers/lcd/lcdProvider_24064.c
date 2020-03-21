@@ -18,18 +18,18 @@ void showUnderlineCursor(void) {
     showUnderlineCursor_24064();
 }
 
-void setCursorPosition (int row, int col){
-    setCursorPosition_24064 (row, col);
+void setCursorPosition(int row, int col) {
+    setCursorPosition_24064(row, col);
 }
 
-void setPixel(int x,int y){
-    setPixel_24064(x,y);
+void setPixel(int x, int y) {
+    setPixel_24064(x, y);
 }
 
-void line(int x1,int y1,int x2,int y2){
+void line(int x1, int y1, int x2, int y2) {
     line_24064(x1, y1, x2, y2);
 }
 
-void initLcd (void){
+void initLcd(void) {
     InitLCD_24064;
 }

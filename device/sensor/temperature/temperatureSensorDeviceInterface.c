@@ -10,8 +10,8 @@ const char* getTemperatureSensorDeviceName(void) {
     return "Temperature Sensor";
 }
 
-int deviceTemperatureSensorGetInterface(unsigned char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
-    if (header == COMMAND_READ_TEMPERATURE_SENSOR ) {
+int deviceTemperatureSensorGetInterface(unsigned char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
+    if (header == COMMAND_READ_TEMPERATURE_SENSOR) {
         if (fillDeviceArgumentList) {
             setFunction("Temperature Sensor Read", 0, 1);
             setResultUnsignedHex2(0, "TEMPERATURE");

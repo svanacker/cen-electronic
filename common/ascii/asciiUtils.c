@@ -5,16 +5,16 @@
 #include "../../common/error/error.h"
 
 // Array of chars to do transformation
-static unsigned char LINE_CHARS_ASCII_ARRAY[4] = { '|', '\\', '-', '/' };
+static unsigned char LINE_CHARS_ASCII_ARRAY[4] = {'|', '\\', '-', '/'};
 
 /**
  * @private
-*/
+ */
 unsigned int getQuadran(float angleInRadian) {
     float angleBetween0AndPI = modPI(angleInRadian);
 
     // To get the quadran by cutting the float value
-    unsigned int quadran = (unsigned int) (angleBetween0AndPI / (0.25f* PI));
+    unsigned int quadran = (unsigned int) (angleBetween0AndPI / (0.25f * PI));
 
     if (quadran < 0 || quadran >= 4) {
         quadran = 0;

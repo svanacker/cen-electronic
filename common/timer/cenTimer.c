@@ -15,38 +15,38 @@ unsigned long getTime(Timer* timer) {
 }
 
 void setTime(Timer* timer, unsigned long value) {
-	if (timer == NULL) {
-		writeError(TIMER_NULL);
-		return;
-	}
+    if (timer == NULL) {
+        writeError(TIMER_NULL);
+        return;
+    }
     timer->time = value;
 }
 
 // STARTS / STOP
 
 void startTimer(Timer* timer) {
-	if (timer == NULL) {
-		writeError(TIMER_NULL);
-		return;
-	}
+    if (timer == NULL) {
+        writeError(TIMER_NULL);
+        return;
+    }
     timer->enabled = true;
 }
 
 void stopTimer(Timer* timer) {
-	if (timer == NULL) {
-		writeError(TIMER_NULL);
-		return;
-	}
+    if (timer == NULL) {
+        writeError(TIMER_NULL);
+        return;
+    }
     timer->enabled = false;
 }
 
 // MARK
 
 unsigned long markTimer(Timer* timer) {
-	if (timer == NULL) {
-		writeError(TIMER_NULL);
-		return 0L;
-	}
+    if (timer == NULL) {
+        writeError(TIMER_NULL);
+        return 0L;
+    }
     if (!timer->enabled) {
         writeError(TIMER_MARK_WHEREAS_DISABLED);
         return 0L;
@@ -56,18 +56,18 @@ unsigned long markTimer(Timer* timer) {
 }
 
 unsigned long getTimeSinceLastMark(Timer* timer) {
-	if (timer == NULL) {
-		writeError(TIMER_NULL);
-		return 0L;
-	}
+    if (timer == NULL) {
+        writeError(TIMER_NULL);
+        return 0L;
+    }
     return (timer->time - timer->markTime);
 }
 
 bool timeout(Timer* timer, unsigned long timeToCheck) {
-	if (timer == NULL) {
-		writeError(TIMER_NULL);
-		return false;
-	}
+    if (timer == NULL) {
+        writeError(TIMER_NULL);
+        return false;
+    }
     unsigned long timeSinceLastMarkValue = getTimeSinceLastMark(timer);
     return timeSinceLastMarkValue > timeToCheck;
 }
@@ -75,10 +75,10 @@ bool timeout(Timer* timer, unsigned long timeToCheck) {
 // LOCK / UNLOCK
 
 void lockAndWaitForTimer(Timer* timer) {
-	if (timer == NULL) {
-		writeError(TIMER_NULL);
-		return;
-	}
+    if (timer == NULL) {
+        writeError(TIMER_NULL);
+        return;
+    }
     // we lock the timer to be sure that he will not be fired
     timer->lock = true;
 
@@ -90,17 +90,17 @@ void lockAndWaitForTimer(Timer* timer) {
 }
 
 void lockTimer(Timer* timer) {
-	if (timer == NULL) {
-		writeError(TIMER_NULL);
-		return;
-	}
-	timer->lock = true;
+    if (timer == NULL) {
+        writeError(TIMER_NULL);
+        return;
+    }
+    timer->lock = true;
 }
 
 void unlockTimer(Timer* timer) {
-	if (timer == NULL) {
-		writeError(TIMER_NULL);
-		return;
-	}
+    if (timer == NULL) {
+        writeError(TIMER_NULL);
+        return;
+    }
     timer->lock = false;
 }

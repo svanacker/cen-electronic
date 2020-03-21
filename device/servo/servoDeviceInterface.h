@@ -56,8 +56,8 @@
 #define SERVO_ALL_INDEX                             0xFF
 
 /**
-* Interface for Servo Device.
-*/
+ * Interface for Servo Device.
+ */
 DeviceInterface* getServoDeviceInterface(void);
 
 #endif

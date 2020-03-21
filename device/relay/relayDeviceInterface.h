@@ -12,8 +12,8 @@
 #define COMMAND_RELAY_DEBUG            'd'
 
 /**
-* Interface for Relay Device
-*/
+ * Interface for Relay Device
+ */
 DeviceInterface* getRelayDeviceInterface(void);
 
 #endif

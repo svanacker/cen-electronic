@@ -33,8 +33,8 @@
 
 
 /**
-* Interface for Device
-*/
+ * Interface for Device
+ */
 DeviceInterface* getCommonBeaconDeviceInterface();
 
 #endif

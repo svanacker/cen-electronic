@@ -38,7 +38,7 @@ void notifyInfraredDetectorDetection(enum InfraredDetectorGroupType type) {
     append(notifyOutputStream, ROBOT_INFRARED_DETECTOR_DEVICE_HEADER);
     append(notifyOutputStream, NOTIFY_INFRARED_DETECTOR_DETECTION);
     appendHex2(notifyOutputStream, type);
-    */
+     */
 
     // Debug
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
@@ -55,13 +55,11 @@ void deviceRobotInfraredDetectorHandleRawData(char commandHeader,
         ackCommand(outputStream, ROBOT_INFRARED_DETECTOR_DEVICE_HEADER, DETECTOR_ENABLE_NOTIFICATION_COMMAND);
         enum InfraredDetectorGroupType type = readHex2(inputStream);
         setInfraredRobotNotification(type, true);
-    }
-    else if (commandHeader == DETECTOR_DISABLE_NOTIFICATION_COMMAND) {
+    } else if (commandHeader == DETECTOR_DISABLE_NOTIFICATION_COMMAND) {
         ackCommand(outputStream, ROBOT_INFRARED_DETECTOR_DEVICE_HEADER, DETECTOR_DISABLE_NOTIFICATION_COMMAND);
         enum InfraredDetectorGroupType type = readHex2(inputStream);
         setInfraredRobotNotification(type, false);
-    }
-    // Read if it detects
+    }// Read if it detects
     else if (commandHeader == COMMAND_INFRARED_DETECTOR_DETECTION) {
         ackCommand(outputStream, ROBOT_INFRARED_DETECTOR_DEVICE_HEADER, COMMAND_INFRARED_DETECTOR_DETECTION);
 
@@ -69,16 +67,14 @@ void deviceRobotInfraredDetectorHandleRawData(char commandHeader,
         bool hasDetected;
         if (type == DETECTOR_GROUP_TYPE_FORWARD) {
             hasDetected = getRobotInfraredObstacleForward();
-        }
-        else {
+        } else {
             hasDetected = getRobotInfraredObstacleBackward();
         }
-        
+
         // Send argument
         if (hasDetected) {
             appendHex2(outputStream, 1);
-        }
-        else {
+        } else {
             appendHex2(outputStream, 0);
         }
     }

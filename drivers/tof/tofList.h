@@ -15,15 +15,15 @@
 typedef struct TofSensorList TofSensorList;
 
 /**
-* Define the specific function which must be used to see the configuration of the tof
-* (but excluding the distance detection & the network).
-*/
+ * Define the specific function which must be used to see the configuration of the tof
+ * (but excluding the distance detection & the network).
+ */
 typedef void TofSensorListConfigTableDebugFunction(OutputStream* outputStream, TofSensorList* tofSensorList);
 
 /**
-* Define the specific function which must be used to see the network 
-* (but excluding the distance detection & the config).
-*/
+ * Define the specific function which must be used to see the network 
+ * (but excluding the distance detection & the config).
+ */
 typedef void TofSensorListNetworkTableDebugFunction(OutputStream* outputStream, TofSensorList* tofSensorList);
 
 /**
@@ -31,9 +31,9 @@ typedef void TofSensorListNetworkTableDebugFunction(OutputStream* outputStream, 
  * detection
  */
 typedef void TofSensorListDetectionTableDebugFunction(OutputStream* outputStream,
-                                                      TofSensorList* tofSensorList,
-                                                      Point* pointOfView, 
-                                                      float pointOfViewAngleRadian);
+        TofSensorList* tofSensorList,
+        Point* pointOfView,
+        float pointOfViewAngleRadian);
 
 /**
  * The struct defining a list of Tof Sensors.
@@ -73,13 +73,13 @@ struct TofSensorList {
  * @param tofSensorListSize the size of the array of Tof Sensor
  */
 void initTofSensorList(TofSensorList* tofSensorList,
-                       TofSensor(*tofSensorArray)[],
-                       unsigned int tofSensorListSize,
-                       bool debug,
-                       TofSensorListConfigTableDebugFunction* tofSensorListConfigTableDebug,
-                       TofSensorListNetworkTableDebugFunction* tofSensorListNetworkTableDebug,
-                       TofSensorListDetectionTableDebugFunction* tofSensorListDetectionTableDebug
-);
+        TofSensor(*tofSensorArray)[],
+        unsigned int tofSensorListSize,
+        bool debug,
+        TofSensorListConfigTableDebugFunction* tofSensorListConfigTableDebug,
+        TofSensorListNetworkTableDebugFunction* tofSensorListNetworkTableDebug,
+        TofSensorListDetectionTableDebugFunction* tofSensorListDetectionTableDebug
+        );
 
 /**
  * Initialise the Beep part of the tofSensor List
@@ -88,9 +88,9 @@ void initTofSensorList(TofSensorList* tofSensorList,
  * @param vccBeepIoPin
  */
 void initTofSensorListBeep(TofSensorList* tofSensorList,
-                           IOExpander* beepIoExpander,
-                           unsigned int groundBeepIoPin,
-                           unsigned int vccBeepIoPin);
+        IOExpander* beepIoExpander,
+        unsigned int groundBeepIoPin,
+        unsigned int vccBeepIoPin);
 /**
  * Get a tof Sensor by his index.
  * @param index the index of the tofSensor to get.
@@ -105,8 +105,8 @@ TofSensor* getTofSensorByIndex(TofSensorList* tofSensorList, unsigned int index)
 unsigned int getTofSensorListSize(TofSensorList* tofSensorList);
 
 /**
-* Activate or not the beep on tofSensorList.
-*/
+ * Activate or not the beep on tofSensorList.
+ */
 void tofSensorListBeep(TofSensorList* tofSensorList, bool beepValue);
 
 void tofSensorListBeepOverrideLock(TofSensorList* tofSensorList, bool beepValue);

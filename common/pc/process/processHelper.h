@@ -32,7 +32,7 @@ bool runProcess(char* applicationName, char* option);
 
 /**
  * Set the size of the console in chars (width and height), and the buffer (for historic).
-*/
+ */
 void setConsoleSizeAndBuffer(int width, int height, int bufferWidth, int bufferHeight);
 
 #endif

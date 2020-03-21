@@ -46,17 +46,17 @@ static Buffer debugI2cOutputBuffer;
 #define TEST_I2C_ADDRESS 0x50
 
 /**
-* Test I2C_SLAVE
-*/
+ * Test I2C_SLAVE
+ */
 void testI2CSlave() {
     unsigned char SERIAL_PORT_DEBUG = SERIAL_PORT_2;
-    
+
     // Open the serial Link
-    openSerialLink(    &debugSerialStreamLink,
-                    &debugInputBuffer,
-                    &debugOutputBuffer,
-                    &debugOutputStream,
-                    SERIAL_PORT_DEBUG);
+    openSerialLink(&debugSerialStreamLink,
+            &debugInputBuffer,
+            &debugOutputBuffer,
+            &debugOutputStream,
+            SERIAL_PORT_DEBUG);
 
     // Logs
     initLog(DEBUG);
@@ -70,9 +70,9 @@ void testI2CSlave() {
 
     // I2C Slave
     openSlaveI2cStreamLink(&i2cSerialStreamLink,
-                            &i2cSlaveInputBuffer,
-                            &i2cSlaveOutputBuffer,
-                            TEST_I2C_ADDRESS);
+            &i2cSlaveInputBuffer,
+            &i2cSlaveOutputBuffer,
+            TEST_I2C_ADDRESS);
 
     // Fill the buffer with a message for the master
     OutputStream* i2cSlaveOutputStream = getOutputStream(&i2cSlaveOutputBuffer);
@@ -80,7 +80,7 @@ void testI2CSlave() {
 
     while (1) {
         delaymSec(1000);
-        printI2cDebugBuffers();    
+        printI2cDebugBuffers();
         delaymSec(1000);
         appendString(i2cSlaveOutputStream, "t50");
     }

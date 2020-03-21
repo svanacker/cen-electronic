@@ -42,13 +42,12 @@
 bool acceleratorArmOn(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "-> Accelerator Arm On");
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) context;
     ServoList* servoList = gameStrategyContext->servoList;
     if (isViolet2019(gameStrategyContext)) {
         // Right Arm
         arm2019On(servoList, FORK_2019_RIGHT_INDEX);
-    }
-    else {
+    } else {
         // Left Arm
         arm2019On(servoList, FORK_2019_LEFT_INDEX);
     }
@@ -59,28 +58,24 @@ bool acceleratorArmOn(int* context) {
 }
 
 bool acceleratorRotationIfNeeded(int* context) {
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) context;
     appendStringCRLF(getDebugOutputStreamLogger(), "-> acceleratorRotationIfNeeded");
     if (isViolet2019(gameStrategyContext)) {
         // Left
         if (gameStrategyContext->simulateMove) {
             gameStrategyContext->robotAngleRadian += degToRad(DEG_90);
-        }
-        else {
+        } else {
             if (gameStrategyContext->robotAngleRadian >= degToRad(-10.0f) && gameStrategyContext->robotAngleRadian <= degToRad(10.0f)) {
                 motionDriverLeft(DEG_90);
                 timerDelayMilliSeconds(2000);
             }
         }
-    }
-    else {
+    } else {
         // Right
         if (gameStrategyContext->simulateMove) {
             gameStrategyContext->robotAngleRadian -= degToRad(DEG_90);
-        }
-        else {
-            if ((gameStrategyContext->robotAngleRadian >= degToRad(170.0f) && gameStrategyContext->robotAngleRadian <= degToRad(190.0f)))
-            {
+        } else {
+            if ((gameStrategyContext->robotAngleRadian >= degToRad(170.0f) && gameStrategyContext->robotAngleRadian <= degToRad(190.0f))) {
                 motionDriverRight(DEG_90);
                 timerDelayMilliSeconds(2000);
             }
@@ -92,13 +87,12 @@ bool acceleratorRotationIfNeeded(int* context) {
 bool acceleratorArmOff(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "-> Accelerator Arm Off");
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) context;
     ServoList* servoList = gameStrategyContext->servoList;
     if (isViolet2019(gameStrategyContext)) {
         // Right Arm
         arm2019Off(servoList, FORK_2019_RIGHT_INDEX);
-    }
-    else {
+    } else {
         // Left Arm
         arm2019Off(servoList, FORK_2019_LEFT_INDEX);
     }
@@ -111,12 +105,11 @@ bool acceleratorArmOff(int* context) {
 bool goldeniumPrepareTake(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "-> goldeniumPrepareTake");
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) context;
     ServoList* servoList = gameStrategyContext->servoList;
     if (isViolet2019(gameStrategyContext)) {
         fork2019PrepareTakeGoldenium(servoList, FORK_2019_RIGHT_INDEX);
-    }
-    else {
+    } else {
         fork2019PrepareTakeGoldenium(servoList, FORK_2019_LEFT_INDEX);
     }
     return true;
@@ -125,13 +118,12 @@ bool goldeniumPrepareTake(int* context) {
 bool goldeniumTake(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "-> goldeniumTake");
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) context;
     ServoList* servoList = gameStrategyContext->servoList;
-    TofSensorList* tofSensorList = gameStrategyContext->tofSensorList; 
+    TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
     if (isViolet2019(gameStrategyContext)) {
         fork2019TakeGoldenium(servoList, tofSensorList, FORK_2019_RIGHT_INDEX);
-    }
-    else {
+    } else {
         fork2019TakeGoldenium(servoList, tofSensorList, FORK_2019_LEFT_INDEX);
     }
 
@@ -144,7 +136,7 @@ bool goldeniumPrepareDrop(int* context) {
     /*
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
-    */
+     */
 
     // WHAT TO DO ?
 
@@ -154,12 +146,11 @@ bool goldeniumPrepareDrop(int* context) {
 bool goldeniumDrop(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "-> goldeniumDrop");
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) context;
     ServoList* servoList = gameStrategyContext->servoList;
     if (isViolet2019(gameStrategyContext)) {
         fork2019DropGoldenium(servoList, FORK_2019_RIGHT_INDEX);
-    }
-    else {
+    } else {
         fork2019DropGoldenium(servoList, FORK_2019_LEFT_INDEX);
     }
     return true;
@@ -167,11 +158,10 @@ bool goldeniumDrop(int* context) {
 
 // -------------------------------------------- SMALL DISTRIBUTOR  -----------------------------------------------
 
-
 bool smallDistributorLinePrepare(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, SMALL_DISTRIBUTOR_PREPARE_ACTION_LOG_NAME);
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) context;
     ServoList* servoList = gameStrategyContext->servoList;
     distributor2019PrepareTake(servoList);
 
@@ -181,14 +171,13 @@ bool smallDistributorLinePrepare(int* context) {
 bool smallDistributorLineTake(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, SMALL_DISTRIBUTOR_TAKE_ACTION_LOG_NAME);
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) context;
     ServoList* servoList = gameStrategyContext->servoList;
     TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
-    
+
     if (isViolet2019(gameStrategyContext)) {
         distributor2019Take(servoList, tofSensorList, FORK_2019_RIGHT_INDEX);
-    }
-    else {
+    } else {
         distributor2019Take(servoList, tofSensorList, FORK_2019_LEFT_INDEX);
     }
 
@@ -204,7 +193,7 @@ bool smallDistributorAcceleratorDrop(int* context) {
 bool bigDistributorLine3Prepare(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, BIG_DISTRIBUTOR_LINE_3_PREPARE_ACTION_LOG_NAME);
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) context;
     ServoList* servoList = gameStrategyContext->servoList;
     distributor2019PrepareTake(servoList);
 
@@ -214,14 +203,13 @@ bool bigDistributorLine3Prepare(int* context) {
 bool bigDistributorLine3Take(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, BIG_DISTRIBUTOR_LINE_3_TAKE_ACTION_LOG_NAME);
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) context;
     ServoList* servoList = gameStrategyContext->servoList;
     TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
-    
+
     if (isViolet2019(gameStrategyContext)) {
         distributor2019Take(servoList, tofSensorList, FORK_2019_RIGHT_INDEX);
-    }
-    else {
+    } else {
         distributor2019Take(servoList, tofSensorList, FORK_2019_LEFT_INDEX);
     }
 
@@ -231,7 +219,7 @@ bool bigDistributorLine3Take(int* context) {
 bool bigDistributorLine3Drop(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, BIG_DISTRIBUTOR_LINE_3_DROP_ACTION_LOG_NAME);
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) context;
     ServoList* servoList = gameStrategyContext->servoList;
     moveForkBack(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX, true);
 
@@ -243,7 +231,7 @@ bool bigDistributorLine3Drop(int* context) {
 bool bigDistributorLine2Prepare(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, BIG_DISTRIBUTOR_LINE_2_PREPARE_ACTION_LOG_NAME);
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) context;
     ServoList* servoList = gameStrategyContext->servoList;
     distributor2019PrepareTake(servoList);
 
@@ -253,17 +241,16 @@ bool bigDistributorLine2Prepare(int* context) {
 bool bigDistributorLine2Take(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, BIG_DISTRIBUTOR_LINE_2_TAKE_ACTION_LOG_NAME);
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) context;
     ServoList* servoList = gameStrategyContext->servoList;
     TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
-    
+
     if (isViolet2019(gameStrategyContext)) {
         distributor2019Take(servoList, tofSensorList, FORK_2019_RIGHT_INDEX);
-    }
-    else {
+    } else {
         distributor2019Take(servoList, tofSensorList, FORK_2019_LEFT_INDEX);
     }
-    
+
     // The last move, and we don't want to hurt the Big Robot => We disabled the tof
     tofSensorListSetEnableUsageType(tofSensorList, TOF_SENSOR_USAGE_TYPE_COLLISION, false);
 
@@ -273,7 +260,7 @@ bool bigDistributorLine2Take(int* context) {
 bool bigDistributorLine2Drop(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, BIG_DISTRIBUTOR_LINE_2_DROP_ACTION_LOG_NAME);
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) context;
     ServoList* servoList = gameStrategyContext->servoList;
     moveForkBack(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX, true);
 

@@ -16,36 +16,31 @@ int deviceElectronLauncher2019GetInterface(unsigned char commandHeader, DeviceIn
             setFunctionNoArgumentAndNoResult("Debug");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // INIT
+    }// INIT
     else if (commandHeader == COMMAND_ELECTRON_LAUNCHER_2019_INIT) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Init");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // LAUNCH
+    }// LAUNCH
     else if (commandHeader == COMMAND_ELECTRON_LAUNCHER_2019_LAUNCH) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Launch");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // SHOW
+    }// SHOW
     else if (commandHeader == COMMAND_ELECTRON_LAUNCHER_2019_SHOW) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Show");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // SIMULATE ROBOT PLACED
+    }// SIMULATE ROBOT PLACED
     else if (commandHeader == COMMAND_ELECTRON_LAUNCHER_2019_SIMULATE_ROBOT_PLACED) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Simulate Robot Placed");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // SIMULATE ROBOT PLACED
+    }// SIMULATE ROBOT PLACED
     else if (commandHeader == COMMAND_ELECTRON_LAUNCHER_2019_SIMULATE_ROBOT_PLACED_AND_MOVED) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Simulate Robot Placed And Moved");

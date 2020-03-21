@@ -16,7 +16,7 @@
 bool bigDistributorLinePrepare(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "-> bigDistributorLinePrepare");
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) context;
     ServoList* servoList = gameStrategyContext->servoList;
     distributor2019PrepareTake(servoList);
 
@@ -26,14 +26,13 @@ bool bigDistributorLinePrepare(int* context) {
 bool bigDistributorLineTake(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "-> bigDistributorLineTake");
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) context;
     ServoList* servoList = gameStrategyContext->servoList;
     TofSensorList* tofSensorList = gameStrategyContext->tofSensorList;
     if (isViolet2019(gameStrategyContext)) {
         distributor2019Take(servoList, tofSensorList, FORK_2019_LEFT_INDEX);
-    }
-    else {
-        distributor2019Take(servoList, tofSensorList, FORK_2019_RIGHT_INDEX);        
+    } else {
+        distributor2019Take(servoList, tofSensorList, FORK_2019_RIGHT_INDEX);
     }
     return true;
 }

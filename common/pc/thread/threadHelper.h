@@ -12,8 +12,8 @@
  * @return the Handle for the Thread
  */
 HANDLE createStandardThread(
-    _In_ LPTHREAD_START_ROUTINE lpStartAddress,
-    _In_opt_ __drv_aliasesMem LPVOID lpParameter,
-    _Out_opt_ LPDWORD lpThreadId);
+        _In_ LPTHREAD_START_ROUTINE lpStartAddress,
+        _In_opt_ __drv_aliasesMem LPVOID lpParameter,
+        _Out_opt_ LPDWORD lpThreadId);
 
 #endif

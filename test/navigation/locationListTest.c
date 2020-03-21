@@ -18,7 +18,7 @@ void locationListTestSuite(void) {
 }
 
 void locationListTest(void) {
-    initLocationList(&locationList, (Location(*)[]) &locationListArray, LOCATION_LIST_ARRAY_TEST);
+    initLocationList(&locationList, (Location(*)[]) & locationListArray, LOCATION_LIST_ARRAY_TEST);
 
     Location* locationA;
     Location* locationB;

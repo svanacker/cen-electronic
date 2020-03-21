@@ -33,7 +33,7 @@ bool isMotionInstructionFailed(PidMotion* pidMotion, MotionInstruction* motionIn
     if (pidMotion->computationValues.pidTimeInSecond > motionInstruction->t3 + MOTION_FAILED_DETECTION_TIMEOUT_AFTER_T3) {
         return true;
     }
-	return false;
+    return false;
 }
 
 bool isMotionFailed(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {

@@ -53,6 +53,7 @@
 static RobotConfig robotConfig;
 static LightHouse2020 lightHouse;
 static EndMatch endMatch;
+
 /**
  * @private
  */
@@ -64,10 +65,10 @@ void initMainBoardDevicesDescriptor() {
     mainLightHouse2020TofAddDevices();
 
     addLocalDevice(getIODeviceInterface(), getIODeviceDescriptor());
-    
+
     // 2020 specific
     addLocalDevice(getLightHouse2020DeviceInterface(), getLightHouse2020DeviceDescriptor(&lightHouse));
-    
+
     addLocalDevice(getEndMatchDetectorDeviceInterface(), getEndMatchDetectorDeviceDescriptor(&endMatch));
 
     // Call the init on each devices
@@ -84,19 +85,19 @@ void initMainBoardDriverDataDispatcherList(void) {
  */
 void mainBoardMainPhase1(void) {
     setBoardName("LIGHT HOUSE 2020");
- 
+
     // CONFIG
     initRobotConfigPic32(&robotConfig, ROBOT_TYPE_LIGHTHOUSE_2020);
-    
+
     // BASE LOGS
     mainBoardCommonInitLogs();
-    
+
     // LCD
     mainBoardCommonLcdInit(&robotConfig);
 
     // SERIAL
     mainBoardCommonInitSerialList();
-    mainBoardCommonDebugOpenSerialLink(); 
+    mainBoardCommonDebugOpenSerialLink();
 }
 
 /**
@@ -104,20 +105,20 @@ void mainBoardMainPhase1(void) {
  */
 void mainBoardMainPhase2(void) {
     mainBoardCommonMainInit(&robotConfig);
-    
-   
+
+
     mainBoardCommonInitBusList();
     mainBoardCommonInitTimerList();
     mainBoardCommonInitCommonDrivers();
 
     TofSensorList* tofSensorList = mainLightHouse2020TofInitDrivers(mainBoardCommonGetAlternativeI2cBus());
-    
+
     // 2020 specific
     initLightHouse2020(&lightHouse,
-                             &endMatch,
-                             &robotConfig,
-                             mainBoardCommonGetServoList(),
-                             tofSensorList);
+            &endMatch,
+            &robotConfig,
+            mainBoardCommonGetServoList(),
+            tofSensorList);
 
     initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
 }
@@ -131,10 +132,10 @@ int main(void) {
     mainBoardMainPhase1();
     mainBoardMainPhase2();
     mainBoardMainPhase3();
-    
+
     while (true) {
         mainBoardCommonHandleStreamInstruction();
-        
+
         /// handleLightHouseActions(&lightHouse);
     }
 }

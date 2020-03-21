@@ -53,7 +53,7 @@ static unsigned int availablePathBitArray[STRATEGY_2012_BIT_LIST_NAVIGATION_TEST
 
 // ------------------------------------------------------ LOCATIONS --------------------------------------------------------------------
 // -> General Points
-static Location* startAreaLocation; 
+static Location* startAreaLocation;
 static Location* startAreaFrontLocation;
 
 static Location* bullion1Location;
@@ -182,13 +182,13 @@ static GameTargetAction bullionLeft1FromL3TargetAction;
 // ------------------------------------------------------- TARGETS ACTIONS ITEMS --------------------------------------------------------
 
 // -> CD 4
-static GameTargetActionItemList cdTakeTargetActionItemList;  
+static GameTargetActionItemList cdTakeTargetActionItemList;
 static GameTargetActionItem cdTakeStep1TargetActionItem;
 static GameTargetActionItem cdTakeStep2TargetActionItem;
 
 // -> BULLION RIGHT 1
-static GameTargetActionItemList bullionRight1FromDropZone1ActionItemList; 
-static GameTargetActionItemList bullionRight1FromR3ActionItemList; 
+static GameTargetActionItemList bullionRight1FromDropZone1ActionItemList;
+static GameTargetActionItemList bullionRight1FromR3ActionItemList;
 static GameTargetActionItem bullionRight1RotateTargetActionItem;
 static GameTargetActionItem bullionRight1Step1FromDropZone1TargetActionItem;
 static GameTargetActionItem bullionRight1Step1FromR3TargetActionItem;
@@ -197,8 +197,8 @@ static GameTargetActionItem bullionRight1Step3GoTargetActionItem;
 static GameTargetActionItem bullionRight1Step4ClosePlierTargetActionItem;
 
 // -> BULLION LEFT 1
-static GameTargetActionItemList bullionLeft1FromDropZone1ActionItemList; 
-static GameTargetActionItemList bullionLeft1FromL3ActionItemList; 
+static GameTargetActionItemList bullionLeft1FromDropZone1ActionItemList;
+static GameTargetActionItemList bullionLeft1FromL3ActionItemList;
 static GameTargetActionItem bullionLeft1RotateTargetActionItem;
 static GameTargetActionItem bullionLeft1Step1FromDropZone1TargetActionItem;
 static GameTargetActionItem bullionLeft1Step1FromL3TargetActionItem;
@@ -236,8 +236,7 @@ void setColor(enum TeamColor color) {
     if (!isGreen()) {
         angle = -angle;
         context->robotPosition.y = 2840;
-    }
-    else {
+    } else {
         context->robotPosition.y = 160;
     }
     context->robotPosition.x = 160;
@@ -255,21 +254,21 @@ void initLocations2012() {
     bottle1Location = addNavigationLocation(BOTTLE_1, BOTTLE_1_X, BOTTLE_1_Y);
     bottle2FrontLocation = addNavigationLocation(BOTTLE_2_FRONT, BOTTLE_2_FRONT_X, BOTTLE_2_FRONT_Y);
     bottle2Location = addNavigationLocation(BOTTLE_2, BOTTLE_2_X, BOTTLE_2_Y);
-//     cdTakeLocation = addNavigationLocation(CD_TAKE, CD_TAKE_X, CD_TAKE_Y);
-    dropZone1Location = addNavigationLocation(DROP_ZONE_1, (int)DROP_ZONE_1_X, (int) DROP_ZONE_1_Y);
-    frontOfMapLocation = addNavigationLocation(FRONT_OF_MAP_LOCATION, (int) FRONT_OF_MAP_LOCATION_X, (int)FRONT_OF_MAP_LOCATION_Y);
+    //     cdTakeLocation = addNavigationLocation(CD_TAKE, CD_TAKE_X, CD_TAKE_Y);
+    dropZone1Location = addNavigationLocation(DROP_ZONE_1, (int) DROP_ZONE_1_X, (int) DROP_ZONE_1_Y);
+    frontOfMapLocation = addNavigationLocation(FRONT_OF_MAP_LOCATION, (int) FRONT_OF_MAP_LOCATION_X, (int) FRONT_OF_MAP_LOCATION_Y);
     // -> Bullion 1
-    bullionRight1Location = addNavigationLocation(BULLION_RIGHT_1, BULLION_RIGHT_1_X, BULLION_RIGHT_1_Y); 
-    bullionLeft1Location = addNavigationLocation(BULLION_LEFT_1, BULLION_LEFT_1_X, BULLION_LEFT_1_Y); 
+    bullionRight1Location = addNavigationLocation(BULLION_RIGHT_1, BULLION_RIGHT_1_X, BULLION_RIGHT_1_Y);
+    bullionLeft1Location = addNavigationLocation(BULLION_LEFT_1, BULLION_LEFT_1_X, BULLION_LEFT_1_Y);
     // -> Bullion 2 / Opponent CD
-    bullionMiddle2Location = addNavigationLocation(BULLION_MIDDLE_2, (int)BULLION_MIDDLE_2_X, (int) BULLION_MIDDLE_2_Y);
+    bullionMiddle2Location = addNavigationLocation(BULLION_MIDDLE_2, (int) BULLION_MIDDLE_2_X, (int) BULLION_MIDDLE_2_Y);
 
     obstacleL1Location = addNavigationLocation(OBSTACLE_L1, OBSTACLE_L_X, OBSTACLE_1_Y);
     obstacleL2Location = addNavigationLocation(OBSTACLE_L2, OBSTACLE_L_X, OBSTACLE_2_Y);
     obstacleL3Location = addNavigationLocation(OBSTACLE_L3, OBSTACLE_L_X, (int) OBSTACLE_3_Y);
-    obstacleL4Location = addNavigationLocation(OBSTACLE_L4, (int) OBSTACLE_L_X, (int)OBSTACLE_4_Y);
-    obstacleM1Location = addNavigationLocation(OBSTACLE_M1, (int) OBSTACLE_M_X, (int)OBSTACLE_1_Y);
-    obstacleM2Location = addNavigationLocation(OBSTACLE_M2, (int) OBSTACLE_M_X, (int)OBSTACLE_4_Y);
+    obstacleL4Location = addNavigationLocation(OBSTACLE_L4, (int) OBSTACLE_L_X, (int) OBSTACLE_4_Y);
+    obstacleM1Location = addNavigationLocation(OBSTACLE_M1, (int) OBSTACLE_M_X, (int) OBSTACLE_1_Y);
+    obstacleM2Location = addNavigationLocation(OBSTACLE_M2, (int) OBSTACLE_M_X, (int) OBSTACLE_4_Y);
     obstacleR1Location = addNavigationLocation(OBSTACLE_R1, (int) OBSTACLE_R_X, (int) OBSTACLE_1_Y);
     obstacleR2Location = addNavigationLocation(OBSTACLE_R2, (int) OBSTACLE_R_X, (int) OBSTACLE_2_Y);
     obstacleR3Location = addNavigationLocation(OBSTACLE_R3, (int) OBSTACLE_R_X, (int) OBSTACLE_3_Y);
@@ -288,12 +287,11 @@ void initPaths2012(int index) {
 
     // DIRECT PATH TO TARGETS
     if (index == STRATEGY_HOMOLOGATION) {
-        #ifdef INCLUDE_HOMOLOGATION
-            startAreaToStartAreaFrontPath = addNavigationPath(startAreaLocation, startAreaFrontLocation, STARTAREA_TO_STARTAREA_FRONT_COST,  0x0A, 0x0A, START_ANGLE, ANGLE_90, STARTAREA_TO_STARTAREA_FRONT_SPEED_FACTOR, STARTAREA_TO_STARTAREA_FRONT_ACCELERATION_FACTOR);
-            startAreaFrontToOM1Path = addNavigationPath(startAreaFrontLocation, obstacleM1Location, STARTAREA_FRONT_TO_OM1_COST,  0x0A, 0x0A, ANGLE_0, ANGLE_0, STARTAREA_FRONT_TO_OM1_SPEED_FACTOR, STARTAREA_FRONT_TO_OM1_ACCELERATION_FACTOR); 
-        #endif
-    }
-    else {
+#ifdef INCLUDE_HOMOLOGATION
+        startAreaToStartAreaFrontPath = addNavigationPath(startAreaLocation, startAreaFrontLocation, STARTAREA_TO_STARTAREA_FRONT_COST, 0x0A, 0x0A, START_ANGLE, ANGLE_90, STARTAREA_TO_STARTAREA_FRONT_SPEED_FACTOR, STARTAREA_TO_STARTAREA_FRONT_ACCELERATION_FACTOR);
+        startAreaFrontToOM1Path = addNavigationPath(startAreaFrontLocation, obstacleM1Location, STARTAREA_FRONT_TO_OM1_COST, 0x0A, 0x0A, ANGLE_0, ANGLE_0, STARTAREA_FRONT_TO_OM1_SPEED_FACTOR, STARTAREA_FRONT_TO_OM1_ACCELERATION_FACTOR);
+#endif
+    } else {
         startAreaToBullion1Path = addNavigationPath(startAreaLocation, bullion1Location, START_AREA_TO_BULLION_1_COST, 0x40, 0x40, START_ANGLE, ANGLE_NEG_90, START_AREA_TO_BULLION_1_SPEED_FACTOR, START_AREA_TO_BULLION_1_ACCELERATION_FACTOR);
     }
 
@@ -315,7 +313,7 @@ void initPaths2012(int index) {
     obstacleL4ToObstacleM2Path = addNavigationPath(obstacleL4Location, obstacleM2Location, OBSTACLE_L4_TO_M2_COST, 0x0A, 0x0A, 0, 0, OBSTACLE_L4_TO_M2_SPEED_FACTOR, OBSTACLE_L4_TO_M2_ACCELERATION_FACTOR);
 
     // OL4->OR4
-    obstacleL4ToObstacleR4Path = addNavigationPath(obstacleL4Location, obstacleR4Location, OBSTACLE_L4_TO_R4_COST, 0x0A, 0x0A, 0, 0, OBSTACLE_L4_TO_R4_SPEED_FACTOR, OBSTACLE_L4_TO_R4_ACCELERATION_FACTOR); 
+    obstacleL4ToObstacleR4Path = addNavigationPath(obstacleL4Location, obstacleR4Location, OBSTACLE_L4_TO_R4_COST, 0x0A, 0x0A, 0, 0, OBSTACLE_L4_TO_R4_SPEED_FACTOR, OBSTACLE_L4_TO_R4_ACCELERATION_FACTOR);
     obstacleM2ToObstacleR4Path = addNavigationPath(obstacleM2Location, obstacleR4Location, OBSTACLE_M2_TO_R4_COST, 0x0A, 0x0A, 0, 0, OBSTACLE_M2_TO_R4_SPEED_FACTOR, OBSTACLE_M2_TO_R4_ACCELERATION_FACTOR);
 
     // OR4->OR3
@@ -401,9 +399,9 @@ void bullionRight1Rotate() {
 
 void bullionRight1Step3GoToDropZone() {
     motionGoLocation(dropZone1Location,
-                     ANGLE_NEG_90, 
-                    0x78, 0x40,
-                    MOTION_ACCELERATION_FACTOR_LOW, MOTION_SPEED_FACTOR_LOW);
+            ANGLE_NEG_90,
+            0x78, 0x40,
+            MOTION_ACCELERATION_FACTOR_LOW, MOTION_SPEED_FACTOR_LOW);
 }
 
 void R3ToBullionRight1() {
@@ -422,9 +420,9 @@ void bullionLeft1Rotate() {
 
 void bullionLeft1Step3GoToDropZone() {
     motionGoLocation(dropZone1Location,
-                     ANGLE_NEG_90, 
-                    0x78, 0x40,
-                    MOTION_ACCELERATION_FACTOR_LOW, MOTION_SPEED_FACTOR_LOW);
+            ANGLE_NEG_90,
+            0x78, 0x40,
+            MOTION_ACCELERATION_FACTOR_LOW, MOTION_SPEED_FACTOR_LOW);
 }
 
 void dropZone1ToBullionLeft1() {
@@ -447,7 +445,7 @@ void initTargetActions2012() {
     addTargetAction(&(bullion1Target.actionList), &bullion1TargetAction, bullion1Location, bullion1Location, 2, NULL, NULL);
     addTargetAction(&(bottle1Target.actionList), &bottle1TargetAction, bottle1Location, bottle1Location, 2, NULL, NULL);
     addTargetAction(&(bottle2Target.actionList), &bottle2TargetAction, bottle2Location, bottle2Location, 3, NULL, NULL);
-    addTargetAction(&(cd4Target.actionList), &cdTakeTargetAction, bottle2Location, dropZone1Location, 4, NULL /** TODO*/,&cdTakeTargetActionItemList);
+    addTargetAction(&(cd4Target.actionList), &cdTakeTargetAction, bottle2Location, dropZone1Location, 4, NULL /** TODO*/, &cdTakeTargetActionItemList);
 
     // BULLION RIGHT 1
     addTargetAction(&(bullionRight1Target.actionList), &bullionRight1FromDropZone1TargetAction, dropZone1Location, dropZone1Location, 5, NULL /** TODO*/, &bullionRight1FromDropZone1ActionItemList);
@@ -512,15 +510,15 @@ void initStrategiesItems2012(int strategyIndex) {
     addGameStrategyItem(&strategy1, &cdTakeStrategyItem, &cd4Target);
     addGameStrategyItem(&strategy1, &bullionRight1StrategyItem, &bullionRight1Target);
     addGameStrategyItem(&strategy1, &bullionLeft1StrategyItem, &bullionLeft1Target);
-//    addGameStrategyItem(&strategy1, &opponentCDStrategyItem, &opponentCDTarget);
+    //    addGameStrategyItem(&strategy1, &opponentCDStrategyItem, &opponentCDTarget);
 }
 
 void initStrategy2012(int strategyIndex) {
 
-    initLocationList(&locationList, (Location(*)[]) &locationListArray, STRATEGY_2012_BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
-    initPathList(&pathList, (PathData(*)[]) &pathListArray, STRATEGY_2012_NAVIGATION_PATH_LIST_TEST_ARRAY_LENGTH);
-    initBitList(&outgoingPathBitList, (unsigned int(*)[]) &outgoingPathBitArray, STRATEGY_2012_BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
-    initBitList(&availablePathBitList, (unsigned int(*)[]) &availablePathBitArray, STRATEGY_2012_BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
+    initLocationList(&locationList, (Location(*)[]) & locationListArray, STRATEGY_2012_BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
+    initPathList(&pathList, (PathData(*)[]) & pathListArray, STRATEGY_2012_NAVIGATION_PATH_LIST_TEST_ARRAY_LENGTH);
+    initBitList(&outgoingPathBitList, (unsigned int(*)[]) & outgoingPathBitArray, STRATEGY_2012_BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
+    initBitList(&availablePathBitList, (unsigned int(*)[]) & availablePathBitArray, STRATEGY_2012_BIT_LIST_NAVIGATION_TEST_ARRAY_LENGTH);
 
     initNavigation(&locationList, &pathList, &outgoingPathBitList, &availablePathBitList);
 
@@ -539,8 +537,7 @@ void initStrategy2012(int strategyIndex) {
     strategyContext->gameStrategy = strategy;
     if (strategyIndex == STRATEGY_HOMOLOGATION) {
         strategyContext->maxTargetToHandle = 1;
-    }
-    else {
+    } else {
         strategyContext->maxTargetToHandle = getGameTargetList()->size;
     }
     //OutputStream* debugOutputStream = getInfoOutputStreamLogger();
@@ -550,12 +547,12 @@ void initStrategy2012(int strategyIndex) {
     Point* p = &(getStrategyContext()->opponentRobotPosition);
     p->x = 0;
     p->y = 0;
-    
+
     // obstacle
     p = &(getStrategyContext()->lastObstaclePosition);
     p->x = 0;
     p->y = 0;
-    
+
     strategyContext->hasMoreNextSteps = true;
 
     // reinitialize the game board to change elements / targets ...

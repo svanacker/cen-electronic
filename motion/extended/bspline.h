@@ -154,7 +154,7 @@ void copyBSplineData(BSplinePointData* source, BSplinePointData* target);
  * @param bSplineCurve the curve for which we compute the length
  * @param timeIncremnt between 0.0f and 1.0f (max for a bezier curve). If the value is very small,
  * the accuracy of length is better, but it takes more time to compute
-*/
+ */
 float computeBSplineArcLength(BSplineCurve* bSplineCurve, float timeIncrement);
 
 /**
@@ -181,10 +181,10 @@ float computeBSplineTimeAtDistance(BSplineCurve* bSplineCurve, float distance);
  * Parametrize a curve by providing source coordinates / angle, target coordinates / angle + controlDistance1 / 2 instead of 4 control points
  */
 void parameterBSplineWithDistanceAndAngle(BSplineCurve* curve,
-    float sourceX, float sourceY, float sourceAngle,
-    float destX, float destY, float destAngle,
-    float distance1, float distance2,
-    float accelerationFactor, float speedFactor,
-    bool relative);
+        float sourceX, float sourceY, float sourceAngle,
+        float destX, float destY, float destAngle,
+        float distance1, float distance2,
+        float accelerationFactor, float speedFactor,
+        bool relative);
 
 #endif

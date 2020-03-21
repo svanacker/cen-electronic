@@ -2,8 +2,8 @@
 #define BSPLINE_TEST_H
 
 /**
-* Test a bspline.
-*/
+ * Test a bspline.
+ */
 void testBSpline1();
 
 void testBSpline2();

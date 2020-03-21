@@ -6,8 +6,8 @@
 #include "../../common/io/outputStream.h"
 
 /**
-* Print the game target list, and for each the detail of target.
-*/
+ * Print the game target list, and for each the detail of target.
+ */
 void printGameTargetListTable(GameTargetList* gameTargetList, OutputStream* outputStream);
 
 #endif

@@ -62,24 +62,21 @@ bool motionRotateToFollowPath(GameStrategyContext* gameStrategyContext, PathData
         // that we do not rely the navigation on just exact computation
         if (gameStrategyContext->simulateMove) {
             gameStrategyContext->robotAngleRadian += diff + 0.001f;
-        }
-        else {
+        } else {
             motionDriverLeft(radToDeg(diff));
         }
         updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_ROTATION);
-    }
-    else {
+    } else {
         appendStringAndDecf(getDebugOutputStreamLogger(), "motionDriverRight:", radToDeg(-diff));
         println(getDebugOutputStreamLogger());
         if (gameStrategyContext->simulateMove) {
             gameStrategyContext->robotAngleRadian += diff + 0.001f;
-        }
-        else {
+        } else {
             motionDriverRight(radToDeg(-diff));
         }
         updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_ROTATION);
     }
-    
+
 
     return true;
 }
@@ -111,16 +108,14 @@ bool motionFollowPath(GameStrategyContext* gameStrategyContext, PathData* pathDa
     if (gameStrategyContext->simulateMove) {
 #ifdef PC_COMPILER        
         simulateBSplineAbsolute(gameStrategyContext, location->x, location->y, angleRadian, cp1, cp2,
-            pathData->accelerationFactor, pathData->speedFactor);
+                pathData->accelerationFactor, pathData->speedFactor);
 #endif
-    }
-    else {
+    } else {
         clientExtendedMotionBSplineAbsolute(location->x, location->y, angleRadian, cp1, cp2,
-            pathData->accelerationFactor, pathData->speedFactor);
+                pathData->accelerationFactor, pathData->speedFactor);
         if (cp1 < 0.0f) {
             updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_BACKWARD);
-        }
-        else {
+        } else {
             updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_FORWARD);
         }
     }

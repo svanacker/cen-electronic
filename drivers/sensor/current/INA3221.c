@@ -13,13 +13,13 @@
  */
 I2cBusConnection* _INA3221_getI2cBusConnection(Current* current) {
     I2cBusConnection* result = (I2cBusConnection*) current->object;
-    
+
     return result;
 }
 
 int _INA3221_readSensorValue(Current* current) {
     I2cBusConnection* i2cBusConnection = _INA3221_getI2cBusConnection(current);
-    
+
     int result = 0;
     unsigned char INA3221Msb = 0;
     unsigned char INA3221Lsb = 0;
@@ -33,15 +33,15 @@ int _INA3221_readSensorValue(Current* current) {
     //I2C REGISTER SELECT
     portableMasterWriteI2C(i2cBusConnection, INA3221_CHANNEL1_SHUNT_VOLTAGE);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     // Restart in read mode
     portableMasterStartI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     //I2C ADDRESS SELECT Read
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress | 0x01);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     //I2C DATA READ
     INA3221Msb = portableMasterReadI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
@@ -53,21 +53,20 @@ int _INA3221_readSensorValue(Current* current) {
     WaitI2cBusConnection(i2cBusConnection);
     portableMasterAckI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     //I2C STOP
     portableMasterStopI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
 
     if (INA3221Msb & 0x80) {
         //courant negatif
-        result = 0x1234; 
-    }
-    else { 
+        result = 0x1234;
+    } else {
         //courant positif
 
-    result = ((((INA3221Msb<<8) + INA3221Lsb)>>3) * INA3221_DELTA ) / INA3221_SHUNT;    
+        result = ((((INA3221Msb << 8) + INA3221Lsb) >> 3) * INA3221_DELTA) / INA3221_SHUNT;
     }
-     
+
     //result en mA
     return result;
 }

@@ -81,8 +81,8 @@
 #define COMMAND_MOTION_OBSTACLE                '|'
 
 /**
-* Interface for Device
-*/
+ * Interface for Device
+ */
 DeviceInterface* getMotionDeviceInterface();
 
 #endif

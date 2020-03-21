@@ -85,8 +85,7 @@ bool clientLaunch2018(int launcherIndex, bool prepare) {
     if (prepare) {
         append(outputStream, LAUNCHER_PREPARE_BALL_COMMAND);
         appendHex2(outputStream, launcherIndex);
-    }
-    else {
+    } else {
         append(outputStream, LAUNCHER_SEND_BALL_COMMAND);
         appendHex2(outputStream, launcherIndex);
     }
@@ -125,9 +124,9 @@ bool clientDistributor2018LoadAndSendUnicolorBallList(int direction) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, LAUNCHER_2018_DEVICE_HEADER);
     append(outputStream, LAUNCHER_LOAD_AND_SEND_UNICOLOR_BALL_LIST);
-    
+
     appendHex2(outputStream, direction);
-    
+
     bool result = transmitFromDriverRequestBuffer();
 
     return result;

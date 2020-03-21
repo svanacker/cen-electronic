@@ -47,43 +47,36 @@ void deviceI2cMasterDebugHandleRawData(unsigned char header, InputStream* inputS
     if (header == COMMAND_I2C_MASTER_DEBUG_PRINT_BUFFER) {
         ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_MASTER_DEBUG_PRINT_BUFFER);
         printI2cDebugBuffers();
-    }
-    else if (header == COMMAND_I2C_MASTER_DEBUG_ENABLE_DISABLE) {
+    } else if (header == COMMAND_I2C_MASTER_DEBUG_ENABLE_DISABLE) {
         ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_MASTER_DEBUG_ENABLE_DISABLE);
 
         unsigned char enable = readHex2(inputStream);
         setDebugI2cEnabled(enable != 0);
-    }
-    // start / stop
+    }// start / stop
     else if (header == COMMAND_I2C_MASTER_DEBUG_START_I2C_BUS) {
         ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_MASTER_DEBUG_START_I2C_BUS);
         I2cBusConnection* i2cBusConnection = getI2cMasterDebugBusConnection(inputStream);
         portableMasterStartI2C(i2cBusConnection);
-    }
-    else if (header == COMMAND_I2C_MASTER_DEBUG_STOP_I2C_BUS) {
+    } else if (header == COMMAND_I2C_MASTER_DEBUG_STOP_I2C_BUS) {
         ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_MASTER_DEBUG_STOP_I2C_BUS);
         I2cBusConnection* i2cBusConnection = getI2cMasterDebugBusConnection(inputStream);
         portableMasterStopI2C(i2cBusConnection);
-    }
-    // ack / nack
+    }// ack / nack
     else if (header == COMMAND_I2C_MASTER_DEBUG_ACK) {
         ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_MASTER_DEBUG_ACK);
         I2cBusConnection* i2cBusConnection = getI2cMasterDebugBusConnection(inputStream);
         portableMasterAckI2C(i2cBusConnection);
-    }
-    else if (header == COMMAND_I2C_MASTER_DEBUG_NACK) {
+    } else if (header == COMMAND_I2C_MASTER_DEBUG_NACK) {
         ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_MASTER_DEBUG_NACK);
         I2cBusConnection* i2cBusConnection = getI2cMasterDebugBusConnection(inputStream);
         portableMasterNackI2C(i2cBusConnection);
-    }
-    // read / write data
+    }// read / write data
     else if (header == COMMAND_I2C_MASTER_DEBUG_SEND_CHAR_TO_SLAVE) {
         ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_MASTER_DEBUG_SEND_CHAR_TO_SLAVE);
         I2cBusConnection* i2cBusConnection = getI2cMasterDebugBusConnection(inputStream);
         int c = readHex2(inputStream);
         i2cMasterWriteChar(i2cBusConnection, i2cBusConnection->i2cAddress, c);
-    }
-    else if (header == COMMAND_I2C_MASTER_DEBUG_READ_CHAR_FROM_SLAVE) {
+    } else if (header == COMMAND_I2C_MASTER_DEBUG_READ_CHAR_FROM_SLAVE) {
         ackCommand(outputStream, I2C_MASTER_DEBUG_DEVICE_HEADER, COMMAND_I2C_MASTER_DEBUG_READ_CHAR_FROM_SLAVE);
         I2cBusConnection* i2cBusConnection = getI2cMasterDebugBusConnection(inputStream);
         unsigned char c = i2cMasterReadChar(i2cBusConnection);
@@ -91,13 +84,15 @@ void deviceI2cMasterDebugHandleRawData(unsigned char header, InputStream* inputS
     }
 }
 
-static DeviceDescriptor descriptor = {
-    .deviceInit = &deviceI2cMasterDebugInit,
-    .deviceShutDown = &deviceI2cMasterDebugShutDown,
-    .deviceIsOk = &deviceI2cMasterDebugIsOk,
-    .deviceHandleRawData = &deviceI2cMasterDebugHandleRawData,
-};
+static DeviceDescriptor descriptor;
 
-DeviceDescriptor* getI2cMasterDebugDeviceDescriptor(void) {
+DeviceDescriptor* getI2cMasterDebugDeviceDescriptor() {
+    initDeviceDescriptor(&descriptor,
+            &deviceI2cMasterDebugInit,
+            &deviceI2cMasterDebugShutDown,
+            &deviceI2cMasterDebugIsOk,
+            &deviceI2cMasterDebugHandleRawData,
+            NULL);
+
     return &descriptor;
 }

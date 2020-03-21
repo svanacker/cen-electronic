@@ -156,7 +156,7 @@ void systemDeviceTestSuite(void) {
 }
 
 void testSystemDeviceUsage(void) {
-    initDeviceList((Device(*)[]) &deviceListArray, SYSTEM_DEVICE_TEST_DEVICE_LIST_LENGTH);
+    initDeviceList((Device(*)[]) & deviceListArray, SYSTEM_DEVICE_TEST_DEVICE_LIST_LENGTH);
 
     addLocalDevice(getADCDeviceInterface(), NULL);
     addLocalDevice(getBatteryDeviceInterface(), NULL);

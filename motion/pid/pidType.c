@@ -18,7 +18,7 @@ unsigned int getPidTypeCount(void) {
 }
 
 unsigned int pidTypeEnumToIndex(enum PidType pidType) {
-    return (unsigned int)pidType;
+    return (unsigned int) pidType;
 }
 
 enum PidType pidTypeValueOf(unsigned int pidTypeIndex) {

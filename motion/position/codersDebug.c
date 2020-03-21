@@ -34,8 +34,8 @@
 static CoderDataHistory coderDataHistory;
 
 /**
-* Private.
-*/
+ * Private.
+ */
 void printCoderListHeader(OutputStream* outputStream) {
     println(outputStream);
     appendTableHeaderSeparatorLine(outputStream);
@@ -73,8 +73,8 @@ void printCoderDebug(OutputStream* outputStream, unsigned int index, signed long
     appendDecTableData(outputStream, rightValue, CODERS_DEVICE_RIGHT_PULSE_DEC_COLUMN_LENGTH);
 
     // Distance
-    appendDecfTableData(outputStream, ((float)leftValue) * leftWheelFactor, CODERS_DEVICE_LEFT_DISTANCE_COLUMN_LENGTH);
-    appendDecfTableData(outputStream, ((float)rightValue) * rightWheelFactor, CODERS_DEVICE_RIGHT_DISTANCE_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, ((float) leftValue) * leftWheelFactor, CODERS_DEVICE_LEFT_DISTANCE_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, ((float) rightValue) * rightWheelFactor, CODERS_DEVICE_RIGHT_DISTANCE_COLUMN_LENGTH);
 
     // Pulse (hex)
     appendHex6TableData(outputStream, leftValue, CODERS_DEVICE_LEFT_PULSE_HEX_COLUMN_LENGTH);
@@ -128,8 +128,8 @@ bool acquireNextCoderSample() {
 }
 
 /**
-* Callback.
-*/
+ * Callback.
+ */
 void debugGetWheelCallback(Timer* timer) {
     // If we don't need to acquire anymore
     if (!acquireNextCoderSample()) {
@@ -146,15 +146,13 @@ void enableCoderSampleRecording(unsigned int sampleCountParam, unsigned int samp
     Timer* timer = getTimerByCode(CODERS_TIMER_CODE);
     if (sampleCountParam < CODER_DEBUG_HISTORY_COUNT) {
         coderDataHistory.sampleToAcquire = sampleCountParam;
-    }
-    else {
+    } else {
         coderDataHistory.sampleToAcquire = CODER_DEBUG_HISTORY_COUNT;
     }
     unsigned long timeDiviser = TIME_DIVIDER_1000_HERTZ * samplingRateMilliSeconds;
     if (timer == NULL) {
         timer = addTimer(CODERS_TIMER_CODE, timeDiviser, &debugGetWheelCallback, "CODERS TIMER", NULL);
-    }
-    else {
+    } else {
         timer->timeDiviser = timeDiviser;
     }
     timer->enabled = true;

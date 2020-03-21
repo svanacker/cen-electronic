@@ -39,7 +39,7 @@ Location* getLocation(LocationList* locationList, unsigned int index) {
         writeError(LOCATION_LIST_INDEX_OUT_OF_BOUNDS);
         return NULL;
     }
-    Location* result = (Location*)locationList->locations;
+    Location* result = (Location*) locationList->locations;
     // we don't need use sizeof because our pointer is a Location* pointer, so the shift
     // is already of the structure, we just have to shift of index.
     result += index;
@@ -83,8 +83,7 @@ Location* addNamedLocation(LocationList* locationList, enum LocationUsageType lo
         initLocation(location, locationUsageType, name, label, x, y);
         locationList->size++;
         return location;
-    }
-    else {
+    } else {
         writeError(TOO_MUCH_LOCATIONS);
         return NULL;
     }
@@ -122,7 +121,7 @@ Location* findLocationByName(LocationList* locationList, FixedCharArray* locatio
 bool containsLocation(LocationList* locationList, Location* locationToFind, bool handled) {
     if (locationToFind == NULL) {
         return false;
-    }    
+    }
     int i;
     int size = locationList->size;
     for (i = 0; i < size; i++) {
@@ -176,6 +175,7 @@ unsigned int getLocationNotHandledCount(LocationList* locationList) {
 // CLEAR
 
 // https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+
 void clearLocationTmpInfo(LocationList* locationList) {
     unsigned int i;
     unsigned int size = locationList->size;
@@ -194,8 +194,7 @@ Location* addTemporaryLocation(LocationList* locationList, float x, float y) {
     Location* result = findLocationToRecycleIfAny(locationList);
     if (result == NULL) {
         result = addNamedLocation(locationList, LOCATION_USAGE_TYPE_TEMPORARY, "TMP", "TMP", x, y);
-    }
-    else {
+    } else {
         result->x = x;
         result->y = y;
         result->usageType = LOCATION_USAGE_TYPE_TEMPORARY;

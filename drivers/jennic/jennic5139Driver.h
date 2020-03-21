@@ -47,15 +47,15 @@ void setJennicNetworkStatus(unsigned char aNetworkStatus);
 // Configuration - CFG Commands
 
 /**
-* Define the mask defining which channel can be search.
-* In this case, we authorize search from channel 11 to 26
-* In binary, the following value equals to :
-* 0b111111111111111100000000000
-* Channels to be included by Router or End
-* Device in the scan for auto-channel
-* selection. Only applicable to Co-ordinator if
-* auto-channel selection enabled using INI
-*/
+ * Define the mask defining which channel can be search.
+ * In this case, we authorize search from channel 11 to 26
+ * In binary, the following value equals to :
+ * 0b111111111111111100000000000
+ * Channels to be included by Router or End
+ * Device in the scan for auto-channel
+ * selection. Only applicable to Co-ordinator if
+ * auto-channel selection enabled using INI
+ */
 #define CHANNEL_MASK_AUTO_SELECTION            "x07FFF800"
 
 /**
@@ -170,7 +170,7 @@ void setJennicNetworkStatus(unsigned char aNetworkStatus);
 
 /**
  * Define the role of the module as a coordinater.
-*/
+ */
 #define NODE_TYPE_COORDINATER                0
 
 /**
@@ -311,20 +311,20 @@ void setJennicNetworkStatus(unsigned char aNetworkStatus);
 // INIT
 
 /**
-* Init the streams used by Jennic.
-*/
-void initJennic5139Streams( InputStream* aZigbeeInputStream,
-                            OutputStream* aZigbeeOutputStream,
-                            OutputStream* aDebugOutputStream);
+ * Init the streams used by Jennic.
+ */
+void initJennic5139Streams(InputStream* aZigbeeInputStream,
+        OutputStream* aZigbeeOutputStream,
+        OutputStream* aDebugOutputStream);
 
 /**
-* Initialize a Jennic 1539 as a role of coordinater.
-*/
+ * Initialize a Jennic 1539 as a role of coordinater.
+ */
 void initJennic5139Coordinater();
 
 /**
-* Initialize a Jennic 1539 as a role of router.
-*/
+ * Initialize a Jennic 1539 as a role of router.
+ */
 void initJennic5139Router();
 
 // WAIT FOR DATA 
@@ -332,15 +332,15 @@ void initJennic5139Router();
 void waitAndCopyFromZigbeeToDebug(int loopCount, int mSecDelay, bool handleZigbeeStream);
 
 /**
-* Search after the beginning of DAT,0006066005651610211,0,3,
-* Data will be for example 0102AA (size of 3)
-* followed by \n
-*/
+ * Search after the beginning of DAT,0006066005651610211,0,3,
+ * Data will be for example 0102AA (size of 3)
+ * followed by \n
+ */
 bool copyFromZigbeeToDebugRetainingData();
 
 /**
-* Contains the outputStream used to build data which will be included in the commandBuffer.
-*/
+ * Contains the outputStream used to build data which will be included in the commandBuffer.
+ */
 OutputStream* getAsciiDataOutputStream();
 
 // COMMAND
@@ -353,14 +353,14 @@ OutputStream* getAsciiDataOutputStream();
 void sendJennic5139CommandFromBuffer();
 
 /**
-* Send a data to the remote Jennic. The function will
-* wrap as a command the data
-* Ex : SND,0006066005650518898,0102AA,3,0
-* @param inputStream the inputStream from which we copy the data to broadcast
-* @param macAddress 64-bit IEEE/MAC address (set to 0 for a broadcast, when enabled
+ * Send a data to the remote Jennic. The function will
+ * wrap as a command the data
+ * Ex : SND,0006066005650518898,0102AA,3,0
+ * @param inputStream the inputStream from which we copy the data to broadcast
+ * @param macAddress 64-bit IEEE/MAC address (set to 0 for a broadcast, when enabled
 using flag, or to send to Co-ordinator)
-* @param flags 
-*/
+ * @param flags 
+ */
 void sendJennic5139DataBuffer(InputStream* inputStream, char* macAddress, int flags);
 
 // POWER
@@ -401,15 +401,15 @@ void jennic5139Reset();
 // LIGHT
 
 /**
-* off or on the light of the local zigbee.
-* @param pinMask : see JENNIC_LED_BLUE, JENNIC_LED_GREEN ... 
-*/
-void jennic5139LocalLight(char* pinMask, bool on) ;
+ * off or on the light of the local zigbee.
+ * @param pinMask : see JENNIC_LED_BLUE, JENNIC_LED_GREEN ... 
+ */
+void jennic5139LocalLight(char* pinMask, bool on);
 
 /**
-* off or on the light of the remote node.
-* @param pinMask : see JENNIC_LED_BLUE, JENNIC_LED_GREEN ... 
-*/
+ * off or on the light of the remote node.
+ * @param pinMask : see JENNIC_LED_BLUE, JENNIC_LED_GREEN ... 
+ */
 void jennic5139RemoteLight(char* jennicAddress, char* pinMask, bool light);
 
 void onJennicError();

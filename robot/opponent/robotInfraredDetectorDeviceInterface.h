@@ -29,8 +29,8 @@
 #define NOTIFY_INFRARED_DETECTOR_DETECTION          'N'
 
 /**
-* Interface for Robot Infrared Detector Device
-*/
+ * Interface for Robot Infrared Detector Device
+ */
 DeviceInterface* getRobotInfraredDetectorDeviceInterface();
 
 #endif

@@ -44,8 +44,7 @@ void deviceExtendedMotionInit(void) {
         loadMotionParameters(eeprom_, true);
         // We store to do as it was already previously store !
         saveMotionParameters(eeprom_);
-    }
-    else {
+    } else {
         loadMotionParameters(eeprom_, false);
     }
 }
@@ -61,7 +60,7 @@ void deviceExtendedMotionHandleRawData(unsigned char commandHeader,
         InputStream* inputStream,
         OutputStream* outputStream,
         OutputStream* notificationOutputStream) {
-	// -> bspline
+    // -> bspline
     if (commandHeader == COMMAND_MOTION_SPLINE_RELATIVE || commandHeader == COMMAND_MOTION_SPLINE_ABSOLUTE) {
         ackCommand(outputStream, EXTENDED_MOTION_DEVICE_HEADER, commandHeader);
 
@@ -78,7 +77,7 @@ void deviceExtendedMotionHandleRawData(unsigned char commandHeader,
         // the distance can be negative, so the robot go back instead of go forward
         float distance1 = readHexFloat4(inputStream, BSPLINE_MOTION_DISTANCE_FACTOR_DIGIT);
         checkIsSeparator(inputStream);
-    
+
         // the distance can be negative, so the robot go back instead of go forward
         float distance2 = readHexFloat4(inputStream, BSPLINE_MOTION_DISTANCE_FACTOR_DIGIT);
         checkIsSeparator(inputStream);
@@ -91,25 +90,23 @@ void deviceExtendedMotionHandleRawData(unsigned char commandHeader,
         // if distance = 0, the system computes the optimum distance
         // we use relative
         gotoSpline(pidMotion,
-						x, y,
-                        angleRadian,
-                        distance1, distance2, 
-                        accelerationFactor, speedFactor,
-                        commandHeader == COMMAND_MOTION_SPLINE_RELATIVE,
-					    notificationOutputStream
-                        );
-    }
-    else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD) {
+                x, y,
+                angleRadian,
+                distance1, distance2,
+                accelerationFactor, speedFactor,
+                commandHeader == COMMAND_MOTION_SPLINE_RELATIVE,
+                notificationOutputStream
+                );
+    } else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD) {
         ackCommand(outputStream, EXTENDED_MOTION_DEVICE_HEADER, commandHeader);
         gotoSpline(pidMotion,
-                 400.0f, 0.0f,
-                 0.0f,
-                 100.0f, 100.0f,
+                400.0f, 0.0f,
+                0.0f,
+                100.0f, 100.0f,
                 MOTION_ACCELERATION_FACTOR_0, MOTION_SPEED_FACTOR_NORMAL,
-                 true,
+                true,
                 notificationOutputStream);
-    }
-    else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD) {
+    } else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD) {
         ackCommand(outputStream, EXTENDED_MOTION_DEVICE_HEADER, commandHeader);
         gotoSpline(pidMotion,
                 -400.0f, 0.0f,
@@ -118,50 +115,47 @@ void deviceExtendedMotionHandleRawData(unsigned char commandHeader,
                 -MOTION_ACCELERATION_FACTOR_NORMAL, -MOTION_SPEED_FACTOR_NORMAL,
                 true,
                 notificationOutputStream);
-    }
-    else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_LEFT || commandHeader == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
+    } else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_LEFT || commandHeader == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
         ackCommand(outputStream, EXTENDED_MOTION_DEVICE_HEADER, commandHeader);
         float sign = 1.0f;
         if (commandHeader == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
             sign = -sign;
         }
         gotoSpline(pidMotion,
-						 400.0f, sign * 400.0f,
-                         sign * 0.75f * PI,
-                         200.0f, 200.0f,
-                        MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
-                         true,
-					    notificationOutputStream);
-    }
-    else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD_LEFT_FORWARD || commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD_RIGHT_FORWARD) {
+                400.0f, sign * 400.0f,
+                sign * 0.75f * PI,
+                200.0f, 200.0f,
+                MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
+                true,
+                notificationOutputStream);
+    } else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD_LEFT_FORWARD || commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD_RIGHT_FORWARD) {
         ackCommand(outputStream, EXTENDED_MOTION_DEVICE_HEADER, commandHeader);
         float sign = 1.0f;
         if (commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD_RIGHT_FORWARD) {
             sign = -sign;
         }
         gotoSpline(pidMotion,
-						 1200.0f, sign * 600.0f,
-                         0.0f,
-                         1000.0f, 1000.0f,
-                        MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
-                         true,
-					    notificationOutputStream);
-    }
-    else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD_LEFT_BACKWARD || commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD_RIGHT_BACKWARD) {
+                1200.0f, sign * 600.0f,
+                0.0f,
+                1000.0f, 1000.0f,
+                MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
+                true,
+                notificationOutputStream);
+    } else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD_LEFT_BACKWARD || commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD_RIGHT_BACKWARD) {
         ackCommand(outputStream, EXTENDED_MOTION_DEVICE_HEADER, commandHeader);
         float sign = 1.0f;
         if (commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD_LEFT_BACKWARD) {
             sign = -sign;
         }
         gotoSpline(pidMotion,
-						 -1200.0f, -sign * 600.0f,
-                         0.0f,
-                         -1000.0f, -1000.0f,
-                        -MOTION_ACCELERATION_FACTOR_NORMAL, -MOTION_SPEED_FACTOR_NORMAL,
-                         true,
-					    notificationOutputStream);
+                -1200.0f, -sign * 600.0f,
+                0.0f,
+                -1000.0f, -1000.0f,
+                -MOTION_ACCELERATION_FACTOR_NORMAL, -MOTION_SPEED_FACTOR_NORMAL,
+                true,
+                notificationOutputStream);
     }
- }
+}
 
 static DeviceDescriptor descriptor = {
     .deviceInit = &deviceExtendedMotionInit,
@@ -171,6 +165,6 @@ static DeviceDescriptor descriptor = {
 };
 
 DeviceDescriptor* getExtendedMotionDeviceDescriptor(PidMotion* pidMotionParam) {
-	pidMotion = pidMotionParam;
+    pidMotion = pidMotionParam;
     return &descriptor;
 }

@@ -110,7 +110,7 @@ bool adjustYPosition(float y, float thresholdDistance) {
 bool adjustAngle(float thresholdAngle) {
     float quadranRadian = -PI;
     for (quadranRadian = -_2_PI; quadranRadian < _2_PI; quadranRadian += PI / 2) {
-        if (trajectory.position.orientation > quadranRadian -thresholdAngle && trajectory.position.orientation < quadranRadian + thresholdAngle) {
+        if (trajectory.position.orientation > quadranRadian - thresholdAngle && trajectory.position.orientation < quadranRadian + thresholdAngle) {
             trajectory.position.orientation = quadranRadian;
             return true;
         }
@@ -234,13 +234,12 @@ enum TrajectoryType computeTrajectoryType(float distanceSinceLastNotification, f
         }
         // More near from a rotation even if the robot has moved
         return TRAJECTORY_TYPE_ROTATION;
-    }
-    else {
+    } else {
         Point* previousPoint = &(trajectory.lastNotificationPosition.pos);
         Point* currentPoint = &(trajectory.position.pos);
 
         float angleOfVectorRadian = angleOfVector(previousPoint, currentPoint);
-        
+
         float orientation = trajectory.position.orientation;
         float orientationMod2PI = mod2PI(orientation - angleOfVectorRadian);
         // We are "more" in a back trajectoty type if we are in this quadran
@@ -269,6 +268,6 @@ float getAverageSpeedSinceLastNotification(float distance) {
 float getAbsoluteAngleRadianBetweenLastNotificationAndCurrentRobotPosition(void) {
     float lastAngle = trajectory.position.orientation;
     float lastNotificationAngle = trajectory.lastNotificationPosition.orientation;
-    
+
     return fabsf(lastAngle - lastNotificationAngle);
 }

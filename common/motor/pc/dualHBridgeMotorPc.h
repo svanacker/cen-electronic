@@ -4,8 +4,8 @@
 #include "../dualHBridgeMotor.h"
 
 /**
-* Init the DualHBridgeMotor for PC 
-*/
+ * Init the DualHBridgeMotor for PC 
+ */
 void initDualHBridgeMotorPc(DualHBridgeMotor* dualHBridgeMotor);
 
 #endif

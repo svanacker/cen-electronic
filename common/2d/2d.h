@@ -60,19 +60,19 @@ float angleOfVector(Point* p0, Point* p1);
 float angleOfVector2(float p0x, float p0y, float p1x, float p1y);
 
 /**
-* Scale a coordinates system by applying a factor for x and y.
-* @param point the point that we want to transform
-* @param factor the scale factor
-*/
+ * Scale a coordinates system by applying a factor for x and y.
+ * @param point the point that we want to transform
+ * @param factor the scale factor
+ */
 void scale(Point *point, float factor);
 
 /**
-* Computes a rotation around point (x, y).
-* @param point the result point
-* @param angleInRadians the angle of the rotation
-* @param x the coordinates along x axis of the center of the rotation
-* @param y the coordinates along y axis of the center of the rotation
-*/
+ * Computes a rotation around point (x, y).
+ * @param point the result point
+ * @param angleInRadians the angle of the rotation
+ * @param x the coordinates along x axis of the center of the rotation
+ * @param y the coordinates along y axis of the center of the rotation
+ */
 void rotate(Point* resultPoint, float angleInRadians, float x, float y);
 
 /**
@@ -83,23 +83,23 @@ void computeDirectionPoint(Point* ref, Point* result, float distance, float angl
 // MANAGEMENT OF AREA
 
 /**
-* Is the point in the rectangle ?
-* @param x the upper left coordinates of the rectangle
-* @param y the upper left coordinates of the rectangle
-* @param width the width of the rectangle
-* @param height the height of the rectangle
-* @param pointX the X coordinate of the point that we want to test if it's inside the rectangle
-* @param pointX the X coordinate of the point that we want to test if it's inside the rectangle
-* @return true if the point is inside the rectangle, false else
-*/
+ * Is the point in the rectangle ?
+ * @param x the upper left coordinates of the rectangle
+ * @param y the upper left coordinates of the rectangle
+ * @param width the width of the rectangle
+ * @param height the height of the rectangle
+ * @param pointX the X coordinate of the point that we want to test if it's inside the rectangle
+ * @param pointX the X coordinate of the point that we want to test if it's inside the rectangle
+ * @return true if the point is inside the rectangle, false else
+ */
 bool isInRectangle(float x, float y, float width, float height, float pointX, float pointY);
 
 /**
-* Is the point in the circle.
-* @param pointX the X coordinate of the point that we want to test if it's inside the rectangle
-* @param pointX the X coordinate of the point that we want to test if it's inside the rectangle
-* @return true if the point is inside the rectangle, false else
-*/
+ * Is the point in the circle.
+ * @param pointX the X coordinate of the point that we want to test if it's inside the rectangle
+ * @param pointX the X coordinate of the point that we want to test if it's inside the rectangle
+ * @return true if the point is inside the rectangle, false else
+ */
 bool isInCircle2(float circleCenterX, float circleCenterY, float circleRadius, float pointX, float pointY);
 
 bool isInCircle(Point* circleCenterPoint, Point* point, float circleRadius);

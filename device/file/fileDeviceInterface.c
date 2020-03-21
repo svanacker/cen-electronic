@@ -8,21 +8,19 @@ const char* getFileDeviceName(void) {
     return "FILE/FAT";
 }
 
-int deviceFileGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
+int deviceFileGetInterface(char header, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     if (header == COMMAND_CREATE_FILE_SYSTEM) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Create File System");
         }
         return 0;
-    }
-    else if (header == COMMAND_GET_FREE_SPACE) {
+    } else if (header == COMMAND_GET_FREE_SPACE) {
         if (fillDeviceArgumentList) {
             setFunction("Get Free Space", 0, 1);
             setResultUnsignedHex4(0, "result");
         }
         return commandLengthValueForMode(mode, 0, 4);
-    }
-    else if (header == COMMAND_SHOW_LIST_FILE ) {
+    } else if (header == COMMAND_SHOW_LIST_FILE) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Show File List");
         }

@@ -11,8 +11,8 @@
 void printDebugPosition(OutputStream* outputStream);
 
 /**
-* Print the value used to analyze coders value
-*/
+ * Print the value used to analyze coders value
+ */
 void printDebugCoderHistory(OutputStream* outputStream);
 
 /**

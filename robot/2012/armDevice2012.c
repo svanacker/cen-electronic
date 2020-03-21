@@ -20,16 +20,13 @@
 
 #include "../../main/meca1/mechanicalBoard1.h"
 
-
 void upArm(int armIndex) {
     int pwmSpeed = 20;
     if (armIndex == ARM_LEFT) {
         pwmServo(ARM_LEFT_PWM_INDEX, pwmSpeed, ARM_LEFT_UP);
-    }
-    else if (armIndex == ARM_RIGHT) {
+    } else if (armIndex == ARM_RIGHT) {
         pwmServo(ARM_RIGHT_PWM_INDEX, pwmSpeed, ARM_RIGHT_UP);
-    }
-    else if (armIndex == 0) {
+    } else if (armIndex == 0) {
         pwmServo(ARM_LEFT_PWM_INDEX, pwmSpeed, ARM_LEFT_UP);
         pwmServo(ARM_RIGHT_PWM_INDEX, pwmSpeed, ARM_RIGHT_UP);
     }
@@ -39,11 +36,9 @@ void downArm(int armIndex) {
     int pwmSpeed = 20;
     if (armIndex == ARM_LEFT) {
         pwmServo(ARM_LEFT_PWM_INDEX, pwmSpeed, ARM_LEFT_DOWN);
-    }
-    else if (armIndex == ARM_RIGHT) {
+    } else if (armIndex == ARM_RIGHT) {
         pwmServo(ARM_RIGHT_PWM_INDEX, pwmSpeed, ARM_RIGHT_DOWN);
-    }
-    else if (armIndex == 0) {
+    } else if (armIndex == 0) {
         pwmServo(ARM_LEFT_PWM_INDEX, pwmSpeed, ARM_LEFT_DOWN);
         pwmServo(ARM_RIGHT_PWM_INDEX, pwmSpeed, ARM_RIGHT_DOWN);
     }
@@ -73,7 +68,7 @@ void deviceArm2012HandleRawData(char header,
         appendAck(outputStream);
         append(outputStream, COMMAND_ARM_2012_UP);
 
-    
+
     } else if (header == COMMAND_ARM_2012_DOWN) {
         int armIndex = readHex2(inputStream);
         downArm(armIndex);

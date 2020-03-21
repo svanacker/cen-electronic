@@ -16,7 +16,6 @@ static unsigned char currentColumn;
 #define LCD_DELAY_COMMAND_MICRO_SECOND     400
 #define LCD_DELAY_DATA_MICRO_SECOND        100
 
-
 /**
  * Verifie et attend si l'afficheur a fini d'effectuer ses op�rations interne.
  */
@@ -291,12 +290,10 @@ void hd44780_writeChar(unsigned char c) {
             incLcdColumn();
         }
         hd44780_setCursorRowAndColumn(currentRow, currentColumn);
-    }
-    else if (c == CLS) {
+    } else if (c == CLS) {
         hd44780_setCursorAtHome();
         hd44780_clearScreen();
-    }
-     else {
+    } else {
         hd44780_sendDataLcd(c);
         incLcdColumn();
     }

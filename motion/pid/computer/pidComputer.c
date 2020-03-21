@@ -52,13 +52,11 @@ float computeNormalAcceleration(MotionInstruction* inst, float time) {
     // Acceleration phase
     if (time <= inst->t1) {
         return inst->a;
-    }
-    // Constant speed -> Acceleration = 0
+    }// Constant speed -> Acceleration = 0
     else if (time <= inst->t2) {
         // speed = normalSpeed
         return 0.0f;
-    }
-    // Deceleration : TODO : Manage initial and final Speed
+    }// Deceleration : TODO : Manage initial and final Speed
     else if (time <= inst->t3) {
         return -inst->a;
     }
@@ -109,7 +107,7 @@ float getUFactorAtFullSpeed(bool rotation) {
 float getNormalU(float speed) {
     // at full Speed (value = 127), 7 rotations / seconds * 20000 impulsions
     // at Frequency of 200 Hz => 730 pulses by pidTime at full Speed
-    
+
     // NormalU = (pulseAtSpeed / pulseAtFullSpeed) * MAX_U
     // TODO : Manage when rotation
     float result = speed * getUFactorAtFullSpeed(false);
@@ -117,16 +115,16 @@ float getNormalU(float speed) {
 }
 
 float computePidCorrection(PidComputationInstructionValues* values,
-                            PidParameter* pidParameter,
-                            float normalSpeed,
-                            float error) {
+        PidParameter* pidParameter,
+        float normalSpeed,
+        float error) {
     // Computes the error, and limit too high value
     values->error = error;
 
     // Computes the integral error, and limit too high value
     values->integralError += values->error;
     // We only limit if maxIntegral is set
-    if (!floatEqualsZero( pidParameter->maxIntegral)) {
+    if (!floatEqualsZero(pidParameter->maxIntegral)) {
         values->integralError = limitFloat(values->integralError, pidParameter->maxIntegral);
     }
     // Saves the error
@@ -142,9 +140,9 @@ float computePidCorrection(PidComputationInstructionValues* values,
 
     // Computes PID
     float result = values->normalU +
-                   + (values->error * pidParameter->p)
-                   + (values->integralError * pidParameter->i)
-                   + (values->derivativeError * pidParameter->d);
+            + (values->error * pidParameter->p)
+            + (values->integralError * pidParameter->i)
+            + (values->derivativeError * pidParameter->d);
 
     return result;
 }

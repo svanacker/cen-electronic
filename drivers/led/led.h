@@ -15,14 +15,17 @@ typedef struct LedArray LedArray;
 typedef bool LedArrayInitFunction(LedArray* ledArray);
 
 /**
-* Write the color (RGB) value of the specified led.
-* @param ledIndex the index of the led
-*/
-typedef void LedArrayWriteValueFunction(LedArray* ledArray, unsigned int ledIndex);
+ * Write the color (RGB) value of the specified led.
+ * @param ledIndex the index of the led
+ * @param R the R value of the RGB value
+ * @param G the G value of the RGB value
+ * @param B the B value of the RGB value
+ */
+typedef void LedArrayWriteValueFunction(LedArray* ledArray, unsigned int ledIndex, unsigned char R, unsigned char G, unsigned char B);
 
 /**
-* Defines the contract for led Array.
-*/
+ * Defines the contract for led Array.
+ */
 struct LedArray {
     /** The function which must be used to init the led Array */
     LedArrayInitFunction* ledArrayInit;
@@ -36,8 +39,8 @@ struct LedArray {
  * Init the wrapper around Led Array. 
  */
 void initLedArray(LedArray* ledArray,
-               LedArrayInitFunction* ledArrayInit,
-               LedArrayWriteValueFunction* ledArrayWriteValue,
-               int* object);
+        LedArrayInitFunction* ledArrayInit,
+        LedArrayWriteValueFunction* ledArrayWriteValue,
+        int* object);
 
 #endif

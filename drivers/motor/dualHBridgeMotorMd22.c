@@ -37,8 +37,7 @@ bool dualHBridgeMotorInitMD22(DualHBridgeMotor* dualHBridgeMotor) {
 signed int dualHBridgeMotorReadValueMD22(DualHBridgeMotor* dualHBridgeMotor, unsigned int motorIndex) {
     if (motorIndex == HBRIDGE_1) {
         return dualHBridgeMotor->motorSpeed1;
-    }
-    else if (motorIndex == HBRIDGE_2) {
+    } else if (motorIndex == HBRIDGE_2) {
         return dualHBridgeMotor->motorSpeed2;
     }
     // TODO : raise an error
@@ -71,9 +70,9 @@ void dualHBridgeMotorWriteValueMD22(DualHBridgeMotor* dualHBridgeMotor, signed i
 
 void initDualHBridgeMotorMD22(DualHBridgeMotor* dualHBridgeMotor, I2cBusConnection* i2cBusConnection) {
     initDualHBridge(dualHBridgeMotor,
-                    dualHBridgeMotorInitMD22,
-                    dualHBridgeMotorReadValueMD22,
-                    dualHBridgeMotorWriteValueMD22,
-                    dualHBridgeMotorGetSoftwareRevisionMD22,
-                    (int*) i2cBusConnection);
+            dualHBridgeMotorInitMD22,
+            dualHBridgeMotorReadValueMD22,
+            dualHBridgeMotorWriteValueMD22,
+            dualHBridgeMotorGetSoftwareRevisionMD22,
+            (int*) i2cBusConnection);
 }

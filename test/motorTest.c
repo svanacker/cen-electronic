@@ -11,23 +11,23 @@ int main(void) {
     initCoders();
     openSerial(DEFAULT_SERIAL_SPEED);
 
-    
+
     writeMD22Speeds(0, 0);
 
     int i;
     char c;
     while (1) {
-        for (i=-128; i<127; i++) {
-//            writeMD22Speeds(i, i);
+        for (i = -128; i < 127; i++) {
+            //            writeMD22Speeds(i, i);
             printf("%d", i);
             delaymSec(50);
             handleChar(0);
             loadNextInstruction();
             if (kbhit()) {
-                   // get the byte
+                // get the byte
                 c = getc();
                 putc(c);
-                if (c=='c') {
+                if (c == 'c') {
                     stopMotors();
                     delaymSec(1000);
                 }

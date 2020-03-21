@@ -18,8 +18,7 @@ int deviceMotorGetInterface(unsigned char header, DeviceInterfaceMode mode, bool
             setArgumentSignedHex2(1, "right");
         }
         return commandLengthValueForMode(mode, 4, 0);
-    }
-    else if (header == COMMAND_SET_PIN_USAGE_MOTOR) {
+    } else if (header == COMMAND_SET_PIN_USAGE_MOTOR) {
         if (fillDeviceArgumentList) {
             setFunction("Set Motor ++-Pin Usages", 4, 0);
             setArgumentSignedHex2(0, "Pin 1 Usage Type");
@@ -31,8 +30,7 @@ int deviceMotorGetInterface(unsigned char header, DeviceInterfaceMode mode, bool
             setArgumentSignedHex2(6, "Pin 2 Stop Type");
         }
         return commandLengthValueForMode(mode, 11, 0);
-    } 
-    else if (header == COMMAND_READ_MOTOR_VALUE) {
+    } else if (header == COMMAND_READ_MOTOR_VALUE) {
         if (fillDeviceArgumentList) {
             setFunction("readMotorValue", 0, 2);
             setResultSignedHex2(0, "left");

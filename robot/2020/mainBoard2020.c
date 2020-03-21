@@ -60,12 +60,11 @@ bool startupCheckList2020(StartMatch* startMatch) {
     return true;
 }
 
-
 Navigation* initNavigation2020(void) {
     // Navigation
-    initLocationList(&locationList, (Location(*)[]) &locationListArray, STRATEGY_2020_NAVIGATION_LOCATION_LIST_ARRAY_LENGTH);
-    initPathList(&pathList, (PathData(*)[]) &pathListArray, STRATEGY_2020_NAVIGATION_PATH_LIST_ARRAY_LENGTH);
-    initOutgoingPathList(&tmpOutgoingPathList, (OutgoingPathData(*)[]) &tmpOutgoingPathListtArray, STRATEGY_2020_NAVIGATION_PATH_LIST_ARRAY_LENGTH);
+    initLocationList(&locationList, (Location(*)[]) & locationListArray, STRATEGY_2020_NAVIGATION_LOCATION_LIST_ARRAY_LENGTH);
+    initPathList(&pathList, (PathData(*)[]) & pathListArray, STRATEGY_2020_NAVIGATION_PATH_LIST_ARRAY_LENGTH);
+    initOutgoingPathList(&tmpOutgoingPathList, (OutgoingPathData(*)[]) & tmpOutgoingPathListtArray, STRATEGY_2020_NAVIGATION_PATH_LIST_ARRAY_LENGTH);
 
     initNavigation(&navigation, &locationList, &pathList, &tmpOutgoingPathList);
 
@@ -82,11 +81,11 @@ GameStrategyContext* initGameStrategyContext2020(RobotConfig* robotConfig, EndMa
 GameBoard* initGameBoard2020(GameStrategyContext* gameStrategyContextParam) {
     initFirstTimeBSplineCurve(&gameBoardCurve);
     initGameBoard(&gameBoard,
-        &gameBoardCurve,
-        &gameBoardElementList,
-        (GameBoardElement(*)[]) &gameBoardElementListArray,
-        MAIN_BOARD_2020_GAME_BOARD_PRINT_ELEMENT_ARRAY_LENGTH,
-        gameStrategyContextParam);
+            &gameBoardCurve,
+            &gameBoardElementList,
+            (GameBoardElement(*)[]) & gameBoardElementListArray,
+            MAIN_BOARD_2020_GAME_BOARD_PRINT_ELEMENT_ARRAY_LENGTH,
+            gameStrategyContextParam);
 
     addGameBoardElements2020(&gameBoardElementList);
 

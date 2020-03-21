@@ -4,11 +4,11 @@
 #include "../../common/io/outputStream.h"
 
 /**
-* Get a value of the channel (A / D conversion)
-* @param channel the channel index between 0 and 11
-* @return the value in millivolt.
-*/
-int getANX (unsigned char channel);
+ * Get a value of the channel (A / D conversion)
+ * @param channel the channel index between 0 and 11
+ * @return the value in millivolt.
+ */
+int getANX(unsigned char channel);
 
 /**
  * Returns how many ANX are managed.

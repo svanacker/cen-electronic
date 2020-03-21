@@ -18,8 +18,7 @@ void relayPcWriteValue(Relay* relay, unsigned int relayIndex, bool value) {
     if (value) {
         // Set the bit
         *(relay->object) |= (1UL << relayIndex);
-    }
-    else {
+    } else {
         // Clear the bit
         *(relay->object) &= ~(1UL << relayIndex);
     }

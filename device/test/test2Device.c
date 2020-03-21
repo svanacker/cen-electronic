@@ -33,22 +33,23 @@ void deviceTest2HandleRawData(unsigned char commandHeader, InputStream* inputStr
         ackCommand(outputStream, TEST2_DEVICE_HEADER, COMMAND_TEST2);
         // data
         appendHex2(outputStream, result);
-    }
-    else if (commandHeader == COMMAND_INTENSIVE_TEST_DRIVER) {
+    } else if (commandHeader == COMMAND_INTENSIVE_TEST_DRIVER) {
         ackCommand(outputStream, TEST2_DEVICE_HEADER, COMMAND_INTENSIVE_TEST_DRIVER);
         unsigned int count = readHex4(inputStream);
         testDriverIntensive(count);
     }
 }
 
-static DeviceDescriptor descriptor = {
-    .deviceInit = &deviceTest2Init,
-    .deviceShutDown = &deviceTest2ShutDown,
-    .deviceIsOk = &deviceTest2IsOk,
-    .deviceHandleRawData = &deviceTest2HandleRawData
-};
+static DeviceDescriptor descriptor;
 
 DeviceDescriptor* getTest2DeviceDescriptor(void) {
+    initDeviceDescriptor(&descriptor,
+            &deviceTest2Init,
+            &deviceTest2ShutDown,
+            &deviceTest2IsOk,
+            &deviceTest2HandleRawData,
+            NULL);
+
     return &descriptor;
 }
 

@@ -37,7 +37,8 @@ static float MOTION_END_DETECTION_PARAMETERS_DEFAULT_EEPROM_VALUES[MOTION_END_DE
     MAX_U_INTEGRAL_FACTOR_THRESHOLD_DEFAULT_VALUE,
     MAX_U_INTEGRAL_CONSTANT_THRESHOLD_DEFAULT_VALUE,
     BLOCKING_OR_REACH_DETECTION_DELAY_DEFAULT_VALUE,
-    BLOCKING_OR_REACH_SKIP_DETECTION_DELAY_DEFAULT_VALUE};
+    BLOCKING_OR_REACH_SKIP_DETECTION_DELAY_DEFAULT_VALUE
+};
 
 // CHECK
 
@@ -73,8 +74,7 @@ float internalLoadMotionEndDetectionParameterItem(Eeprom* motionEndDetectionPara
     float result;
     if (loadDefaultValues) {
         result = MOTION_END_DETECTION_PARAMETERS_DEFAULT_EEPROM_VALUES[index];
-    }
-    else {
+    } else {
         unsigned long dataIndex = EEPROM_MOTION_END_DETECTION_PARAMETERS_START_INDEX + index * MOTION_END_DETECTION_PARAMETER_DATA_SIZE;
         result = eepromReadUnsignedFloat(motionEndDetectionParametersEeprom, dataIndex, digitPrecision);
     }
@@ -113,7 +113,7 @@ void loadMotionEndDetectionParameters(MotionEndDetectionParameter* motionEndDete
 }
 
 void saveMotionEndDetectionParameters(MotionEndDetectionParameter* motionEndDetectionParameter,
-                                      Eeprom* motionEndDetectionParametersEeprom) {
+        Eeprom* motionEndDetectionParametersEeprom) {
     if (!internalMotionEndDetectionParametersCheckIfEepromIsNotNull(motionEndDetectionParametersEeprom)) {
         return;
     }
@@ -122,53 +122,53 @@ void saveMotionEndDetectionParameters(MotionEndDetectionParameter* motionEndDete
 
     // DETAIL PHASE
     internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
-                                    MOTION_END_DETECTION_ACCELERATION_TOO_HIGH_THRESHOLD_INDEX,
-                                    motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold,
-                                    MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
-    
-    internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
-                                    MOTION_END_DETECTION_SPEED_TOO_LOW_THRESHOLD_INDEX,
-                                    motionEndDetectionParameter->speedTooLowThresholdFactor,
-                                    MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
-    
-    internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
-                                    MOTION_END_DETECTION_U_TOO_HIGH_THRESHOLD_FACTOR_INDEX,
-                                    motionEndDetectionParameter->uTooHighTresholdFactor,
-                                    MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+            MOTION_END_DETECTION_ACCELERATION_TOO_HIGH_THRESHOLD_INDEX,
+            motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold,
+            MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
 
     internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
-                                    MOTION_END_DETECTION_SPEED_MIN_THRESHOLD_INDEX,
-                                    motionEndDetectionParameter->speedMinThreshold,
-                                    MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
-    
+            MOTION_END_DETECTION_SPEED_TOO_LOW_THRESHOLD_INDEX,
+            motionEndDetectionParameter->speedTooLowThresholdFactor,
+            MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+
     internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
-                                    MOTION_END_DETECTION_U_MIN_THRESHOLD_INDEX,
-                                    motionEndDetectionParameter->uMinThresholdValue,
-                                    MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
-    
+            MOTION_END_DETECTION_U_TOO_HIGH_THRESHOLD_FACTOR_INDEX,
+            motionEndDetectionParameter->uTooHighTresholdFactor,
+            MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+
+    internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
+            MOTION_END_DETECTION_SPEED_MIN_THRESHOLD_INDEX,
+            motionEndDetectionParameter->speedMinThreshold,
+            MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+
+    internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
+            MOTION_END_DETECTION_U_MIN_THRESHOLD_INDEX,
+            motionEndDetectionParameter->uMinThresholdValue,
+            MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+
     // AGGREGATION PHASE
     internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
-                                    MOTION_END_DETECTION_ABS_DELTA_POSITION_INTEGRAL_FACTOR_THRESHOLD_INDEX,
-                                    motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold,
-                                    MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
-    
-    internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
-                                    MOTION_END_DETECTION_MAX_U_INTEGRAL_FACTOR_THRESHOLD_INDEX,
-                                    motionEndDetectionParameter->maxUIntegralFactorThreshold,
-                                    MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+            MOTION_END_DETECTION_ABS_DELTA_POSITION_INTEGRAL_FACTOR_THRESHOLD_INDEX,
+            motionEndDetectionParameter->absDeltaPositionIntegralFactorThreshold,
+            MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
 
     internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
-                                    MOTION_END_DETECTION_MAX_U_INTEGRAL_CONSTANT_THRESHOLD_INDEX,
-                                    motionEndDetectionParameter->maxUIntegralConstantThreshold,
-                                    MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
-    
+            MOTION_END_DETECTION_MAX_U_INTEGRAL_FACTOR_THRESHOLD_INDEX,
+            motionEndDetectionParameter->maxUIntegralFactorThreshold,
+            MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+
     internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
-                                    MOTION_END_DETECTION_NO_ANALYSIS_AT_STARTUP_TIME_IN_SECOND_INDEX,
-                                    motionEndDetectionParameter->noAnalysisAtStartupTimeInSecond,
-                                    MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
-    
+            MOTION_END_DETECTION_MAX_U_INTEGRAL_CONSTANT_THRESHOLD_INDEX,
+            motionEndDetectionParameter->maxUIntegralConstantThreshold,
+            MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+
     internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
-                                    MOTION_END_DETECTION_TIME_RANGE_ANALYSIS_INDEX,
-                                    motionEndDetectionParameter->timeRangeAnalysisInSecond,
-                                    MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);    
+            MOTION_END_DETECTION_NO_ANALYSIS_AT_STARTUP_TIME_IN_SECOND_INDEX,
+            motionEndDetectionParameter->noAnalysisAtStartupTimeInSecond,
+            MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+
+    internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
+            MOTION_END_DETECTION_TIME_RANGE_ANALYSIS_INDEX,
+            motionEndDetectionParameter->timeRangeAnalysisInSecond,
+            MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
 }

@@ -11,8 +11,8 @@
 #define COMMAND_MOTION_SIMULATION_SET   'w'
 
 /**
-* Interface for Device
-*/
+ * Interface for Device
+ */
 DeviceInterface* getMotionSimulationDeviceInterface();
 
 #endif

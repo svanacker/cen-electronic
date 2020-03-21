@@ -77,10 +77,10 @@ tcs34725Gain_t;
  * Encapsulate all informations
  */
 typedef struct Tcs34725 {
-    I2cBusConnection*           i2cBusConnection;
-    tcs34725IntegrationTime_t   integrationTime;
-    tcs34725Gain_t              gain;
-    bool                        initialized;
+    I2cBusConnection* i2cBusConnection;
+    tcs34725IntegrationTime_t integrationTime;
+    tcs34725Gain_t gain;
+    bool initialized;
 } Tcs34725;
 
 bool tcs34725_begin(Tcs34725* tcs34725);

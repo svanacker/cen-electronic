@@ -37,8 +37,8 @@
 // ARM
 
 /**
-* @param leftRightCenter Center = 0x00, Left = 0x01, Right = 0x02
-*/
+ * @param leftRightCenter Center = 0x00, Left = 0x01, Right = 0x02
+ */
 void arm2020(ServoList* servoList, unsigned char leftRightCenter);
 
 // FLAG

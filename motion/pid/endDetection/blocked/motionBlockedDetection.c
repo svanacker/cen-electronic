@@ -49,12 +49,12 @@ bool isMotionBlocked(PidMotion* pidMotion, PidMotionDefinition* motionDefinition
     PidComputationValues* computationValues = &(pidMotion->computationValues);
     PidComputationInstructionValues* thetaCurrentValues = &(computationValues->values[THETA]);
     PidComputationInstructionValues* alphaCurrentValues = &(computationValues->values[ALPHA]);
-    
+
     MotionInstruction* thetaMotionInstruction = &(motionDefinition->inst[THETA]);
     MotionInstruction* alphaMotionInstruction = &(motionDefinition->inst[ALPHA]);
 
     bool isThetaBlocked = isMotionInstructionBlocked(thetaMotionInstruction, thetaCurrentValues);
     bool isAlphaBlocked = isMotionInstructionBlocked(alphaMotionInstruction, alphaCurrentValues);
-    
+
     return (isAlphaBlocked || isThetaBlocked);
 }

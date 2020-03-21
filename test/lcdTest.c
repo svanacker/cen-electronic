@@ -19,11 +19,11 @@ int main(void) {
         if ((count % 60000) == 0) {
             clrScreen();
             int i;
-            for (i=0; i<2; i++) {
+            for (i = 0; i < 2; i++) {
                 long coder = getCoderValue(i);
-                sprintf(s, "%x_", (int)(coder >> 16));
+                sprintf(s, "%x_", (int) (coder >> 16));
                 affTexte(s);
-                sprintf(s, "%x", (int)(coder & 0xFFFF));
+                sprintf(s, "%x", (int) (coder & 0xFFFF));
                 affTexte(s);
                 carRetCur();
             }

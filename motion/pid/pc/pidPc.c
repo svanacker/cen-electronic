@@ -9,24 +9,24 @@
 #include "../../../motion/position/coders.h"
 
 /**
-* @private
-*/
+ * @private
+ */
 void simulateCurrentPositionReachIfNeeded(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
-	MotionSimulationParameter* motionSimulationParameter = getMotionSimulationParameter();
-	if (motionSimulationParameter->simulateCoders) {
-		MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
-		MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
+    MotionSimulationParameter* motionSimulationParameter = getMotionSimulationParameter();
+    if (motionSimulationParameter->simulateCoders) {
+        MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
+        MotionInstruction* alphaInst = &(motionDefinition->inst[ALPHA]);
 
-		float pidTime = pidMotion->computationValues.pidTimeInSecond;
+        float pidTime = pidMotion->computationValues.pidTimeInSecond;
 
-		float normalThetaPosition = computeNormalPosition(thetaInst, pidTime);
-		float normalAlphaPosition = computeNormalPosition(alphaInst, pidTime);
+        float normalThetaPosition = computeNormalPosition(thetaInst, pidTime);
+        float normalAlphaPosition = computeNormalPosition(alphaInst, pidTime);
 
-		float normalLeftCoderValue = computeLeft(normalThetaPosition, normalAlphaPosition);
-		float normalRightCoderValue = computeRight(normalThetaPosition, normalAlphaPosition);
+        float normalLeftCoderValue = computeLeft(normalThetaPosition, normalAlphaPosition);
+        float normalRightCoderValue = computeRight(normalThetaPosition, normalAlphaPosition);
 
-		setCoderValue(CODER_LEFT, (long)normalLeftCoderValue);
-		setCoderValue(CODER_RIGHT, (long)normalRightCoderValue);
-	}
+        setCoderValue(CODER_LEFT, (long) normalLeftCoderValue);
+        setCoderValue(CODER_RIGHT, (long) normalRightCoderValue);
+    }
 }
 

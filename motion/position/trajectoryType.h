@@ -7,13 +7,13 @@
 enum TrajectoryType {
     /** Static position */
     TRAJECTORY_TYPE_NONE = 0,
-    
+
     /** Forward move */
     TRAJECTORY_TYPE_FORWARD = 1,
-    
+
     /** Backward move. */
     TRAJECTORY_TYPE_BACKWARD = 2,
-    
+
     /** Rotation */
     TRAJECTORY_TYPE_ROTATION = 3
 };

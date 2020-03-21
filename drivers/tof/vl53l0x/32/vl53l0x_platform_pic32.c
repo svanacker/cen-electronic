@@ -21,28 +21,28 @@
 
 // PRIMITIVES
 
-int32_t VL53L0X_write_multi(uint8_t deviceAddress, uint8_t index, uint8_t  *pdata, int32_t count) {
+int32_t VL53L0X_write_multi(uint8_t deviceAddress, uint8_t index, uint8_t *pdata, int32_t count) {
     I2cBusConnection* i2cBusConnection = getI2cBusConnectionBySlaveAddress(deviceAddress);
     if (i2cBusConnection == NULL) {
         writeError(I2C_BUS_CONNECTION_NULL);
         appendStringAndDecLN(getErrorOutputStreamLogger(), "addr=", deviceAddress);
         return VL53L0X_ERROR_CONTROL_INTERFACE;
     }
-    
+
     portableMasterWaitSendI2C(i2cBusConnection);
     // Wait till Start sequence is completed
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     portableMasterStartI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     // I2C PICs adress use 8 bits and not 7 bits
     portableMasterWriteI2C(i2cBusConnection, deviceAddress);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     portableMasterWriteI2C(i2cBusConnection, index);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
 #ifdef VL53L0X_DEBUG
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendString(debugOutputStream, "\tWriting ");
@@ -51,47 +51,47 @@ int32_t VL53L0X_write_multi(uint8_t deviceAddress, uint8_t index, uint8_t  *pdat
     appendHex2(debugOutputStream, deviceAddress);
     appendString(debugOutputStream, ": ");
 #endif
-    
-    while(count--) {
+
+    while (count--) {
         portableMasterWriteI2C(i2cBusConnection, pdata[0]);
         WaitI2cBusConnection(i2cBusConnection);
 #ifdef VL53L0X_DEBUG
-    appendString(debugOutputStream, "0x ");
-    appendHex2(debugOutputStream, pdata[0]);
-    appendString(debugOutputStream, ", ");
+        appendString(debugOutputStream, "0x ");
+        appendHex2(debugOutputStream, pdata[0]);
+        appendString(debugOutputStream, ", ");
 #endif
         pdata++;
     }
 #ifdef VL53L0X_DEBUG
     println(debugOutputStream);
 #endif
-    
+
     portableMasterStopI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     return VL53L0X_ERROR_NONE;
 }
 
-int32_t VL53L0X_read_multi(uint8_t deviceAddress,  uint8_t index, uint8_t  *pdata, int32_t count) {
+int32_t VL53L0X_read_multi(uint8_t deviceAddress, uint8_t index, uint8_t *pdata, int32_t count) {
     I2cBusConnection* i2cBusConnection = getI2cBusConnectionBySlaveAddress(deviceAddress);
     if (i2cBusConnection == NULL) {
         writeError(I2C_BUS_CONNECTION_NULL);
         appendStringAndDecLN(getErrorOutputStreamLogger(), "addr=", deviceAddress);
         return VL53L0X_ERROR_CONTROL_INTERFACE;
     }
-    
+
     portableMasterWaitSendI2C(i2cBusConnection);
-    
+
     portableMasterStartI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     portableMasterWriteI2C(i2cBusConnection, deviceAddress);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     // Write the "index" from which we want to read
     portableMasterWriteI2C(i2cBusConnection, index);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     portableMasterStartI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
     // Enter in "read" mode
@@ -107,27 +107,26 @@ int32_t VL53L0X_read_multi(uint8_t deviceAddress,  uint8_t index, uint8_t  *pdat
     appendString(debugOutputStream, ": ");
 #endif
 
-  while (count--) {
-    pdata[0] = portableMasterReadI2C(i2cBusConnection);
-    // Ack
-    if (count > 0) {
-        portableMasterAckI2C(i2cBusConnection);
-    }
-    else {
-        portableMasterNackI2C(i2cBusConnection);
-    }
-    WaitI2cBusConnection(i2cBusConnection);
+    while (count--) {
+        pdata[0] = portableMasterReadI2C(i2cBusConnection);
+        // Ack
+        if (count > 0) {
+            portableMasterAckI2C(i2cBusConnection);
+        } else {
+            portableMasterNackI2C(i2cBusConnection);
+        }
+        WaitI2cBusConnection(i2cBusConnection);
 #ifdef VL53L0X_DEBUG
-    appendString(debugOutputStream, "0x ");
-    appendHex2(debugOutputStream, pdata[0]);
-    appendString(debugOutputStream, ", ");
+        appendString(debugOutputStream, "0x ");
+        appendHex2(debugOutputStream, pdata[0]);
+        appendString(debugOutputStream, ", ");
 #endif
-    pdata++;
-  }
+        pdata++;
+    }
 #ifdef VL53L0X_DEBUG
-     println(debugOutputStream);
+    println(debugOutputStream);
 #endif
-     
-  return VL53L0X_ERROR_NONE;
+
+    return VL53L0X_ERROR_NONE;
 }
 

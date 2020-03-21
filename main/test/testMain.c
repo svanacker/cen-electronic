@@ -40,16 +40,16 @@ bool hex2CharToIntTest1() {
 }
 
 int main(void) {
-    openSerialLink( &testSerialStreamLink,
-                    &testInputBuffer,
-                    &testInputBufferArray,
-                    100,
-                    &testOutputBuffer,
-                    &testOutputBufferArray,
-                    100,
-                    &testOutputStream,
-                    SERIAL_PORT_TEST,
-                    DEFAULT_SERIAL_SPEED);
+    openSerialLink(&testSerialStreamLink,
+            &testInputBuffer,
+            &testInputBufferArray,
+            100,
+            &testOutputBuffer,
+            &testOutputBufferArray,
+            100,
+            &testOutputStream,
+            SERIAL_PORT_TEST,
+            DEFAULT_SERIAL_SPEED);
 
     // Configure Logging
     initLog(DEBUG);

@@ -29,12 +29,12 @@ void tca9548A_setChannelsMask(I2cBusConnection* i2cBusConnection, unsigned char 
 }
 
 unsigned char tca9548A_getChannelsMask(I2cBusConnection* i2cBusConnection) {
-    
+
     portableMasterWaitSendI2C(i2cBusConnection);
 
     portableMasterStartI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     // send read address (bit zero is set)
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress | 1);
     WaitI2cBusConnection(i2cBusConnection);
@@ -45,6 +45,6 @@ unsigned char tca9548A_getChannelsMask(I2cBusConnection* i2cBusConnection) {
 
     portableMasterNackI2C(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
-    
+
     return result;
 }

@@ -21,8 +21,8 @@ DWORD WINAPI slaveToMasterCallback(LPVOID lpvParam);
 void handleI2CDataFromMaster(I2cBusConnection* i2cBusConnection);
 
 /**
-* Function to call to send through the I2C (use Pipe) data from the slave to the master.
-*/
+ * Function to call to send through the I2C (use Pipe) data from the slave to the master.
+ */
 void sendI2CDataToMaster(I2cBusConnection* i2cBusConnection);
 
 #endif

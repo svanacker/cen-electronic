@@ -12,6 +12,7 @@
 
 #include "../../robot/strategy/teamColor.h"
 #include "../../robot/strategy/teamColor.h"
+
 /**
  * Determine the type of content in the distributor
  */
@@ -40,7 +41,7 @@ struct Distributor {
     /** The sensor for color */
     ColorSensor* colorSensor;
     /** The square array */
-    enum DistributorSquareContent (squares)[DISTRIBUTOR_ITEM_COUNT];
+    enum DistributorSquareContent(squares)[DISTRIBUTOR_ITEM_COUNT];
     /** The index of the square */
     unsigned int squareIndex;
     /** The launcher square Content*/

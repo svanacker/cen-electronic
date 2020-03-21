@@ -6,9 +6,9 @@
 #include "../../../device/deviceDescriptor.h"
 
 /**
-* Returns a descriptor on the CurrentSensor device.
-* @param current a wrapper on current device
-*/
+ * Returns a descriptor on the CurrentSensor device.
+ * @param current a wrapper on current device
+ */
 DeviceDescriptor* getCurrentSensorDeviceDescriptor(Current* current);
 
 #endif    

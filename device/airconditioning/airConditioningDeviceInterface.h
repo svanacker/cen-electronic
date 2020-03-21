@@ -11,8 +11,8 @@
 #define AIR_CONDITIONING_COMMAND_OFF          'f'
 
 /**
-* Interface for Air Conditioning Device.
-*/
+ * Interface for Air Conditioning Device.
+ */
 DeviceInterface* getAirConditioningDeviceInterface();
 
 #endif

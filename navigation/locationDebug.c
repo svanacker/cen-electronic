@@ -11,14 +11,11 @@
 unsigned int appendLocationUsageTypeAsString(OutputStream* outputStream, enum LocationUsageType LocationUsageType) {
     if (LocationUsageType == LOCATION_USAGE_TYPE_PERMANENT) {
         return appendString(outputStream, "PERMANENT");
-    }
-    else if (LocationUsageType == LOCATION_USAGE_TYPE_TEMPORARY) {
+    } else if (LocationUsageType == LOCATION_USAGE_TYPE_TEMPORARY) {
         return appendString(outputStream, "TEMPORARY");
-    }
-    else if (LocationUsageType == LOCATION_USAGE_TYPE_TO_BE_REUSE) {
+    } else if (LocationUsageType == LOCATION_USAGE_TYPE_TO_BE_REUSE) {
         return appendString(outputStream, "TO BE REUSE");
-    }
-    else if (LocationUsageType == LOCATION_USAGE_TYPE_UNKNOWN) {
+    } else if (LocationUsageType == LOCATION_USAGE_TYPE_UNKNOWN) {
         return appendString(outputStream, "UNKNOWN");
     }
     return 0;
@@ -27,14 +24,11 @@ unsigned int appendLocationUsageTypeAsString(OutputStream* outputStream, enum Lo
 unsigned int appendLocationUsageTypeAsShortString(OutputStream* outputStream, enum LocationUsageType LocationUsageType) {
     if (LocationUsageType == LOCATION_USAGE_TYPE_PERMANENT) {
         return appendString(outputStream, "P");
-    }
-    else if (LocationUsageType == LOCATION_USAGE_TYPE_TEMPORARY) {
+    } else if (LocationUsageType == LOCATION_USAGE_TYPE_TEMPORARY) {
         return appendString(outputStream, "T");
-    }
-    else if (LocationUsageType == LOCATION_USAGE_TYPE_TO_BE_REUSE) {
+    } else if (LocationUsageType == LOCATION_USAGE_TYPE_TO_BE_REUSE) {
         return appendString(outputStream, "R");
-    }
-    else if (LocationUsageType == LOCATION_USAGE_TYPE_UNKNOWN) {
+    } else if (LocationUsageType == LOCATION_USAGE_TYPE_UNKNOWN) {
         return appendString(outputStream, "U");
     }
     return 0;

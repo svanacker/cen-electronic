@@ -5,18 +5,18 @@
 #include "../../../device/deviceConstants.h"
 
 /**
-* Defines the header used to ask absolute position.
-*/
+ * Defines the header used to ask absolute position.
+ */
 #define COMMAND_TRAJECTORY_GET_ABSOLUTE_POSITION            'r'
 
 /**
-* Write in debug the absolute position .
-*/
+ * Write in debug the absolute position .
+ */
 #define COMMAND_TRAJECTORY_DEBUG_GET_ABSOLUTE_POSITION      'd'
 
 /**
-* Write in debug coders history value.
-*/
+ * Write in debug coders history value.
+ */
 #define COMMAND_TRAJECTORY_DEBUG_CODERS					    'D'
 
 /**
@@ -37,14 +37,14 @@
 #define COMMAND_TRAJECTORY_NOTIFY_SET_PARAMETERS            'P'
 
 /**
-* Defines the header used to set the absolute position.
-*/
+ * Defines the header used to set the absolute position.
+ */
 #define COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION            'W'
 
 /**
  * Set the angle to the closest value.
  * Ex : 0, 90, 180, 270 (in radians) ... 
-*/
+ */
 #define COMMAND_TRAJECTORY_ADJUST_ANGLE_TO_CLOSEST          't'
 
 /**
@@ -66,8 +66,8 @@
 #define NOTIFY_TRAJECTORY_CHANGED                           'm'
 
 /**
-* Interface for Device
-*/
+ * Interface for Device
+ */
 DeviceInterface* getTrajectoryDeviceInterface();
 
 #endif

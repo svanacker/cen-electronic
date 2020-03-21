@@ -60,8 +60,8 @@ void mainLightHouse2020TofAddDevices(void) {
 void mainBoardLightHouse2020IOExpanderListInitDrivers(I2cBus* i2cBus) {
     // IO Expander List
     appendString(getDebugOutputStreamLogger(), "IO Expander List ...");
-    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MAIN_PHARE_2020_IO_EXPANDER_LIST_LENGTH);
-    
+    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) & ioExpanderArray, MAIN_PHARE_2020_IO_EXPANDER_LIST_LENGTH);
+
     // -> IO Button Board
     IOExpander* ioButtonBoardIoExpander = getIOExpanderByIndex(&ioExpanderList, 0);
     I2cBusConnection* ioButtonBoardBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_0, true);
@@ -73,23 +73,23 @@ void mainBoardLightHouse2020IOExpanderListInitDrivers(I2cBus* i2cBus) {
 
 MultiplexerList* mainLightHouse2020MultiplexerListInitDrivers(I2cBus* i2cBus) {
     appendString(getDebugOutputStreamLogger(), "Multiplexer List ...");
-    initMultiplexerList(&multiplexerList, (Multiplexer(*)[]) &multiplexerArray, MAIN_PHARE_2020_MULTIPLEXER_LIST_LENGTH);
-    
+    initMultiplexerList(&multiplexerList, (Multiplexer(*)[]) & multiplexerArray, MAIN_PHARE_2020_MULTIPLEXER_LIST_LENGTH);
+
     // -> Multiplexer 0 Board
     Multiplexer* multiplexerExpander0 = getMultiplexerByIndex(&multiplexerList, 0);
     I2cBusConnection* multiplexerBoardBusConnection0 = addI2cBusConnection(i2cBus, TCA9548A_ADDRESS_0, true);
     initMultiplexerTca9548A(multiplexerExpander0, multiplexerBoardBusConnection0, /* Cache Masks */ true);
-    
+
     appendStringLN(getDebugOutputStreamLogger(), "OK");
-    
+
     return &multiplexerList;
 }
 
-TofSensorList* mainLightHouse2020TofInitDrivers(I2cBus* i2cBus) {    
+TofSensorList* mainLightHouse2020TofInitDrivers(I2cBus* i2cBus) {
     mainLightHouse2020MultiplexerListInitDrivers(i2cBus);
-    
+
     mainBoardLightHouse2020IOExpanderListInitDrivers(i2cBus);
-    
+
     if (MAIN_PHARE_2020_TOF_SENSOR_LIST_COUNT > 0) {
         tofSensorArray[0].name = "TOF LIGHT HOUSE 0";
         tofSensorArray[0].enabled = true;
@@ -98,21 +98,21 @@ TofSensorList* mainLightHouse2020TofInitDrivers(I2cBus* i2cBus) {
         tofSensorArray[0].angleFromRobotCenterRadian = 0.0f;
 
         tofSensorArray[0].detectionThreshold = 1;
-                
+
         tofSensorArray[0].i2cBusIndex = 1;
         tofSensorArray[0].changeAddress = true;
         tofSensorArray[0].targetAddress = VL530X_ADDRESS_0;
-        tofSensorArray[0].multiplexer =  getMultiplexerByIndex(&multiplexerList, 0);
+        tofSensorArray[0].multiplexer = getMultiplexerByIndex(&multiplexerList, 0);
         tofSensorArray[0].multiplexerChannel = MULTIPLEXER_CHANNEL_0;
-        
+
         tofSensorArray[0].hardwareRestartable = false;
         tofSensorArray[0].hardwareRestartIOExpander = NULL;
         tofSensorArray[0].hardwareRestartIOExpanderIoIndex = 0;
 
     }
-    if (MAIN_PHARE_2020_TOF_SENSOR_LIST_COUNT > 1) {   
+    if (MAIN_PHARE_2020_TOF_SENSOR_LIST_COUNT > 1) {
         tofSensorArray[1].name = "TOF LIGHT HOUSE 1";
-        tofSensorArray[1].enabled = true; 
+        tofSensorArray[1].enabled = true;
         tofSensorArray[1].orientationRadian = 0.0f;
         tofSensorArray[1].distanceFromRobotCenter = 0.0f;
         tofSensorArray[1].angleFromRobotCenterRadian = 0.0f;
@@ -124,7 +124,7 @@ TofSensorList* mainLightHouse2020TofInitDrivers(I2cBus* i2cBus) {
         tofSensorArray[1].targetAddress = VL530X_ADDRESS_1;
         tofSensorArray[1].multiplexer = getMultiplexerByIndex(&multiplexerList, 0);
         tofSensorArray[1].multiplexerChannel = MULTIPLEXER_CHANNEL_1;
- 
+
         tofSensorArray[1].hardwareRestartable = false;
         tofSensorArray[1].hardwareRestartIOExpander = NULL;
         tofSensorArray[1].hardwareRestartIOExpanderIoIndex = 0;
@@ -132,14 +132,14 @@ TofSensorList* mainLightHouse2020TofInitDrivers(I2cBus* i2cBus) {
 
     appendStringLN(getDebugOutputStreamLogger(), "TOF ...");
     initTofSensorListVL53L0X(&tofSensorList,
-                             (TofSensor(*)[]) &tofSensorArray,
-                             (TofSensorVL53L0X(*)[]) &tofSensorVL53L0XArray,
-                              // Size
-                              MAIN_PHARE_2020_TOF_SENSOR_LIST_COUNT,
-                              // debug
-                              true
+            (TofSensor(*)[]) & tofSensorArray,
+            (TofSensorVL53L0X(*)[]) & tofSensorVL53L0XArray,
+            // Size
+            MAIN_PHARE_2020_TOF_SENSOR_LIST_COUNT,
+            // debug
+            true
             );
     appendStringLN(getDebugOutputStreamLogger(), "OK");
-    
+
     return &tofSensorList;
 }

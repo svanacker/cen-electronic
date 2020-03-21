@@ -16,7 +16,6 @@
 
 #include "../../../common/math/cenMath.h"
 
-
 /**
  * @private
  * Computes the next value of the pid.
@@ -26,8 +25,8 @@
  * @param time the time in pid sampling
  */
 float computeNextPID(PidMotion* pidMotion,
-                    PidMotionDefinition* motionDefinition,
-                     enum InstructionType instructionType) {
+        PidMotionDefinition* motionDefinition,
+        enum InstructionType instructionType) {
     PidComputationValues* computationValues = &(pidMotion->computationValues);
     MotionInstruction* motionInstruction = &(motionDefinition->inst[instructionType]);
     PidComputationInstructionValues* computationInstructionValues = &(computationValues->values[instructionType]);
@@ -51,11 +50,11 @@ float computeNextPID(PidMotion* pidMotion,
 
     // Error
     float positionError = normalPosition - currentPosition;
-    
+
     // Speed
     float normalSpeed = computeNormalSpeed(motionInstruction, pidTimeInSecond);
     computationInstructionValues->normalSpeed = normalSpeed;
-    
+
     // Do the compute on P, I, D and return u
     float result = computePidCorrection(computationInstructionValues, pidParameter, normalSpeed, positionError);
     computationInstructionValues->u = result;

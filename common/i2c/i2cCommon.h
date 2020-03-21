@@ -14,21 +14,21 @@ struct I2cBusConnection;
 typedef struct I2cBusConnection I2cBusConnection;
 
 /**
-* Encapsulate which I2C Port we use (4 on PIC32)
-*/
+ * Encapsulate which I2C Port we use (4 on PIC32)
+ */
 enum I2cPort {
     /** To avoid to have a bad value. */
     I2C_BUS_PORT_UNKOWN = 0,
 
     /** Define the index of i2c port 1. */
     I2C_BUS_PORT_1 = 1,
-    
+
     /** Define the index of i2c port 2. */
     I2C_BUS_PORT_2 = 2,
-    
+
     /** Define the index of i2c port 3. */
     I2C_BUS_PORT_3 = 3,
-    
+
     /** Define the index of i2c port 4. */
     I2C_BUS_PORT_4 = 4
 };

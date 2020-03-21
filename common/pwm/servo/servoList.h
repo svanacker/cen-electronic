@@ -7,8 +7,8 @@
 #include "servoList.h"
 
 /**
-* The structure defining a list of servo.
-*/
+ * The structure defining a list of servo.
+ */
 typedef struct ServoList {
     /** To know if the servo List is already initialized. */
     bool initialized;
@@ -42,15 +42,15 @@ bool servoListContainsServoType(ServoList* servoList, enum ServoType servoType);
  * @param servo the servo to add to the list
  */
 Servo* addServo(ServoList* servoList,
-    enum ServoType servoType,
-    unsigned int internalServoIndex,
-    char* name,
-    ServoTypeInitFunction* typeInitFunction,
-    ServoInitFunction* initFunction,
-    ServoUpdateConfigFunction* updateConfigFunction,
-    ServoInternalPwmFunction* internalPwmFunction,
-    int* object
-);
+        enum ServoType servoType,
+        unsigned int internalServoIndex,
+        char* name,
+        ServoTypeInitFunction* typeInitFunction,
+        ServoInitFunction* initFunction,
+        ServoUpdateConfigFunction* updateConfigFunction,
+        ServoInternalPwmFunction* internalPwmFunction,
+        int* object
+        );
 
 /**
  * Get a servo object at the specified index.
@@ -69,12 +69,12 @@ unsigned int getServoCount(ServoList* servoList);
 // UTILS FUNCTION
 
 /**
-* Do a pwm on all pwm of the servoList
-* @param servoList the list of servo 
-* @param speed the speed to reach the value
-* @param targetPosition duration of pwm to 1 typical value between
-* PWM_SERVO_LEFT_POSITION and PWM_SERVO_RIGHT_POSITION 
-*/
+ * Do a pwm on all pwm of the servoList
+ * @param servoList the list of servo 
+ * @param speed the speed to reach the value
+ * @param targetPosition duration of pwm to 1 typical value between
+ * PWM_SERVO_LEFT_POSITION and PWM_SERVO_RIGHT_POSITION 
+ */
 void pwmServoAll(ServoList* servoList, unsigned int speed, unsigned int targetPosition);
 
 /**

@@ -30,17 +30,14 @@
 #include "../test/navigation/pathListTest.h"
 #include "../test/navigation/navigationTest.h"
 
-void setUp(void)
-{
+void setUp(void) {
     clearLastError();
 }
 
-void tearDown(void)
-{
+void tearDown(void) {
 }
 
-void runAllTests(void)
-{
+void runAllTests(void) {
     UnityBegin("cen");
 
     // RUN_TEST calls runTest
@@ -64,7 +61,7 @@ void runAllTests(void)
     printWriterTestSuite();
     readerTestSuite();
     ioUtilsTestSuite();
-    
+
     // Drivers
     driverDataDispatcherListTestSuite();
     testDriverTestTestSuite();

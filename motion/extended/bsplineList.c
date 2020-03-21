@@ -6,9 +6,9 @@
 #include "../../common/error/error.h"
 
 /**
-* Private Functions.
-* @returns true if there is a problem, false else
-*/
+ * Private Functions.
+ * @returns true if there is a problem, false else
+ */
 bool checkCurveListNotNull(const BSplineCurveList* curveList) {
     if (curveList == NULL) {
         writeError(MOTION_BSPLINE_LIST_NULL);
@@ -70,8 +70,7 @@ BSplineCurve* getNextCurveToWrite(BSplineCurveList* curveList) {
         curveList->writeIndex %= curveList->length;
 
         return result;
-    }
-    else {
+    } else {
         // We must log the problem
         writeError(MOTION_BSPLINE_LIST_FULL);
         // Print Curve List
@@ -91,12 +90,11 @@ void removeCurrentCurve(BSplineCurveList* curveList) {
 BSplineCurve* getCurrentCurve(const BSplineCurveList* curveList) {
     int isEmpty = isCurveListEmpty(curveList);
     if (!isEmpty) {
-        BSplineCurve* result = (BSplineCurve*)curveList->curves;
+        BSplineCurve* result = (BSplineCurve*) curveList->curves;
         result += curveList->readIndex;
 
         return result;
-    }
-    else {
+    } else {
         // We must log the problem
         writeError(MOTION_BSPLINE_LIST_EMPTY);
         return NULL;

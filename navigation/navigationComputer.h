@@ -4,8 +4,8 @@
 #include "navigation.h"
 
 /**
-* Update the outgoing paths for a specific Location.
-*/
+ * Update the outgoing paths for a specific Location.
+ */
 void updateOutgoingPaths(Navigation* navigation, Location* location);
 
 /**
@@ -16,7 +16,7 @@ void updateOutgoingPaths(Navigation* navigation, Location* location);
  * @return the cost to reach the best Path
  */
 float computeBestPath(Navigation* navigation,
-                      Location* start,
-                      Location* end);
+        Location* start,
+        Location* end);
 
 #endif

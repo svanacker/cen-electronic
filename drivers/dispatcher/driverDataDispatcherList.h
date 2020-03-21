@@ -45,14 +45,14 @@ DriverDataDispatcherList* getDispatcherList();
  * @return dispatcher the data dispatcher added to the list.
  */
 DriverDataDispatcher* addDriverDataDispatcher(
-                        TransmitMode transmitMode,
-                        const char* name,
-                        const char* addressString,
-                        int address,
-                        InputStream* inputStream,
-                        OutputStream* outputStream,
-                        driverDataDispatcherTransmitDataFunction* driverDataDispatcherTransmitData
-);
+        TransmitMode transmitMode,
+        const char* name,
+        const char* addressString,
+        int address,
+        InputStream* inputStream,
+        OutputStream* outputStream,
+        driverDataDispatcherTransmitDataFunction* driverDataDispatcherTransmitData
+        );
 
 /**
  * Get a driver data dispatcher by his index.

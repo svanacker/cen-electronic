@@ -11,7 +11,7 @@
  * The descriptor for the Fork 2019 device.
  */
 DeviceDescriptor* getFork2019DeviceDescriptor(ServoList* servoList,
-                                              TofSensorList* tofSensorListParam);
+        TofSensorList* tofSensorListParam);
 
 
 #endif

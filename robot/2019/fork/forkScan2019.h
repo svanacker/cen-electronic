@@ -58,9 +58,9 @@
 
 // FORK SCAN
 void forkScan2019ConfigTofList(TofSensor* leftForkScanSensor,
-                              TofSensor* rightForkScanSensor,
-                              MultiplexerList* multiplexerList,
-                              IOExpanderList* ioExpanderList);
+        TofSensor* rightForkScanSensor,
+        MultiplexerList* multiplexerList,
+        IOExpanderList* ioExpanderList);
 
 bool forkScan(ServoList* servoList, TofSensorList* tofSensorList, unsigned int retryCount, unsigned int leftRight);
 

@@ -3,7 +3,7 @@
 #include "../common/delay/delay30F.h"
 #include "../common/pwm/pwmPic.h"
 
-void pwmTest (void){
+void pwmTest(void) {
 
     pwm1(1000);
     pwm2(1200);

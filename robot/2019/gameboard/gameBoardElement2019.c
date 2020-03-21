@@ -20,6 +20,7 @@
 #include "../../../robot/2019/strategy/strategy2019.h"
 
 // FAKE ROBOT
+
 void fakeRobotPrint(GameBoard* gameBoard, int* element) {
     setGameBoardCurrentColor(gameBoard, CONSOLE_COLOR_YELLOW);
     FakeRobot* fakeRobot = getFakeRobotInstance();
@@ -30,6 +31,7 @@ void fakeRobotPrint(GameBoard* gameBoard, int* element) {
 // 2019 ELEMENTS
 
 // AREA
+
 void windowExclusion2019Print(GameBoard* gameBoard, int* element) {
     // Do nothing
 }
@@ -37,25 +39,25 @@ void windowExclusion2019Print(GameBoard* gameBoard, int* element) {
 bool windowExclusionNotReachable2019(GameBoard* gameBoard, int* element, float x, float y, float z) {
     // If it's outside of the rectangle of the gameboard with border, return false
     if (!isInRectangle(GAME_BOARD_TOF_WINDOW_WIDTH, GAME_BOARD_TOF_WINDOW_WIDTH,
-        GAMEBOARD_WIDTH - 2 * GAME_BOARD_TOF_WINDOW_WIDTH, GAMEBOARD_HEIGHT - 2 * GAME_BOARD_TOF_WINDOW_WIDTH,
-        x, y)) {
+            GAMEBOARD_WIDTH - 2 * GAME_BOARD_TOF_WINDOW_WIDTH, GAMEBOARD_HEIGHT - 2 * GAME_BOARD_TOF_WINDOW_WIDTH,
+            x, y)) {
         return false;
     }
 
     // Exclude the slope area
-    if (isInRectangle(GAME_BOARD_BIG_DISTRIBUTOR_X - GAME_BOARD_TOF_WINDOW_WIDTH, 
-                      GAME_BOARD_BIG_DISTRIBUTOR_Y - GAME_BOARD_TOF_WINDOW_WIDTH,
-                      GAME_BOARD_BIG_DISTRIBUTOR_WIDTH + GAME_BOARD_SLOPE_WIDTH + GAME_BOARD_TOF_WINDOW_WIDTH, 
-                      GAMEBOARD_HEIGHT - 2 * (GAME_BOARD_BIG_DISTRIBUTOR_Y - GAME_BOARD_TOF_WINDOW_WIDTH),
-        x, y)) {
+    if (isInRectangle(GAME_BOARD_BIG_DISTRIBUTOR_X - GAME_BOARD_TOF_WINDOW_WIDTH,
+            GAME_BOARD_BIG_DISTRIBUTOR_Y - GAME_BOARD_TOF_WINDOW_WIDTH,
+            GAME_BOARD_BIG_DISTRIBUTOR_WIDTH + GAME_BOARD_SLOPE_WIDTH + GAME_BOARD_TOF_WINDOW_WIDTH,
+            GAMEBOARD_HEIGHT - 2 * (GAME_BOARD_BIG_DISTRIBUTOR_Y - GAME_BOARD_TOF_WINDOW_WIDTH),
+            x, y)) {
         return false;
     }
     // Excluding the separation of the weighting Machine
     if (isInRectangle(GAME_BOARD_WEIGHING_MACHINE_SEPARATOR_X - GAME_BOARD_TOF_SMALL_WINDOW_WIDTH,
-        GAME_BOARD_WEIGHING_MACHINE_SEPARATOR_Y - GAME_BOARD_TOF_SMALL_WINDOW_WIDTH,
-        GAME_BOARD_WEIGHING_MACHINE_SEPARATOR_WIDTH + GAME_BOARD_TOF_SMALL_WINDOW_WIDTH,
-        GAME_BOARD_WEIGHING_MACHINE_SEPARATOR_HEIGHT + 2 * GAME_BOARD_TOF_SMALL_WINDOW_WIDTH,
-        x, y)) {
+            GAME_BOARD_WEIGHING_MACHINE_SEPARATOR_Y - GAME_BOARD_TOF_SMALL_WINDOW_WIDTH,
+            GAME_BOARD_WEIGHING_MACHINE_SEPARATOR_WIDTH + GAME_BOARD_TOF_SMALL_WINDOW_WIDTH,
+            GAME_BOARD_WEIGHING_MACHINE_SEPARATOR_HEIGHT + 2 * GAME_BOARD_TOF_SMALL_WINDOW_WIDTH,
+            x, y)) {
         return false;
     }
 
@@ -64,6 +66,7 @@ bool windowExclusionNotReachable2019(GameBoard* gameBoard, int* element, float x
 }
 
 // PERIODIC TABLE 
+
 void periodicTableRediumPrint(GameBoard* gameBoard, int* element) {
     setGameBoardCurrentColor(gameBoard, CONSOLE_COLOR_RED);
     drawRectangle(gameBoard, GAME_BOARD_PERIODIC_TABLE_REDIUM_X, GAME_BOARD_PERIODIC_TABLE_REDIUM_Y, GAME_BOARD_PERIODIC_TABLE_REDIUM_WIDTH, GAME_BOARD_PERIODIC_TABLE_REDIUM_HEIGHT, CHAR_VERTICAL, CHAR_HORIZONTAL);
@@ -73,13 +76,13 @@ void periodicTableRediumPrint(GameBoard* gameBoard, int* element) {
 
 bool periodicTableRediumNotReachable(GameBoard* gameBoard, int* element, float x, float y, float z) {
     if (isInRectangle(GAME_BOARD_PERIODIC_TABLE_REDIUM_X, GAME_BOARD_PERIODIC_TABLE_REDIUM_Y,
-        GAME_BOARD_PERIODIC_TABLE_REDIUM_WIDTH, GAME_BOARD_PERIODIC_TABLE_REDIUM_HEIGHT,
-        x, y)) {
+            GAME_BOARD_PERIODIC_TABLE_REDIUM_WIDTH, GAME_BOARD_PERIODIC_TABLE_REDIUM_HEIGHT,
+            x, y)) {
         return false;
     }
     if (isInRectangle(GAME_BOARD_PERIODIC_TABLE_REDIUM_X, GAMEBOARD_HEIGHT - GAME_BOARD_PERIODIC_TABLE_REDIUM_HEIGHT - GAME_BOARD_PERIODIC_TABLE_REDIUM_Y,
-        GAME_BOARD_PERIODIC_TABLE_REDIUM_WIDTH, GAME_BOARD_PERIODIC_TABLE_REDIUM_HEIGHT,
-        x, y)) {
+            GAME_BOARD_PERIODIC_TABLE_REDIUM_WIDTH, GAME_BOARD_PERIODIC_TABLE_REDIUM_HEIGHT,
+            x, y)) {
         return false;
     }
     return true;
@@ -87,13 +90,13 @@ bool periodicTableRediumNotReachable(GameBoard* gameBoard, int* element, float x
 
 bool periodicTableBlueiumNotReachable(GameBoard* gameBoard, int* element, float x, float y, float z) {
     if (isInRectangle(GAME_BOARD_PERIODIC_TABLE_BLUEIUM_X, GAME_BOARD_PERIODIC_TABLE_BLUEIUM_Y,
-        GAME_BOARD_PERIODIC_TABLE_BLUEIUM_WIDTH, GAME_BOARD_PERIODIC_TABLE_BLUEIUM_HEIGHT,
-        x, y)) {
+            GAME_BOARD_PERIODIC_TABLE_BLUEIUM_WIDTH, GAME_BOARD_PERIODIC_TABLE_BLUEIUM_HEIGHT,
+            x, y)) {
         return false;
     }
     if (isInRectangle(GAME_BOARD_PERIODIC_TABLE_BLUEIUM_X, GAMEBOARD_HEIGHT - GAME_BOARD_PERIODIC_TABLE_BLUEIUM_HEIGHT - GAME_BOARD_PERIODIC_TABLE_BLUEIUM_Y,
-        GAME_BOARD_PERIODIC_TABLE_BLUEIUM_WIDTH, GAME_BOARD_PERIODIC_TABLE_BLUEIUM_HEIGHT,
-        x, y)) {
+            GAME_BOARD_PERIODIC_TABLE_BLUEIUM_WIDTH, GAME_BOARD_PERIODIC_TABLE_BLUEIUM_HEIGHT,
+            x, y)) {
         return false;
     }
     return true;
@@ -101,13 +104,13 @@ bool periodicTableBlueiumNotReachable(GameBoard* gameBoard, int* element, float 
 
 bool periodicTableGreeniumNotReachable(GameBoard* gameBoard, int* element, float x, float y, float z) {
     if (isInRectangle(GAME_BOARD_PERIODIC_TABLE_GREENIUM_X, GAME_BOARD_PERIODIC_TABLE_GREENIUM_Y,
-        GAME_BOARD_PERIODIC_TABLE_GREENIUM_WIDTH, GAME_BOARD_PERIODIC_TABLE_GREENIUM_HEIGHT,
-        x, y)) {
+            GAME_BOARD_PERIODIC_TABLE_GREENIUM_WIDTH, GAME_BOARD_PERIODIC_TABLE_GREENIUM_HEIGHT,
+            x, y)) {
         return false;
     }
     if (isInRectangle(GAME_BOARD_PERIODIC_TABLE_GREENIUM_X, GAMEBOARD_HEIGHT - GAME_BOARD_PERIODIC_TABLE_GREENIUM_HEIGHT - GAME_BOARD_PERIODIC_TABLE_GREENIUM_Y,
-        GAME_BOARD_PERIODIC_TABLE_GREENIUM_WIDTH, GAME_BOARD_PERIODIC_TABLE_GREENIUM_HEIGHT,
-        x, y)) {
+            GAME_BOARD_PERIODIC_TABLE_GREENIUM_WIDTH, GAME_BOARD_PERIODIC_TABLE_GREENIUM_HEIGHT,
+            x, y)) {
         return false;
     }
     return true;
@@ -128,6 +131,7 @@ void periodicTableBlueiumPrint(GameBoard* gameBoard, int* element) {
 }
 
 // CHAOS AREAS
+
 void chaosAreaPrint(GameBoard* gameBoard, int* element) {
     setGameBoardCurrentColor(gameBoard, CONSOLE_COLOR_GRAY);
     // Big Circles : Yellow / Purple
@@ -175,6 +179,7 @@ void weighingMachinePrint(GameBoard* gameBoard, int* element) {
 }
 
 // Distributor
+
 void bigDistributorPrint(GameBoard* gameBoard, int* element) {
     setGameBoardCurrentColor(gameBoard, CONSOLE_COLOR_GRAY);
     drawRectangle(gameBoard, GAME_BOARD_BIG_DISTRIBUTOR_X, GAME_BOARD_BIG_DISTRIBUTOR_Y, GAME_BOARD_BIG_DISTRIBUTOR_WIDTH, GAME_BOARD_BIG_DISTRIBUTOR_HEIGHT, CHAR_VERTICAL, CHAR_HORIZONTAL);
@@ -194,6 +199,7 @@ void smallDistributorPrint(GameBoard* gameBoard, int* element) {
 
 
 // Pucks
+
 void puckPeriodicTablePrint(GameBoard* gameBoard, int* element) {
     setGameBoardCurrentColor(gameBoard, CONSOLE_COLOR_RED);
     drawCircle(gameBoard, GAME_BOARD_PUCK_RED_PERIODIC_TABLE_X, GAME_BOARD_PUCK_RED_PERIODIC_TABLE_Y, GAME_BOARD_PUCK_RADIUS, '.');

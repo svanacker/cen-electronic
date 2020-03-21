@@ -13,18 +13,18 @@
  * Print a list of tof Sensor (PC Simulation).
  */
 void printTofSensorDetectionTablePc(OutputStream* outputStream,
-                                    TofSensorList* tofSensorList,
-                                    Point* pointOfView,
-                                   float pointOfViewAngleRadian);
+        TofSensorList* tofSensorList,
+        Point* pointOfView,
+        float pointOfViewAngleRadian);
 
 /**
-* Print the Config Table (PC Simulation).
-*/
+ * Print the Config Table (PC Simulation).
+ */
 void printTofSensorConfigTablePc(OutputStream* outputStream, TofSensorList* tofSensorList);
 
 /**
-* Print the Network Table (PC Simulation).
-*/
+ * Print the Network Table (PC Simulation).
+ */
 void printTofSensorNetworkTablePc(OutputStream* outputStream, TofSensorList* tofSensorList);
 
 

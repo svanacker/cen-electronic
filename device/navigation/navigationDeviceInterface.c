@@ -8,9 +8,9 @@ const char* getNavigationDeviceName(void) {
     return "Navigation";
 }
 
-int deviceNavigationGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList){
+int deviceNavigationGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // Locations
-    if (commandHeader == COMMAND_NAVIGATION_LOCATION_COUNT ) {
+    if (commandHeader == COMMAND_NAVIGATION_LOCATION_COUNT) {
         if (fillDeviceArgumentList) {
             setFunction("Navigation Location Count", 0, 1);
             setResultUnsignedHex4(0, "Count");
@@ -37,28 +37,24 @@ int deviceNavigationGetInterface(unsigned char commandHeader, DeviceInterfaceMod
             setArgumentUnsignedHex4(4, "y (mm)");
         }
         return commandLengthValueForMode(mode, 18, 0);
-    }
-	else if (commandHeader == COMMAND_NAVIGATION_LOCATION_LIST_DEBUG) {
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("Location List");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	}
-	else if (commandHeader == COMMAND_NAVIGATION_LOCATION_ADD_TESTS_DATA) {
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("Location Add Tests Data");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	}
-    // Paths
+    } else if (commandHeader == COMMAND_NAVIGATION_LOCATION_LIST_DEBUG) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Location List");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    } else if (commandHeader == COMMAND_NAVIGATION_LOCATION_ADD_TESTS_DATA) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Location Add Tests Data");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }// Paths
     else if (commandHeader == COMMAND_NAVIGATION_PATH_COUNT) {
         if (fillDeviceArgumentList) {
             setFunction("Navigation Path Count", 0, 1);
             setResultUnsignedHex4(0, "Count");
         }
         return commandLengthValueForMode(mode, 0, 4);
-    }
-    else if (commandHeader == COMMAND_NAVIGATION_GET_PATH) {
+    } else if (commandHeader == COMMAND_NAVIGATION_GET_PATH) {
         if (fillDeviceArgumentList) {
             setFunction("GetPath", 1, 19);
             setArgumentUnsignedHex4(0, "Index");
@@ -83,8 +79,7 @@ int deviceNavigationGetInterface(unsigned char commandHeader, DeviceInterfaceMod
             setResultUnsignedChar1(18, "mustGoBackward");
         }
         return commandLengthValueForMode(mode, 4, 50);
-    }
-    else if (commandHeader == COMMAND_NAVIGATION_SET_PATH) {
+    } else if (commandHeader == COMMAND_NAVIGATION_SET_PATH) {
         if (fillDeviceArgumentList) {
             setFunction("SetPath", 19, 0);
             setArgumentFixedCharArray(0, "LocationName1");
@@ -108,31 +103,27 @@ int deviceNavigationGetInterface(unsigned char commandHeader, DeviceInterfaceMod
             setArgumentUnsignedChar1(18, "mustGoBackward");
         }
         return commandLengthValueForMode(mode, 50, 0);
-    }
-    else if (commandHeader == COMMAND_NAVIGATION_PATH_GO) {
+    } else if (commandHeader == COMMAND_NAVIGATION_PATH_GO) {
         if (fillDeviceArgumentList) {
             setFunction("Path Go !", 1, 0);
             setArgumentUnsignedHex2(0, "path Index");
         }
         return commandLengthValueForMode(mode, 2, 0);
-    }
-	else if (commandHeader == COMMAND_NAVIGATION_PATH_LIST_DEBUG) {
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("PathList");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	}
-	else if (commandHeader == COMMAND_NAVIGATION_PATH_LIST_ADD_TESTS_DATA) {
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("Path Add Tests Data");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	}
-    else if (commandHeader == COMMAND_NAVIGATION_LOCATION_LIST_AND_OUTGOING_PATHS) {
-    if (fillDeviceArgumentList) {
-        setFunctionNoArgumentAndNoResult("Location List And Outgoing Paths");
-    }
-    return commandLengthValueForMode(mode, 0, 0);
+    } else if (commandHeader == COMMAND_NAVIGATION_PATH_LIST_DEBUG) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("PathList");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    } else if (commandHeader == COMMAND_NAVIGATION_PATH_LIST_ADD_TESTS_DATA) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Path Add Tests Data");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    } else if (commandHeader == COMMAND_NAVIGATION_LOCATION_LIST_AND_OUTGOING_PATHS) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Location List And Outgoing Paths");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

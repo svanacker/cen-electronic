@@ -19,9 +19,9 @@ I2cBusConnection* _INA219_getI2cBusConnection(Current* current) {
 void _INA219_initSensor(Current* current) {
     I2cBusConnection* i2cBusConnection = _INA219_getI2cBusConnection(current);
     ina219_write16(i2cBusConnection, INA219_CONFIGURATION_REGISTER,
-                                     INA219_CONFIGURATION_GAIN_RANGE_40_MV |
-                                     INA219_ADC_MODE_9_BIT |
-                                     INA219_CONFIGURATION_SHUNT_VOLTAGE_CONTINUOUS);
+            INA219_CONFIGURATION_GAIN_RANGE_40_MV |
+            INA219_ADC_MODE_9_BIT |
+            INA219_CONFIGURATION_SHUNT_VOLTAGE_CONTINUOUS);
 }
 
 void ina219_write16(I2cBusConnection* i2cBusConnection, unsigned char reg, unsigned int data) {
@@ -40,7 +40,7 @@ void ina219_write16(I2cBusConnection* i2cBusConnection, unsigned char reg, unsig
     // I2C VALUE : LSB
     portableMasterWriteI2C(i2cBusConnection, (unsigned char) (data & 0xFF));
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     portableMasterStopI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
 }
@@ -84,13 +84,13 @@ unsigned int ina219_read16(I2cBusConnection* i2cBusConnection, unsigned char reg
     portableMasterStopI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
 
-    result = (msbValue << 8) | lsbValue; 
+    result = (msbValue << 8) | lsbValue;
 
     return result;
 }
 
 int _INA219_readSensorValue(Current* current) {
-//    I2cBusConnection* i2cBusConnection = _INA219_getI2cBusConnection(current);
+    //    I2cBusConnection* i2cBusConnection = _INA219_getI2cBusConnection(current);
 
     return 0;
 }

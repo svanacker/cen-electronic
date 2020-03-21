@@ -12,19 +12,19 @@ bool colorSensorPcInit(ColorSensor* colorSensor) {
 }
 
 /**
-* ColorSensor Implementation (POO)
-*/
+ * ColorSensor Implementation (POO)
+ */
 Color* colorSensorPcReadValue(ColorSensor* colorSensor) {
     return colorSensor->color;
 }
 
-void initColorSensorPc(ColorSensor* colorSensor, 
-                       Color* pColor,
-                       colorSensorFindColorTypeFunction* colorSensorFindColorType) {
-    initColorSensor(colorSensor, 
-                    &colorSensorPcInit,
-                    &colorSensorPcReadValue,
-                    colorSensorFindColorType,
-                    pColor,
-                    NULL);
+void initColorSensorPc(ColorSensor* colorSensor,
+        Color* pColor,
+        colorSensorFindColorTypeFunction* colorSensorFindColorType) {
+    initColorSensor(colorSensor,
+            &colorSensorPcInit,
+            &colorSensorPcReadValue,
+            colorSensorFindColorType,
+            pColor,
+            NULL);
 }

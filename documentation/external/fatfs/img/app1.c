@@ -2,11 +2,10 @@
 / Open or create a file in append mode
 /------------------------------------------------------------*/
 
-FRESULT open_append (
-    FIL* fp,            /* [OUT] File object to create */
-    const char* path    /* [IN]  File name to be opened */
-)
-{
+FRESULT open_append(
+        FIL* fp, /* [OUT] File object to create */
+        const char* path /* [IN]  File name to be opened */
+        ) {
     FRESULT fr;
 
     /* Opens an existing file. If not exist, creates a new file. */
@@ -20,9 +19,7 @@ FRESULT open_append (
     return fr;
 }
 
-
-int main (void)
-{
+int main(void) {
     FRESULT fr;
     FATFS fs;
     FIL fil;

@@ -46,29 +46,27 @@ void deviceBeaconHandleRawData(char commandHeader, InputStream* inputStream, Out
         appendAck(outputStream);
         append(outputStream, COMMAND_INIT_JENNIC_AS_COORDINATER);
         initJennic5139Coordinater();
-    }
-    // Send immediately position to router (even if beacon system is disabled)
+    }// Send immediately position to router (even if beacon system is disabled)
     else if (commandHeader == COMMAND_SEND_ROBOT_POSITION_FROM_COORDINATER_TO_ROUTER) {
         appendAck(outputStream);
         append(outputStream, COMMAND_SEND_ROBOT_POSITION_FROM_COORDINATER_TO_ROUTER);
         Point* point = getOpponentRobotPosition();
         notifyRobotPosition(point);
-    }
-    // Get the last detected position of the robot
+    }// Get the last detected position of the robot
     else if (commandHeader == COMMAND_BEACON_POSITION) {
         // Computes position
         Point* point = getOpponentRobotPosition();
         appendAck(outputStream);
 
         appendRobotPosition(outputStream, COMMAND_BEACON_POSITION, point);
-    // Get the configuration of the both laser
+        // Get the configuration of the both laser
     } else if (commandHeader == COMMAND_BEACON_CONFIGURATION) {
         appendAck(outputStream);
         append(outputStream, COMMAND_BEACON_CONFIGURATION);
 
         OutputStream* logOutputStream = getInfoOutputStreamLogger();
         printBeaconSystemConfiguration(logOutputStream);
-    // Set the configuration of the system
+        // Set the configuration of the system
     } else if (commandHeader == COMMAND_BEACON_SET_CONFIGURATION) {
         appendAck(outputStream);
 
@@ -80,27 +78,25 @@ void deviceBeaconHandleRawData(char commandHeader, InputStream* inputStream, Out
 
         setDistanceBetweenBeacon(distanceBetweenBeacon);
         setCalibrationPoint(calibrationX, calibrationY);
-    
+
         append(outputStream, COMMAND_BEACON_SET_CONFIGURATION);
-    // Calibration
+        // Calibration
     } else if (commandHeader == COMMAND_BEACON_CALIBRATION) {
         appendAck(outputStream);
         doBeaconCalibration();
         append(outputStream, COMMAND_BEACON_CALIBRATION);
-    // Jennic Remote (router) Light on / off
+        // Jennic Remote (router) Light on / off
     } else if (commandHeader == COMMAND_ROUTER_LIGHT) {
         appendAck(outputStream);
         unsigned char status = readHex2(inputStream);
         jennic5139RemoteLight(JENNIC_ROUTER_MAC_ADDRESS, JENNIC_LED_ALL, status != 0);
         append(outputStream, COMMAND_ROUTER_LIGHT);
-    }
-    // Run the servo of the beacon system
+    }// Run the servo of the beacon system
     else if (commandHeader == COMMAND_BEACON_SERVO_RUN) {
         appendAck(outputStream);
         setBeaconSystemEnabled(true);
         append(outputStream, COMMAND_BEACON_SERVO_RUN);
-    }
-    // Stop the servo of the beacon system
+    }// Stop the servo of the beacon system
     else if (commandHeader == COMMAND_BEACON_SERVO_STOP) {
         appendAck(outputStream);
         setBeaconSystemEnabled(false);

@@ -16,13 +16,13 @@
 #define FORK_2019_RIGHT_ARM_SERVO_OFF                                     0x05DC
 
 /**
-* @param leftRight Both Arm = 0x00, Left Arm = 0x01, Right Arm = 0x02
-*/
+ * @param leftRight Both Arm = 0x00, Left Arm = 0x01, Right Arm = 0x02
+ */
 void arm2019On(ServoList* servoList, unsigned int leftRight);
 
 /**
-* @param leftRight Both Arm = 0x00, Left Arm = 0x01, Right Arm = 0x02
-*/
+ * @param leftRight Both Arm = 0x00, Left Arm = 0x01, Right Arm = 0x02
+ */
 void arm2019Off(ServoList* servoList, unsigned int leftRight);
 
 #endif

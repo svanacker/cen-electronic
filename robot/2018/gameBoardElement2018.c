@@ -17,6 +17,7 @@
 #include "../../robot/strategy/gameStrategyHandler.h"
 
 // START AREA
+
 void startAreaGreenPrint(GameBoard* gameBoard, int* element) {
     drawRectangle(gameBoard, 0.0f, 0.0f, GAME_BOARD_START_AREA_2018_WIDTH, GAME_BOARD_START_AREA_2018_HEIGHT, CHAR_VERTICAL, CHAR_HORIZONTAL);
 }
@@ -26,6 +27,7 @@ void startAreaOrangePrint(GameBoard* gameBoard, int* element) {
 }
 
 // GARBAGE
+
 void garbageGreenPrint(GameBoard* gameBoard, int* element) {
     drawRectangle(gameBoard, GAME_BOARD_GARBAGE_2018_X, GAME_BOARD_GARBAGE_2018_GREEN_Y, GAME_BOARD_GARBAGE_2018_WIDTH, GAME_BOARD_GARBAGE_2018_HEIGHT, CHAR_VERTICAL, CHAR_HORIZONTAL);
 }
@@ -35,6 +37,7 @@ void garbageOrangePrint(GameBoard* gameBoard, int* element) {
 }
 
 // SWITCH
+
 void switchGreenPrint(GameBoard* gameBoard, int* element) {
     drawPointCoordinates(gameBoard, GAME_BOARD_SWITCH_2018_X, GAME_BOARD_SWITCH_GREEN_2018_Y, 'S');
 }
@@ -44,6 +47,7 @@ void switchOrangePrint(GameBoard* gameBoard, int* element) {
 }
 
 // CUBES
+
 void cubeSetPrintAtLocation(GameBoard* gameBoard, int* element, float x, float y) {
     drawPointCoordinates(gameBoard, x, y, '@');
     drawPointCoordinates(gameBoard, x, y + GAME_BOARD_CUBE_HEIGHT, '@');
@@ -78,6 +82,7 @@ void cubeSetRight2(GameBoard* gameBoard, int* element) {
 
 
 // BUILDING_AREA
+
 void buildingAreaGreenPrint(GameBoard* gameBoard, int* element) {
     drawRectangle(gameBoard, 0, GAME_BOARD_BUILDING_GREEN_AREA_Y, GAME_BOARD_BUILDING_AREA_WIDTH, GAME_BOARD_BUILDING_AREA_HEIGHT, CHAR_VERTICAL, CHAR_HORIZONTAL);
 }
@@ -87,6 +92,7 @@ void buildingAreaOrangePrint(GameBoard* gameBoard, int* element) {
 }
 
 // BEE
+
 void beeLaunchingAreaGreenPrint(GameBoard* gameBoard, int* element) {
     drawPointCoordinates(gameBoard, GAME_BOARD_BEE_LAUNCHING_AREA_X, GAME_BOARD_BEE_LAUNCHING_GREEN_AREA_Y, 'B');
 }
@@ -96,6 +102,7 @@ void beeLaunchingAreaOrangePrint(GameBoard* gameBoard, int* element) {
 }
 
 // DISTRIBUTOR 1
+
 void distributor1GreenPrint(GameBoard* gameBoard, int* element) {
     drawPointCoordinates(gameBoard, GAME_BOARD_DISTRIBUTOR_1_X, GAME_BOARD_DISTRIBUTOR_1_GREEN_Y, 'D');
 }

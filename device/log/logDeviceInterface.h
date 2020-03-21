@@ -20,9 +20,9 @@
 #define COMMAND_TEST_LOG                          'T'
 
 /**
-* Get the Log device interface.
-* @return a pointer on the log device Interface.
-*/
+ * Get the Log device interface.
+ * @return a pointer on the log device Interface.
+ */
 DeviceInterface* getLogDeviceInterface(void);
 
 #endif

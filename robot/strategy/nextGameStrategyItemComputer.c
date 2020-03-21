@@ -44,7 +44,7 @@ GameTarget* computeBestNextTarget(GameStrategyContext* strategyContext) {
     // Loop every StrategyItem with Target
     for (strategyItemIndex = 0; strategyItemIndex < gameStrategyItemCount; strategyItemIndex++) {
         GameStrategyItem* strategyItem = getStrategyItem(gameStrategy, strategyItemIndex);
-        
+
         GameTarget* target = strategyItem->target;
         if (target == NULL) {
             writeError(TARGET_IS_NULL);
@@ -60,7 +60,7 @@ GameTarget* computeBestNextTarget(GameStrategyContext* strategyContext) {
         int targetActionCount = getGameTargetActionCount(actionList);
 
         // To avoid DIVIDE_BY_ZERO Error, we consider that the base cost is 1.0f
-        float cost = 1.0f;  
+        float cost = 1.0f;
 
         // For every Action of the target, compute the cost
         for (actionIndex = 0; actionIndex < targetActionCount; actionIndex++) {

@@ -26,8 +26,7 @@ bool readBool(InputStream* inputStream) {
     unsigned char c = inputStream->readChar(inputStream);
     if (c == '0') {
         return false;
-    }
-    else if (c == '1') {
+    } else if (c == '1') {
         return true;
     }
     writeError(IO_READER_NOT_BOOL_VALUE);
@@ -98,7 +97,7 @@ signed long readSignedHex4(InputStream* inputStream) {
     signed long result = readHex4(inputStream);
     if (result > 0x7FFF) {
         result -= 0x10000;
-    }    
+    }
     return result;
 }
 
@@ -122,7 +121,7 @@ signed long readSignedHex6(InputStream* inputStream) {
 }
 
 float readHexFloat2(InputStream* inputStream, unsigned int digitPrecision) {
-    float result = (float)readSignedHex2(inputStream);
+    float result = (float) readSignedHex2(inputStream);
     unsigned int i;
     for (i = 0; i < digitPrecision; i++) {
         result /= 10.0f;
@@ -140,7 +139,7 @@ float readHexFloat4(InputStream* inputStream, unsigned int digitPrecision) {
 }
 
 float readHexFloat6(InputStream* inputStream, unsigned int digitPrecision) {
-    float result = (float)readSignedHex6(inputStream);
+    float result = (float) readSignedHex6(inputStream);
     unsigned int i;
     for (i = 0; i < digitPrecision; i++) {
         result /= 10.0f;

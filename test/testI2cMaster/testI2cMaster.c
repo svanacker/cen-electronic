@@ -39,16 +39,16 @@ static OutputStream i2cOutputStream;
 static Buffer i2cBuffer;
 
 /**
-* Test PCF8574
-*/
+ * Test PCF8574
+ */
 void testPcf8574() {
     unsigned char SERIAL_PORT_DEBUG = SERIAL_PORT_2;
     // Open the serial Link
-    openSerialLink(    &debugSerialStreamLink,
-                    &debugInputBuffer,
-                    &debugOutputBuffer,
-                    &debugOutputStream,
-                    SERIAL_PORT_DEBUG);
+    openSerialLink(&debugSerialStreamLink,
+            &debugInputBuffer,
+            &debugOutputBuffer,
+            &debugOutputStream,
+            SERIAL_PORT_DEBUG);
 
     // Logs
     initLog(DEBUG);
@@ -70,16 +70,16 @@ void testPcf8574() {
 }
 
 /**
-* Test I2C_MASTER WITH CUSTOM I2C_SLAVE
-*/
+ * Test I2C_MASTER WITH CUSTOM I2C_SLAVE
+ */
 void testInputStream() {
     unsigned char SERIAL_PORT_DEBUG = SERIAL_PORT_2;
     // Open the serial Link
-    openSerialLink(    &debugSerialStreamLink,
-                    &debugInputBuffer,
-                    &debugOutputBuffer,
-                    &debugOutputStream,
-                    SERIAL_PORT_DEBUG);
+    openSerialLink(&debugSerialStreamLink,
+            &debugInputBuffer,
+            &debugOutputBuffer,
+            &debugOutputStream,
+            SERIAL_PORT_DEBUG);
 
     // Logs
     initLog(DEBUG);

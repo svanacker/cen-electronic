@@ -18,12 +18,12 @@ typedef struct TofSensorVL53L0X TofSensorVL53L0X;
  * Specific structure about the Tof Sensor specific to the VL53L0X.
  */
 struct TofSensorVL53L0X {
-    VL53L0X_Error                      status;
-    VL53L0X_Dev_t                      device;
-    VL53L0X_Version_t                  version;
-    VL53L0X_DeviceInfo_t               deviceInfo;
-    VL53L0X_RangingMeasurementData_t   rangingMeasurementData;
-    I2cBusConnection*                  i2cBusConnection;
+    VL53L0X_Error status;
+    VL53L0X_Dev_t device;
+    VL53L0X_Version_t version;
+    VL53L0X_DeviceInfo_t deviceInfo;
+    VL53L0X_RangingMeasurementData_t rangingMeasurementData;
+    I2cBusConnection* i2cBusConnection;
 };
 
 /**
@@ -68,7 +68,7 @@ void printRangeStatus(VL53L0X_RangingMeasurementData_t* pRangingMeasurementData)
  * @return 
  */
 void initTofSensorVL53L0X(TofSensor* tofSensor,
-                    TofSensorVL53L0X* tofSensorVL53L0X);
+        TofSensorVL53L0X* tofSensorVL53L0X);
 
 
 #endif

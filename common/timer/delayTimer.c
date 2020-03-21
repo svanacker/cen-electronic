@@ -8,7 +8,7 @@
 #include "timerConstants.h"
 
 Timer* timerDelayMark(void) {
-        TimerList* timerList = getTimerList();
+    TimerList* timerList = getTimerList();
     // Avoid to be blocked
     if (!timerList->started) {
         return NULL;
@@ -28,7 +28,7 @@ Timer* timerDelayMark(void) {
     }
     // Mark the timer so that we could know when we need to release it
     markTimer(timer);
-    
+
     return timer;
 }
 
@@ -39,11 +39,11 @@ bool timerDelayTimeout(Timer* delayTimer, unsigned long delayMilliSeconds) {
 }
 
 void timerDelayWaitMark(Timer* delayTimer, unsigned long delayMilliSeconds) {
-    if (delayTimer == NULL) {   
+    if (delayTimer == NULL) {
         writeError(TIMER_NULL);
         return;
     }
-    while(!timerDelayTimeout(delayTimer, delayMilliSeconds)) {
+    while (!timerDelayTimeout(delayTimer, delayMilliSeconds)) {
         // Do nothing, other interrupt will occur
     }
 }
@@ -74,10 +74,10 @@ bool initSystemDelayTimer(void) {
     // and add the timer to the list, so that the interrupt function will
     // update at a certain frequency
     Timer* timer = addTimer(SYSTEM_TIMER_DELAY_CODE,
-                            TIME_DIVIDER_100_HERTZ,
-                            &interruptSystemDelayCallbackFunc,
-                            "TIMER DELAY", 
-							NULL);
+            TIME_DIVIDER_100_HERTZ,
+            &interruptSystemDelayCallbackFunc,
+            "TIMER DELAY",
+            NULL);
     timer->enabled = true;
     return true;
 }

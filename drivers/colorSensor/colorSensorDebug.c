@@ -12,8 +12,8 @@
 #define COLOR_SENSOR_LAST_COLUMN		         60
 
 /**
-* Private.
-*/
+ * Private.
+ */
 void printColorSensorDebugTableHeader(OutputStream* outputStream) {
     println(outputStream);
     appendTableHeaderSeparatorLine(outputStream);
@@ -23,7 +23,6 @@ void printColorSensorDebugTableHeader(OutputStream* outputStream) {
     appendEndOfTableColumn(outputStream, COLOR_SENSOR_LAST_COLUMN);
     appendTableHeaderSeparatorLine(outputStream);
 }
-
 
 void printColorSensorTable(OutputStream* outputStream, ColorSensor* colorSensor) {
     printColorSensorDebugTableHeader(outputStream);

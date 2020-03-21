@@ -17,38 +17,32 @@ int deviceTofGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
             setResultUnsignedHex4(0, "distance (mm)");
         }
         return commandLengthValueForMode(mode, 2, 4);
-    }
-    else if (commandHeader == COMMAND_TOF_LIST_CONFIG) {
+    } else if (commandHeader == COMMAND_TOF_LIST_CONFIG) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("TOF List Config");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_TOF_LIST_NETWORK) {
+    } else if (commandHeader == COMMAND_TOF_LIST_NETWORK) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("TOF List Network");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_TOF_LIST_DETECTED) {
+    } else if (commandHeader == COMMAND_TOF_LIST_DETECTED) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("TOF List Detection");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_TOF_BEEP_ON) {
+    } else if (commandHeader == COMMAND_TOF_BEEP_ON) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("TOF Beep On");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_TOF_BEEP_OFF) {
+    } else if (commandHeader == COMMAND_TOF_BEEP_OFF) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("TOF Beep Off");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_TOF_SEARCH_IF_COLLIDING) {
+    } else if (commandHeader == COMMAND_TOF_SEARCH_IF_COLLIDING) {
         if (fillDeviceArgumentList) {
             setFunction("Search If Colliding for x secs", 3, 0);
             setArgumentUnsignedHex2(0, "tofIndex, FF if we check all");
@@ -56,8 +50,7 @@ int deviceTofGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
             setArgumentUnsignedHex2(2, "Analysis length (seconds)");
         }
         return commandLengthValueForMode(mode, 5, 0);
-    }
-    else if (commandHeader == COMMAND_TOF_RESTART) {
+    } else if (commandHeader == COMMAND_TOF_RESTART) {
         if (fillDeviceArgumentList) {
             setFunction("TOF Restart", 1, 1);
             setArgumentUnsignedHex2(0, "Tof Index");

@@ -31,8 +31,7 @@ int deviceCodersGetInterface(unsigned char commandHeader, DeviceInterfaceMode mo
             setFunctionNoArgumentAndNoResult("debug Coders Value");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_DEBUG_ACQUIRE_SAMPLE_WHEEL_POSITION) {
+    } else if (commandHeader == COMMAND_DEBUG_ACQUIRE_SAMPLE_WHEEL_POSITION) {
         if (fillDeviceArgumentList) {
             setFunction("acquire Sample for xx milliSec", 3, 0);
             setArgumentUnsignedHex4(0, "time in 1/1000 sec");
@@ -40,8 +39,7 @@ int deviceCodersGetInterface(unsigned char commandHeader, DeviceInterfaceMode mo
             setArgumentUnsignedHex4(2, "iteration count (max 1000)");
         }
         return commandLengthValueForMode(mode, 9, 0);
-    } 
-    else if (commandHeader == COMMAND_DEBUG_PRINT_SAMPLE_WHEEL_POSITION) {
+    } else if (commandHeader == COMMAND_DEBUG_PRINT_SAMPLE_WHEEL_POSITION) {
         // Same INPUT / OUTPUT
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("print the sample previouly recorded");

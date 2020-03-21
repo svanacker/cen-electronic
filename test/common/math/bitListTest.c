@@ -24,7 +24,7 @@ void bitListTestSuite(void) {
 }
 
 void testBitList(void) {
-    initBitList(&bitList, (unsigned int(*)[]) &bitListValues, BIT_LIST_TEST_ARRAY_LENGTH);
+    initBitList(&bitList, (unsigned int(*)[]) & bitListValues, BIT_LIST_TEST_ARRAY_LENGTH);
     OutputStream* outputStream = getAlwaysOutputStreamLogger();
 
     // Check if bit are false by default

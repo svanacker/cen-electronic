@@ -61,20 +61,19 @@ static OutputStream motorNotifyOutputStream;
 static StreamLink motorNotifySerialStreamLink;
 
 // FORWARD DECLARATION
+
 void mainBoardDeviceHandleTestDeviceNotification(const Device* device, const unsigned char commandHeader, InputStream* notificationInputStream) {
     if (device->deviceInterface->deviceHeader == TEST_DEVICE_HEADER) {
         if (commandHeader == NOTIFY_TEST) {
             unsigned int value = readHex2(notificationInputStream);
             appendStringAndDecLN(getDebugOutputStreamLogger(), "Notify Test ! Value=", value);
-        }
-        else {
+        } else {
             writeError(NOTIFICATION_BAD_DEVICE_COMMAND_HANDLER_NOT_HANDLE);
             appendString(getDebugOutputStreamLogger(), "header:");
             append(getDebugOutputStreamLogger(), commandHeader);
             println(getDebugOutputStreamLogger());
         }
-    }
-    else {
+    } else {
         writeError(NOTIFICATION_BAD_DEVICE);
     }
 }
@@ -91,18 +90,18 @@ void mainBoardCommonMotorAddDevices(unsigned char serialIndex) {
 }
 
 void mainBoardCommonMotorAddDispatcher(void) {
- 
+
     // Uart Stream for motorBoard
     addUartDriverDataDispatcher(
-        &motorSerialStreamLink,
-        "MOTOR_BOARD_UART_DISPATCHER",
-        MAIN_BOARD_SERIAL_PORT_MOTOR);
+            &motorSerialStreamLink,
+            "MOTOR_BOARD_UART_DISPATCHER",
+            MAIN_BOARD_SERIAL_PORT_MOTOR);
 
     // Uart Stream for motorBoard Notification
     addUartDriverDataDispatcher(
-        &motorNotifySerialStreamLink,
-        "MOTOR_BOARD_NOTIFY_UART_DISPATCHER",
-        MAIN_BOARD_SERIAL_PORT_MOTOR_NOTIFY);
+            &motorNotifySerialStreamLink,
+            "MOTOR_BOARD_NOTIFY_UART_DISPATCHER",
+            MAIN_BOARD_SERIAL_PORT_MOTOR_NOTIFY);
 }
 
 // ERROR MANAGEMENT
@@ -116,30 +115,30 @@ void mainBoardManageErrors(void) {
 
 void clearMotorAndMotorNotifyBuffer(void) {
     appendStringCRLF(getDebugOutputStreamLogger(), "clearMotorAndMotorNotifyBuffer !");
-            
+
     clearBuffer(&motorInputBuffer);
     // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
     append(&motorOutputStream, HEADER_CLEAR_INPUT_STREAM);
     motorOutputStream.flush(&motorOutputStream);
-    
+
     // UART Notification
     clearBuffer(&motorNotifyInputBuffer);
     // Send a clear Buffer to the remote board to avoid to keep bad data in the link when rebooting
     append(&motorNotifyOutputStream, HEADER_CLEAR_INPUT_STREAM);
     motorNotifyOutputStream.flush(&motorNotifyOutputStream);
-    
+
     timerDelayMilliSeconds(100);
 }
 
 void mainBoardCommonMotorHandleStreamInstruction(void) {
     // Handle Notification
     while (handleNotificationFromDispatcherList(TRANSMIT_UART, MAIN_BOARD_SERIAL_PORT_MOTOR_NOTIFY)) {
-        
+
     }
-    
+
     // Handle Notification
     while (handleNotificationFromDispatcherList(TRANSMIT_UART, MAIN_BOARD_SERIAL_PORT_MOTOR)) {
-        
+
     }
 
     // Listen instruction from motorNotifyStream->Devices
@@ -150,30 +149,30 @@ void mainBoardCommonMotorHandleStreamInstruction(void) {
             NULL,
             &filterRemoveCRLF_255,
             NULL);
-    
+
     mainBoardManageErrors();
 }
 
 void mainBoardCommonMotorOpenSerialLink(void) {
-        // Open the serial Link for the Motor Board
+    // Open the serial Link for the Motor Board
     openSerialLink(&motorSerialStreamLink,
-                   "SERIAL_MOTOR", 
-                   &motorInputBuffer, &motorInputBufferArray, MAIN_BOARD_MOTOR_INPUT_BUFFER_LENGTH,
-                   &motorOutputBuffer, &motorOutputBufferArray, MAIN_BOARD_MOTOR_OUTPUT_BUFFER_LENGTH,
-                   &motorOutputStream,
-                   MAIN_BOARD_SERIAL_PORT_MOTOR,
-                   DEFAULT_SERIAL_SPEED);
+            "SERIAL_MOTOR",
+            &motorInputBuffer, &motorInputBufferArray, MAIN_BOARD_MOTOR_INPUT_BUFFER_LENGTH,
+            &motorOutputBuffer, &motorOutputBufferArray, MAIN_BOARD_MOTOR_OUTPUT_BUFFER_LENGTH,
+            &motorOutputStream,
+            MAIN_BOARD_SERIAL_PORT_MOTOR,
+            DEFAULT_SERIAL_SPEED);
 }
 
 void mainBoardCommonMotorNotifyOpenSerialLink(void) {
-        // Open the serial Link for the PC : No Log, only instruction
+    // Open the serial Link for the PC : No Log, only instruction
     openSerialLink(&motorNotifySerialStreamLink,
-                   "MOTOR_NOTIFY", 
-                    &motorNotifyInputBuffer, &motorNotifyInputBufferArray, MAIN_BOARD_MOTOR_NOTIFY_INPUT_BUFFER_LENGTH,
-                    &motorNotifyOutputBuffer, &motorNotifyOutputBufferArray, MAIN_BOARD_MOTOR_NOTIFY_OUTPUT_BUFFER_LENGTH,
-                    &motorNotifyOutputStream,
-                    MAIN_BOARD_SERIAL_PORT_MOTOR_NOTIFY,
-                    DEFAULT_SERIAL_SPEED);
+            "MOTOR_NOTIFY",
+            &motorNotifyInputBuffer, &motorNotifyInputBufferArray, MAIN_BOARD_MOTOR_NOTIFY_INPUT_BUFFER_LENGTH,
+            &motorNotifyOutputBuffer, &motorNotifyOutputBufferArray, MAIN_BOARD_MOTOR_NOTIFY_OUTPUT_BUFFER_LENGTH,
+            &motorNotifyOutputStream,
+            MAIN_BOARD_SERIAL_PORT_MOTOR_NOTIFY,
+            DEFAULT_SERIAL_SPEED);
 }
 
 /**

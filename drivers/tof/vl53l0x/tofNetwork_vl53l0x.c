@@ -37,7 +37,6 @@ I2cBusConnection* getTofSensorVL53L0XI2cBusConnection(TofSensor* tofSensor) {
     return tofSensorVL53L0X->i2cBusConnection;
 }
 
-
 bool tofSetAddress(TofSensorVL53L0X* tofSensorVL53L0X, I2cBusConnection* i2cBusConnection, unsigned int newAddress) {
     tofSensorVL53L0X->status = VL53L0X_ERROR_NONE;
     VL53L0X_Dev_t* tofDevice = &(tofSensorVL53L0X->device);
@@ -75,9 +74,9 @@ bool tofSensorChangeAddressIfNeeded(TofSensor* tofSensor) {
  * @param debug
  * @return 
  */
-I2cBusConnection* tofSensorSelectRightI2cBusConnection(TofSensor* tofSensor, 
-                                                       unsigned char tofI2cSlaveAddress,
-                                                       bool debug) {
+I2cBusConnection* tofSensorSelectRightI2cBusConnection(TofSensor* tofSensor,
+        unsigned char tofI2cSlaveAddress,
+        bool debug) {
     if (tofSensor->multiplexer != NULL) {
         Multiplexer* multiplexer = tofSensor->multiplexer;
         unsigned char channel = tofSensor->multiplexerChannel;
@@ -87,7 +86,7 @@ I2cBusConnection* tofSensorSelectRightI2cBusConnection(TofSensor* tofSensor,
         multiplexerEnableOnly(multiplexer, channel);
         timerDelayMilliSeconds(10);
         I2cBusConnection* multiplexerBusConnection = getMultiplexerI2cBusConnection(multiplexer);
-        
+
         return getOrCreateI2cBusConnection(multiplexerBusConnection->i2cBus, tofI2cSlaveAddress, true);
     }
     // If we do not use the multiplexer, we get the bus

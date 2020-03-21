@@ -24,10 +24,9 @@ static Buffer debugOutputBuffer;
 static OutputStream debugOutputStream;
 static StreamLink debugSerialStreamLink;
 
-
 /**
-* Test the putc function.
-*/
+ * Test the putc function.
+ */
 void putcTest() {
     unsigned char SERIAL_PORT_DEBUG = SERIAL_PORT_2;
     openSerialAtDefaultSpeed(SERIAL_PORT_DEBUG);
@@ -43,16 +42,16 @@ void putcTest() {
 }
 
 /**
-* Test UART Link
-*/
+ * Test UART Link
+ */
 void serialLinkTest() {
     unsigned char SERIAL_PORT_DEBUG = SERIAL_PORT_2;
     // Open the serial Link
-    openSerialLink(    &debugSerialStreamLink,
-                    &debugInputBuffer,
-                    &debugOutputBuffer,
-                    &debugOutputStream,
-                    SERIAL_PORT_DEBUG);
+    openSerialLink(&debugSerialStreamLink,
+            &debugInputBuffer,
+            &debugOutputBuffer,
+            &debugOutputStream,
+            SERIAL_PORT_DEBUG);
 
     initLog(DEBUG);
 

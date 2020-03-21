@@ -1,20 +1,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="ja">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta http-equiv="Content-Style-Type" content="text/css">
-<link rel="up" title="FatFs" href="../00index_j.html">
-<link rel="alternate" hreflang="en" title="English" href="../en/sdir.html">
-<link rel="stylesheet" href="../css_j.css" type="text/css" media="screen" title="ELM Default">
-<title>FatFs - DIR</title>
-</head>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="Content-Style-Type" content="text/css">
+        <link rel="up" title="FatFs" href="../00index_j.html">
+        <link rel="alternate" hreflang="en" title="English" href="../en/sdir.html">
+        <link rel="stylesheet" href="../css_j.css" type="text/css" media="screen" title="ELM Default">
+        <title>FatFs - DIR</title>
+    </head>
 
-<body>
+    <body>
 
-<div class="para">
-<h2>DIR</h2>
-<p><tt>DIR</tt>構造体は、<tt>f_opendir/f_readdir/f_findfirst/f_findnext</tt>関数のワーク エリアとして使用されます。アプリケーションは、この構造体のメンバを書き換えてはなりません。</p>
-<pre>
+        <div class="para">
+            <h2>DIR</h2>
+            <p><tt>DIR</tt>構造体は、<tt>f_opendir/f_readdir/f_findfirst/f_findnext</tt>関数のワーク エリアとして使用されます。アプリケーションは、この構造体のメンバを書き換えてはなりません。</p>
+            <pre>
 <span class="k">typedef</span> <span class="k">struct</span> {
     FATFS*  fs;        <span class="c">/* 親ファイル システム オブジェクトへのポインタ */</span>
     WORD    id;        <span class="c">/* 親ファイル システム オブジェクトのマウントID */</span>
@@ -35,9 +35,9 @@
     const TCHAR*  pat; <span class="c">/* マッチング パターンへのポインタ */</span>
 <span class="k">#endif</span>
 } DIR;
-</pre>
-</div>
+            </pre>
+        </div>
 
-<p class="foot"><a href="../00index_j.html">戻る</a></p>
-</body>
+        <p class="foot"><a href="../00index_j.html">戻る</a></p>
+    </body>
 </html>

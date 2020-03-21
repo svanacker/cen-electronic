@@ -4,8 +4,8 @@
 #include "outputStream.h"
 
 /**
-* Structure defining a composite of streams.
-*/
+ * Structure defining a composite of streams.
+ */
 typedef struct CompositeOutputStream {
     // The outputStream exposed as an interface
     OutputStream outputStream;
@@ -18,24 +18,24 @@ typedef struct CompositeOutputStream {
 } CompositeOutputStream;
 
 /**
-* Add a stream to the composite.
-* @param compositeOutputStream the composite in which we add a sub outputStream
-* @param childOutputStream the outputStream to add
-*/
+ * Add a stream to the composite.
+ * @param compositeOutputStream the composite in which we add a sub outputStream
+ * @param childOutputStream the outputStream to add
+ */
 void addOutputStream(CompositeOutputStream* compositeOutputStream, OutputStream* childOutputStream);
 
 /**
-* Returns the children.
-* @param compositeOutputStream the stream containing child.
-* @return the number of outputStream children
-*/
+ * Returns the children.
+ * @param compositeOutputStream the stream containing child.
+ * @return the number of outputStream children
+ */
 int getCompositeOutputStreamChildrenCount(CompositeOutputStream* compositeOutputStream);
 
 /**
-* Init a compositeOutputStream, and branch the outputStream exposed to use the streams children.
-* @param compositeOutputStream the composite stream to initialize
+ * Init a compositeOutputStream, and branch the outputStream exposed to use the streams children.
+ * @param compositeOutputStream the composite stream to initialize
 
-*/
+ */
 void initCompositeOutputStream(CompositeOutputStream* compositeOutputStream, OutputStream*(*outputStreamListArray)[], unsigned int outputStreamListSize);
 
 #endif

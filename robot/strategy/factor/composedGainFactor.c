@@ -6,12 +6,12 @@
 #include "../../../robot/strategy/gameTargetAction.h"
 
 float getComposedGainFactor(ComposedGainFactor* composedGainFactor,
-                              GameTarget* target,
-                              GameTargetAction* targetAction,
-                              float distanceToTargetAction,
-                              float currentMatchingTime,
-                              float opponentRobotX,
-                              float opponentRobotY) {
+        GameTarget* target,
+        GameTargetAction* targetAction,
+        float distanceToTargetAction,
+        float currentMatchingTime,
+        float opponentRobotX,
+        float opponentRobotY) {
     float result;
     // Basic Gain
     float targetGainFactorValue = target->potentialGain;
@@ -26,12 +26,12 @@ float getComposedGainFactor(ComposedGainFactor* composedGainFactor,
     float timeToAchieve = targetAction->timeToAchieve;
     float timeFactorValue = timeToAchieve;
     if (composedGainFactor->timeGainFactor != NULL) {
-        timeFactorValue = composedGainFactor->timeGainFactor (currentMatchingTime, 90000, timeToAchieve);
+        timeFactorValue = composedGainFactor->timeGainFactor(currentMatchingTime, 90000, timeToAchieve);
     }
 
     float obstacleGainFactorValue = 1.0;
     if (composedGainFactor->opponentRobotGainFactor != NULL) {
-        obstacleGainFactorValue = composedGainFactor->opponentRobotGainFactor (opponentRobotX, opponentRobotY);
+        obstacleGainFactorValue = composedGainFactor->opponentRobotGainFactor(opponentRobotX, opponentRobotY);
     }
 
     result = targetGainFactorValue * distanceGainFactorValue * obstacleGainFactorValue * timeFactorValue;

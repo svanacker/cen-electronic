@@ -37,15 +37,15 @@ bool initMD22(I2cBusConnection* i2cBusConnection);
 unsigned char getMD22Version(I2cBusConnection* i2cBusConnection);
 
 /**
-* Stops the motors
-*/
+ * Stops the motors
+ */
 void stopMD22Motors(I2cBusConnection* i2cBusConnection);
 
 /**
-* Write speeds to left and right motors
-* @param leftSpeed the left motor speed (value between MD22_MODE_0_FULL_REVERSE and MD22_MODE_0_FULL_FORWARD)
-* @param rightSpeed the right motor speed (value between MD22_MODE_0_FULL_REVERSE and MD22_MODE_0_FULL_FORWARD)
-*/
+ * Write speeds to left and right motors
+ * @param leftSpeed the left motor speed (value between MD22_MODE_0_FULL_REVERSE and MD22_MODE_0_FULL_FORWARD)
+ * @param rightSpeed the right motor speed (value between MD22_MODE_0_FULL_REVERSE and MD22_MODE_0_FULL_FORWARD)
+ */
 void setMD22MotorSpeeds(I2cBusConnection* i2cBusConnection, unsigned char leftSpeed, unsigned char rightSpeed);
 
 #endif

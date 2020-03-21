@@ -7,8 +7,8 @@
 #include "location.h"
 
 /**
-* Determine the usage of the PathData.
-*/
+ * Determine the usage of the PathData.
+ */
 enum PathDataUsageType {
     PATH_DATA_USAGE_TYPE_UNKNOWN = 0,
     /** The path is permanent */
@@ -29,9 +29,9 @@ typedef struct PathData {
     Location* location2;
     /** Cost of the path. */
     float cost;
-    /** Distance of the control point P0-P1 in mm (can be negative). */     
+    /** Distance of the control point P0-P1 in mm (can be negative). */
     float controlPointDistance1;
-    /** Distance of the control point P1->P3 in mm. */     
+    /** Distance of the control point P1->P3 in mm. */
     float controlPointDistance2;
     /** angle1 (when at P0) in degree. */
     float angleRadian1;
@@ -57,31 +57,31 @@ float getPathEndAngleRadian(PathData* pathData);
  * Initializes the PathData structure with all informations.
  */
 void initPathData(PathData* pathData,
-                  enum PathDataUsageType usageType,
-                        Location* location1,
-                         Location* location2, 
-                         float cost,
-                         float controlPointDistance1,
-                         float controlPointDistance2,
-                         float angleRadian1,
-                         float angleRadian2,
-                         float accelerationFactor,
-                         float speedFactor);
+        enum PathDataUsageType usageType,
+        Location* location1,
+        Location* location2,
+        float cost,
+        float controlPointDistance1,
+        float controlPointDistance2,
+        float angleRadian1,
+        float angleRadian2,
+        float accelerationFactor,
+        float speedFactor);
 
 /** 
  * Fills the data of an asymmetric path, a path on which 
  * the robot must move backward when reversed.
  */
-void initAsymmetricPathData(PathData* pathData, 
-                        Location* location1,
-                         Location* location2, 
-                         float cost,
-                         float controlPointDistance1,
-                         float controlPointDistance2,
-                         float angle1,
-                         float angle2,
-                         unsigned char accelerationFactor,
-                         unsigned char speedFactor);
+void initAsymmetricPathData(PathData* pathData,
+        Location* location1,
+        Location* location2,
+        float cost,
+        float controlPointDistance1,
+        float controlPointDistance2,
+        float angle1,
+        float angle2,
+        unsigned char accelerationFactor,
+        unsigned char speedFactor);
 
 /**
  * Return if the path contains the location passed in parameter

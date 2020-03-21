@@ -16,8 +16,7 @@ int deviceADCGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
             setResultUnsignedHex4(0, "Value(mV)");
         }
         return commandLengthValueForMode(mode, 2, 4);
-    }
-    else if (commandHeader == COMMANG_GET_ADC_VALUE_DEBUG_PERIOD) {
+    } else if (commandHeader == COMMANG_GET_ADC_VALUE_DEBUG_PERIOD) {
         if (fillDeviceArgumentList) {
             setFunction("getADCPeriod", 5, 0);
             setArgumentUnsignedHex2(0, "ADC_idx");
@@ -27,8 +26,7 @@ int deviceADCGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
             setArgumentUnsignedHex2(4, "Deci seconds between read");
         }
         return commandLengthValueForMode(mode, 8, 0);
-    }
-    else if (commandHeader == COMMAND_GET_ADC_ALL_VALUES) {
+    } else if (commandHeader == COMMAND_GET_ADC_ALL_VALUES) {
         if (fillDeviceArgumentList) {
             setFunction("getADC_AllValues", 0, 11);
             setResultUnsignedHex4(0, "Value 0(mV)");
@@ -44,8 +42,7 @@ int deviceADCGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
             setResultUnsignedHex4(10, "Value 5(mV)");
         }
         return commandLengthValueForMode(mode, 0, 29);
-    }
-    else if (commandHeader == COMMAND_GET_ADC_LIST) {   
+    } else if (commandHeader == COMMAND_GET_ADC_LIST) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("getADCList");
         }

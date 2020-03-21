@@ -29,12 +29,12 @@ typedef void EepromWriteCharFunction(Eeprom* eeprom_, unsigned long index, unsig
 typedef unsigned char EepromReadCharFunction(Eeprom* eeprom_, unsigned long index);
 
 /**
-* Write the buffer into the Eeprom.
-* @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
-* @param index the index to write the buffer
-* @param length the number of data to write
-* @param buffer the pointer on buffer
-*/
+ * Write the buffer into the Eeprom.
+ * @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
+ * @param index the index to write the buffer
+ * @param length the number of data to write
+ * @param buffer the pointer on buffer
+ */
 typedef void EepromWriteBlockFunction(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer);
 
 /**
@@ -48,15 +48,15 @@ typedef void EepromWriteBlockFunction(Eeprom* eeprom_, unsigned long index, unsi
 typedef void EepromReadBlockFunction(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer);
 
 /**
-* Load the values from an existing Dump into the the EEPROM (useful for Pc simulation).
-* @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
-*/
+ * Load the values from an existing Dump into the the EEPROM (useful for Pc simulation).
+ * @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
+ */
 typedef void EepromLoadFunction(Eeprom* eeprom_);
 
 /**
-* Dump values from to the EEPROM device to a file (usefull for Pc simulation).
-* @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
-*/
+ * Dump values from to the EEPROM device to a file (usefull for Pc simulation).
+ * @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
+ */
 typedef void EepromDumpFunction(Eeprom* eeprom_);
 
 /**
@@ -102,30 +102,30 @@ long getMaxIndex(Eeprom* eeprom_);
  * @param eepromWriteBlock the pointer on the real hardware function which reads a block of data.
  */
 void initEeprom(Eeprom* eeprom_,
-                enum EepromType eepromType,
-                long maxIndex,
-                EepromWriteCharFunction* eepromWriteChar,
-                EepromReadCharFunction* eepromReadChar,
-                EepromWriteBlockFunction* eepromWriteBlock,
-                EepromReadBlockFunction* eepromReadBlock,
-                EepromLoadFunction* eepromLoadFunction,
-                EepromDumpFunction* eepromDumpFunction,
-                void* object);
+        enum EepromType eepromType,
+        long maxIndex,
+        EepromWriteCharFunction* eepromWriteChar,
+        EepromReadCharFunction* eepromReadChar,
+        EepromWriteBlockFunction* eepromWriteBlock,
+        EepromReadBlockFunction* eepromReadBlock,
+        EepromLoadFunction* eepromLoadFunction,
+        EepromDumpFunction* eepromDumpFunction,
+        void* object);
 
 /**
-* Read an int from the eeprom at a specific index (needs 2 bytes).
-* @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
-* @param index where we read the first char
-* @return the value to read
-*/
+ * Read an int from the eeprom at a specific index (needs 2 bytes).
+ * @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
+ * @param index where we read the first char
+ * @return the value to read
+ */
 unsigned int eepromReadInt(Eeprom* eeprom_, unsigned int index);
 
 /**
-* Read a long from the eeprom at a specific index (needs 4 bytes).
-* @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
-* @param index where we read the first char
-* @return the value to read
-*/
+ * Read a long from the eeprom at a specific index (needs 4 bytes).
+ * @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
+ * @param index where we read the first char
+ * @return the value to read
+ */
 unsigned long eepromReadLong(Eeprom* eeprom_, unsigned long index);
 
 /**
@@ -149,25 +149,25 @@ float eepromReadUnsignedFloat(Eeprom* eeprom_, unsigned long index, unsigned int
 void eepromWriteInt(Eeprom* eeprom_, unsigned long index, unsigned int value);
 
 /**
-* Write a long into the eeprom at a specific index (needs 4 bytes).
-* @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
-* @param index where we write the first char
-* @param value the value to write
-*/
+ * Write a long into the eeprom at a specific index (needs 4 bytes).
+ * @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
+ * @param index where we write the first char
+ * @param value the value to write
+ */
 void eepromWriteLong(Eeprom* eeprom_, unsigned long index, unsigned long value);
 
 /**
-* Write a float into the eeprom at a specific index (needs 4 bytes).
-* @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
-* @param index where we write the first char
-* @param value the value to write
-* @param digitPrecision float are difficult to handle because digit. As we 
-* store float using basic eeprom function, the consumer need to know what 
-* was the digit precision to store the comma
-* @throws EEPROM_NEGATIVE_FLOAT_NOT_ALLOWED if the value is negative
-*/
+ * Write a float into the eeprom at a specific index (needs 4 bytes).
+ * @param eeprom_ a pointer on the Eeprom object (Simulates POO programming)
+ * @param index where we write the first char
+ * @param value the value to write
+ * @param digitPrecision float are difficult to handle because digit. As we 
+ * store float using basic eeprom function, the consumer need to know what 
+ * was the digit precision to store the comma
+ * @throws EEPROM_NEGATIVE_FLOAT_NOT_ALLOWED if the value is negative
+ */
 void eepromWriteFloat(Eeprom* eeprom_, unsigned long index, float value, unsigned int digitPrecision);
-                
+
 /**
  * Returns true if the eeprom is initialized (if the fields of callbacks are NOT NULL), false else.
  * @param eeprom_ a pointer on the Eeprom object (Simulates POO programming) 

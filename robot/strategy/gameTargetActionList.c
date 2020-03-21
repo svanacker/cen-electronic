@@ -49,52 +49,49 @@ void addTargetMoveAction(GameTargetActionList* targetActionList,
         writeError(TOO_MUCH_TARGET_ACTION);
     }
 }
-*/
+ */
 
 void addTargetPrepareAction(GameTargetActionList* targetActionList,
-                     GameTargetAction* targetAction,
-                     Location* location,
-                     float timeToAchieve,
-                     GameTargetActionItemList* actionItemList) {
+        GameTargetAction* targetAction,
+        Location* location,
+        float timeToAchieve,
+        GameTargetActionItemList* actionItemList) {
     unsigned char size = targetActionList->size;
     if (size < MAX_TARGET_ACTION) {
         initGameTargetAction(targetAction, location, location, ACTION_TYPE_PREPARE, timeToAchieve, ACTION_PRIORITY_PREPARE_STANDARD, actionItemList);
         targetActionList->actions[size] = targetAction;
         targetActionList->size++;
-    }
-    else {
+    } else {
         writeError(TOO_MUCH_TARGET_ACTION);
     }
 }
 
 void addTargetTakeAction(GameTargetActionList* targetActionList,
-    GameTargetAction* targetAction,
-    Location* location,
-    float timeToAchieve,
-    GameTargetActionItemList* actionItemList) {
+        GameTargetAction* targetAction,
+        Location* location,
+        float timeToAchieve,
+        GameTargetActionItemList* actionItemList) {
     unsigned char size = targetActionList->size;
     if (size < MAX_TARGET_ACTION) {
         initGameTargetAction(targetAction, location, location, ACTION_TYPE_TAKE, timeToAchieve, ACTION_PRIORITY_TAKE_STANDARD, actionItemList);
         targetActionList->actions[size] = targetAction;
         targetActionList->size++;
-    }
-    else {
+    } else {
         writeError(TOO_MUCH_TARGET_ACTION);
     }
 }
 
 void addTargetDropAction(GameTargetActionList* targetActionList,
-    GameTargetAction* targetAction,
-    Location* location,
-    float timeToAchieve,
-    GameTargetActionItemList* actionItemList) {
+        GameTargetAction* targetAction,
+        Location* location,
+        float timeToAchieve,
+        GameTargetActionItemList* actionItemList) {
     unsigned char size = targetActionList->size;
     if (size < MAX_TARGET_ACTION) {
         initGameTargetAction(targetAction, location, location, ACTION_TYPE_DROP, timeToAchieve, ACTION_PRIORITY_DROP_STANDARD, actionItemList);
         targetActionList->actions[size] = targetAction;
         targetActionList->size++;
-    }
-    else {
+    } else {
         writeError(TOO_MUCH_TARGET_ACTION);
     }
 }
@@ -120,7 +117,6 @@ GameTargetAction* getNextGameTargetActionTodoByLocation(GameTargetActionList* ta
     }
     return NULL;
 }
-
 
 GameTargetAction* getNextGameTargetActionTodoByPriority(GameTargetActionList* targetActionList) {
     int i;

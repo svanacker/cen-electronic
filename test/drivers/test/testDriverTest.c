@@ -59,22 +59,22 @@ void testDriverTestTestSuite(void) {
 }
 
 void test_testDriverGetValue(void) {
-    initLogs(LOG_LEVEL_DEBUG, (LogHandler(*)[]) &logHandlerListArray, TEST_DRIVER_TEST_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    initLogs(LOG_LEVEL_DEBUG, (LogHandler(*)[]) & logHandlerListArray, TEST_DRIVER_TEST_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
     addConsoleLogHandler(LOG_LEVEL_DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
 
     // Dispatchers
-    initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, TEST_DRIVER_TEST_DATA_DISPATCHER_LIST_LENGTH);
+    initDriverDataDispatcherList((DriverDataDispatcher(*)[]) & driverDataDispatcherListArray, TEST_DRIVER_TEST_DATA_DISPATCHER_LIST_LENGTH);
     addLocalDriverDataDispatcher();
 
     // Init the drivers
-    initDrivers(&driverRequestBuffer, (char(*)[]) &driverRequestBufferArray, TEST_DRIVER_TEST_REQUEST_DRIVER_BUFFER_LENGTH,
-        &driverResponseBuffer, (char(*)[]) &driverResponseBufferArray, TEST_DRIVER_TEST_RESPONSE_DRIVER_BUFFER_LENGTH);
+    initDrivers(&driverRequestBuffer, (char(*)[]) & driverRequestBufferArray, TEST_DRIVER_TEST_REQUEST_DRIVER_BUFFER_LENGTH,
+            &driverResponseBuffer, (char(*)[]) & driverResponseBufferArray, TEST_DRIVER_TEST_RESPONSE_DRIVER_BUFFER_LENGTH);
 
     // Get test driver for debug purpose
     addDriver(testDriverGetDescriptor(), TRANSMIT_LOCAL);
 
     // Devices
-    initDeviceList((Device(*)[]) &deviceListArray, TEST_DRIVER_TEST_DEVICE_LIST_LENGTH);
+    initDeviceList((Device(*)[]) & deviceListArray, TEST_DRIVER_TEST_DEVICE_LIST_LENGTH);
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
 
     // Test Driver Test

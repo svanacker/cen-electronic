@@ -7,13 +7,13 @@
 #define TOMATOE_RELAY_INDEX 0x01
 
 /**
-* Enable or disable the tomatoe engine.
-*/
+ * Enable or disable the tomatoe engine.
+ */
 void setTomatoeEnabled(int value);
 
 /**
-* Get the descriptor on tomatoe Engine.
-*/
+ * Get the descriptor on tomatoe Engine.
+ */
 DeviceDescriptor getTomatoe2010DeviceDescriptor();
 
 #endif

@@ -34,7 +34,7 @@ typedef struct InfraredDetectorGroup {
     bool notifyIfDetected;
     // COMPUTATION VALUES
     /** Returns the last Result. */
-    bool lastResult;    
+    bool lastResult;
     /** Current result : we try to maintain the value for a while. */
     bool result;
     /** Indicates if we have to notify someone. */

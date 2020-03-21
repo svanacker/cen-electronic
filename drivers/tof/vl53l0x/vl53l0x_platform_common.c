@@ -16,63 +16,62 @@
 
 // WRITE
 
-int32_t VL53L0X_write_byte(uint8_t deviceAddress,  uint8_t index, uint8_t   data) {
+int32_t VL53L0X_write_byte(uint8_t deviceAddress, uint8_t index, uint8_t data) {
     return VL53L0X_write_multi(deviceAddress, index, &data, 1);
 }
 
-
-int32_t VL53L0X_write_word(uint8_t deviceAddress,  uint8_t index, uint16_t  data) {
+int32_t VL53L0X_write_word(uint8_t deviceAddress, uint8_t index, uint16_t data) {
     uint8_t buff[2];
-  buff[1] = data & 0xFF;
-  buff[0] = data >> 8;
-  return VL53L0X_write_multi(deviceAddress, index, buff, 2);
+    buff[1] = data & 0xFF;
+    buff[0] = data >> 8;
+    return VL53L0X_write_multi(deviceAddress, index, buff, 2);
 }
 
-int32_t VL53L0X_write_dword(uint8_t deviceAddress, uint8_t index, uint32_t  data) {
+int32_t VL53L0X_write_dword(uint8_t deviceAddress, uint8_t index, uint32_t data) {
     uint8_t buff[4];
 
-  buff[3] = data & 0xFF;
-  buff[2] = data >> 8;
-  buff[1] = data >> 16;
-  buff[0] = data >> 24;
+    buff[3] = data & 0xFF;
+    buff[2] = data >> 8;
+    buff[1] = data >> 16;
+    buff[0] = data >> 24;
 
-  return VL53L0X_write_multi(deviceAddress, index, buff, 4);
+    return VL53L0X_write_multi(deviceAddress, index, buff, 4);
 }
 
 // READ
 
-int32_t VL53L0X_read_byte(uint8_t deviceAddress,  uint8_t index, uint8_t  *data) {
+int32_t VL53L0X_read_byte(uint8_t deviceAddress, uint8_t index, uint8_t *data) {
     return VL53L0X_read_multi(deviceAddress, index, data, 1);
 }
 
-int32_t VL53L0X_read_word(uint8_t deviceAddress,  uint8_t index, uint16_t *data) {
-  uint8_t buff[2];
-  int r = VL53L0X_read_multi(deviceAddress, index, buff, 2);
+int32_t VL53L0X_read_word(uint8_t deviceAddress, uint8_t index, uint16_t *data) {
+    uint8_t buff[2];
+    int r = VL53L0X_read_multi(deviceAddress, index, buff, 2);
 
-  uint16_t tmp;
-  tmp = buff[0];
-  tmp <<= 8;
-  tmp |= buff[1];
-  *data = tmp;
+    uint16_t tmp;
+    tmp = buff[0];
+    tmp <<= 8;
+    tmp |= buff[1];
+    *data = tmp;
 
-  return r;
+    return r;
 }
 
 int VL53L0X_read_dword(uint8_t deviceAddress, uint8_t index, uint32_t *data) {
-  uint8_t buff[4];
-  int r = VL53L0X_read_multi(deviceAddress, index, buff, 4);
+    uint8_t buff[4];
+    int r = VL53L0X_read_multi(deviceAddress, index, buff, 4);
 
-  uint32_t tmp;
-  tmp = buff[0];
-  tmp <<= 8;
-  tmp |= buff[1];
-  tmp <<= 8;
-  tmp |= buff[2];
-  tmp <<= 8;
-  tmp |= buff[3];
+    uint32_t tmp;
+    tmp = buff[0];
+    tmp <<= 8;
+    tmp |= buff[1];
+    tmp <<= 8;
+    tmp |= buff[2];
+    tmp <<= 8;
+    tmp |= buff[3];
 
-  *data = tmp;
+    *data = tmp;
 
-  return r;
+    return r;
 }
 

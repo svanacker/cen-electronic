@@ -6,10 +6,10 @@
 #include "../../device/deviceDescriptor.h"
 
 /**
-* Returns a descriptor on the CLOCK device.
-* @param clock the pointer on the clock object.
-* @return a descriptor to handle with hardware the clock object.
-*/
+ * Returns a descriptor on the CLOCK device.
+ * @param clock the pointer on the clock object.
+ * @return a descriptor to handle with hardware the clock object.
+ */
 DeviceDescriptor* getClockDeviceDescriptor(Clock* clock);
 
 #endif

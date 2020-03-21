@@ -19,7 +19,7 @@ void devicePinShutDown() {
 
 bool devicePinIsOk() {
     return true;
-}    
+}
 
 void devicePinHandleRawData(char header, InputStream* inputStream, OutputStream* outputStream) {
     if (header == COMMAND_SET_PIN_VALUE) {

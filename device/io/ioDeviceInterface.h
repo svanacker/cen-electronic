@@ -11,8 +11,8 @@
 #define COMMAND_IO_DEBUG         'd'
 
 /**
-* Interface for IO Device.
-*/
+ * Interface for IO Device.
+ */
 DeviceInterface* getIODeviceInterface(void);
 
 #endif

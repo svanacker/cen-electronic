@@ -19,9 +19,9 @@
 
 // EEPROM values
 static float MOTION_PARAMETERS_DEFAULT_EEPROM_VALUES[MOTION_PARAMETERS_VALUES_COUNT] = {
-    DEFAULT_FORWARD_ACCELERATION,                    DEFAULT_FORWARD_SPEED,
-    DEFAULT_ROTATION_ACCELERATION,                   DEFAULT_ROTATION_SPEED,
-    DEFAULT_ROTATION_ONE_WHEEL_ACCELERATION,         DEFAULT_ROTATION_ONE_WHEEL_SPEED,
+    DEFAULT_FORWARD_ACCELERATION, DEFAULT_FORWARD_SPEED,
+    DEFAULT_ROTATION_ACCELERATION, DEFAULT_ROTATION_SPEED,
+    DEFAULT_ROTATION_ONE_WHEEL_ACCELERATION, DEFAULT_ROTATION_ONE_WHEEL_SPEED,
     DEFAULT_ROTATION_MAINTAIN_POSITION_ACCELERATION, DEFAULT_ROTATION_MAINTAIN_POSITION_SPEED
 };
 
@@ -60,8 +60,7 @@ float internalLoadMotionParameterItem(Eeprom* motionParameterEeprom, unsigned lo
     float result;
     if (loadDefaultValues) {
         result = MOTION_PARAMETERS_DEFAULT_EEPROM_VALUES[index];
-    }
-    else {
+    } else {
         unsigned long dataIndex = EEPROM_MOTION_PARAMETERS_START_INDEX + index * MOTION_PARAMETER_DATA_SIZE;
         result = eepromReadUnsignedFloat(motionParameterEeprom, dataIndex, digitPrecision);
     }
@@ -91,7 +90,7 @@ void internalSaveMotionParameter(Eeprom* motionParameterEeprom, enum MotionParam
 
 // Interface Implementation
 
-void loadMotionParameters(Eeprom* motionParameterEeprom, bool loadDefaultValues) {    
+void loadMotionParameters(Eeprom* motionParameterEeprom, bool loadDefaultValues) {
     if (!loadDefaultValues) {
         if (!internalMotionParametersCheckIfEepromIsNotNull(motionParameterEeprom)) {
             return;

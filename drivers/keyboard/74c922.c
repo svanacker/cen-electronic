@@ -1,8 +1,7 @@
 #include <p32xxxx.h>
 #include "74c922.h"
 
-
-void init74c922 (void){
+void init74c922(void) {
     //Initialisation des ports du PIC pour le control du 74c922
 
     TRISGbits.TRISG2 = 1; // KDF
@@ -15,15 +14,15 @@ void init74c922 (void){
     TRISDbits.TRISD8 = 1; // KDD
 }
 
-char readKey (void){
+char readKey(void) {
     char data = 0xFF;
 
     // TEST si une touche est active
-    if ( KEYBOARD_DATA_AVAILABLE == 1 ){
+    if (KEYBOARD_DATA_AVAILABLE == 1) {
         // Active la lecture de l'encodeur
         KEYBOARD_OUTPUT_ENABLE = 1;
 
-        data = PORTD>>5 ;
+        data = PORTD >> 5;
 
         // Desactive la lecture de l'encodeur
         KEYBOARD_OUTPUT_ENABLE = 0;
@@ -31,5 +30,5 @@ char readKey (void){
 
     }
 
-    return (data );
+    return (data);
 }

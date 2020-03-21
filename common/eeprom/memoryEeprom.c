@@ -13,7 +13,7 @@ void eepromMemoryWriteChar(Eeprom* eeprom_, unsigned long index, unsigned char v
         writeError(EEPROM_OUT_OF_BOUNDS);
         return;
     }
-    char* sPointer = (char*)eeprom_->object;
+    char* sPointer = (char*) eeprom_->object;
     sPointer += index;
     *sPointer = value;
 }
@@ -23,11 +23,11 @@ unsigned char eepromMemoryReadChar(Eeprom* eeprom_, unsigned long index) {
         writeError(EEPROM_OUT_OF_BOUNDS);
         return 0;
     }
-    char* sPointer = (char*)eeprom_->object;
+    char* sPointer = (char*) eeprom_->object;
     sPointer += index;
     char result = *sPointer;
     return result;
-    
+
 }
 
 void eepromMemoryReadBlock(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer) {
@@ -51,13 +51,13 @@ void eepromMemoryWriteBlock(Eeprom* eeprom_, unsigned long index, unsigned int l
 
 void initEepromMemory(Eeprom* memoryEeprom, char(*valuesArray)[], unsigned int maxIndex) {
     initEeprom(memoryEeprom,
-               EEPROM_TYPE_MEMORY,
-               maxIndex,
-               eepromMemoryWriteChar,
-               eepromMemoryReadChar,
-               eepromMemoryWriteBlock,
-               eepromMemoryReadBlock,
-               NULL,
-               NULL,
-               valuesArray);
+            EEPROM_TYPE_MEMORY,
+            maxIndex,
+            eepromMemoryWriteChar,
+            eepromMemoryReadChar,
+            eepromMemoryWriteBlock,
+            eepromMemoryReadBlock,
+            NULL,
+            NULL,
+            valuesArray);
 }

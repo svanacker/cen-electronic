@@ -16,13 +16,13 @@ typedef struct DualHBridgeMotor DualHBridgeMotor;
 typedef bool dualHBridgeMotorInitFunction(DualHBridgeMotor* dualHBridgeMotor);
 
 /**
-* Read the value of the DualHBridge.
-*/
+ * Read the value of the DualHBridge.
+ */
 typedef signed int dualHBridgeMotorReadValueFunction(DualHBridgeMotor* dualHBridgeMotor, unsigned int motorIndex);
 
 /**
-* Get the software revision of the dualHBrige Motor.
-*/
+ * Get the software revision of the dualHBrige Motor.
+ */
 typedef unsigned char dualHBridgeMotorGetSoftwareRevisionFunction(DualHBridgeMotor* dualHBridgeMotor);
 
 /**
@@ -61,8 +61,8 @@ enum DualHBridgePinStopEventType {
 };
 
 /**
-* Defines the contract for the Dual HBridge Motor.
-*/
+ * Defines the contract for the Dual HBridge Motor.
+ */
 struct DualHBridgeMotor {
     /** The function which must be used to init the dual hBridge */
     dualHBridgeMotorInitFunction* dualHBridgeMotorInit;
@@ -93,12 +93,12 @@ struct DualHBridgeMotor {
 /** 
  * Init the wrapper around DualHBridge. 
  */
-void initDualHBridge(DualHBridgeMotor* dualHBridgeMotors, 
-               dualHBridgeMotorInitFunction* dualHBridgeMotorInit,
-               dualHBridgeMotorReadValueFunction* dualHBridgeMotorReadValue,
-               dualHBridgeMotorWriteValueFunction* dualHBridgeMotorWriteValue,
-               dualHBridgeMotorGetSoftwareRevisionFunction* dualHBridgeMotorGetSoftwareRevision,
-               int* object);
+void initDualHBridge(DualHBridgeMotor* dualHBridgeMotors,
+        dualHBridgeMotorInitFunction* dualHBridgeMotorInit,
+        dualHBridgeMotorReadValueFunction* dualHBridgeMotorReadValue,
+        dualHBridgeMotorWriteValueFunction* dualHBridgeMotorWriteValue,
+        dualHBridgeMotorGetSoftwareRevisionFunction* dualHBridgeMotorGetSoftwareRevision,
+        int* object);
 
 /** 
  * Stop the motor for the specified Dual HBridge Motors.

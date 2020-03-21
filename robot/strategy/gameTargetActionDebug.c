@@ -12,20 +12,15 @@
 unsigned int appendActionTypeAsString(OutputStream* outputStream, enum ActionType actionType) {
     if (actionType == ACTION_TYPE_UNDEFINED) {
         return appendString(outputStream, "UNDEFINED");
-    }
-    else if (actionType == ACTION_TYPE_MOVE) {
+    } else if (actionType == ACTION_TYPE_MOVE) {
         return appendString(outputStream, "MOVE");
-    }
-    else if (actionType == ACTION_TYPE_PREPARE) {
+    } else if (actionType == ACTION_TYPE_PREPARE) {
         return appendString(outputStream, "PREP");
-    }
-    else if (actionType == ACTION_TYPE_TAKE) {
+    } else if (actionType == ACTION_TYPE_TAKE) {
         return appendString(outputStream, "TAKE");
-    }
-    else if (actionType == ACTION_TYPE_DROP) {
+    } else if (actionType == ACTION_TYPE_DROP) {
         return appendString(outputStream, "DROP");
-    }
-    else {
+    } else {
         return appendString(outputStream, "???");
     }
 }
@@ -43,20 +38,15 @@ unsigned int appendActionTypeTableData(OutputStream* outputStream, enum ActionTy
 unsigned int appendActionStatusAsString(OutputStream* outputStream, enum ActionStatus actionStatus) {
     if (actionStatus == ACTION_STATUS_UNDEFINED) {
         return appendString(outputStream, "UNDEFINED");
-    }
-    else if (actionStatus == ACTION_STATUS_TODO) {
+    } else if (actionStatus == ACTION_STATUS_TODO) {
         return appendString(outputStream, "TODO");
-    }
-    else if (actionStatus == ACTION_STATUS_DOING) {
+    } else if (actionStatus == ACTION_STATUS_DOING) {
         return appendString(outputStream, "DOING");
-    }
-    else if (actionStatus == ACTION_STATUS_DONE) {
+    } else if (actionStatus == ACTION_STATUS_DONE) {
         return appendString(outputStream, "DONE");
-    }
-    else if (actionStatus == ACTION_STATUS_ERROR) {
+    } else if (actionStatus == ACTION_STATUS_ERROR) {
         return appendString(outputStream, "ERROR");
-    }
-    else {
+    } else {
         return appendString(outputStream, "???");
     }
 }

@@ -86,10 +86,10 @@ void updateMotorsAndDetectedMotionType(PidMotion* pidMotion) {
     pidMotion->computationValues.lastPidTimeInSecond = pidMotion->computationValues.pidTimeInSecond;
     pidMotion->computationValues.pidTimeInSecond = getPidTimeInSecond();
 
-    #ifdef _MSC_VER
-        #include "pc/pidPc.h"
-        simulateCurrentPositionReachIfNeeded(pidMotion, motionDefinition);
-    #endif
+#ifdef _MSC_VER
+#include "pc/pidPc.h"
+    simulateCurrentPositionReachIfNeeded(pidMotion, motionDefinition);
+#endif
 
     // Compute the current Position
     computeCurrentPositionUsingCoders(pidMotion);
@@ -109,7 +109,7 @@ void updateMotorsAndDetectedMotionType(PidMotion* pidMotion) {
     float leftMotorSpeed = computeLeft(thetaValues->u, alphaValues->u);
     float rightMotorSpeed = computeRight(thetaValues->u, alphaValues->u);
     DualHBridgeMotor* dualHBridgeMotor = pidMotion->dualHBridgeMotor;
-    dualHBridgeMotor->dualHBridgeMotorWriteValue(dualHBridgeMotor, (signed int)leftMotorSpeed, (signed int) rightMotorSpeed);
+    dualHBridgeMotor->dualHBridgeMotorWriteValue(dualHBridgeMotor, (signed int) leftMotorSpeed, (signed int) rightMotorSpeed);
 
     // If we maintain the position, we consider that we must do not check the end of motion (next paragraph)
     MotionInstruction* thetaInst = &(motionDefinition->inst[THETA]);
@@ -117,15 +117,15 @@ void updateMotorsAndDetectedMotionType(PidMotion* pidMotion) {
         setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN);
         return;
     }
-    
+
     updateEndDetectionStatusRegister(pidMotion, motionDefinition);
 
-        // Detection if the robot has an obstacle or not, and update the DetectedMotionType
+    // Detection if the robot has an obstacle or not, and update the DetectedMotionType
     if (detectIfRobotHasObstacle(pidMotion, motionDefinition)) {
         setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_OBSTACLE);
         return;
     }
-    
+
     // Detection if the robot is blocked or not, and update the DetectedMotionType
     if (detectIfRobotIsShocked(pidMotion, motionDefinition)) {
         setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_SHOCK_WHEELS);
@@ -143,7 +143,7 @@ void updateMotorsAndDetectedMotionType(PidMotion* pidMotion) {
         setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_REACHED);
         return;
     }
-    
+
     // Detection if this is the end of the move because we have failed to reach the target (timeout)
     if (isMotionFailed(pidMotion, motionDefinition)) {
         setDetectedMotionType(computationValues, DETECTED_MOTION_TYPE_POSITION_FAILED);

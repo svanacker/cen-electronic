@@ -6,9 +6,9 @@
 #include "../../navigation/navigation.h"
 
 /**
-* Returns a descriptor on the Navigation device.
-* @return a descriptor to handle with hardware the navigation object.
-*/
+ * Returns a descriptor on the Navigation device.
+ * @return a descriptor to handle with hardware the navigation object.
+ */
 DeviceDescriptor* getNavigationDeviceDescriptor(Navigation* navigationParam);
 
 #endif

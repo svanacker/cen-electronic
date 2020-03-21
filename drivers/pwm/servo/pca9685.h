@@ -62,7 +62,7 @@ void pca9685_setPWMFreq(I2cBusConnection* i2cBusConnection, float frequency);
     @param  num One of the PWM output pins, from 0 to 15
     @param  on At what point in the 4096-part cycle to turn the PWM output ON
     @param  off At what point in the 4096-part cycle to turn the PWM output OFF
-*/
+ */
 void pca9685_setPWM(I2cBusConnection* i2cBusConnection, unsigned char pwmIndex, unsigned int on, unsigned int off);
 
 void pca9685_setPin(I2cBusConnection* i2cBusConnection, unsigned char pwmIndex, unsigned int value, bool invert);

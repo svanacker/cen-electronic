@@ -94,19 +94,19 @@ struct RobotConfig {
  * @param robotConfigReadIntFunction the pointer on the real function which read an int.
  */
 void initRobotConfig(RobotConfig* robotConfig,
-                     enum RobotType robotType, 
-                     robotConfigReadIntFunction* robotConfigReadInt,
-                     robotConfigWriteIntFunction* robotConfigWriteInt);
+        enum RobotType robotType,
+        robotConfigReadIntFunction* robotConfigReadInt,
+        robotConfigWriteIntFunction* robotConfigWriteInt);
 
 /**
-* Reads the raw config Value.
-* You must call refreshConfig for the first time
-*/
+ * Reads the raw config Value.
+ * You must call refreshConfig for the first time
+ */
 unsigned int getConfigValue(RobotConfig* robotConfig);
 
 /**
-* Returns if the specified configMask is set or not
-*/
+ * Returns if the specified configMask is set or not
+ */
 bool isConfigSet(RobotConfig* robotConfig, unsigned int configMask);
 
 bool isSonarActivated(RobotConfig* robotConfig);

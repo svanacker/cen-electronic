@@ -8,8 +8,8 @@
 // LIST DEBUG
 
 /**
-* Print the list of I2cBus.
-*/
+ * Print the list of I2cBus.
+ */
 void printI2cBusList(OutputStream* outputStream);
 
 #endif

@@ -9,10 +9,10 @@
 
 
 #ifdef PROG_32
-    #include "32/hctl2032_pindefinition32.h"
+#include "32/hctl2032_pindefinition32.h"
 #else
-    #include "30F/hctl2032_pindefinition30F.h"
-    #include <p30Fxxxx.h>
+#include "30F/hctl2032_pindefinition30F.h"
+#include <p30Fxxxx.h>
 #endif
 
 // variables
@@ -51,9 +51,9 @@ void initHCTL2032() {
     TRISD = 0;
 
     // PORTB as digital
-    #ifndef PROG_32
-        ADPCFG = 0xFFFF;
-    #endif
+#ifndef PROG_32
+    ADPCFG = 0xFFFF;
+#endif
 
     // PORTB as input for data (8 bits in parallel)
     TRISB = TRIS_DX;

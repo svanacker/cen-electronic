@@ -17,9 +17,9 @@
 #define COMMAND_GET_ADC_LIST                    'L'
 
 /**
-* Interface for the Device
-* @return the Interface for the ADC device.
-*/
+ * Interface for the Device
+ * @return the Interface for the ADC device.
+ */
 DeviceInterface* getADCDeviceInterface();
 
 #endif

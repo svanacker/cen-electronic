@@ -39,11 +39,11 @@ void bufferTestSuite(void) {
 }
 
 void initNullBufferForTest(void) {
-    initBuffer(NULL, (char(*)[]) &bufferArrayTest, TEST_BUFFER_SIZE, "bufferTest", "bufferTestType");
+    initBuffer(NULL, (char(*)[]) & bufferArrayTest, TEST_BUFFER_SIZE, "bufferTest", "bufferTestType");
 }
 
 void initBufferForTest(void) {
-    initBuffer(&bufferTest, (char(*)[]) &bufferArrayTest, TEST_BUFFER_SIZE, "bufferTest", "bufferTestType");
+    initBuffer(&bufferTest, (char(*)[]) & bufferArrayTest, TEST_BUFFER_SIZE, "bufferTest", "bufferTestType");
 }
 
 // initBuffer

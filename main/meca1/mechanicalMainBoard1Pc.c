@@ -189,29 +189,29 @@ void mechanicalBoard1PcWaitForInstruction(void) {
 
     // Analyse from the ConsoleBuffer
     handleStreamInstruction(
-        &consoleInputBuffer,
-        &consoleOutputBuffer,
-        &consoleOutputStream,
-        &consoleOutputStream,
-        &filterRemoveCRLF,
-        NULL);
+            &consoleInputBuffer,
+            &consoleOutputBuffer,
+            &consoleOutputStream,
+            &consoleOutputStream,
+            &filterRemoveCRLF,
+            NULL);
 
     if (!singleModeActivated) {
         // Analyse data from the I2C
         handleStreamInstruction(
-            &i2cSlaveInputBuffer,
-            &i2cSlaveOutputBuffer,
-            NULL,
-            NULL,
-            &filterRemoveCRLF,
-            NULL);
+                &i2cSlaveInputBuffer,
+                &i2cSlaveOutputBuffer,
+                NULL,
+                NULL,
+                &filterRemoveCRLF,
+                NULL);
     }
 }
 
 void runMechanicalBoard1PC(bool singleMode) {
     singleModeActivated = singleMode;
     setBoardName(MECHANICAL_BOARD_1_PC_NAME);
-	setConsoleSizeAndBuffer(CONSOLE_CHARS_WIDTH, CONSOLE_CHARS_HEIGHT, CONSOLE_BUFFER_WIDTH, CONSOLE_BUFFER_HEIGHT);
+    setConsoleSizeAndBuffer(CONSOLE_CHARS_WIDTH, CONSOLE_CHARS_HEIGHT, CONSOLE_BUFFER_WIDTH, CONSOLE_BUFFER_HEIGHT);
     moveConsole(HALF_SCREEN_WIDTH, CONSOLE_HEIGHT / 2, HALF_SCREEN_WIDTH, CONSOLE_HEIGHT / 2);
 
     // We use http://patorjk.com/software/taag/#p=display&v=2&f=Jerusalem&t=MECA%20%20%201%20%20%20PC
@@ -222,58 +222,58 @@ void runMechanicalBoard1PC(bool singleMode) {
     printf("| |  | | |__| |___  / ___ \\    | |   |  __/| |___\r\n");
     printf("|_|  |_| _____\\____/ _ / \\_\\   |_|   |_|    \\____ |\r\n");
 
-    initLogs(LOG_LEVEL_DEBUG, (LogHandler(*)[]) &logHandlerListArray, MECHANICAL_BOARD_1_PC_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    initLogs(LOG_LEVEL_DEBUG, (LogHandler(*)[]) & logHandlerListArray, MECHANICAL_BOARD_1_PC_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
     initConsoleInputStream(&consoleInputStream);
     initConsoleOutputStream(&consoleOutputStream);
     addConsoleLogHandler(LOG_LEVEL_DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
 
-	initSerialLinkList((SerialLink(*)[]) &serialLinkListArray, MECHANICAL_BOARD_1_PC_SERIAL_LINK_LIST_LENGTH);
+    initSerialLinkList((SerialLink(*)[]) & serialLinkListArray, MECHANICAL_BOARD_1_PC_SERIAL_LINK_LIST_LENGTH);
 
-    initTimerList((Timer(*)[]) &timerListArray, MECHANICAL_BOARD_1_PC_TIMER_LENGTH);
+    initTimerList((Timer(*)[]) & timerListArray, MECHANICAL_BOARD_1_PC_TIMER_LENGTH);
 
-    initBuffer(&consoleInputBuffer, (char(*)[]) &consoleInputBufferArray, MECHANICAL_BOARD_1_PC_CONSOLE_INPUT_BUFFER_LENGTH, "inputConsoleBuffer", "IN");
-    initBuffer(&consoleOutputBuffer, (char(*)[]) &consoleOutputBufferArray, MECHANICAL_BOARD_1_PC_CONSOLE_OUTPUT_BUFFER_LENGTH, "outputConsoleBuffer", "IN");
+    initBuffer(&consoleInputBuffer, (char(*)[]) & consoleInputBufferArray, MECHANICAL_BOARD_1_PC_CONSOLE_INPUT_BUFFER_LENGTH, "inputConsoleBuffer", "IN");
+    initBuffer(&consoleOutputBuffer, (char(*)[]) & consoleOutputBufferArray, MECHANICAL_BOARD_1_PC_CONSOLE_OUTPUT_BUFFER_LENGTH, "outputConsoleBuffer", "IN");
 
     // Dispatchers
-    initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, MECHANICAL_BOARD_1_PC_DATA_DISPATCHER_LIST_LENGTH);
+    initDriverDataDispatcherList((DriverDataDispatcher(*)[]) & driverDataDispatcherListArray, MECHANICAL_BOARD_1_PC_DATA_DISPATCHER_LIST_LENGTH);
     addLocalDriverDataDispatcher();
 
     if (!singleModeActivated) {
-		// I2c
-		initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MECHANICAL_BOARD_1_PC_I2C_BUS_LIST_LENGTH);
-		mechanical1I2cBus = addI2cBus(I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
+        // I2c
+        initI2cBusList((I2cBus(*)[]) & i2cBusListArray, MECHANICAL_BOARD_1_PC_I2C_BUS_LIST_LENGTH);
+        mechanical1I2cBus = addI2cBus(I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
 
-        initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MECHANICAL_BOARD_1_PC_I2C_BUS_CONNECTION_LIST_LENGTH);
+        initI2cBusConnectionList((I2cBusConnection(*)[]) & i2cBusConnectionListArray, MECHANICAL_BOARD_1_PC_I2C_BUS_CONNECTION_LIST_LENGTH);
         mechanical1I2cBusConnection = addI2cBusConnection(mechanical1I2cBus, MECHANICAL_BOARD_1_I2C_ADDRESS, false);
         mechanical1I2cBusConnection->i2cBus = mechanical1I2cBus;
         mechanical1I2cBusConnectionPc.i2cPipeMasterName = MAIN_BOARD_TO_MECA1_BOARD_PC_PIPE_I2C_MASTER_NAME;
         mechanical1I2cBusConnectionPc.i2cPipeSlaveName = MECHANICAL_BOARD_1_PC_PIPE_I2C_SLAVE_NAME;
         mechanical1I2cBusConnection->object = &mechanical1I2cBusConnectionPc;
 
-		openSlaveI2cStreamLink(&i2cSlaveStreamLink,
-            &i2cSlaveInputBuffer,
-            (char(*)[]) &i2cSlaveInputBufferArray,
-            MECHANICAL_BOARD_1_PC_IN_BUFFER_LENGTH,
-            &i2cSlaveOutputBuffer,
-            (char(*)[]) &i2cSlaveOutputBufferArray,
-            MECHANICAL_BOARD_1_PC_OUT_BUFFER_LENGTH,
-            mechanical1I2cBusConnection
-        );
+        openSlaveI2cStreamLink(&i2cSlaveStreamLink,
+                &i2cSlaveInputBuffer,
+                (char(*)[]) & i2cSlaveInputBufferArray,
+                MECHANICAL_BOARD_1_PC_IN_BUFFER_LENGTH,
+                &i2cSlaveOutputBuffer,
+                (char(*)[]) & i2cSlaveOutputBufferArray,
+                MECHANICAL_BOARD_1_PC_OUT_BUFFER_LENGTH,
+                mechanical1I2cBusConnection
+                );
         // I2C Debug
         initI2CDebugBuffers(&i2cSlaveDebugInputBuffer,
-            (char(*)[]) &i2cSlaveDebugInputBufferArray,
-            MECHANICAL_BOARD_1_PC_I2C_DEBUG_SLAVE_IN_BUFFER_LENGTH,
-            &i2cSlaveDebugOutputBuffer,
-            (char(*)[]) &i2cSlaveDebugOutputBufferArray,
-            MECHANICAL_BOARD_1_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH);
-	}
+                (char(*)[]) & i2cSlaveDebugInputBufferArray,
+                MECHANICAL_BOARD_1_PC_I2C_DEBUG_SLAVE_IN_BUFFER_LENGTH,
+                &i2cSlaveDebugOutputBuffer,
+                (char(*)[]) & i2cSlaveDebugOutputBufferArray,
+                MECHANICAL_BOARD_1_PC_I2C_DEBUG_SLAVE_OUT_BUFFER_LENGTH);
+    }
 
     // Eeprom
     initEepromPc(&eeprom, "MECHANICAL_BOARD_1_PC_EEPROM");
 
     // Battery
     initBattery(&battery, getBatteryVoltage);
-	
+
     // Clock
     initSoftClock(&clock);
 
@@ -282,24 +282,24 @@ void runMechanicalBoard1PC(bool singleMode) {
 
     // 2018
     //  IO Expander
-    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MECHANICAL_BOARD_1_PC_IO_EXPANDER_LIST_LENGTH);
+    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) & ioExpanderArray, MECHANICAL_BOARD_1_PC_IO_EXPANDER_LIST_LENGTH);
     initIOExpanderPc(getIOExpanderByIndex(&ioExpanderList, MECHANICAL_BOARD_1_PC_IO_EXPANDER_LAUNCHER_INDEX), &ioExpanderValue0);
     IOExpander* launcherIoExpander = getIOExpanderByIndex(&ioExpanderList, MECHANICAL_BOARD_1_PC_IO_EXPANDER_LAUNCHER_INDEX);
 
     // TODO : Add tof !
     // initLauncher2018(&launcher2018, launcherIoExpander, &relay, &md22, NULL);
- 
+
     // Relay
     initRelayPc(&relay, &relayValue);
 
     // Devices
-    initDeviceList((Device(*)[]) &deviceListArray, MECHANICAL_BOARD_1_PC_DEVICE_LIST_LENGTH);
+    initDeviceList((Device(*)[]) & deviceListArray, MECHANICAL_BOARD_1_PC_DEVICE_LIST_LENGTH);
     addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
-	addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor());
+    addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor());
     addLocalDevice(getI2cSlaveDebugDeviceInterface(), getI2cSlaveDebugDeviceDescriptor(mechanical1I2cBusConnection));
     addLocalDevice(getSystemDeviceInterface(), getSystemDeviceDescriptor());
-	addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
+    addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
 
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));

@@ -25,7 +25,7 @@ int deviceRobotSonarDetectorGetInterface(char commandHeader, DeviceInterfaceMode
 static DeviceInterface deviceInterface = {
     .deviceGetName = &deviceRobotSonarDetectorGetName,
     .deviceHeader = ROBOT_SONAR_DETECTOR_DEVICE_HEADER,
-//    .deviceGetSoftwareRevision = &deviceRobotSonarDetectorGetSoftwareRevision,
+    //    .deviceGetSoftwareRevision = &deviceRobotSonarDetectorGetSoftwareRevision,
     .deviceGetInterface = &deviceRobotSonarDetectorGetInterface
 };
 

@@ -30,29 +30,28 @@ void i2cMasterInitialize(I2cBus* i2cBus) {
         return;
     }
     i2cBus->initialized = true;
-    #define I2C_BRG     0xC6    // 100khz for PIC32
+#define I2C_BRG     0xC6    // 100khz for PIC32
     // Configure I2C for 7 bit address mode
-    #define I2C_CON     I2C_ON
+#define I2C_CON     I2C_ON
 
     i2cBus->config = I2C_CON;
 
     if (i2cBus == NULL) {
         OpenI2C1(
-                 // Configure I2C for 7 bit address mode.
-                 I2C_CON,
-                 // 100khz for PIC32.
-                 I2C_BRG);
-    }
-    else {
+                // Configure I2C for 7 bit address mode.
+                I2C_CON,
+                // 100khz for PIC32.
+                I2C_BRG);
+    } else {
         I2C_MODULE i2cModule = getI2C_MODULE(i2cBus->port);
         I2CConfigure(i2cModule, I2C_ON);
         I2CSetFrequency(i2cModule, GetPeripheralClock(), 100000L);
     }
 
     WaitI2C(i2cBus);
-    
+
     // Indicates that it's ok !
-    appendString(outputStream, "OK\n"); 
+    appendString(outputStream, "OK\n");
     printI2cBus(outputStream, i2cBus);
     appendCRLF(outputStream);
 }

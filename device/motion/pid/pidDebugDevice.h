@@ -8,9 +8,9 @@
 #include "../../../motion/pid/pidMotion.h"
 
 /**
-* Returns a descriptor on the device which manages the Debug of the PID.
-* @param pidMotion the object to store parametesr
-*/
+ * Returns a descriptor on the device which manages the Debug of the PID.
+ * @param pidMotion the object to store parametesr
+ */
 DeviceDescriptor* getPidDebugDeviceDescriptor(PidMotion* pidMotion);
 
 #endif

@@ -14,10 +14,10 @@
 void printServo(OutputStream* outputStream, Servo* servo, unsigned int servoIndex);
 
 /**
-* Print the Servo List loaded in the system.
-* @param outputStream the stream in which we write information.
-* @param servoList the list of servo to write
-*/
+ * Print the Servo List loaded in the system.
+ * @param outputStream the stream in which we write information.
+ * @param servoList the list of servo to write
+ */
 void printServoList(OutputStream* outputStream, ServoList* servoList);
 
 /**

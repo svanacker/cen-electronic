@@ -18,12 +18,12 @@ void clearTargetAction(GameTargetAction* targetAction) {
 }
 
 void initGameTargetAction(GameTargetAction* targetAction,
-    Location* startLocation,
-    Location* endLocation,
-    enum ActionType actionType,
-    float timeToAchieve,
-    unsigned int priority,
-    GameTargetActionItemList* actionItemList) {
+        Location* startLocation,
+        Location* endLocation,
+        enum ActionType actionType,
+        float timeToAchieve,
+        unsigned int priority,
+        GameTargetActionItemList* actionItemList) {
     targetAction->startLocation = startLocation;
     targetAction->endLocation = endLocation;
     targetAction->status = ACTION_STATUS_TODO;

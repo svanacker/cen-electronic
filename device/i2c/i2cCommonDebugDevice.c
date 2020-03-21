@@ -46,26 +46,26 @@ void deviceI2cCommonDebugHandleRawData(unsigned char header, InputStream* inputS
     // I2C Management
     if (header == COMMAND_I2C_COMMON_DEBUG_LIST_BUS) {
         ackCommand(outputStream, I2C_COMMON_DEBUG_DEVICE_HEADER, COMMAND_I2C_COMMON_DEBUG_LIST_BUS);
-		printI2cBusList(getInfoOutputStreamLogger());
-    }
-	else if (header == COMMAND_I2C_COMMON_DEBUG_LIST_BUS_CONNECTION) {
-		ackCommand(outputStream, I2C_COMMON_DEBUG_DEVICE_HEADER, COMMAND_I2C_COMMON_DEBUG_LIST_BUS_CONNECTION);
-		printI2cBusConnectionList(getInfoOutputStreamLogger());
-	}
-    else if (header == COMMAND_I2C_COMMON_DEBUG_WAIT) {
+        printI2cBusList(getInfoOutputStreamLogger());
+    } else if (header == COMMAND_I2C_COMMON_DEBUG_LIST_BUS_CONNECTION) {
+        ackCommand(outputStream, I2C_COMMON_DEBUG_DEVICE_HEADER, COMMAND_I2C_COMMON_DEBUG_LIST_BUS_CONNECTION);
+        printI2cBusConnectionList(getInfoOutputStreamLogger());
+    } else if (header == COMMAND_I2C_COMMON_DEBUG_WAIT) {
         ackCommand(outputStream, I2C_COMMON_DEBUG_DEVICE_HEADER, COMMAND_I2C_COMMON_DEBUG_WAIT);
         I2cBusConnection* i2cBusConnection = getI2cCommonDebugBusConnection(inputStream);
         WaitI2cBusConnection(i2cBusConnection);
     }
 }
 
-static DeviceDescriptor descriptor = {
-    .deviceInit = &deviceI2cCommonDebugInit,
-    .deviceShutDown = &deviceI2cCommonDebugShutDown,
-    .deviceIsOk = &deviceI2cCommonDebugIsOk,
-    .deviceHandleRawData = &deviceI2cCommonDebugHandleRawData,
-};
+static DeviceDescriptor descriptor;
 
 DeviceDescriptor* getI2cCommonDebugDeviceDescriptor() {
+    initDeviceDescriptor(&descriptor,
+            &deviceI2cCommonDebugInit,
+            &deviceI2cCommonDebugShutDown,
+            &deviceI2cCommonDebugIsOk,
+            &deviceI2cCommonDebugHandleRawData,
+            NULL);
+
     return &descriptor;
 }

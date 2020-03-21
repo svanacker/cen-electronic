@@ -21,7 +21,7 @@ typedef struct {
 
 /**
  * Returns the single instance of GameStrategyList.
-*/
+ */
 GameStrategyList* getGameStrategyList(void);
 
 /**

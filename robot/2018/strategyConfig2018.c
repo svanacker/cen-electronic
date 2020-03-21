@@ -39,8 +39,7 @@ float getSonarDistanceCheckFactor(RobotConfig* robotConfig) {
             return 0.75f;
         }
         return 1.0f;
-    }
-    else if (isConfigSet(robotConfig, CONFIG_SONAR_NEAR_MASK)) {
+    } else if (isConfigSet(robotConfig, CONFIG_SONAR_NEAR_MASK)) {
         return 0.50f;
     }
     // To avoid to detect something too far !

@@ -25,8 +25,7 @@ LogHandler* addLogHandlerToList(LogHandlerList* logHandlerList, enum LogLevel lo
         logHandlerList->size++;
         initHandler(result, handlerName, outputStream, logLevel, logCategoryMask);
         return result;
-    }
-    else {
+    } else {
         writeError(LOG_LIST_TOO_MUCH_LOG_HANDLERS);
         return NULL;
     }
@@ -41,7 +40,7 @@ LogHandler* getLogHandler(LogHandlerList* logHandlerList, int logHandlerIndex) {
         writeError(LOG_LIST_OUT_OF_BOUNDS);
         return NULL;
     }
-    LogHandler* result = (LogHandler*)logHandlerList->logHandlers;
+    LogHandler* result = (LogHandler*) logHandlerList->logHandlers;
     // we don't need use sizeof because our pointer is a LogHandler* pointer, so the shift
     // is already of the structure, we just have to shift of index.
     result += logHandlerIndex;

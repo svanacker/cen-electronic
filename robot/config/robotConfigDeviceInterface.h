@@ -14,8 +14,8 @@
 #define COMMAND_CONFIG_DEBUG                'd'
 
 /**
-* Interface for Device "RobotConfig"
-*/
+ * Interface for Device "RobotConfig"
+ */
 DeviceInterface* getRobotConfigDeviceInterface();
 
 #endif

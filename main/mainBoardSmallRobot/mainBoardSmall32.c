@@ -34,24 +34,15 @@
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cBusConnectionList.h"
 
-#include "../../robot/2019/mainBoard2019.h"
+#include "../../robot/2020/mainBoard2020.h"
 
 // SMALL ROBOT PART
 #include "../../drivers/pwm/servo/servoPwmPca9685.h"
-#include "../../robot/2019/arm/armDeviceInterface2019.h"
-#include "../../robot/2019/arm/armDevice2019.h"
-#include "../../robot/2019/distributor/distributorDeviceInterface2019.h"
-#include "../../robot/2019/distributor/distributorDevice2019.h"
-#include "../../robot/2019/elevator/elevatorDevice2019.h"
-#include "../../robot/2019/elevator/elevatorDeviceInterface2019.h"
-#include "../../robot/2019/elevator/elevatorDevice2019.h"
-#include "../../robot/2019/fork/forkDeviceInterface2019.h"
-#include "../../robot/2019/fork/forkDevice2019.h"
-#include "../../robot/2019/goldenium/goldeniumDeviceInterface2019.h"
-#include "../../robot/2019/goldenium/goldeniumDevice2019.h"
+#include "../../robot/2020/arm/armDeviceInterface2020.h"
+#include "../../robot/2020/arm/armDevice2020.h"
 
 
-#include "../../robot/2019/strategy/strategyConfig2019.h"
+#include "../../robot/2020/strategy/strategyConfig2020.h"
 
 // Robot Configuration
 static RobotConfig robotConfig;
@@ -76,8 +67,8 @@ void initMainBoardDevicesDescriptor() {
 
 void initMainBoardDriverDataDispatcherList(void) {
     mainBoardCommonInitDriverDataDispatcherList();
- 
-    mainBoardCommonMotorAddDispatcher();    
+
+    mainBoardCommonMotorAddDispatcher();
     // mainBoardCommonMeca1AddDispatcher();
 }
 
@@ -104,19 +95,19 @@ bool loopUnWaitForInstruction(StartMatch* startMatchParam) {
  */
 void mainBoardMainPhase1(void) {
     setBoardName("MAIN SMALL ROBOT 32");
- 
+
     // CONFIG
     initRobotConfigPic32(&robotConfig, ROBOT_TYPE_SMALL);
-    
+
     // BASE LOGS
     mainBoardCommonInitLogs();
-    
+
     // LCD
     mainBoardCommonLcdInit(&robotConfig);
 
     // SERIAL
     mainBoardCommonInitSerialList();
-    mainBoardCommonDebugOpenSerialLink(); 
+    mainBoardCommonDebugOpenSerialLink();
 }
 
 /**
@@ -124,11 +115,11 @@ void mainBoardMainPhase1(void) {
  */
 void mainBoardMainPhase2(void) {
     mainBoardCommonMainInit(&robotConfig);
-    
+
     // OTHER SERIAL LINKS
     mainBoardCommonMotorNotifyOpenSerialLink();
     mainBoardCommonMotorOpenSerialLink();
-   
+
     mainBoardCommonInitBusList();
     mainBoardCommonInitTimerList();
     mainBoardCommonInitCommonDrivers();
@@ -145,7 +136,7 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonStrategyMainInitDrivers(&robotConfig);
 
     mainBoardCommonTofInitDrivers32(&robotConfig);
-    mainBoardCommonMatchMainInitDrivers(&robotConfig, &startupCheckList2019, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
+    mainBoardCommonMatchMainInitDrivers(&robotConfig, &startupCheckList2020, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
 }
 
 void mainBoardMainPhase3(void) {
@@ -160,15 +151,11 @@ int main(void) {
     mainBoardMainPhase1();
     mainBoardMainPhase2();
     mainBoardMainPhase3();
-    
+
     TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
     ServoList* servoList = mainBoardCommonGetServoList();
-	addLocalDevice(getArm2019DeviceInterface(), getArm2019DeviceDescriptor(servoList));
-	addLocalDevice(getElevator2019DeviceInterface(), getElevator2019DeviceDescriptor(servoList));
-    addLocalDevice(getFork2019DeviceInterface(), getFork2019DeviceDescriptor(servoList, tofSensorList));
-    addLocalDevice(getDistributor2019DeviceInterface(), getDistributor2019DeviceDescriptor(servoList, tofSensorList));
-    addLocalDevice(getGoldenium2019DeviceInterface(), getGoldenium2019DeviceDescriptor(servoList, tofSensorList));
-   
+    addLocalDevice(getArm2020DeviceInterface(), getArm2020DeviceDescriptor(servoList));
+
     mainBoardCommonStrategyMainLoop();
 
     while (true) {

@@ -47,27 +47,23 @@ void deviceEndMatchDetectorHandleRawData(unsigned char commandHeader, InputStrea
         EndMatch* endMatch = getEndMatchDetectorEndMatchObject();
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         printEndOfMatchTable(debugOutputStream, endMatch);
-    }
-    else if (commandHeader == COMMAND_SHOW_MATCH_ENDED) {
+    } else if (commandHeader == COMMAND_SHOW_MATCH_ENDED) {
         ackCommand(outputStream, END_MATCH_DETECTOR_DEVICE_HEADER, COMMAND_SHOW_MATCH_ENDED);
         EndMatch* endMatch = getEndMatchDetectorEndMatchObject();
         OutputStream* debugOutputStream = getAlwaysOutputStreamLogger();
         showEndAndScore(endMatch, debugOutputStream);
-    }
-    // Getter
+    }// Getter
     else if (commandHeader == COMMAND_GET_TIME_LEFT) {
         ackCommand(outputStream, END_MATCH_DETECTOR_DEVICE_HEADER, COMMAND_GET_TIME_LEFT);
         EndMatch* endMatch = getEndMatchDetectorEndMatchObject();
         appendHex2(outputStream, MATCH_DURATION - endMatch->currentTimeInSecond);
-    }
-    // Setters
+    }// Setters
     else if (commandHeader == COMMAND_SET_CURRENT_TIME_IN_SECOND) {
         ackCommand(outputStream, END_MATCH_DETECTOR_DEVICE_HEADER, COMMAND_SET_CURRENT_TIME_IN_SECOND);
         EndMatch* endMatch = getEndMatchDetectorEndMatchObject();
         unsigned char currentTimeInSecond = readHex2(inputStream);
         endMatch->currentTimeInSecond = currentTimeInSecond;
-    }
-    else if (commandHeader == COMMAND_SET_MATCH_DURATION) {
+    } else if (commandHeader == COMMAND_SET_MATCH_DURATION) {
         ackCommand(outputStream, END_MATCH_DETECTOR_DEVICE_HEADER, COMMAND_SET_MATCH_DURATION);
         EndMatch* endMatch = getEndMatchDetectorEndMatchObject();
         unsigned char newMatchDuration = readHex2(inputStream);
@@ -83,10 +79,10 @@ static DeviceDescriptor endMatchDetectorDeviceDescriptor = {
 };
 
 EndMatch* getEndMatchDetectorEndMatchObject(void) {
-    return (EndMatch*)endMatchDetectorDeviceDescriptor.object;
+    return (EndMatch*) endMatchDetectorDeviceDescriptor.object;
 }
 
 DeviceDescriptor* getEndMatchDetectorDeviceDescriptor(EndMatch* endMatchParam) {
-    endMatchDetectorDeviceDescriptor.object = (int*)endMatchParam;
+    endMatchDetectorDeviceDescriptor.object = (int*) endMatchParam;
     return &endMatchDetectorDeviceDescriptor;
 }

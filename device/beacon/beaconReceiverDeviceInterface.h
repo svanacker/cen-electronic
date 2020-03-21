@@ -5,8 +5,8 @@
 #include "../../device/deviceConstants.h"
 
 /**
-* Command header for getting the position of the opponent robot.
-*/
+ * Command header for getting the position of the opponent robot.
+ */
 #define COMMAND_GET_OPPONENT_ROBOT_POSITION     'o'
 
 /**
@@ -29,8 +29,8 @@
 #define COMMAND_INIT_JENNIC_AS_ROUTER                                'i'
 
 /**
-* Interface for Device
-*/
+ * Interface for Device
+ */
 DeviceInterface* getBeaconReceiverDeviceInterface();
 
 #endif

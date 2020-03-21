@@ -6,7 +6,7 @@
 
 /**
  * Output a table with all values.
-*/
+ */
 void printRobotKinematicsTable(OutputStream* outputStream, RobotKinematics* robotKinematics);
 
 #endif

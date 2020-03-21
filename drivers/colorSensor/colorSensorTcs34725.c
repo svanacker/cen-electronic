@@ -12,7 +12,7 @@
  * To get underlying object on PC
  */
 Color* colorSensorTcs34725GetColor(ColorSensor* colorSensor) {
-    return (Color*)colorSensor->object;
+    return (Color*) colorSensor->object;
 }
 
 /**
@@ -33,11 +33,11 @@ bool colorSensorTcs34725Init(ColorSensor* colorSensor) {
 }
 
 /**
-* ColorSensor Implementation (POO)
-*/
+ * ColorSensor Implementation (POO)
+ */
 Color* colorSensorTcs34725ReadValue(ColorSensor* colorSensor) {
     Tcs34725* tcs34725 = colorSensorTcs34725GetTcs34725(colorSensor);
-    Color* color = colorSensor->color; 
+    Color* color = colorSensor->color;
     uint16_t r;
     uint16_t g;
     uint16_t b;
@@ -50,13 +50,13 @@ Color* colorSensorTcs34725ReadValue(ColorSensor* colorSensor) {
 }
 
 void initColorSensorTcs34725(ColorSensor* colorSensor,
-                             Color* color,
-                             colorSensorFindColorTypeFunction* colorSensorFindColorType,
-                             Tcs34725* tcs34725) {
-    initColorSensor(colorSensor, 
-                    &colorSensorTcs34725Init,
-                    &colorSensorTcs34725ReadValue,       
-                    colorSensorFindColorType,
-                    color,
-                    (int*) tcs34725);
+        Color* color,
+        colorSensorFindColorTypeFunction* colorSensorFindColorType,
+        Tcs34725* tcs34725) {
+    initColorSensor(colorSensor,
+            &colorSensorTcs34725Init,
+            &colorSensorTcs34725ReadValue,
+            colorSensorFindColorType,
+            color,
+            (int*) tcs34725);
 }

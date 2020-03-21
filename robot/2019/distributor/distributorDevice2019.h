@@ -11,7 +11,7 @@
  * The descriptor for the Distributor 2019 device.
  */
 DeviceDescriptor* getDistributor2019DeviceDescriptor(ServoList* servoList,
-                                              TofSensorList* tofSensorListParam);
+        TofSensorList* tofSensorListParam);
 
 
 #endif

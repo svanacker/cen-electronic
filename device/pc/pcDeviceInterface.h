@@ -11,9 +11,9 @@
 #define COMMAND_LOAD_COMMAND_FILE 'L'
 
 /**
-* Get the pc device interface.
-* @return a pointer on the system device Interface.
-*/
+ * Get the pc device interface.
+ * @return a pointer on the system device Interface.
+ */
 DeviceInterface* getPcDeviceInterface(void);
 
 #endif

@@ -7,8 +7,8 @@
 #define COMMAND_SET_SONAR_STATUS            '<'
 
 /**
-* Get the robotSonarDetector interface.
-*/
+ * Get the robotSonarDetector interface.
+ */
 DeviceInterface* getRobotSonarDetectorDeviceInterface();
 
 #endif

@@ -13,8 +13,8 @@
 #define COMMAND_COLOR_SENSOR_WRITE            'w'
 
 /**
-* Interface for Color Sensor Device.
-*/
+ * Interface for Color Sensor Device.
+ */
 DeviceInterface* getColorSensorDeviceInterface(void);
 
 #endif

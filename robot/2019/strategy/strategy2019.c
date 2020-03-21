@@ -67,8 +67,7 @@ void initColorAndStartPosition2019(GameStrategyContext* gameStrategyContext) {
     // Configure the color so that we could use isViolet after, could NOT be used before !
     if (configValue & CONFIG_COLOR_YELLOW_MASK) {
         gameStrategyContext->color = TEAM_COLOR_2019_YELLOW;
-    }
-    else {
+    } else {
         gameStrategyContext->color = TEAM_COLOR_2019_VIOLET;
     }
     float angleDeciDegree = 0;
@@ -77,17 +76,16 @@ void initColorAndStartPosition2019(GameStrategyContext* gameStrategyContext) {
         gameStrategyContext->robotPosition->x = BIG_ROBOT_START_AREA_X;
         gameStrategyContext->robotPosition->y = BIG_ROBOT_START_AREA_Y;
         angleDeciDegree = BIG_ROBOT_START_AREA_ANGLE_DECI_DEG;
-    }
-    else if (robotType == ROBOT_TYPE_SMALL) {
+    } else if (robotType == ROBOT_TYPE_SMALL) {
         gameStrategyContext->robotPosition->x = SMALL_ROBOT_START_AREA_X;
         gameStrategyContext->robotPosition->y = SMALL_ROBOT_START_AREA_Y;
         angleDeciDegree = SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG;
     }
     // Symetry
-	if (isViolet2019(gameStrategyContext)) {
+    if (isViolet2019(gameStrategyContext)) {
         angleDeciDegree = -angleDeciDegree;
         gameStrategyContext->robotPosition->y = GAMEBOARD_HEIGHT - gameStrategyContext->robotPosition->y;
-	}
+    }
     float angleRadian = mod2PI(deciDegreeToRad(angleDeciDegree));
     gameStrategyContext->robotAngleRadian = angleRadian;
 }
@@ -104,17 +102,17 @@ Location* addLocationWithColors2019(enum TeamColor teamColor, Navigation* naviga
 // PATHS
 
 PathData* addNavigationPathWithColor2019(
-    enum TeamColor teamColor,
-    Navigation* navigation,
-    Location* location1,
-    Location* location2,
-    float cost,
-    float controlPointDistance1,
-    float controlPointDistance2,
-    float angle1,
-    float angle2,
-    float accelerationFactor,
-    float speedFactor) {
+        enum TeamColor teamColor,
+        Navigation* navigation,
+        Location* location1,
+        Location* location2,
+        float cost,
+        float controlPointDistance1,
+        float controlPointDistance2,
+        float angle1,
+        float angle2,
+        float accelerationFactor,
+        float speedFactor) {
     PathData* pathData = addPath(navigation->paths);
 
     if (teamColor == TEAM_COLOR_2019_VIOLET) {
@@ -150,8 +148,7 @@ void initStrategy2019(GameStrategyContext* gameStrategyContext) {
         if (strategyId != NO_STRATEGY_INDEX) {
             gameStrategyContext->gameStrategy = initSmallRobotStrategiesItems2019(gameStrategyContext);
         }
-    }
-    else if (robotType == ROBOT_TYPE_BIG) {
+    } else if (robotType == ROBOT_TYPE_BIG) {
         initBigRobotLocations2019(gameStrategyContext);
         initBigRobotPaths2019(gameStrategyContext);
 
@@ -164,20 +161,19 @@ void initStrategy2019(GameStrategyContext* gameStrategyContext) {
         if (strategyId != NO_STRATEGY_INDEX) {
             gameStrategyContext->gameStrategy = initBigRobotStrategiesItems2019(gameStrategyContext);
         }
-    }
-    else {
+    } else {
         writeError(ROBOT_TYPE_UNKNOWN_ERROR);
     }
 
-	// opponent
-	Point* p = gameStrategyContext->opponentRobotPosition;
-	p->x = 0;
-	p->y = 0;
+    // opponent
+    Point* p = gameStrategyContext->opponentRobotPosition;
+    p->x = 0;
+    p->y = 0;
 
-	// obstacle
-	p = gameStrategyContext->lastObstaclePosition;
-	p->x = 0;
-	p->y = 0;
+    // obstacle
+    p = gameStrategyContext->lastObstaclePosition;
+    p->x = 0;
+    p->y = 0;
 
-	// reinitialize the game board to change elements / targets ...
+    // reinitialize the game board to change elements / targets ...
 }

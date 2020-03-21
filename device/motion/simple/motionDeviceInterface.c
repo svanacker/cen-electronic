@@ -52,23 +52,20 @@ int deviceMotionGetInterface(unsigned char commandHeader, DeviceInterfaceMode mo
             setArgumentUnsignedHex2(0, "Demi Quadrant count");
         }
         return commandLengthValueForMode(mode, 2, 0);
-    }
-    // turn right in degree
+    }// turn right in degree
     else if (commandHeader == COMMAND_MOTION_RIGHT_IN_DECI_DEGREE) {
         if (fillDeviceArgumentList) {
             setFunction("rotation Right", 1, 0);
             setArgumentUnsignedHex4(0, "rightAngle (DeciDeg)");
         }
         return commandLengthValueForMode(mode, 4, 0);
-    }
-    else if (commandHeader == COMMAND_MOTION_RIGHT_DEMI_QUADRANT) {
+    } else if (commandHeader == COMMAND_MOTION_RIGHT_DEMI_QUADRANT) {
         if (fillDeviceArgumentList) {
             setFunction("rotation Right (step of 45°)", 1, 0);
             setArgumentUnsignedHex2(0, "Demi Quadrant count");
         }
         return commandLengthValueForMode(mode, 2, 0);
-    }
-    // ONLY ONE WHEEL
+    }// ONLY ONE WHEEL
         // turn left (only right in degree
     else if (commandHeader == COMMAND_MOTION_LEFT_ONE_WHEEL_IN_DECI_DEGREE) {
         if (fillDeviceArgumentList) {
@@ -83,16 +80,14 @@ int deviceMotionGetInterface(unsigned char commandHeader, DeviceInterfaceMode mo
             setArgumentUnsignedHex4(0, "rightAngle (DeciDeg)");
         }
         return commandLengthValueForMode(mode, 4, 0);
-    }
-    // motion : Cancel
+    }// motion : Cancel
     else if (commandHeader == COMMAND_MOTION_STOP) {
         // Same INPUT/OUTPUT
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Cancel Motion");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // motion : Cancel ALL
+    }// motion : Cancel ALL
     else if (commandHeader == COMMAND_MOTION_CANCEL_ALL) {
         // Same INPUT/OUTPUT
         if (fillDeviceArgumentList) {
@@ -116,67 +111,59 @@ int deviceMotionGetInterface(unsigned char commandHeader, DeviceInterfaceMode mo
         }
         return commandLengthValueForMode(mode, 7, 0);
     }// Parameters
-	// MODE REPLACE / ADD
-	else if (commandHeader == COMMAND_MOTION_MODE_ADD) {
-		if(fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("motion Mode Add");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	}
-	else if (commandHeader == COMMAND_MOTION_MODE_REPLACE) {
-		if(fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("motion Mode Replace");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	}
-	else if (commandHeader == COMMAND_MOTION_MODE_GET) {
-		if (fillDeviceArgumentList) {
-			setFunction("motion Mode Get", 0, 1);
-			setResultUnsignedChar1(0, "value");
-		}
-		return commandLengthValueForMode(mode, 0, 1);
-	}
-    else if (commandHeader == COMMAND_MOTION_NOTIFY_FAKE) {
-		if (fillDeviceArgumentList) {
-			setFunction("Generate fake Notification", 1, 0);
+        // MODE REPLACE / ADD
+    else if (commandHeader == COMMAND_MOTION_MODE_ADD) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("motion Mode Add");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    } else if (commandHeader == COMMAND_MOTION_MODE_REPLACE) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("motion Mode Replace");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    } else if (commandHeader == COMMAND_MOTION_MODE_GET) {
+        if (fillDeviceArgumentList) {
+            setFunction("motion Mode Get", 0, 1);
+            setResultUnsignedChar1(0, "value");
+        }
+        return commandLengthValueForMode(mode, 0, 1);
+    } else if (commandHeader == COMMAND_MOTION_NOTIFY_FAKE) {
+        if (fillDeviceArgumentList) {
+            setFunction("Generate fake Notification", 1, 0);
             setArgumentUnsignedChar1(0, "Notif. type char");
-			setResultUnsignedChar1(0, "value");
-		}
-		return commandLengthValueForMode(mode, 1, 0);
+            setResultUnsignedChar1(0, "value");
+        }
+        return commandLengthValueForMode(mode, 1, 0);
     }
-	// NOTIFICATION
+    // NOTIFICATION
     if (DEVICE_MODE_NOTIFY == mode) {
         if (commandHeader == NOTIFY_MOTION_STATUS_REACHED) {
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Reached");
             }
             return MOTION_DEVICE_NOTIFY_LENGTH;
-        }
-        else if (commandHeader == NOTIFY_MOTION_STATUS_BLOCKED) {
+        } else if (commandHeader == NOTIFY_MOTION_STATUS_BLOCKED) {
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Blocked");
             }
             return MOTION_DEVICE_NOTIFY_LENGTH;
-        }
-        else if (commandHeader == NOTIFY_MOTION_STATUS_SHOCKED) {
+        } else if (commandHeader == NOTIFY_MOTION_STATUS_SHOCKED) {
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Shocked");
             }
             return MOTION_DEVICE_NOTIFY_LENGTH;
-        }
-        else if (commandHeader == NOTIFY_MOTION_STATUS_OBSTACLE) {
+        } else if (commandHeader == NOTIFY_MOTION_STATUS_OBSTACLE) {
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Obstacle");
             }
             return MOTION_DEVICE_NOTIFY_LENGTH;
-        }
-        else if (commandHeader == NOTIFY_MOTION_STATUS_FAILED) {
+        } else if (commandHeader == NOTIFY_MOTION_STATUS_FAILED) {
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Failed");
             }
             return MOTION_DEVICE_NOTIFY_LENGTH;
-        }
-        else if (commandHeader == NOTIFY_MOTION_STATUS_MOVING) {
+        } else if (commandHeader == NOTIFY_MOTION_STATUS_MOVING) {
             if (fillDeviceArgumentList) {
                 fillNotifyResults("notify Moving");
             }

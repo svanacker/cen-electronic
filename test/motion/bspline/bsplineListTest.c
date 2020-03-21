@@ -18,7 +18,7 @@ void bsplineListTestSuite(void) {
 
 void test_init_bsplineList(void) {
     TEST_ASSERT_FALSE(isCurveListInitialized(&curveListTest));
-    initCurveList(&curveListTest, (BSplineCurve(*)[]) &curveArrayTest, TEST_BSPLINE_LIST_ARRAY_LENGTH);
+    initCurveList(&curveListTest, (BSplineCurve(*)[]) & curveArrayTest, TEST_BSPLINE_LIST_ARRAY_LENGTH);
 
     TEST_ASSERT_TRUE(isCurveListInitialized(&curveListTest));
     TEST_ASSERT_TRUE(isCurveListEmpty(&curveListTest));
@@ -29,7 +29,7 @@ void test_init_bsplineList(void) {
 }
 
 void test_read_write_bspline_list(void) {
-    initCurveList(&curveListTest, (BSplineCurve(*)[]) &curveArrayTest, TEST_BSPLINE_LIST_ARRAY_LENGTH);
+    initCurveList(&curveListTest, (BSplineCurve(*)[]) & curveArrayTest, TEST_BSPLINE_LIST_ARRAY_LENGTH);
     BSplineCurve* curve0 = getCurrentCurve(&curveListTest);
 
     TEST_ASSERT_EQUAL(MOTION_BSPLINE_LIST_EMPTY, getLastError());

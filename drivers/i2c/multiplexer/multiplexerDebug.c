@@ -24,8 +24,8 @@
 #define MULTIPLEXER_LAST_COLUMN		                                  0
 
 /**
-* Private.
-*/
+ * Private.
+ */
 void printMultiplexerDebugTableHeader(OutputStream* outputStream) {
     println(outputStream);
     appendTableHeaderSeparatorLine(outputStream);
@@ -58,7 +58,6 @@ void printMultiplexerDebugTableHeader(OutputStream* outputStream) {
     appendTableHeaderSeparatorLine(outputStream);
 }
 
-
 void printMultiplexerTable(OutputStream* outputStream, MultiplexerList* multiplexerList) {
     printMultiplexerDebugTableHeader(outputStream);
     unsigned int multiplexerIndex;
@@ -66,7 +65,7 @@ void printMultiplexerTable(OutputStream* outputStream, MultiplexerList* multiple
         Multiplexer* multiplexer = getMultiplexerByIndex(multiplexerList, multiplexerIndex);
         appendDecTableData(outputStream, multiplexerIndex, MULTIPLEXER_INDEX_COLUMN_LENGTH);
         appendDecTableData(outputStream, multiplexer->channelCount, MULTIPLEXER_COUNT_COLUMN_LENGTH);
-        
+
         I2cBusConnection* i2cBusConnection = NULL;
 #ifndef PC_COMPILER
         i2cBusConnection = getMultiplexerI2cBusConnection(multiplexer);
@@ -74,16 +73,15 @@ void printMultiplexerTable(OutputStream* outputStream, MultiplexerList* multiple
         if (i2cBusConnection == NULL) {
             appendStringTableData(outputStream, "-", MULTIPLEXER_BUS_COLUMN_LENGTH);
             appendStringTableData(outputStream, "-", MULTIPLEXER_ADDRESS_COLUMN_LENGTH);
-        }
-        else {
+        } else {
             I2cBus* i2cBus = i2cBusConnection->i2cBus;
             const char* i2cPortAsString = getI2cPortAsString(i2cBus->port);
             appendStringTableData(outputStream, i2cPortAsString, MULTIPLEXER_BUS_COLUMN_LENGTH);
             appendHex2TableData(outputStream, i2cBusConnection->i2cAddress, MULTIPLEXER_ADDRESS_COLUMN_LENGTH);
         }
-        
+
         appendBoolAsStringTableData(outputStream, multiplexer->useChannelMasksCache, MULTIPLEXER_USE_CACHE_CHANNEL_MASK_COLUMN_LENGTH);
-        
+
         // ALL CHANNELS
         signed int channelIndex;
         for (channelIndex = (signed int) multiplexer->channelCount - 1; channelIndex >= 0; channelIndex--) {

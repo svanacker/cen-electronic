@@ -16,8 +16,8 @@
 // ------------------------------------------------------ CONFIG ------------------------------------------
 
 /**
-* Private.
-*/
+ * Private.
+ */
 void printTofSensorConfigDebugTableHeader(OutputStream* outputStream) {
     println(outputStream);
     appendTableHeaderSeparatorLine(outputStream);
@@ -36,7 +36,7 @@ void printTofSensorConfigDebugTableHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Dist.", TOF_SENSOR_VALUE_DISTANCE_FROM_ROBOT_CENTER_MM_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Angle.", TOF_SENSOR_VALUE_ANGLE_FROM_ROBOT_CENTER_DEGREE_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
-    
+
     // Second header line
     appendStringHeader(outputStream, "", TOF_SENSOR_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_NAME_COLUMN_LENGTH);
@@ -117,8 +117,8 @@ void printTofSensorConfigTable(OutputStream* outputStream, TofSensorList* tofSen
 // ------------------------------------------------------ NETWORK --------------------------------------------------
 
 /**
-* Private.
-*/
+ * Private.
+ */
 void printTofSensorNetworkDebugTableHeader(OutputStream* outputStream) {
     println(outputStream);
     appendTableHeaderSeparatorLine(outputStream);
@@ -146,12 +146,11 @@ void printTofSensorNetworkDebugTableHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Channel", TOF_SENSOR_MULTIPLEXER_CHANNEL_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Reset ?", TOF_SENSOR_HAS_HARDWARE_RESTART_COLUMN_LENGTH);
     appendStringHeader(outputStream, "IO Index", TOF_SENSOR_HARDWARE_RESTART_IO_EXPANDER_IO_INDEX_COLUMN_LENGTH);
-    
+
     appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
 
     appendTableHeaderSeparatorLine(outputStream);
 }
-
 
 void printTofSensorNetworkTable(OutputStream* outputStream, TofSensorList* tofSensorList) {
     printTofSensorNetworkDebugTableHeader(outputStream);
@@ -181,8 +180,8 @@ void printTofSensorNetworkTable(OutputStream* outputStream, TofSensorList* tofSe
 // -------------------------------------------------- DETECTION ----------------------------------------------------
 
 /**
-* Private.
-*/
+ * Private.
+ */
 void printTofSensorDetectionDebugTableHeader(OutputStream* outputStream) {
     println(outputStream);
     appendTableHeaderSeparatorLine(outputStream);
@@ -200,7 +199,7 @@ void printTofSensorDetectionDebugTableHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Detect. X", TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Detect. Y", TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
-    
+
     // Second header line
     appendStringHeader(outputStream, "", TOF_SENSOR_INDEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_NAME_COLUMN_LENGTH);
@@ -240,7 +239,7 @@ void printTofSensorDetectionTable(OutputStream* outputStream, TofSensorList* tof
     unsigned int index;
     for (index = 0; index < tofSensorList->size; index++) {
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, index);
-        
+
         appendDecTableData(outputStream, index, TOF_SENSOR_INDEX_COLUMN_LENGTH);
         appendStringTableData(outputStream, tofSensor->name, TOF_SENSOR_NAME_COLUMN_LENGTH);
         appendBoolAsStringTableData(outputStream, tofSensor->enabled, TOF_SENSOR_ENABLE_COLUMN_LENGTH);
@@ -266,10 +265,9 @@ void printTofSensorDetectionTable(OutputStream* outputStream, TofSensorList* tof
         if (detected) {
             appendDecfTableData(outputStream, detectedPoint.x, TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH);
             appendDecfTableData(outputStream, detectedPoint.y, TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);
-        }
-        else {
+        } else {
             appendStringTableData(outputStream, "-", TOF_SENSOR_VALUE_OBJECT_X_COLUMN_LENGTH);
-            appendStringTableData(outputStream, "-", TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);        
+            appendStringTableData(outputStream, "-", TOF_SENSOR_VALUE_OBJECT_Y_COLUMN_LENGTH);
         }
         appendEndOfTableColumn(outputStream, TOF_SENSOR_LAST_COLUMN);
     }

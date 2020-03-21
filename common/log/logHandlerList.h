@@ -18,10 +18,10 @@ typedef struct {
 
 
 /**
-* Init the list of logHandler
-* @param handlerListArray the array containing all log Handlers
-* @param handlerListSize the size of the previous array
-*/
+ * Init the list of logHandler
+ * @param handlerListArray the array containing all log Handlers
+ * @param handlerListSize the size of the previous array
+ */
 void initLogHandlerList(LogHandlerList* logHandlerList, LogHandler(*logHandlerListArray)[], unsigned char logHandlerListSize);
 
 /**

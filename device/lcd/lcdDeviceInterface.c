@@ -15,21 +15,18 @@ int deviceLCDGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
             setArgumentFixedCharArray(0, "char Array");
         }
         return commandLengthValueForMode(mode, (LCD_CHAR_COUNT_BY_MESSAGE * 2), 0);
-    }
-    else if (commandHeader == COMMAND_CLEAR_LCD) {
+    } else if (commandHeader == COMMAND_CLEAR_LCD) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("clear");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_BACKLIGHT_LCD) {
+    } else if (commandHeader == COMMAND_BACKLIGHT_LCD) {
         if (fillDeviceArgumentList) {
             setFunction("backlight", 1, 0);
             setArgumentUnsignedChar1(0, "on/off");
         }
         return commandLengthValueForMode(mode, 1, 0);
-    }
-    else if (commandHeader == COMMAND_LCD_TEST) {
+    } else if (commandHeader == COMMAND_LCD_TEST) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("test");
         }

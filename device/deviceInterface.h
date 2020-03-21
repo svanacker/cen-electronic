@@ -4,19 +4,19 @@
 #include <stdbool.h>
 
 /**
-* Definition of the functions and types shared by devices
-*/
+ * Definition of the functions and types shared by devices
+ */
 // TODO : change to Enum !
 typedef int DeviceInterfaceMode;
 
 /**
-* Define the constant for device (input of device).
-*/
+ * Define the constant for device (input of device).
+ */
 #define DEVICE_MODE_INPUT 0
 
 /**
-* Define the constant for device (output of device).
-*/
+ * Define the constant for device (output of device).
+ */
 #define DEVICE_MODE_OUTPUT 1
 
 /**
@@ -44,8 +44,8 @@ typedef int DeviceInterfaceMode;
 #define ACK_LENGTH                                1
 
 /**
-* Define the length used by the header length
-*/
+ * Define the length used by the header length
+ */
 #define DEVICE_HEADER_LENGTH                    1
 
 /**
@@ -73,8 +73,8 @@ typedef int DeviceInterfaceMode;
 #define DEVICE_AND_NOTIFY_HEADER_LENGTH         2
 
 /**
-* Define an argument.
-*/
+ * Define an argument.
+ */
 typedef struct DeviceArgument {
     /** The type of argument (see below). */
     unsigned char type;
@@ -86,14 +86,14 @@ typedef struct DeviceArgument {
 #define MAX_RETURNS       40
 
 /**
-* Define the result of deviceGetRawDataHeaderFunction if the
-* header is not handled
-*/
+ * Define the result of deviceGetRawDataHeaderFunction if the
+ * header is not handled
+ */
 #define DEVICE_HEADER_NOT_HANDLED -1
 
 /**
-* Define the argument list and returns list for a device.
-*/
+ * Define the argument list and returns list for a device.
+ */
 typedef struct DeviceMethodMetaData {
     /** The name of the function. */
     const char* functionName;
@@ -188,9 +188,9 @@ typedef struct DeviceMethodMetaData {
 // ARGUMENT LIST
 
 /**
-* Singleton of DeviceInterfaceMetaData.
-* @return the singleton of DeviceInterfaceMetaData
-*/
+ * Singleton of DeviceInterfaceMetaData.
+ * @return the singleton of DeviceInterfaceMetaData
+ */
 DeviceMethodMetaData* getDeviceMethodMetaData(void);
 
 /**
@@ -202,11 +202,11 @@ DeviceMethodMetaData* getDeviceMethodMetaData(void);
 int getLengthOfType(int parameterType);
 
 /**
-* Set the function Name and the size of all argument list for that function.
-* @param functionName the name of the function (as remote method name)
-* @param argumentsSize the number of arguments (NOT the length of the marshalled string !)
-* @param resultsSize the number of results (NOT the length of the marshalled string !)
-*/
+ * Set the function Name and the size of all argument list for that function.
+ * @param functionName the name of the function (as remote method name)
+ * @param argumentsSize the number of arguments (NOT the length of the marshalled string !)
+ * @param resultsSize the number of results (NOT the length of the marshalled string !)
+ */
 void setFunction(const char* functionName, int argumentsSize, int resultsSize);
 
 /**
@@ -216,9 +216,9 @@ void setFunction(const char* functionName, int argumentsSize, int resultsSize);
 void setNotification(const char* notificationName, int notificationArguments);
 
 /**
-* Set the function Name and the size of all argument to 0.
-* @param functionName the name of the function (as remote method name)
-*/
+ * Set the function Name and the size of all argument to 0.
+ * @param functionName the name of the function (as remote method name)
+ */
 void setFunctionNoArgumentAndNoResult(const char* functionName);
 
 /**
@@ -230,42 +230,42 @@ int commandLengthValueForMode(DeviceInterfaceMode mode, int inputResult, int out
 // ARGUMENTS MANAGEMENT
 
 /**
-* Set the argument of the deviceArgumentList with index for type/name
-*/
+ * Set the argument of the deviceArgumentList with index for type/name
+ */
 void setArgument(int index, int type, const char* name);
 
 /**
-* Set the argument of the deviceArgumentList with index for name
-*/
+ * Set the argument of the deviceArgumentList with index for name
+ */
 void setArgumentUnsignedChar1(int index, const char* name);
 
 /**
-* Set the argument of the deviceArgumentList with index for name
-*/
+ * Set the argument of the deviceArgumentList with index for name
+ */
 void setArgumentUnsignedHex2(int index, const char* name);
 
 /**
-* Set the argument of the deviceArgumentList with index for name
-*/
+ * Set the argument of the deviceArgumentList with index for name
+ */
 void setArgumentSignedHex2(int index, const char* name);
 
 /**
-* Set the argument of the deviceArgumentList with index for name
-*/
+ * Set the argument of the deviceArgumentList with index for name
+ */
 void setArgumentUnsignedHex4(int index, const char* name);
 
 /**
-* Set the argument of the deviceArgumentList with index for name
-*/
+ * Set the argument of the deviceArgumentList with index for name
+ */
 void setArgumentSignedHex4(int index, const char* name);
 
 /**
-* Set the argument of the deviceArgumentList with index for name
-*/
+ * Set the argument of the deviceArgumentList with index for name
+ */
 void setArgumentUnsignedHex6(int index, const char* name);
 /**
-* Set the argument of the deviceArgumentList with index for name
-*/
+ * Set the argument of the deviceArgumentList with index for name
+ */
 void setArgumentUnsignedHex8(int index, const char* name);
 
 /**
@@ -273,107 +273,105 @@ void setArgumentUnsignedHex8(int index, const char* name);
  */
 void setArgumentFixedCharArray(int index, const char* name);
 /**
-* Set the argument of the deviceArgumentList with index for name.
-*/
+ * Set the argument of the deviceArgumentList with index for name.
+ */
 void setArgumentFloatHex2(int index, const char* name);
 
 /**
-* Set the argument of the deviceArgumentList with index for name.
-*/
+ * Set the argument of the deviceArgumentList with index for name.
+ */
 void setArgumentFloatHex4(int index, const char* name);
 /**
-* Set the argument of the deviceArgumentList with index for name.
-*/
+ * Set the argument of the deviceArgumentList with index for name.
+ */
 void setArgumentFloatHex6(int index, const char* name);
 
 /**
-* Set argument with index to a separator ("-")
-*/
+ * Set argument with index to a separator ("-")
+ */
 void setArgumentSeparator(int index);
 
 // RESULTS MANAGEMENT
 
 /**
-* Set the result of the deviceMethodMetaData with index for type/name
-*/
+ * Set the result of the deviceMethodMetaData with index for type/name
+ */
 void setResult(int index, int type, const char* name);
 
 /**
-* Set the argument of the deviceMethodMetaData with index for name
-*/
+ * Set the argument of the deviceMethodMetaData with index for name
+ */
 void setResultUnsignedChar1(int index, const char* name);
 
 /**
-* Set the result of the deviceMethodMetaData with index for name
-*/
+ * Set the result of the deviceMethodMetaData with index for name
+ */
 void setResultUnsignedHex2(int index, const char* name);
 
 /**
-* Set the result of the deviceMethodMetaData with index for name
-*/
+ * Set the result of the deviceMethodMetaData with index for name
+ */
 void setResultSignedHex2(int index, const char* name);
 
 /**
-* Set the result of the deviceMethodMetaData with index for name
-*/
+ * Set the result of the deviceMethodMetaData with index for name
+ */
 void setResultUnsignedHex4(int index, const char* name);
 
 /**
-* Set the result of the deviceMethodMetaData with index for name
-*/
+ * Set the result of the deviceMethodMetaData with index for name
+ */
 void setResultUnsignedHex6(int index, const char* name);
 
 /**
-* Set the result of the deviceMethodMetaData with index for name
-*/
+ * Set the result of the deviceMethodMetaData with index for name
+ */
 void setResultUnsignedHex8(int index, const char* name);
 
 /**
-*  Set the result of the deviceMethodMetaData with index for name
-*/
+ *  Set the result of the deviceMethodMetaData with index for name
+ */
 void setResultFixedCharArray(int index, const char* name);
 
 /**
-*  Set the result of the deviceMethodMetaData with index for name
-*/
+ *  Set the result of the deviceMethodMetaData with index for name
+ */
 void setResultFloatHex2(int index, const char* name);
 
 /**
-*  Set the result of the deviceMethodMetaData with index for name
-*/
+ *  Set the result of the deviceMethodMetaData with index for name
+ */
 void setResultFloatHex4(int index, const char* name);
 
 /**
-*  Set the result of the deviceMethodMetaData with index for name
-*/
+ *  Set the result of the deviceMethodMetaData with index for name
+ */
 void setResultFloatHex6(int index, const char* name);
 
 /**
-* Set result with index to a separator ("-")
-*/
+ * Set result with index to a separator ("-")
+ */
 void setResultSeparator(int index);
 
 /**
-* Defines the function to know the name of the device.
-*/
+ * Defines the function to know the name of the device.
+ */
 typedef const char* deviceGetNameFunction(void);
 
 /**
-* @param commandHeader the character which is the header of the command
-* @param mode either MODE_INPUT to know the length of the inputBuffer to handle the command of the header, either MODE_OUTPUT to know the length of the outputBuffer to get results
-* @param fillDeviceArgumentList if true, the function will update the argumentList
-* Returns a value >= 0 if the device handle this char, and -1, if it's not handled
-*/
+ * @param commandHeader the character which is the header of the command
+ * @param mode either MODE_INPUT to know the length of the inputBuffer to handle the command of the header, either MODE_OUTPUT to know the length of the outputBuffer to get results
+ * @param fillDeviceArgumentList if true, the function will update the argumentList
+ * Returns a value >= 0 if the device handle this char, and -1, if it's not handled
+ */
 typedef int deviceGetInterfaceFunction(unsigned char commandHeader,
-                                        DeviceInterfaceMode mode,
-                                        bool fillDeviceArgumentList);
-
-
+        DeviceInterfaceMode mode,
+        bool fillDeviceArgumentList);
 
 /**
-* Defines the structure used to describe the remote commands accepted by the device.
-*/
-typedef struct DeviceInterface{
+ * Defines the structure used to describe the remote commands accepted by the device.
+ */
+typedef struct DeviceInterface {
     /**
      * The header of the Device. Each device must have its own name.
      * @see https://github.com/svanacker/cen-electronic/wiki/Device-Header-List

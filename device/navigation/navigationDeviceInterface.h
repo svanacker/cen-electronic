@@ -9,8 +9,8 @@
 // -> LOCATIONS
 
 /**
-* Defines the header to read how many locations there are.
-*/
+ * Defines the header to read how many locations there are.
+ */
 #define COMMAND_NAVIGATION_LOCATION_COUNT        'c'
 
 /**
@@ -28,7 +28,7 @@
  */
 #define COMMAND_NAVIGATION_LOCATION_CLEAR        'k'
 
- /**
+/**
  * Defines the header to list all location.
  */
 #define COMMAND_NAVIGATION_LOCATION_LIST_DEBUG        'd'
@@ -41,8 +41,8 @@
 // -> PATHS
 
 /**
-* Defines the header to read how many paths there are.
-*/
+ * Defines the header to read how many paths there are.
+ */
 #define COMMAND_NAVIGATION_PATH_COUNT        'C'
 
 /**
@@ -51,40 +51,40 @@
 #define COMMAND_NAVIGATION_PATH_GO           'G'
 
 /**
-* Do a table with the list of location, compute the outgoing Paths for each locations, and show it
-*/
+ * Do a table with the list of location, compute the outgoing Paths for each locations, and show it
+ */
 #define COMMAND_NAVIGATION_LOCATION_LIST_AND_OUTGOING_PATHS    'O'
 
 /**
-* Defines the header to get information about a specific path.
-*/
+ * Defines the header to get information about a specific path.
+ */
 #define COMMAND_NAVIGATION_GET_PATH          'R'
 
 /**
-* Defines the header to add a new path or replace an existing one (if it has the same name).
-*/
+ * Defines the header to add a new path or replace an existing one (if it has the same name).
+ */
 #define COMMAND_NAVIGATION_SET_PATH          'W'
 
 /**
-* Defines the header to clear all paths.
-*/
+ * Defines the header to clear all paths.
+ */
 #define COMMAND_NAVIGATION_PATH_CLEAR        'K'
 
 /**
-* Defines the header to list all paths.
-*/
+ * Defines the header to list all paths.
+ */
 #define COMMAND_NAVIGATION_PATH_LIST_DEBUG     'D'
 
 /**
-* Add some test data (to avoid to fill them manually).
-*/
+ * Add some test data (to avoid to fill them manually).
+ */
 #define COMMAND_NAVIGATION_PATH_LIST_ADD_TESTS_DATA       'T'
 
 // Function to get the specific Device Interface
 
 /**
-* Interface for Device.
-*/
+ * Interface for Device.
+ */
 DeviceInterface* getNavigationDeviceInterface(void);
 
 #endif

@@ -37,6 +37,8 @@
 #include "../../common/io/ioUtils.h"
 #include "../../common/io/printWriter.h"
 
+#include "../../common/io/32/pin32.h"
+
 #include "../../common/pwm/pwmPic.h"
 #include "../../common/pwm/motor/dualHBridgeMotorPwm.h"
 
@@ -181,6 +183,9 @@ static char memoryEepromArray[MOTOR_BOARD_MEMORY_EEPROM_LENGTH];
 // Clock
 static Clock clock;
 
+// IO
+static PinList pinList;
+
 // MOTOR (for pidMotion)
 static DualHBridgeMotor motors;
 
@@ -252,7 +257,7 @@ static Device deviceListArray[MOTOR_BOARD_DEVICE_LIST_LENGTH];
 void initDevicesDescriptor() {
     initDeviceList(&deviceListArray, MOTOR_BOARD_DEVICE_LIST_LENGTH);
 
-    addLocalDevice(getIODeviceInterface(), getIODeviceDescriptor());
+    addLocalDevice(getIODeviceInterface(), getIODeviceDescriptor(&pinList));
 
     // Common I2C
     addLocalDevice(getI2cCommonDebugDeviceInterface(), getI2cCommonDebugDeviceDescriptor(mainBoardI2cBusConnection));
@@ -288,7 +293,7 @@ void waitForInstruction() {
         // and never to the call back device
     }
     OutputStream* notifyBufferedOutputStream = getOutputStream(&notifyOutputBuffer);
-    
+
     // I2C Stream
     // handleStreamInstruction(&i2cSlaveInputBuffer, &i2cSlaveOutputBuffer, NULL, &standardOutputStream, &filterRemoveCRLF, NULL);
 
@@ -300,17 +305,17 @@ void waitForInstruction() {
 
     // NOTIFY UART (MOTOR BOARD -> MAIN BOARD)
     // handleStreamInstruction(&notifyInputBuffer, &notifyOutputBuffer, &notifyOutputStream, notifyBufferedOutputStream, &filterRemoveCRLF, NULL);
-    
+
     // Manage Motion
     handleInstructionAndMotion(&pidMotion, notifyBufferedOutputStream);
-    
+
     // Copy the buffered notify to the serial NotifyOutputStream
     copyInputToOutputStream(getInputStream(&notifyOutputBuffer), &notifyOutputStream, &filterRemoveCRLF_255, COPY_ALL);
 
     // Notify the change of position (useful to know where we are when we detect an object with the tof
     // We must know if we see an object inside the gameboard or outside
     trajectoryNotifyIfEnabledAndTreshold(notifyBufferedOutputStream);
-    
+
     // Copy the buffered notify to the serial NotifyOutputStream
     copyInputToOutputStream(getInputStream(&notifyOutputBuffer), &notifyOutputStream, &filterRemoveCRLF_255, COPY_ALL);
 }
@@ -349,9 +354,9 @@ int runMotorBoard() {
             &debugOutputStream,
             MOTOR_BOARD_SERIAL_PORT_DEBUG,
             DEFAULT_SERIAL_SPEED);
-    
+
     // Notification
-        openSerialLink(&notifySerialStreamLink,
+    openSerialLink(&notifySerialStreamLink,
             "SERIAL_NOTIFY",
             &notifyInputBuffer,
             &notifyInputBufferArray,
@@ -364,16 +369,16 @@ int runMotorBoard() {
             DEFAULT_SERIAL_SPEED);
 
     // Init the logs
-    initLogs(LOG_LEVEL_DEBUG, (LogHandler(*)[]) &logHandlerListArray, MOTOR_BOARD_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    initLogs(LOG_LEVEL_DEBUG, (LogHandler(*)[]) & logHandlerListArray, MOTOR_BOARD_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
     addLogHandler("UART", &debugOutputStream, LOG_LEVEL_DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
     appendString(getDebugOutputStreamLogger(), getBoardName());
     appendCRLF(getDebugOutputStreamLogger());
 
     initTimerList(&timerListArray, MOTOR_BOARD_TIMER_LENGTH);
 
-	// I2c
-	initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MOTOR_BOARD_I2C_BUS_LIST_LENGTH);
-	initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MOTOR_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH);
+    // I2c
+    initI2cBusList((I2cBus(*)[]) & i2cBusListArray, MOTOR_BOARD_I2C_BUS_LIST_LENGTH);
+    initI2cBusConnectionList((I2cBusConnection(*)[]) & i2cBusConnectionListArray, MOTOR_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH);
 
     mainBoardI2cBus = addI2cBus(I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
     mainBoardI2cBusConnection = addI2cBusConnection(mainBoardI2cBus, MOTOR_BOARD_I2C_ADDRESS, true);
@@ -389,39 +394,42 @@ int runMotorBoard() {
 
     // Debug of I2C : Only if there is problems
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
-        (unsigned char(*)[]) &i2cMasterDebugInputBufferArray,
-        MOTOR_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
-        &i2cMasterDebugOutputBuffer,
-        (unsigned char(*)[]) &i2cMasterDebugOutputBufferArray,
-        MOTOR_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
+            (unsigned char(*)[]) & i2cMasterDebugInputBufferArray,
+            MOTOR_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
+            &i2cMasterDebugOutputBuffer,
+            (unsigned char(*)[]) & i2cMasterDebugOutputBufferArray,
+            MOTOR_BOARD_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
 
     setDebugI2cEnabled(false);
 
     // I2C Master (PORT 4)
     masterI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_4);
     i2cMasterInitialize(masterI2cBus);
-    
+
     // EEPROM : If Eeprom is installed
     eepromI2cBusConnection = addI2cBusConnection(masterI2cBus, ST24C512_ADDRESS_0, true);
     init24C512Eeprom(&eeprom_, eepromI2cBusConnection);
-    
+
+    // IO
+    initPinList32(&pinList);
+
     // EEPROM : If we use Software Eeprom
     // initEepromMemory(&eeprom_, &memoryEepromArray, MOTOR_BOARD_MEMORY_EEPROM_LENGTH);
-    
+
     // Clock
     // -> Clock
     clockI2cBusConnection = addI2cBusConnection(masterI2cBus, PCF8563_WRITE_ADDRESS, true);
     initClockPCF8563(&clock, clockI2cBusConnection);
-    
+
     // MOTOR (PWM for Motion)
     initDualHBridgeMotorPWM(&motors);
-    
+
     // PidMotion
     initPidMotion(&pidMotion,
-                  &motors,
-                  &eeprom_,
-                  (PidMotionDefinition(*)[]) &motionDefinitionArray,
-                  MOTOR_BOARD_PID_MOTION_INSTRUCTION_COUNT);
+            &motors,
+            &eeprom_,
+            (PidMotionDefinition(*)[]) & motionDefinitionArray,
+            MOTOR_BOARD_PID_MOTION_INSTRUCTION_COUNT);
 
     // initSoftClock(&clock);
 
@@ -430,7 +438,7 @@ int runMotorBoard() {
 
     // Init the timers management
     startTimerList(true);
-    
+
     // IO
     // RB12 & RB 13 are IO of MOTOR_BOARD
     TRISBbits.TRISB12 = 1;

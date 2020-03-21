@@ -55,12 +55,12 @@ enum TofSensorStartResult {
     TOF_SENSOR_START_RESULT_ALREADY_STARTED = 3,
     TOF_SENSOR_START_RESULT_INIT_PROBLEM = 4,
     TOF_SENSOR_START_RESULT_CHANGE_ADDRESS_PROBLEM = 5,
-    
+
 };
 
 /**
-* Defines the contract For one Tof Sensor.
-*/
+ * Defines the contract For one Tof Sensor.
+ */
 struct TofSensor {
     /** An name for the sensor. */
     char* name;
@@ -72,7 +72,7 @@ struct TofSensor {
     enum TofSensorStartResult startResult;
     /** If we enabled it. If disable, we do not try to initialize it .*/
     bool enabled;
-    
+
     // NETWORK
     /** The i2cBus index which must be used .*/
     unsigned int i2cBusIndex;
@@ -84,7 +84,7 @@ struct TofSensor {
     Multiplexer* multiplexer;
     /** The channel to use inside the multiplexer if we use it (MULTIPLEXER_CHANNEL_0 to MULTIPLEXER_CHANNEL_7). */
     unsigned int multiplexerChannel;
-    
+
     // RESTART
     /** If the tof is connected to a mechanism which could restart it */
     bool hardwareRestartable;
@@ -92,7 +92,7 @@ struct TofSensor {
     IOExpander* hardwareRestartIOExpander;
     /** The index of the IO, which is connected to the XShut pin of the tof  */
     unsigned int hardwareRestartIOExpanderIoIndex;
-    
+
     // DISTANCE & TRESHOLD
     /** The function which must be used to read the distance */
     tofSensorGetDistanceMMFunction* tofGetDistanceMM;
@@ -106,7 +106,7 @@ struct TofSensor {
     unsigned int detectionThreshold;
     /** The counter of how many detected were done. */
     unsigned int detectedCount;
-    
+
     // CONFIG
     /** The beam angle of what he could detect. */
     float beamAngleRadian;
@@ -121,7 +121,7 @@ struct TofSensor {
     // IMPLEMENTATION CALL BACK
     /** The real function which do something on the Hardware */
     tofSensorStartFunction* tofSensorStart;
-    
+
     // EXTENSION OBJECT
     /** Generic pointer for context use */
     int* object;
@@ -130,10 +130,10 @@ struct TofSensor {
 /**
  * Init a Tof Sensor
  */
-void initTofSensor(TofSensor* tofSensor, 
-                    tofSensorStartFunction* tofSensorStart,
-                    tofSensorGetDistanceMMFunction* tofGetDistanceMM,
-                    int* object);
+void initTofSensor(TofSensor* tofSensor,
+        tofSensorStartFunction* tofSensorStart,
+        tofSensorGetDistanceMMFunction* tofGetDistanceMM,
+        int* object);
 
 /**
  * Start the Tof Sensor for the first time.

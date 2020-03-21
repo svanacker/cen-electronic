@@ -26,14 +26,13 @@ unsigned int appendBool(OutputStream* outputStream, bool b) {
     } else {
         append(outputStream, '0');
     }
-	return 1;
+    return 1;
 }
 
 unsigned int appendBoolAsString(OutputStream* outputStream, bool b) {
     if (b) {
         return appendString(outputStream, "true");
-    }
-    else {
+    } else {
         return appendString(outputStream, "false");
     }
 }
@@ -43,7 +42,7 @@ void appendSeparator(OutputStream* outputStream) {
 }
 
 void appendSpace(OutputStream* outputStream) {
-	append(outputStream, ' ');
+    append(outputStream, ' ');
 }
 
 unsigned int appendRepeatedChars(OutputStream* outputStream, unsigned char c, int count) {
@@ -67,14 +66,14 @@ unsigned int appendSpaces(OutputStream* outputStream, int count) {
 
 unsigned int appendString(OutputStream* outputStream, const char* s) {
     unsigned int result = 0;
-	if (s == NULL) {
+    if (s == NULL) {
         return result;
     }
     while (*s != '\0') {
         append(outputStream, *s++);
-		result++;
+        result++;
     }
-	return result;
+    return result;
 }
 
 unsigned int appendStringLN(OutputStream* outputStream, const char* s) {
@@ -85,19 +84,19 @@ unsigned int appendStringLN(OutputStream* outputStream, const char* s) {
 }
 
 unsigned int appendHexFixedCharArray(OutputStream* outputStream, FixedCharArray* s) {
-	unsigned int i;
-	char* sPointer = (char*)s;
-	for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
-		unsigned char c = *sPointer;
-		appendHex2(outputStream, c);
-		sPointer++;
-	}
-	return FIXED_CHAR_ARRAY_LENGTH * 2;
+    unsigned int i;
+    char* sPointer = (char*) s;
+    for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
+        unsigned char c = *sPointer;
+        appendHex2(outputStream, c);
+        sPointer++;
+    }
+    return FIXED_CHAR_ARRAY_LENGTH * 2;
 }
 
 unsigned int appendFixedCharArray(OutputStream* outputStream, FixedCharArray* s) {
     unsigned int i;
-    char* sPointer = (char*)s;
+    char* sPointer = (char*) s;
     for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
         unsigned char c = *sPointer;
         if (c == 0) {
@@ -106,54 +105,54 @@ unsigned int appendFixedCharArray(OutputStream* outputStream, FixedCharArray* s)
         append(outputStream, c);
         sPointer++;
     }
-	return FIXED_CHAR_ARRAY_LENGTH;
+    return FIXED_CHAR_ARRAY_LENGTH;
 }
 
 unsigned int appendStringCRLF(OutputStream* outputStream, const char* s) {
     unsigned int result;
-	result = appendString(outputStream, s);
+    result = appendString(outputStream, s);
     result += appendCRLF(outputStream);
-	return result;
+    return result;
 }
 
 unsigned int appendCR(OutputStream* outputStream) {
     append(outputStream, CARRIAGE_RETURN);
-	return 1;
+    return 1;
 }
 
 unsigned int appendLF(OutputStream* outputStream) {
     append(outputStream, LF);
-	return 1;
+    return 1;
 }
 
 unsigned int appendCRLF(OutputStream* outputStream) {
     append(outputStream, CARRIAGE_RETURN);
     append(outputStream, LF);
-	return 2;
+    return 2;
 }
 
 unsigned int println(OutputStream* outputStream) {
-    #ifdef USE_CR
-        return appendCRLF(outputStream);
-    #endif
+#ifdef USE_CR
+    return appendCRLF(outputStream);
+#endif
     return appendLF(outputStream);
 }
 
 unsigned int appendAck(OutputStream* outputStream) {
     append(outputStream, ACK);
-	return 1;
+    return 1;
 }
 
 // BUFFER
 
 unsigned int printBuffer(OutputStream* outputStream, Buffer* buffer) {
     unsigned int result = 0;
-	while(!isBufferEmpty(buffer)) {
+    while (!isBufferEmpty(buffer)) {
         unsigned char c = bufferReadChar(buffer);
         append(outputStream, c);
-		result++;
+        result++;
     }
-	return result;
+    return result;
 }
 
 // HEXADECIMAL
@@ -162,8 +161,7 @@ unsigned char convertToHex(unsigned char c) {
     // Value between 0 and 9
     if (c < 10) {
         return c + 48;
-    }
-    else if (c < 16) {
+    } else if (c < 16) {
         // Value between A and F
         // (65 - 10 + c)
         return c + 55;
@@ -243,7 +241,7 @@ void appendHexFloat6(OutputStream* stream, float value, unsigned int digitPrecis
     for (i = 0; i < digitPrecision; i++) {
         valueWrite *= 10.0f;
     }
-    signed long longValue = (signed long)valueWrite;
+    signed long longValue = (signed long) valueWrite;
     appendHex6(stream, longValue);
 }
 
@@ -254,7 +252,7 @@ void appendHexFloat8(OutputStream* stream, float value, unsigned int digitPrecis
     for (i = 0; i < digitPrecision; i++) {
         valueWrite *= 10.0f;
     }
-    signed long longValue = (signed long)valueWrite;
+    signed long longValue = (signed long) valueWrite;
     appendHex8(stream, longValue);
 }
 
@@ -300,23 +298,22 @@ int appendDecf(OutputStream* stream, float value) {
     float decimalValue;
     long decimalValueLong;
 
-	float absValue = value;
-	if (absValue < 0) {
-		absValue = -absValue;
-	}
-	// By default, 1 decimal
-	int decimalCount = 1;
-	float decimalFactorMultiplicator = 10;
-	if (absValue < 10) {
-		// 3 decimal
-		decimalCount = 3;
-		decimalFactorMultiplicator = 1000;
-	}
-	else if (absValue < 100) {
-		// 2 decimal
-		decimalCount = 2;
-		decimalFactorMultiplicator = 100;
-	}
+    float absValue = value;
+    if (absValue < 0) {
+        absValue = -absValue;
+    }
+    // By default, 1 decimal
+    int decimalCount = 1;
+    float decimalFactorMultiplicator = 10;
+    if (absValue < 10) {
+        // 3 decimal
+        decimalCount = 3;
+        decimalFactorMultiplicator = 1000;
+    } else if (absValue < 100) {
+        // 2 decimal
+        decimalCount = 2;
+        decimalFactorMultiplicator = 100;
+    }
 
     if (value < 0) {
         decimalValue = ((value - (long) value) * (-decimalFactorMultiplicator));
@@ -332,22 +329,21 @@ int appendDecf(OutputStream* stream, float value) {
     append(stream, DECIMAL_SEPARATOR);
     result++;
 
-	// Decimals
-	if (decimalCount >= 3 && decimalValueLong < 100) {
-		append(stream, '0');
-		result++;
-	}
+    // Decimals
+    if (decimalCount >= 3 && decimalValueLong < 100) {
+        append(stream, '0');
+        result++;
+    }
     if (decimalCount >= 2 && decimalValueLong < 10) {
         append(stream, '0');
-		result++;
-	}
+        result++;
+    }
     result += appendDec(stream, decimalValueLong);
 
     return result;
 }
 
 // AGGREGATION
-
 
 void appendStringAndDecf(OutputStream* stream, const char* s, float value) {
     appendString(stream, s);
@@ -377,8 +373,8 @@ void appendStringAndHex2LN(OutputStream* stream, const char* s, unsigned char va
 }
 
 void appendStringAndBool(OutputStream* outputStream, const char* s, bool value) {
-	appendString(outputStream, s);
-	appendBool(outputStream, value);
+    appendString(outputStream, s);
+    appendBool(outputStream, value);
 }
 
 void appendKeyAndName(OutputStream* stream, const char* key, const char* name) {

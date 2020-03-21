@@ -11,12 +11,12 @@
  * @private
  */
 
-unsigned int _robotConfigReadInt (RobotConfig* robotConfig){
+unsigned int _robotConfigReadInt(RobotConfig* robotConfig) {
     unsigned int value = 0;
 
     value = ((PORTG & 0x0004) << 11) | // PORTG2
             ((PORTC & 0x2000) >> 1) | // PORTC13
-            ((PORTB & 0x8000) >> 4)|// PORTB15
+            ((PORTB & 0x8000) >> 4) | // PORTB15
             ((PORTB & 0x3E00) >> 3) | // PORTB9 -> PORTB13
             ((PORTB & 0x00C0) >> 2) | // PORTB6 - PORTB7
             ((PORTD & 0x01E0) >> 5); // PORTD5 ->PORTD8
@@ -26,7 +26,7 @@ unsigned int _robotConfigReadInt (RobotConfig* robotConfig){
 
 void initRobotConfigPic32(RobotConfig* robotConfig, enum RobotType robotType) {
     // Init the portb input selected as I/O
-    AD1PCFG = 0xBFC0;//0b1011111011000000;
+    AD1PCFG = 0xBFC0; //0b1011111011000000;
 
     //Init the port selected as Input
     TRISDbits.TRISD5 = 1;

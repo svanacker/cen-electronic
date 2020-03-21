@@ -36,18 +36,17 @@ void printUsage(void) {
 
 }
 
-int main(int argumentCount, char* arguments[])
-{
+int main(int argumentCount, char* arguments[]) {
     char* applicationNameAsChar = arguments[0];
 
     if (argumentCount <= 1) {
 
         // Run the Motor Board
         char motorBoardOptionCommand[255];
-		strcpy_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), MOTOR_BOARD_PC_NAME);
-		strcat_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), " ");
-		strcat_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), MOTOR_BOARD_PC_RUN_STANDARD);
-		runProcess(applicationNameAsChar, motorBoardOptionCommand);
+        strcpy_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), MOTOR_BOARD_PC_NAME);
+        strcat_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), " ");
+        strcat_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), MOTOR_BOARD_PC_RUN_STANDARD);
+        runProcess(applicationNameAsChar, motorBoardOptionCommand);
 
         // Run the Mecanical Board 1
         char mechanical1OptionCommand[255];
@@ -60,8 +59,7 @@ int main(int argumentCount, char* arguments[])
         runMainBoardPC(false, false);
 
         delayMilliSecs(10);
-    }
-    else {
+    } else {
         char* boardName = arguments[1];
         if (strcmp(boardName, MAIN_BOARD_PC_NAME) == 0) {
             bool robotManager = false;
@@ -77,36 +75,32 @@ int main(int argumentCount, char* arguments[])
                 strcat_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), " ");
                 strcat_s(motorBoardOptionCommand, _countof(motorBoardOptionCommand), MOTOR_BOARD_PC_RUN_STANDARD);
                 runProcess(applicationNameAsChar, motorBoardOptionCommand);
-                */
+                 */
             }
             // In all cases
             runMainBoardPC(robotManager, singleMode);
-        }
-        else if (strcmp(boardName, MOTOR_BOARD_PC_NAME) == 0) {
+        } else if (strcmp(boardName, MOTOR_BOARD_PC_NAME) == 0) {
             bool singleMode = false;
             if (argumentCount > 2) {
                 char* motorBoardRunMode = arguments[2];
                 singleMode = (strcmp(motorBoardRunMode, MOTOR_BOARD_PC_RUN_SINGLE) == 0);
             }
             runMotorBoardPC(singleMode);
-        }
-        else if (strcmp(boardName, MECHANICAL_BOARD_1_PC_NAME) == 0) {
+        } else if (strcmp(boardName, MECHANICAL_BOARD_1_PC_NAME) == 0) {
             bool singleMode = false;
             if (argumentCount > 2) {
                 char* mechanicalBoard1RunMode = arguments[2];
                 singleMode = (strcmp(mechanicalBoard1RunMode, MOTOR_BOARD_PC_RUN_SINGLE) == 0);
             }
             runMechanicalBoard1PC(singleMode);
-        }
-        else if (strcmp(boardName, ALL_TESTS_NAME) == 0) {
+        } else if (strcmp(boardName, ALL_TESTS_NAME) == 0) {
             runAllTests();
-        }
-        else {
+        } else {
             printUsage();
             return EXIT_FAILURE;
         }
     }
-    
+
     getchar();
     return EXIT_SUCCESS;
 }

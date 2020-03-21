@@ -195,7 +195,7 @@ void initBigRobotLocations2019(GameStrategyContext* gameStrategyContext) {
 
     keyPoint1Location = addLocationWithColors2019(teamColor, navigation, KEY_POINT_1, KEY_POINT_1_LABEL, KEY_POINT_1_X, KEY_POINT_1_Y);
     keyPoint2Location = addLocationWithColors2019(teamColor, navigation, KEY_POINT_2, KEY_POINT_2_LABEL, KEY_POINT_2_X, KEY_POINT_2_Y);
-    bigDistributorLine1FrontLocation = addLocationWithColors2019(teamColor, navigation, BIG_DISTRIBUTOR_LINE_1, BIG_DISTRIBUTOR_LINE_1_LABEL,  BIG_DISTRIBUTOR_LINE_1_X, BIG_DISTRIBUTOR_LINE_1_Y);
+    bigDistributorLine1FrontLocation = addLocationWithColors2019(teamColor, navigation, BIG_DISTRIBUTOR_LINE_1, BIG_DISTRIBUTOR_LINE_1_LABEL, BIG_DISTRIBUTOR_LINE_1_X, BIG_DISTRIBUTOR_LINE_1_Y);
     bigDistributorLine2FrontLocation = addLocationWithColors2019(teamColor, navigation, BIG_DISTRIBUTOR_LINE_2, BIG_DISTRIBUTOR_LINE_2_LABEL, BIG_DISTRIBUTOR_LINE_2_X, BIG_DISTRIBUTOR_LINE_2_Y);
     bigDistributorLine3FrontLocation = addLocationWithColors2019(teamColor, navigation, BIG_DISTRIBUTOR_LINE_3, BIG_DISTRIBUTOR_LINE_3_LABEL, BIG_DISTRIBUTOR_LINE_3_X, BIG_DISTRIBUTOR_LINE_3_Y);
     blueiumGreeniumCenteredLocation = addLocationWithColors2019(teamColor, navigation, BLUEIUM_GREENIUM_POINT, BLUEIUM_GREENIUM_POINT_LABEL, BLUEIUM_GREENIUM_POINT_X, BLUEIUM_GREENIUM_POINT_Y);
@@ -210,224 +210,223 @@ void initBigRobotPaths2019(GameStrategyContext* gameStrategyContext) {
 
     // Big Robot
     bigRobotStartArea_to_bigDistributorLine1Front = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        bigRobotStartAreaLocation,
-        bigDistributorLine1FrontLocation,
-        BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_COST,
-        BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_CP1,
-        BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_CP2,
-        deciDegreeToRad(BIG_ROBOT_START_AREA_ANGLE_DECI_DEG),
-        deciDegreeToRad(BIG_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG),
-        aFactor * BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_ACCELERATION_FACTOR,
-        speedFactor * BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_SPEED_FACTOR);
+            navigation,
+            bigRobotStartAreaLocation,
+            bigDistributorLine1FrontLocation,
+            BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_COST,
+            BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_CP1,
+            BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_CP2,
+            deciDegreeToRad(BIG_ROBOT_START_AREA_ANGLE_DECI_DEG),
+            deciDegreeToRad(BIG_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG),
+            aFactor * BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_ACCELERATION_FACTOR,
+            speedFactor * BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_SPEED_FACTOR);
 
     bigRobotStartArea_to_chaosZoneFront = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        bigRobotStartAreaLocation,
-        chaosFrontLocation,
-        BIG_ROBOT_STARTAREA_TO_CHAOS_ZONE_FRONT_COST,
-        BIG_ROBOT_STARTAREA_TO_CHAOS_ZONE_FRONT_CP1,
-        BIG_ROBOT_STARTAREA_TO_CHAOS_ZONE_FRONT_CP2,
-        deciDegreeToRad(BIG_ROBOT_START_AREA_ANGLE_DECI_DEG),
-        deciDegreeToRad(CHAOS_ZONE_FRONT_ANGLE_DECI_DEG),
-        aFactor * BIG_ROBOT_STARTAREA_TO_CHAOS_ZONE_FRONT_ACCELERATION_FACTOR,
-        speedFactor * BIG_ROBOT_STARTAREA_TO_CHAOS_ZONE_FRONT_SPEED_FACTOR);
+            navigation,
+            bigRobotStartAreaLocation,
+            chaosFrontLocation,
+            BIG_ROBOT_STARTAREA_TO_CHAOS_ZONE_FRONT_COST,
+            BIG_ROBOT_STARTAREA_TO_CHAOS_ZONE_FRONT_CP1,
+            BIG_ROBOT_STARTAREA_TO_CHAOS_ZONE_FRONT_CP2,
+            deciDegreeToRad(BIG_ROBOT_START_AREA_ANGLE_DECI_DEG),
+            deciDegreeToRad(CHAOS_ZONE_FRONT_ANGLE_DECI_DEG),
+            aFactor * BIG_ROBOT_STARTAREA_TO_CHAOS_ZONE_FRONT_ACCELERATION_FACTOR,
+            speedFactor * BIG_ROBOT_STARTAREA_TO_CHAOS_ZONE_FRONT_SPEED_FACTOR);
 
     chaosZoneFront_to_rediumDropZone = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        chaosFrontLocation,
-        rediumDropZoneLocation,
-        CHAOS_ZONE_FRONT_TO_REDIUM_DROP_ZONE_COST,
-        CHAOS_ZONE_FRONT_TO_REDIUM_DROP_ZONE_CP1,
-        CHAOS_ZONE_FRONT_TO_REDIUM_DROP_ZONE_CP2,
-        deciDegreeToRad(CHAOS_ZONE_FRONT_ANGLE_DECI_DEG),
-        deciDegreeToRad(REDIUM_DROP_ZONE_ANGLE_DECI_DEG),
-        aFactor * CHAOS_ZONE_FRONT_TO_REDIUM_DROP_ZONE_ACCELERATION_FACTOR,
-        speedFactor * CHAOS_ZONE_FRONT_TO_REDIUM_DROP_ZONE_SPEED_FACTOR);
+            navigation,
+            chaosFrontLocation,
+            rediumDropZoneLocation,
+            CHAOS_ZONE_FRONT_TO_REDIUM_DROP_ZONE_COST,
+            CHAOS_ZONE_FRONT_TO_REDIUM_DROP_ZONE_CP1,
+            CHAOS_ZONE_FRONT_TO_REDIUM_DROP_ZONE_CP2,
+            deciDegreeToRad(CHAOS_ZONE_FRONT_ANGLE_DECI_DEG),
+            deciDegreeToRad(REDIUM_DROP_ZONE_ANGLE_DECI_DEG),
+            aFactor * CHAOS_ZONE_FRONT_TO_REDIUM_DROP_ZONE_ACCELERATION_FACTOR,
+            speedFactor * CHAOS_ZONE_FRONT_TO_REDIUM_DROP_ZONE_SPEED_FACTOR);
 
     rediumDropZone_to_keyPoint1 = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        rediumDropZoneLocation,
-        keyPoint1Location,
-        REDIUM_DROP_ZONE_TO_KEY_POINT_1_COST,
-        REDIUM_DROP_ZONE_TO_KEY_POINT_1_CP1,
-        REDIUM_DROP_ZONE_TO_KEY_POINT_1_CP2,
-        deciDegreeToRad(REDIUM_DROP_ZONE_ANGLE_DECI_DEG),
-        deciDegreeToRad(KEY_POINT_1_FROM_REDIUM_DROP_ZONE_ANGLE_DECI_DEG),
-        aFactor * REDIUM_DROP_ZONE_TO_KEY_POINT_1_ACCELERATION_FACTOR,
-        speedFactor * REDIUM_DROP_ZONE_TO_KEY_POINT_1_SPEED_FACTOR);
+            navigation,
+            rediumDropZoneLocation,
+            keyPoint1Location,
+            REDIUM_DROP_ZONE_TO_KEY_POINT_1_COST,
+            REDIUM_DROP_ZONE_TO_KEY_POINT_1_CP1,
+            REDIUM_DROP_ZONE_TO_KEY_POINT_1_CP2,
+            deciDegreeToRad(REDIUM_DROP_ZONE_ANGLE_DECI_DEG),
+            deciDegreeToRad(KEY_POINT_1_FROM_REDIUM_DROP_ZONE_ANGLE_DECI_DEG),
+            aFactor * REDIUM_DROP_ZONE_TO_KEY_POINT_1_ACCELERATION_FACTOR,
+            speedFactor * REDIUM_DROP_ZONE_TO_KEY_POINT_1_SPEED_FACTOR);
 
     rediumDropZone_to_keyPoint2 = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        rediumDropZoneLocation,
-        keyPoint2Location,
-        REDIUM_DROP_ZONE_TO_KEY_POINT_2_COST,
-        REDIUM_DROP_ZONE_TO_KEY_POINT_2_CP1,
-        REDIUM_DROP_ZONE_TO_KEY_POINT_2_CP2,
-        deciDegreeToRad(REDIUM_DROP_ZONE_ANGLE_DECI_DEG),
-        deciDegreeToRad(KEY_POINT_2_ANGLE_DECI_DEG),
-        aFactor * REDIUM_DROP_ZONE_TO_KEY_POINT_2_ACCELERATION_FACTOR,
-        speedFactor * REDIUM_DROP_ZONE_TO_KEY_POINT_2_SPEED_FACTOR);
+            navigation,
+            rediumDropZoneLocation,
+            keyPoint2Location,
+            REDIUM_DROP_ZONE_TO_KEY_POINT_2_COST,
+            REDIUM_DROP_ZONE_TO_KEY_POINT_2_CP1,
+            REDIUM_DROP_ZONE_TO_KEY_POINT_2_CP2,
+            deciDegreeToRad(REDIUM_DROP_ZONE_ANGLE_DECI_DEG),
+            deciDegreeToRad(KEY_POINT_2_ANGLE_DECI_DEG),
+            aFactor * REDIUM_DROP_ZONE_TO_KEY_POINT_2_ACCELERATION_FACTOR,
+            speedFactor * REDIUM_DROP_ZONE_TO_KEY_POINT_2_SPEED_FACTOR);
 
     keyPoint2_to_bigDistributorLine1Front = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        keyPoint2Location,
-        bigDistributorLine1FrontLocation,
-        KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_COST,
-        KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_CP1,
-        KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_CP2,
-        deciDegreeToRad(KEY_POINT_2_TO_DISTRIBUTOR_ANGLE_DECI_DEG),
-        deciDegreeToRad(BIG_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG),
-        aFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_ACCELERATION_FACTOR,
-        speedFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_SPEED_FACTOR);
+            navigation,
+            keyPoint2Location,
+            bigDistributorLine1FrontLocation,
+            KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_COST,
+            KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_CP1,
+            KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_CP2,
+            deciDegreeToRad(KEY_POINT_2_TO_DISTRIBUTOR_ANGLE_DECI_DEG),
+            deciDegreeToRad(BIG_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG),
+            aFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_ACCELERATION_FACTOR,
+            speedFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_1_FRONT_SPEED_FACTOR);
 
 
     bigDistributorLine1Front_to_keyPoint1 = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        bigDistributorLine1FrontLocation,
-        keyPoint1Location,
-        BIGDISTRIBUTOR_LINE1_FRONT_TO_KEY_POINT_1_COST,
-        BIGDISTRIBUTOR_LINE1_FRONT_TO_KEY_POINT_1_CP1,
-        BIGDISTRIBUTOR_LINE1_FRONT_TO_KEY_POINT_1_CP2,
-        deciDegreeToRad(BIG_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG),
-        deciDegreeToRad(KEY_POINT_1_FROM_DISTRIBUTOR_ANGLE_DECI_DEG),
-        aFactor * BIGDISTRIBUTOR_LINE1_FRONT_TO_KEY_POINT_1_ACCELERATION_FACTOR,
-        speedFactor * BIGDISTRIBUTOR_LINE1_FRONT_TO_KEY_POINT_1_SPEED_FACTOR);
+            navigation,
+            bigDistributorLine1FrontLocation,
+            keyPoint1Location,
+            BIGDISTRIBUTOR_LINE1_FRONT_TO_KEY_POINT_1_COST,
+            BIGDISTRIBUTOR_LINE1_FRONT_TO_KEY_POINT_1_CP1,
+            BIGDISTRIBUTOR_LINE1_FRONT_TO_KEY_POINT_1_CP2,
+            deciDegreeToRad(BIG_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG),
+            deciDegreeToRad(KEY_POINT_1_FROM_DISTRIBUTOR_ANGLE_DECI_DEG),
+            aFactor * BIGDISTRIBUTOR_LINE1_FRONT_TO_KEY_POINT_1_ACCELERATION_FACTOR,
+            speedFactor * BIGDISTRIBUTOR_LINE1_FRONT_TO_KEY_POINT_1_SPEED_FACTOR);
 
     keyPoint1_to_acceleratorDrop = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        keyPoint1Location,
-        acceleratorDropLocation,
-        KEY_POINT_1_TO_ACCELERATOR_DROP_COST,
-        KEY_POINT_1_TO_ACCELERATOR_DROP_CP1,
-        KEY_POINT_1_TO_ACCELERATOR_DROP_CP2,
-        deciDegreeToRad(KEY_POINT_1_TO_ACCERATOR_ANGLE_DECI_DEG),
-        deciDegreeToRad(ACCELERATOR_DROP_DECI_DEG),
-        aFactor * KEY_POINT_1_TO_ACCELERATOR_DROP_ACCELERATION_FACTOR,
-        speedFactor * KEY_POINT_1_TO_ACCELERATOR_DROP_SPEED_FACTOR);
+            navigation,
+            keyPoint1Location,
+            acceleratorDropLocation,
+            KEY_POINT_1_TO_ACCELERATOR_DROP_COST,
+            KEY_POINT_1_TO_ACCELERATOR_DROP_CP1,
+            KEY_POINT_1_TO_ACCELERATOR_DROP_CP2,
+            deciDegreeToRad(KEY_POINT_1_TO_ACCERATOR_ANGLE_DECI_DEG),
+            deciDegreeToRad(ACCELERATOR_DROP_DECI_DEG),
+            aFactor * KEY_POINT_1_TO_ACCELERATOR_DROP_ACCELERATION_FACTOR,
+            speedFactor * KEY_POINT_1_TO_ACCELERATOR_DROP_SPEED_FACTOR);
 
     acceleratorDrop_to_keyPoint1 = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        acceleratorDropLocation,
-        keyPoint1Location,
-        ACCELERATOR_DROP_TO_KEY_POINT_1_COST,
-        ACCELERATOR_DROP_TO_KEY_POINT_1_CP1,
-        ACCELERATOR_DROP_TO_KEY_POINT_1_CP2,
-        deciDegreeToRad(ACCELERATOR_DROP_DECI_DEG),
-        deciDegreeToRad(KEY_POINT_1_FROM_ACCERATOR_ANGLE_DECI_DEG),
-        aFactor * ACCELERATOR_DROP_TO_KEY_POINT_1_ACCELERATION_FACTOR,
-        speedFactor * ACCELERATOR_DROP_TO_KEY_POINT_1_SPEED_FACTOR);
+            navigation,
+            acceleratorDropLocation,
+            keyPoint1Location,
+            ACCELERATOR_DROP_TO_KEY_POINT_1_COST,
+            ACCELERATOR_DROP_TO_KEY_POINT_1_CP1,
+            ACCELERATOR_DROP_TO_KEY_POINT_1_CP2,
+            deciDegreeToRad(ACCELERATOR_DROP_DECI_DEG),
+            deciDegreeToRad(KEY_POINT_1_FROM_ACCERATOR_ANGLE_DECI_DEG),
+            aFactor * ACCELERATOR_DROP_TO_KEY_POINT_1_ACCELERATION_FACTOR,
+            speedFactor * ACCELERATOR_DROP_TO_KEY_POINT_1_SPEED_FACTOR);
 
     keyPoint1_to_bigDistributorLine2Front = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        keyPoint1Location,
-        bigDistributorLine2FrontLocation,
-        KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_2_FRONT_COST,
-        KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_2_FRONT_CP1,
-        KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_2_FRONT_CP2,
-        deciDegreeToRad(KEY_POINT_1_FROM_ACCERATOR_ANGLE_DECI_DEG),
-        deciDegreeToRad(BIG_DISTRIBUTOR_LINE_2_ANGLE_DECI_DEG),
-        aFactor * KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_2_FRONT_ACCELERATION_FACTOR,
-        speedFactor * KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_2_FRONT_SPEED_FACTOR);
+            navigation,
+            keyPoint1Location,
+            bigDistributorLine2FrontLocation,
+            KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_2_FRONT_COST,
+            KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_2_FRONT_CP1,
+            KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_2_FRONT_CP2,
+            deciDegreeToRad(KEY_POINT_1_FROM_ACCERATOR_ANGLE_DECI_DEG),
+            deciDegreeToRad(BIG_DISTRIBUTOR_LINE_2_ANGLE_DECI_DEG),
+            aFactor * KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_2_FRONT_ACCELERATION_FACTOR,
+            speedFactor * KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_2_FRONT_SPEED_FACTOR);
 
     bigDistributorLine2Front_to_keyPoint1 = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        bigDistributorLine2FrontLocation,
-        keyPoint1Location,
-        BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_1_COST,
-        BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_1_CP1,
-        BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_1_CP2,
-        deciDegreeToRad(BIG_DISTRIBUTOR_LINE_2_ANGLE_DECI_DEG),
-        deciDegreeToRad(KEY_POINT_1_FROM_DISTRIBUTOR_ANGLE_DECI_DEG),
-        aFactor * BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_1_ACCELERATION_FACTOR,
-        speedFactor * BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_1_SPEED_FACTOR);
+            navigation,
+            bigDistributorLine2FrontLocation,
+            keyPoint1Location,
+            BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_1_COST,
+            BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_1_CP1,
+            BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_1_CP2,
+            deciDegreeToRad(BIG_DISTRIBUTOR_LINE_2_ANGLE_DECI_DEG),
+            deciDegreeToRad(KEY_POINT_1_FROM_DISTRIBUTOR_ANGLE_DECI_DEG),
+            aFactor * BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_1_ACCELERATION_FACTOR,
+            speedFactor * BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_1_SPEED_FACTOR);
 
     keyPoint2_to_bigDistributorLine2Front = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        keyPoint2Location,
-        bigDistributorLine2FrontLocation,
-        KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_2_FRONT_COST,
-        KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_2_FRONT_CP1,
-        KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_2_FRONT_CP2,
-        deciDegreeToRad(KEY_POINT_2_TO_DISTRIBUTOR_ANGLE_DECI_DEG),
-        deciDegreeToRad(BIG_DISTRIBUTOR_LINE_2_ANGLE_DECI_DEG),
-        aFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_2_FRONT_ACCELERATION_FACTOR,
-        speedFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_2_FRONT_SPEED_FACTOR);
+            navigation,
+            keyPoint2Location,
+            bigDistributorLine2FrontLocation,
+            KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_2_FRONT_COST,
+            KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_2_FRONT_CP1,
+            KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_2_FRONT_CP2,
+            deciDegreeToRad(KEY_POINT_2_TO_DISTRIBUTOR_ANGLE_DECI_DEG),
+            deciDegreeToRad(BIG_DISTRIBUTOR_LINE_2_ANGLE_DECI_DEG),
+            aFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_2_FRONT_ACCELERATION_FACTOR,
+            speedFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_2_FRONT_SPEED_FACTOR);
 
     bigDistributorLine2Front_to_keyPoint2 = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        bigDistributorLine2FrontLocation,
-        keyPoint2Location,
-        BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_2_COST,
-        BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_2_CP1,
-        BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_2_CP2,
-        deciDegreeToRad(BIG_DISTRIBUTOR_LINE_2_ANGLE_DECI_DEG),
-        deciDegreeToRad(KEY_POINT_2_FROM_DISTRIBUTOR_ANGLE_DECI_DEG),
-        aFactor * BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_2_ACCELERATION_FACTOR,
-        speedFactor * BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_2_SPEED_FACTOR);
+            navigation,
+            bigDistributorLine2FrontLocation,
+            keyPoint2Location,
+            BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_2_COST,
+            BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_2_CP1,
+            BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_2_CP2,
+            deciDegreeToRad(BIG_DISTRIBUTOR_LINE_2_ANGLE_DECI_DEG),
+            deciDegreeToRad(KEY_POINT_2_FROM_DISTRIBUTOR_ANGLE_DECI_DEG),
+            aFactor * BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_2_ACCELERATION_FACTOR,
+            speedFactor * BIGDISTRIBUTOR_LINE2_FRONT_TO_KEY_POINT_2_SPEED_FACTOR);
 
     keyPoint2_to_bigDistributorLine3Front = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        keyPoint2Location,
-        bigDistributorLine3FrontLocation,
-        KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_3_FRONT_COST,
-        KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_3_FRONT_CP1,
-        KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_3_FRONT_CP2,
-        deciDegreeToRad(KEY_POINT_2_TO_DISTRIBUTOR_ANGLE_DECI_DEG),
-        deciDegreeToRad(BIG_DISTRIBUTOR_LINE_3_ANGLE_DECI_DEG),
-        aFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_3_FRONT_ACCELERATION_FACTOR,
-        speedFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_3_FRONT_SPEED_FACTOR);
+            navigation,
+            keyPoint2Location,
+            bigDistributorLine3FrontLocation,
+            KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_3_FRONT_COST,
+            KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_3_FRONT_CP1,
+            KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_3_FRONT_CP2,
+            deciDegreeToRad(KEY_POINT_2_TO_DISTRIBUTOR_ANGLE_DECI_DEG),
+            deciDegreeToRad(BIG_DISTRIBUTOR_LINE_3_ANGLE_DECI_DEG),
+            aFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_3_FRONT_ACCELERATION_FACTOR,
+            speedFactor * KEY_POINT_2_TO_BIGDISTRIBUTOR_LINE_3_FRONT_SPEED_FACTOR);
 
     bigDistributorLine2Front_to_keyPoint2 = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        bigDistributorLine2FrontLocation,
-        keyPoint2Location,
-        BIGDISTRIBUTOR_LINE3_FRONT_TO_KEY_POINT_2_COST,
-        BIGDISTRIBUTOR_LINE3_FRONT_TO_KEY_POINT_2_CP1,
-        BIGDISTRIBUTOR_LINE3_FRONT_TO_KEY_POINT_2_CP2,
-        deciDegreeToRad(BIG_DISTRIBUTOR_LINE_3_ANGLE_DECI_DEG),
-        deciDegreeToRad(KEY_POINT_2_FROM_DISTRIBUTOR_ANGLE_DECI_DEG),
-        aFactor * BIGDISTRIBUTOR_LINE3_FRONT_TO_KEY_POINT_2_ACCELERATION_FACTOR,
-        speedFactor * BIGDISTRIBUTOR_LINE3_FRONT_TO_KEY_POINT_2_SPEED_FACTOR);
+            navigation,
+            bigDistributorLine2FrontLocation,
+            keyPoint2Location,
+            BIGDISTRIBUTOR_LINE3_FRONT_TO_KEY_POINT_2_COST,
+            BIGDISTRIBUTOR_LINE3_FRONT_TO_KEY_POINT_2_CP1,
+            BIGDISTRIBUTOR_LINE3_FRONT_TO_KEY_POINT_2_CP2,
+            deciDegreeToRad(BIG_DISTRIBUTOR_LINE_3_ANGLE_DECI_DEG),
+            deciDegreeToRad(KEY_POINT_2_FROM_DISTRIBUTOR_ANGLE_DECI_DEG),
+            aFactor * BIGDISTRIBUTOR_LINE3_FRONT_TO_KEY_POINT_2_ACCELERATION_FACTOR,
+            speedFactor * BIGDISTRIBUTOR_LINE3_FRONT_TO_KEY_POINT_2_SPEED_FACTOR);
 
 
     keyPoint1_to_bigDistributorLine3Front = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        keyPoint1Location,
-        bigDistributorLine3FrontLocation,
-        KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_3_FRONT_COST,
-        KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_3_FRONT_CP1,
-        KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_3_FRONT_CP2,
-        deciDegreeToRad(KEY_POINT_1_FROM_ACCERATOR_ANGLE_DECI_DEG),
-        deciDegreeToRad(BIG_DISTRIBUTOR_LINE_3_ANGLE_DECI_DEG),
-        aFactor * KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_3_FRONT_ACCELERATION_FACTOR,
-        speedFactor * KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_3_FRONT_SPEED_FACTOR);
+            navigation,
+            keyPoint1Location,
+            bigDistributorLine3FrontLocation,
+            KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_3_FRONT_COST,
+            KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_3_FRONT_CP1,
+            KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_3_FRONT_CP2,
+            deciDegreeToRad(KEY_POINT_1_FROM_ACCERATOR_ANGLE_DECI_DEG),
+            deciDegreeToRad(BIG_DISTRIBUTOR_LINE_3_ANGLE_DECI_DEG),
+            aFactor * KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_3_FRONT_ACCELERATION_FACTOR,
+            speedFactor * KEY_POINT_1_TO_BIGDISTRIBUTOR_LINE_3_FRONT_SPEED_FACTOR);
 
     bigDistributorLine3Front_to_keyPoint1 = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        bigDistributorLine3FrontLocation,
-        keyPoint1Location,
-        BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_COST,
-        BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_CP1,
-        BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_CP2,
-        deciDegreeToRad(BIG_DISTRIBUTOR_LINE_3_ANGLE_DECI_DEG),
-        deciDegreeToRad(KEY_POINT_1_FROM_DISTRIBUTOR_ANGLE_DECI_DEG),
-        aFactor * BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_ACCELERATION_FACTOR,
-        speedFactor * BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_SPEED_FACTOR);
-    
-    bigDistributorLine1Front_to_blueiumGreeniumPoint = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        bigDistributorLine1FrontLocation,
-        blueiumGreeniumCenteredLocation,
-        500.0f,
-        -300.0f,
-        -300.0f,
-        deciDegreeToRad(ANGLE_DECI_DEG_0),
-        deciDegreeToRad(ANGLE_DECI_DEG_90),
-        aFactor * 0.5f,
-        speedFactor * 0.5f);
-}
+            navigation,
+            bigDistributorLine3FrontLocation,
+            keyPoint1Location,
+            BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_COST,
+            BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_CP1,
+            BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_CP2,
+            deciDegreeToRad(BIG_DISTRIBUTOR_LINE_3_ANGLE_DECI_DEG),
+            deciDegreeToRad(KEY_POINT_1_FROM_DISTRIBUTOR_ANGLE_DECI_DEG),
+            aFactor * BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_ACCELERATION_FACTOR,
+            speedFactor * BIGDISTRIBUTOR_LINE_3_FRONT_TO_KEY_POINT_1_SPEED_FACTOR);
 
+    bigDistributorLine1Front_to_blueiumGreeniumPoint = addNavigationPathWithColor2019(teamColor,
+            navigation,
+            bigDistributorLine1FrontLocation,
+            blueiumGreeniumCenteredLocation,
+            500.0f,
+            -300.0f,
+            -300.0f,
+            deciDegreeToRad(ANGLE_DECI_DEG_0),
+            deciDegreeToRad(ANGLE_DECI_DEG_90),
+            aFactor * 0.5f,
+            speedFactor * 0.5f);
+}
 
 void initBigRobotTargets2019(GameStrategyContext* gameStrategyContext) {
     clearGameTargets();
@@ -470,7 +469,7 @@ void initBigRobotTargetActionsItems2019(GameStrategyContext* gameStrategyContext
     // Big Distributor 1 Line 2
     addTargetActionItem(&bigDistributorLine2PrepareTakeTargetActionItemList, &bigDistributorLine2PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 3");
     addTargetActionItem(&bigDistributorLine2TakeTargetActionItemList, &bigDistributorLine2TakeTargetActionItem, &bigDistributorLineTake, "TAKE DIST 3");
-    addTargetActionItem(&bigDistributorLine2DropTargetActionItemList, &bigDistributorLine2DropTargetActionItem, &bigDistributorAcceleratorDrop , "ACC DROP");
+    addTargetActionItem(&bigDistributorLine2DropTargetActionItemList, &bigDistributorLine2DropTargetActionItem, &bigDistributorAcceleratorDrop, "ACC DROP");
 
     // Big Distributor 1 Line 3
     addTargetActionItem(&bigDistributorLine3PrepareTakeTargetActionItemList, &bigDistributorLine3PrepareTargetActionItem, &bigDistributorLinePrepare, "PREP DIST 3");
@@ -488,29 +487,24 @@ GameStrategy* initBigRobotStrategiesItems2019(GameStrategyContext* gameStrategyC
     if (strategyId == BIG_ROBOT_STRATEGY_1_CHAOS) {
         addGameStrategyItem(&bigRobotStrategy1Chaos, &chaosStrategyItem, &chaosTarget);
         return &bigRobotStrategy1Chaos;
-    }
-    else if (strategyId == BIG_ROBOT_STRATEGY_2_BIG_DISTRIBUTOR_LINE_1) {
+    } else if (strategyId == BIG_ROBOT_STRATEGY_2_BIG_DISTRIBUTOR_LINE_1) {
         addGameStrategyItem(&bigRobotStrategy2BigDistributorLine1, &bigDistributorLine1StrategyItem, &bigDistributorLine1Target);
         return &bigRobotStrategy2BigDistributorLine1;
-    }
-    else if (strategyId == BIG_ROBOT_STRATEGY_3_BIG_DISTRIBUTOR_LINE_1_2_3) {
+    } else if (strategyId == BIG_ROBOT_STRATEGY_3_BIG_DISTRIBUTOR_LINE_1_2_3) {
         addGameStrategyItem(&bigRobotStrategy3BigDistributorLine123, &bigDistributorLine1StrategyItem, &bigDistributorLine1Target);
         addGameStrategyItem(&bigRobotStrategy3BigDistributorLine123, &bigDistributorLine2StrategyItem, &bigDistributorLine2Target);
         addGameStrategyItem(&bigRobotStrategy3BigDistributorLine123, &bigDistributorLine3StrategyItem, &bigDistributorLine3Target);
         return &bigRobotStrategy3BigDistributorLine123;
-    }
-    else if (strategyId == BIG_ROBOT_STRATEGY_4_CHAOS_BIG_DISTRIBUTOR_LINE) {
+    } else if (strategyId == BIG_ROBOT_STRATEGY_4_CHAOS_BIG_DISTRIBUTOR_LINE) {
         addGameStrategyItem(&bigRobotStrategy4ChaosBigDistributorLine, &chaosStrategyItem, &chaosTarget);
         addGameStrategyItem(&bigRobotStrategy4ChaosBigDistributorLine, &bigDistributorLine1StrategyItem, &bigDistributorLine1Target);
         return &bigRobotStrategy4ChaosBigDistributorLine;
-    }
-    else if (strategyId == BIG_ROBOT_STRATEGY_5_CHAOS_BIG_DISTRIBUTOR_LINE) {
+    } else if (strategyId == BIG_ROBOT_STRATEGY_5_CHAOS_BIG_DISTRIBUTOR_LINE) {
         addGameStrategyItem(&bigRobotStrategy5ChaosBigDistributorLine, &chaosStrategyItem, &chaosTarget);
         addGameStrategyItem(&bigRobotStrategy5ChaosBigDistributorLine, &bigDistributorLine1StrategyItem, &bigDistributorLine1Target);
         addGameStrategyItem(&bigRobotStrategy5ChaosBigDistributorLine, &bigDistributorLine2StrategyItem, &bigDistributorLine2Target);
         return &bigRobotStrategy5ChaosBigDistributorLine;
-    }
-    else if (strategyId == BIG_ROBOT_STRATEGY_6_CHAOS_BIG_DISTRIBUTOR_LINE) {
+    } else if (strategyId == BIG_ROBOT_STRATEGY_6_CHAOS_BIG_DISTRIBUTOR_LINE) {
         addGameStrategyItem(&bigRobotStrategy6ChaosBigDistributorLine, &chaosStrategyItem, &chaosTarget);
         addGameStrategyItem(&bigRobotStrategy6ChaosBigDistributorLine, &bigDistributorLine1StrategyItem, &bigDistributorLine1Target);
         addGameStrategyItem(&bigRobotStrategy6ChaosBigDistributorLine, &bigDistributorLine2StrategyItem, &bigDistributorLine2Target);

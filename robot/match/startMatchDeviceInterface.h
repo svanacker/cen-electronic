@@ -6,10 +6,10 @@
 
 /** Defines the pin which must be used to detect the start. */
 #ifdef PROG_32
-    #define START_DETECTOR_PIN      PORTGbits.RG3
+#define START_DETECTOR_PIN      PORTGbits.RG3
 #endif
 #ifdef PROG_30
-    #define START_DETECTOR_PIN      PORTFbits.RF6
+#define START_DETECTOR_PIN      PORTFbits.RF6
 #endif
 
 #define COMMAND_CHECKLIST_MATCH                   'c' 

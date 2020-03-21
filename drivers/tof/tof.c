@@ -14,10 +14,10 @@
 
 #include "../../common/math/cenMath.h"
 
-void initTofSensor(TofSensor* tofSensor, 
-                    tofSensorStartFunction* tofSensorStart,
-                    tofSensorGetDistanceMMFunction* tofGetDistanceMM,
-                    int* object) {
+void initTofSensor(TofSensor* tofSensor,
+        tofSensorStartFunction* tofSensorStart,
+        tofSensorGetDistanceMMFunction* tofGetDistanceMM,
+        int* object) {
     // Important Call back & Properties
     tofSensor->tofSensorStart = tofSensorStart;
     tofSensor->tofGetDistanceMM = tofGetDistanceMM;

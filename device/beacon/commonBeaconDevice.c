@@ -37,7 +37,7 @@ void setCommandRedirectToDevices() {
 // Device
 
 void commonBeaconDeviceInit() {
-    
+
 }
 
 void commonBeaconDeviceShutDown() {
@@ -49,24 +49,23 @@ bool commonBeaconDeviceIsOk() {
 }
 
 void commonBeaconDeviceHandleRawData(char commandHeader,
-                                     InputStream* inputStream,
-                                     OutputStream* outputStream) {
+        InputStream* inputStream,
+        OutputStream* outputStream) {
     // Redirect command to Jennic
     if (commandHeader == COMMAND_REDIRECT_TO_JENNIC) {
         ackCommand(outputStream, COMMON_BEACON_DEVICE_HEADER, COMMAND_REDIRECT_TO_JENNIC);
         redirectToDevices = false;
         appendString(getInfoOutputStreamLogger(), "REDIRECT COMMAND TO JENNIC \n");
-    // Reset
+        // Reset
     } else if (commandHeader == COMMAND_RESET_JENNIC) {
         ackCommand(outputStream, COMMON_BEACON_DEVICE_HEADER, COMMAND_RESET_JENNIC);
         jennic5139Reset();
-    // Local Jennic Light on/off
+        // Local Jennic Light on/off
     } else if (commandHeader == COMMAND_LOCAL_LIGHT) {
         unsigned char status = readHex(inputStream);
         ackCommand(outputStream, COMMON_BEACON_DEVICE_HEADER, COMMAND_LOCAL_LIGHT);
         jennic5139LocalLight(JENNIC_LED_ALL, status != 0);
-    }
-    // Print the data buffer
+    }// Print the data buffer
     else if (commandHeader == COMMAND_SHOW_DATA_FROM_JENNIC) {
         ackCommand(outputStream, COMMON_BEACON_DEVICE_HEADER, COMMAND_SHOW_DATA_FROM_JENNIC);
         Buffer* inDataBuffer = getJennicInDataBuffer();

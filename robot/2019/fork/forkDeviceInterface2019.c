@@ -28,7 +28,7 @@ int deviceFork2019GetInterface(unsigned char commandHeader, DeviceInterfaceMode 
             setArgumentUnsignedChar1(0, "servo Idx (0:L/R, 1=L, 2=R)");
         }
         return commandLengthValueForMode(mode, 1, 0);
-    }        // FORK PUSH
+    }// FORK PUSH
     else if (commandHeader == COMMAND_2019_FORK_PUSH_OFF) {
         if (fillDeviceArgumentList) {
             setFunction("Push Off", 1, 0);
@@ -41,14 +41,13 @@ int deviceFork2019GetInterface(unsigned char commandHeader, DeviceInterfaceMode 
             setArgumentUnsignedChar1(0, "servo Idx (0:L/R, 1=L, 2=R)");
         }
         return commandLengthValueForMode(mode, 1, 0);
-    }        // INIT
+    }// INIT
     else if (commandHeader == COMMAND_2019_FORK_INIT) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Fork Init");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_2019_FORK_SCAN) {
+    } else if (commandHeader == COMMAND_2019_FORK_SCAN) {
         if (fillDeviceArgumentList) {
             setFunction("Fork Scan", 3, 1);
             setArgumentUnsignedChar1(0, "retryCount");

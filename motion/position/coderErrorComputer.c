@@ -19,8 +19,8 @@ void computeCurrentPositionUsingCoders(PidMotion* pidMotion) {
     PidComputationInstructionValues* alphaCurrentValues = &(computationValues->values[ALPHA]);
 
     // 2 dependant Wheels (left / right)
-    float coderValueLeft = (float)getCoderValue(CODER_LEFT);
-    float coderValueRight = (float)getCoderValue(CODER_RIGHT);
+    float coderValueLeft = (float) getCoderValue(CODER_LEFT);
+    float coderValueRight = (float) getCoderValue(CODER_RIGHT);
 
     RobotKinematics* robotKinematics = getRobotKinematics();
     float coderValueDistanceMMLeft = getCoderLeftWheelLengthForOnePulse(robotKinematics) * coderValueLeft;
@@ -35,18 +35,17 @@ void computeCurrentPositionUsingCoders(PidMotion* pidMotion) {
     float elapsedTimeInSecond = computationValues->pidTimeInSecond - computationValues->lastPidTimeInSecond;
     if (floatEqualsZero(elapsedTimeInSecond)) {
         thetaCurrentValues->currentSpeed = 0.0f;
-        alphaCurrentValues->currentSpeed = 0.0f;        
+        alphaCurrentValues->currentSpeed = 0.0f;
         thetaCurrentValues->currentAcceleration = 0.0f;
-        alphaCurrentValues->currentAcceleration = 0.0f;        
-    }
-    else {
+        alphaCurrentValues->currentAcceleration = 0.0f;
+    } else {
         float thetaPreviousSpeed = thetaCurrentValues->currentSpeed;
         float alphaPreviousSpeed = alphaCurrentValues->currentSpeed;
-        
-         // Computes the speed
+
+        // Computes the speed
         thetaCurrentValues->currentSpeed = (theta - thetaCurrentValues->currentPosition) / elapsedTimeInSecond;
-        alphaCurrentValues->currentSpeed = (alpha - alphaCurrentValues->currentPosition) / elapsedTimeInSecond;        
-        
+        alphaCurrentValues->currentSpeed = (alpha - alphaCurrentValues->currentPosition) / elapsedTimeInSecond;
+
         // Computes the acceleration 
         thetaCurrentValues->currentAcceleration = (thetaCurrentValues->currentSpeed - thetaPreviousSpeed) / elapsedTimeInSecond;
         alphaCurrentValues->currentAcceleration = (alphaCurrentValues->currentSpeed - alphaPreviousSpeed) / elapsedTimeInSecond;

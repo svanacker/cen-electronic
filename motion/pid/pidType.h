@@ -14,10 +14,10 @@
 enum PidType {
     /** The type of pid when we don't know */
     PID_TYPE_NONE = 0,
-    
+
     /** The mask used to indicate that we want to use value of PID to go forward and backward. */
     PID_TYPE_GO_INDEX = 1,
-    
+
     /** The mask used to indicate that we want to use value of PID to rotate. */
     PID_TYPE_ROTATE_INDEX = 2,
 
@@ -26,7 +26,7 @@ enum PidType {
 
     /** The mask used to indicate that we want to use value of PID to maintain very strongly the position (Very Strong PID). */
     PID_TYPE_MAINTAIN_POSITION_INDEX = 4,
-    
+
     /** The mask used to indicate that we want to adjust the robot to the border of board (=> low PID). */
     PID_TYPE_ADJUST = 5
 };

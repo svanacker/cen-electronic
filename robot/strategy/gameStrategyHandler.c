@@ -34,9 +34,8 @@
 void initStrategyHandler(GameStrategyContext* gameStrategyContext) {
 }
 
-
 Location* updateGameStrategyContextNearestLocation(GameStrategyContext* gameStrategyContext) {
-    gameStrategyContext->nearestLocation = getNearestLocationFromGameStrategyContext (gameStrategyContext);
+    gameStrategyContext->nearestLocation = getNearestLocationFromGameStrategyContext(gameStrategyContext);
     return gameStrategyContext->nearestLocation;
 }
 
@@ -63,27 +62,25 @@ void updateTargetStatusAndScore(GameStrategyContext* gameStrategyContext) {
             writeError(ROBOT_END_MATCH_NULL);
             return;
         }
-        gameStrategyContext->endMatch->scoreToShow += (int)currentTarget->gain;
+        gameStrategyContext->endMatch->scoreToShow += (int) currentTarget->gain;
     }
 }
 
-
 void executeTargetAction(GameStrategyContext* gameStrategyContext, GameTargetAction* targetAction) {
     GameTargetActionItemList* actionItemList = targetAction->actionItemList;
-    if (executeTargetActionItemList(actionItemList, (int*)gameStrategyContext)) {
+    if (executeTargetActionItemList(actionItemList, (int*) gameStrategyContext)) {
         // All Items of the actions were done successfully
         targetAction->status = ACTION_STATUS_DONE;
-    }
-    else {
+    } else {
         // We mark the action in error
         targetAction->status = ACTION_STATUS_ERROR;
     }
 }
 
 /**
-* Handle the trajectory and return true if we go to a location, false else.
-* @private
-*/
+ * Handle the trajectory and return true if we go to a location, false else.
+ * @private
+ */
 bool handleNextMoveActionOrAction(GameStrategyContext* gameStrategyContext) {
     GameTarget* currentTarget = gameStrategyContext->currentTarget;
     // If No Target => No Action
@@ -99,15 +96,14 @@ bool handleNextMoveActionOrAction(GameStrategyContext* gameStrategyContext) {
         gameStrategyCreateOutsideTemporaryPaths(gameStrategyContext);
         // We have a new temporary location where the robot is !
         nearestLocation = updateGameStrategyContextNearestLocation(gameStrategyContext);
-    }
-    else {
+    } else {
         // Try to recycle the temporary Paths & Locations !
         gameStrategyClearOusideTemporaryPathsAndLocations(gameStrategyContext);
     }
 
     // Compute the next action to do by priority
     GameTargetActionList* actionList = &(currentTarget->actionList);
-    GameTargetAction* targetAction =  getNextGameTargetActionTodoByPriority(actionList);
+    GameTargetAction* targetAction = getNextGameTargetActionTodoByPriority(actionList);
     // Nothing more to do
     if (targetAction == NULL) {
         return false;
@@ -116,8 +112,7 @@ bool handleNextMoveActionOrAction(GameStrategyContext* gameStrategyContext) {
         executeTargetAction(gameStrategyContext, targetAction);
         updateTargetStatusAndScore(gameStrategyContext);
         return true;
-    }
-    // We must compute via Drijska the next way to go to the end Location of the action
+    }// We must compute via Drijska the next way to go to the end Location of the action
     else {
         computeBestPath(navigation, nearestLocation, targetAction->endLocation);
         // TODO : Manage the case where there is no way to go to endLocation

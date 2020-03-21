@@ -18,24 +18,24 @@ int upValues[2] = { 0x0320, 0x07D0 };
 int downPosition1Values[2] = { 0x03E8, 0x0780 };
 int downPosition2Values[2] = { 0x05DC, 0x0580 };
 int downValues[2] = { 0x07D0, 0x0320 };
-*/
-int upValues[2] = { 0x0430, 0x600  };
-int downPosition1Values[2] = { 0x0480, 0x05F0 };
-int downPosition2Values[2] = { 0x05DC, 0x0480 };
-int downValues[2] = { 0x00830, 0x0200 };
+ */
+int upValues[2] = {0x0430, 0x600};
+int downPosition1Values[2] = {0x0480, 0x05F0};
+int downPosition2Values[2] = {0x05DC, 0x0480};
+int downValues[2] = {0x00830, 0x0200};
 
 // Open / Close operations
-int openPliers[2] = { 0x0400, 0x0400 };
+int openPliers[2] = {0x0400, 0x0400};
 //int openMiddlePliers[2] = { 0x05DC, 0x05DC };
-int openMiddleSmallPliers[2] = { 0x0500, 0x0500 };
-int openMiddlePliers[2] = { 0x0620, 0x05A0 };
-int closePliers[2] = { 0x0820, 0x07D0 };
+int openMiddleSmallPliers[2] = {0x0500, 0x0500};
+int openMiddlePliers[2] = {0x0620, 0x05A0};
+int closePliers[2] = {0x0820, 0x07D0};
 
 // Sensor operations
 // begin value to not be too large for the robot
-int beginUpSensorValues[2] = { 0x03A8, 0x0860 };
-int upSensorValues[2] = { 0x03C8, 0x0830};
-int downSensorValues[2] = { 0x0740, 0x0480};
+int beginUpSensorValues[2] = {0x03A8, 0x0860};
+int upSensorValues[2] = {0x03C8, 0x0830};
+int downSensorValues[2] = {0x0740, 0x0480};
 
 // Temporisation
 #define LONG_TEMP 500
@@ -45,7 +45,7 @@ int downSensorValues[2] = { 0x0740, 0x0480};
 #define LONG_TEMP 2000
 #define MIDDLE_TEMP 2000
 #define SHORT_TEMP 2000
-*/
+ */
 
 
 // Private functions
@@ -71,7 +71,7 @@ int getSensorServoIndex(int plierIndex) {
 int getContactorMask(int plierIndex) {
     return contactorMasks[plierIndex];
 }
-*/
+ */
 
 int getMetallicSensorMask(int plierIndex) {
     return metallicSensorMasks[plierIndex];
@@ -85,15 +85,15 @@ unsigned char readInput(unsigned char inputMask) {
 // SENSOR
 
 void beginUpSensor(int plierIndex) {
-    commandServo(getSensorServoIndex(plierIndex), beginUpSensorValues[plierIndex]);    
+    commandServo(getSensorServoIndex(plierIndex), beginUpSensorValues[plierIndex]);
 }
 
 void upSensor(int plierIndex) {
-    commandServo(getSensorServoIndex(plierIndex), upSensorValues[plierIndex]);    
+    commandServo(getSensorServoIndex(plierIndex), upSensorValues[plierIndex]);
 }
 
 void downSensor(int plierIndex) {
-    commandServo(getSensorServoIndex(plierIndex), downSensorValues[plierIndex]);    
+    commandServo(getSensorServoIndex(plierIndex), downSensorValues[plierIndex]);
 }
 
 unsigned char isMetalDetected(int plierIndex) {
@@ -115,9 +115,9 @@ void takeAndLoadCorn(int plierIndex) {
     longTemp();
     middleTemp();
 
-    int i=0;
+    int i = 0;
 
-    for (i=0; i<TRIES_COUNT_TO_LOAD_CORN; i++) {
+    for (i = 0; i < TRIES_COUNT_TO_LOAD_CORN; i++) {
         openPlierMiddleSmallPosition(plierIndex);
         middleTemp();
         openPlierMiddlePosition(plierIndex);
@@ -142,23 +142,23 @@ void takeAndLoadCorn(int plierIndex) {
 
 // Public functions
 
-void waitPlier( int delay ) {
+void waitPlier(int delay) {
     delaymSec(delay);
 }
 
-void longTemp( void ) {
+void longTemp(void) {
     waitPlier(LONG_TEMP);
 }
 
-void middleTemp( void ) {
+void middleTemp(void) {
     waitPlier(MIDDLE_TEMP);
 }
 
-void shortTemp( void ) {
+void shortTemp(void) {
     waitPlier(SHORT_TEMP);
 }
 
-void pliersInTheRobot( void ) {
+void pliersInTheRobot(void) {
     int index;
     for (index = 0; index < PLIERS_COUNT; index++) {
         // Plier
@@ -169,29 +169,29 @@ void pliersInTheRobot( void ) {
     }
 }
 
-void pliersAfterStart( void ) {
+void pliersAfterStart(void) {
     int index;
     for (index = 0; index < PLIERS_COUNT; index++) {
         upSensor(index);
-    }    
+    }
 }
 
 // UP / DOWN
 
 void upPlier(int plierIndex) {
-    commandServo(getUpDownServoIndex(plierIndex), upValues[plierIndex]);    
+    commandServo(getUpDownServoIndex(plierIndex), upValues[plierIndex]);
 }
 
 void downPlier(int plierIndex) {
-    commandServo(getUpDownServoIndex(plierIndex), downValues[plierIndex]);    
+    commandServo(getUpDownServoIndex(plierIndex), downValues[plierIndex]);
 }
 
 void downPlierPosition1(int plierIndex) {
-    commandServo(getUpDownServoIndex(plierIndex), downPosition1Values[plierIndex]);    
+    commandServo(getUpDownServoIndex(plierIndex), downPosition1Values[plierIndex]);
 }
 
 void downPlierPosition2(int plierIndex) {
-    commandServo(getUpDownServoIndex(plierIndex), downPosition2Values[plierIndex]);    
+    commandServo(getUpDownServoIndex(plierIndex), downPosition2Values[plierIndex]);
 }
 
 // OPEN / CLOSE
@@ -218,19 +218,19 @@ void initPliers2010(void) {
     getSD21SoftwareRevision();
     getSD21BatteryLevel();
     pliersInTheRobot();
-    
+
 }
 
 void stopPliers2010(void) {
     pliersInTheRobot();
 }
 
-const char* getPliers2010DeviceName( void ) {
+const char* getPliers2010DeviceName(void) {
     return "Pliers2010";
 }
 
 unsigned int getPliers2010SoftwareRevision(void) {
-    return 1; 
+    return 1;
 }
 
 unsigned int isPliers2010DeviceOk() {

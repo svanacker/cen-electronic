@@ -60,15 +60,15 @@ void resetStartMatch(EndMatch* endMatch);
 void showRemainingTime(EndMatch* endMatch, OutputStream* outputStream);
 
 /**
-* Show to an output Stream the result of the match.
-* @return true if we have shown the end of the match
-*/
+ * Show to an output Stream the result of the match.
+ * @return true if we have shown the end of the match
+ */
 void showEndAndScore(EndMatch* endMatch, OutputStream* outputStream);
 
 /**
  * Show to an output Stream the result of the match, but only if needed (if endMatch is not finished and not already shown)
  * @return true if we have shown the end of the match
-*/
+ */
 bool showEndAndScoreIfNeeded(EndMatch* endMatch, OutputStream* outputStream);
 
 /**

@@ -21,29 +21,27 @@
 
 #include "../../robot/strategy/teamColor.h"
 
-
 enum ColorType colorSensorFindColorType2018(ColorSensor* colorSensor) {
     Color* color = colorSensor->colorSensorReadValue(colorSensor);
-    
-    if (isColorInRange(color, 
-        DISTRIBUTOR_2018_GREEN_R_LOW_THRESHOLD, 
-        DISTRIBUTOR_2018_GREEN_R_HIGH_THRESHOLD,
-        DISTRIBUTOR_2018_GREEN_G_LOW_THRESHOLD,
-        DISTRIBUTOR_2018_GREEN_G_HIGH_THRESHOLD,
-        DISTRIBUTOR_2018_GREEN_B_LOW_THRESHOLD,
-        DISTRIBUTOR_2018_GREEN_B_HIGH_THRESHOLD)
-        && (color->G > color->R)    
+
+    if (isColorInRange(color,
+            DISTRIBUTOR_2018_GREEN_R_LOW_THRESHOLD,
+            DISTRIBUTOR_2018_GREEN_R_HIGH_THRESHOLD,
+            DISTRIBUTOR_2018_GREEN_G_LOW_THRESHOLD,
+            DISTRIBUTOR_2018_GREEN_G_HIGH_THRESHOLD,
+            DISTRIBUTOR_2018_GREEN_B_LOW_THRESHOLD,
+            DISTRIBUTOR_2018_GREEN_B_HIGH_THRESHOLD)
+            && (color->G > color->R)
             ) {
         return COLOR_TYPE_GREEN;
-        }
-    else if (isColorInRange(color,
-        DISTRIBUTOR_2018_ORANGE_R_LOW_THRESHOLD,
-        DISTRIBUTOR_2018_ORANGE_R_HIGH_THRESHOLD,
-        DISTRIBUTOR_2018_ORANGE_G_LOW_THRESHOLD,
-        DISTRIBUTOR_2018_ORANGE_G_HIGH_THRESHOLD,
-        DISTRIBUTOR_2018_ORANGE_B_LOW_THRESHOLD,
-        DISTRIBUTOR_2018_ORANGE_B_HIGH_THRESHOLD)
-        && (color->R > 2 * color->G)    
+    } else if (isColorInRange(color,
+            DISTRIBUTOR_2018_ORANGE_R_LOW_THRESHOLD,
+            DISTRIBUTOR_2018_ORANGE_R_HIGH_THRESHOLD,
+            DISTRIBUTOR_2018_ORANGE_G_LOW_THRESHOLD,
+            DISTRIBUTOR_2018_ORANGE_G_HIGH_THRESHOLD,
+            DISTRIBUTOR_2018_ORANGE_B_LOW_THRESHOLD,
+            DISTRIBUTOR_2018_ORANGE_B_HIGH_THRESHOLD)
+            && (color->R > 2 * color->G)
             ) {
         return COLOR_TYPE_ORANGE;
     }
@@ -74,6 +72,7 @@ void initDistributor(Distributor* distributor, enum TeamColor teamColor, ColorSe
 //  => Blocked by Item to avoid ejection <= [2]   [6]
 //                                           [3] [5] => RIGHT EJECTOR
 //                                             [4]
+
 void updateDistributorStateClockWise(Distributor* distributor) {
     // If we have something just in the square before the hole for the launcher
     if (distributor->squares[6] != SQUARE_CONTENT_EMPTY) {
@@ -121,10 +120,9 @@ void loadUnicolorDistributorSimple(enum TeamColor teamColor) {
     unsigned direction = 0;
     if (teamColor == TEAM_COLOR_2018_GREEN) {
         direction = LAUNCHER_RIGHT_INDEX;
+    } else {
+        direction = LAUNCHER_LEFT_INDEX;
     }
-    else {
-        direction = LAUNCHER_LEFT_INDEX; 
-    }        
     for (i = 0; i < 8; i++) {
         // In all cases, prepare the launcher even if it's empty, because it does not take time unless if it is needed
         clientLaunch2018(direction, LAUNCHER_PREPARE_ON);
@@ -139,10 +137,10 @@ void loadUnicolorDistributorSimple(enum TeamColor teamColor) {
 
 void loadUnicolorDistributorWithColorCheck(Distributor* distributor) {
     unsigned int i;
-    
+
     // Clean to avoid problem when we do lots of trial
     cleanDistributor(distributor);
-    
+
     ColorSensor* colorSensor = distributor->colorSensor;
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     if (distributor->teamColor == TEAM_COLOR_2018_GREEN) {
@@ -155,13 +153,13 @@ void loadUnicolorDistributorWithColorCheck(Distributor* distributor) {
             println(debugOutputStream);
             // In all cases, prepare the launcher even if it's empty, because it does not take time unless if it is needed
             clientLaunch2018(LAUNCHER_RIGHT_INDEX, LAUNCHER_PREPARE_ON);
-            
+
             // Rotate the distributor 
             clientDistributor2018CleanNext(LAUNCHER_LEFT_INDEX);
-            
+
             // Update the internal representation of the distributor
             updateDistributorStateClockWise(distributor);
-            
+
             // Determine the color
             if (colorSensor->colorSensorFindColorType(colorSensor) == COLOR_TYPE_GREEN) {
                 distributor->squares[0] = SQUARE_CONTENT_OK;
@@ -169,7 +167,7 @@ void loadUnicolorDistributorWithColorCheck(Distributor* distributor) {
             printColorSensorTable(debugOutputStream, colorSensor);
 
             printDistributor2018(debugOutputStream, distributor);
-            
+
             if (distributor->launcherContent == SQUARE_CONTENT_OK) {
                 sendBallAndCountScore(distributor, LAUNCHER_RIGHT_INDEX);
             }
@@ -190,8 +188,7 @@ void loadMixedDistributor(enum TeamColor teamColor) {
         if (teamColor == TEAM_COLOR_2018_GREEN) {
             // Rotate the distributor 
             clientDistributor2018CleanNext(LAUNCHER_LEFT_INDEX);
-        }
-        else if (teamColor == TEAM_COLOR_2018_ORANGE) {
+        } else if (teamColor == TEAM_COLOR_2018_ORANGE) {
             // Rotate the distributor 
             clientDistributor2018CleanNext(LAUNCHER_RIGHT_INDEX);
         }
@@ -208,8 +205,7 @@ void ejectMixedDistributor(enum TeamColor teamColor) {
             // Rotate the distributor in other direction
             clientDistributor2018CleanNext(LAUNCHER_LEFT_INDEX);
         }
-    }
-    else if (teamColor == TEAM_COLOR_2018_ORANGE) {
+    } else if (teamColor == TEAM_COLOR_2018_ORANGE) {
         for (i = 0; i < 8; i++) {
             clientDistributor2018EjectDirty();
             // Rotate the distributor in other direction
@@ -217,7 +213,6 @@ void ejectMixedDistributor(enum TeamColor teamColor) {
         }
     }
 }
-
 
 void sendBallAndCountScore(Distributor* distributor, unsigned int launcherIndex) {
     clientLaunch2018(LAUNCHER_RIGHT_INDEX, LAUNCHER_LAUNCH);

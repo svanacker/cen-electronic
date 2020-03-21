@@ -6,8 +6,8 @@
 #include "../../robot/gameboard/gameboard.h"
 
 /**
-* Returns a descriptor on the device for Gameboard.
-*/
+ * Returns a descriptor on the device for Gameboard.
+ */
 DeviceDescriptor* getGameboardDeviceDescriptor(GameBoard* gameBoard);
 
 #endif

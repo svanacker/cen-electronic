@@ -24,8 +24,7 @@ int deviceStartMatchGetInterface(unsigned char commandHeader, DeviceInterfaceMod
             setResultUnsignedHex2(0, "value");
         }
         return commandLengthValueForMode(mode, 0, 2);
-    }
-    else if (commandHeader == COMMAND_START_MATCH_DEBUG) {
+    } else if (commandHeader == COMMAND_START_MATCH_DEBUG) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Start Match Debug");
         }

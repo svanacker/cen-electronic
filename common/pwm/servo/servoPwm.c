@@ -21,7 +21,6 @@
 #include "../../../common/timer/timerList.h"
 #include "../../../common/timer/delayTimer.h"
 
-
 /**
  * Return a pointer on servoList from the servo.
  * @param servo
@@ -68,7 +67,7 @@ void initServo(Servo* servo,
 void pwmServo(Servo* servo, unsigned int targetSpeed, int targetPosition, bool wait) {
     if (servo == NULL) {
         writeError(SERVO_LIST_SERVO_NULL);
-        return; 
+        return;
     }
     if (!servo->enabled) {
         return;

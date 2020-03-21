@@ -12,8 +12,8 @@ LogHandlerList* getLoggerHandlerList() {
 }
 
 /**
-* @private
-*/
+ * @private
+ */
 void flushLog(OutputStream* outputStream) {
     // don't do anything for the moment
 }
@@ -62,9 +62,9 @@ void initLogs(enum LogLevel globalLogLevel, LogHandler(*handlerListArray)[], uns
 }
 
 LogHandler* addLogHandler(char* handlerName,
-                            OutputStream* outputStream,
-                            enum LogLevel logLevel,
-                            unsigned long logCategoryMask) {
+        OutputStream* outputStream,
+        enum LogLevel logLevel,
+        unsigned long logCategoryMask) {
     LogHandler* result = addLogHandlerToList(&logHandlerList, logLevel, logCategoryMask, handlerName, outputStream);
 
     return result;
@@ -107,6 +107,7 @@ OutputStream* getAlwaysOutputStreamLogger() {
 }
 
 // Convenient method to avoid to consume time for logging when not enabled
+
 bool isLoggerDebugEnabled(void) {
     return logger.writeLogLevel >= LOG_LEVEL_DEBUG;
 }

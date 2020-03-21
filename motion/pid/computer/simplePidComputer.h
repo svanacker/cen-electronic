@@ -9,9 +9,9 @@
  * @see also bSplinePidCompute
  */
 void simpleMotionUCompute(
-						//PidComputationValues* computationValues,
-					     PidMotion* pidMotion,
-						 PidMotionDefinition* motionDefinition);
+        //PidComputationValues* computationValues,
+        PidMotion* pidMotion,
+        PidMotionDefinition* motionDefinition);
 
 #endif
 

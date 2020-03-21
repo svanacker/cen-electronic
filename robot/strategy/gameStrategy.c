@@ -12,16 +12,15 @@ void clearGameStrategy(GameStrategy* gameStrategy) {
 }
 
 void addGameStrategyItem(GameStrategy* gameStrategy,
-                         GameStrategyItem* strategyItem,
-                         GameTarget* target
-) {
+        GameStrategyItem* strategyItem,
+        GameTarget* target
+        ) {
     unsigned char size = gameStrategy->size;
     if (size < MAX_STRATEGY_ITEM) {
         strategyItem->target = target;
         gameStrategy->items[size] = strategyItem;
         gameStrategy->size++;
-    }
-    else {
+    } else {
         writeError(TOO_MUCH_STRATEGY_ITEMS);
     }
 }

@@ -39,23 +39,23 @@ signed int testDriverGetValue(signed int argument1, signed int argument2) {
 bool testDriverIntensive(unsigned int testCount) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* resultStream = getDriverResponseInputStream();
-    
+
 
     unsigned int i;
     for (i = 0; i < testCount; i++) {
         append(outputStream, TEST_DEVICE_HEADER);
         append(outputStream, COMMAND_HEAVY_TEST);
 
-        unsigned char value1 = (unsigned char)randomInRange(0, 255);
-        unsigned char value2 = (unsigned char)randomInRange(0, 255);
+        unsigned char value1 = (unsigned char) randomInRange(0, 255);
+        unsigned char value2 = (unsigned char) randomInRange(0, 255);
         unsigned int value3 = (unsigned int) randomInRange(0, 32535);
         unsigned int value4 = (unsigned int) randomInRange(0, 32535);
         unsigned char value5 = randomInRange(0, 32535);
         // Separator / value 6
-        unsigned char value7 = (unsigned char)randomInRange(0, 255);
-        unsigned int value8 = (unsigned int)randomInRange(0, 32535);
-        unsigned long value9 = (unsigned long)randomInRange(0, 32535);
-        unsigned char value10 = (unsigned char)randomInRange(0, 255);
+        unsigned char value7 = (unsigned char) randomInRange(0, 255);
+        unsigned int value8 = (unsigned int) randomInRange(0, 32535);
+        unsigned long value9 = (unsigned long) randomInRange(0, 32535);
+        unsigned char value10 = (unsigned char) randomInRange(0, 255);
         appendHex2(outputStream, value1);
         appendHex2(outputStream, value2);
         appendHex4(outputStream, value3);
@@ -78,8 +78,7 @@ bool testDriverIntensive(unsigned int testCount) {
                 appendCRLF(getErrorOutputStreamLogger());
                 return false;
             }
-        }
-        else {
+        } else {
             return false;
         }
     }

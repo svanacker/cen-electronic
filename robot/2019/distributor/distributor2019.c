@@ -18,20 +18,19 @@
 #include "../../../robot/2019/fork/forkScan2019.h"
 #include "../../../robot/2019/fork/fork2019.h"
 
-
 bool distributor2019PrepareTake(ServoList* servoList) {
     // We do not wait because this action is a preparing action, so we could do during the robot moves
     bool wait = false;
 
     // Fork Push Off for both
     moveForkPushOff(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX, wait);
-    
+
     // Fork Push Off for both
     moveForkBack(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX, wait);
 
     // Elevator
     moveElevatorDistributorScan(servoList, wait);
-    
+
     return true;
 }
 
@@ -48,7 +47,7 @@ bool distributor2019Take(ServoList* servoList, TofSensorList* tofSensorList, uns
     if (!forkScan(servoList, tofSensorList, DISTRIBUTOR_2019_SCAN_RETRY_COUNT, leftRightIndex)) {
         moveElevatorMiddle(servoList, wait);
     }
-    
+
     // Move to Bottom which is the level to take the distributor elements
     moveElevatorBottom(servoList, wait);
 

@@ -5,9 +5,9 @@
 #include "../../device/deviceConstants.h"
 
 /**
-* Command header for test.
-* The test is an addition between 2 values.
-*/
+ * Command header for test.
+ * The test is an addition between 2 values.
+ */
 #define COMMAND_TEST2                    'w'
 
 /** 
@@ -16,9 +16,9 @@
 #define COMMAND_INTENSIVE_TEST_DRIVER    'I'
 
 /**
-* Interface for Test2 Device.
-* @return the interface for Test Device
-*/
+ * Interface for Test2 Device.
+ * @return the interface for Test Device
+ */
 DeviceInterface* getTest2DeviceInterface();
 
 #endif

@@ -4,8 +4,8 @@
 #include "../../device/deviceDescriptor.h"
 
 /**
-* Returns the deviceDescriptor of the sonar Detector.
-*/
+ * Returns the deviceDescriptor of the sonar Detector.
+ */
 DeviceDescriptor* getSonarDeviceDescriptor();
 
 #endif

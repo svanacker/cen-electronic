@@ -26,10 +26,10 @@
 
 #include "../../robot/strategy/gameStrategyContext.h"
 
-TofSensorList* mainBoardCommonTofInitDriversPc(RobotConfig* robotConfig, 
-                                               MultiplexerList* multiplexerList,
-                                               IOExpanderList* ioExpanderList,
-                                               GameStrategyContext* gameStrategyContext) {
+TofSensorList* mainBoardCommonTofInitDriversPc(RobotConfig* robotConfig,
+        MultiplexerList* multiplexerList,
+        IOExpanderList* ioExpanderList,
+        GameStrategyContext* gameStrategyContext) {
     TofSensorList* tofSensorList = mainBoardCommonTofInitDrivers(robotConfig, multiplexerList, ioExpanderList);
     initTofSensorListPc(tofSensorList, tofSensorList->tofSensorArray, MAIN_BOARD_TOF_SENSOR_LIST_LENGTH, (int*) gameStrategyContext);
 

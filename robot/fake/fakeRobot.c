@@ -10,8 +10,8 @@ void initFakeRobot(float x, float y, float angleRadian, float radius) {
 }
 
 /**
-* Returns the singleton of fake Robot
-*/
+ * Returns the singleton of fake Robot
+ */
 FakeRobot* getFakeRobotInstance(void) {
     return &fakeRobot;
 }

@@ -31,20 +31,20 @@ void initI2cBusConnectionList(I2cBusConnection(*i2cBusConnectionListArray)[], un
 }
 
 I2cBusConnection* getI2cBusConnectionByIndex(int index) {
-	if (i2cBusConnectionList.maxSize == 0) {
-		writeError(I2C_BUS_CONNECTION_LIST_NOT_INITIALIZED);
-		return NULL;
-	}
-	if (index < 0 || index >= i2cBusConnectionList.maxSize) {
-		writeError(I2C_BUS_CONNECTION_LIST_ILLEGAL_INDEX);
-		return NULL;
-	}
-	I2cBusConnection* result = (I2cBusConnection*)i2cBusConnectionList.busConnectionArray;
-	// we don't need use sizeof because our pointer is a I2cBusConnection pointer, so the shift
-	// is already of the structure, we just have to shift of index.
-	result += index;
+    if (i2cBusConnectionList.maxSize == 0) {
+        writeError(I2C_BUS_CONNECTION_LIST_NOT_INITIALIZED);
+        return NULL;
+    }
+    if (index < 0 || index >= i2cBusConnectionList.maxSize) {
+        writeError(I2C_BUS_CONNECTION_LIST_ILLEGAL_INDEX);
+        return NULL;
+    }
+    I2cBusConnection* result = (I2cBusConnection*) i2cBusConnectionList.busConnectionArray;
+    // we don't need use sizeof because our pointer is a I2cBusConnection pointer, so the shift
+    // is already of the structure, we just have to shift of index.
+    result += index;
 
-	return result;
+    return result;
 }
 
 I2cBusConnection* addI2cBusConnection(I2cBus* i2cBus, unsigned char i2cSlaveAddress, bool defaultInitConnection) {

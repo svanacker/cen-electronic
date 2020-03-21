@@ -4,8 +4,8 @@
 #include "../../device/deviceDescriptor.h"
 
 /**
-* Returns a descriptor on the lcd device.
-*/
+ * Returns a descriptor on the lcd device.
+ */
 DeviceDescriptor* getLCDDeviceDescriptor();
 
 #endif

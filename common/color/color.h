@@ -4,8 +4,8 @@
 #include <stdbool.h>
 
 /**
-* Define a Color structure.
-*/
+ * Define a Color structure.
+ */
 typedef struct Color {
     unsigned int R;
     unsigned int G;
@@ -29,12 +29,12 @@ enum ColorType {
 };
 
 /**
-* Determine if a color is in the Threshold values.
-*/
-bool isColorInRange(Color* color, 
-    unsigned int rLowThreshold, unsigned int rHighThreshold,
-    unsigned int gLowThreshold, unsigned int gHighThreshold,
-    unsigned int bLowThreshold, unsigned int bHighThreshold);
+ * Determine if a color is in the Threshold values.
+ */
+bool isColorInRange(Color* color,
+        unsigned int rLowThreshold, unsigned int rHighThreshold,
+        unsigned int gLowThreshold, unsigned int gHighThreshold,
+        unsigned int bLowThreshold, unsigned int bHighThreshold);
 
 
 // COLORS

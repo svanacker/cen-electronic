@@ -18,31 +18,31 @@
 #include "../../device/transmitMode.h"
 
 /**
-* @private
-* Transmit the buffer locally, call the device which write data out to the stream
-*/
+ * @private
+ * Transmit the buffer locally, call the device which write data out to the stream
+ */
 bool _driverDataDispatcherTransmitLocal(DriverDataDispatcher* dispatcher,
-                                     Buffer* inputBuffer,
-                                     Buffer* outputBuffer,
-                                     int dataToTransferCount,
-                                     int dataToReceiveCount
-    ) {
+        Buffer* inputBuffer,
+        Buffer* outputBuffer,
+        int dataToTransferCount,
+        int dataToReceiveCount
+        ) {
     handleStreamInstruction(inputBuffer, outputBuffer, NULL, NULL, NULL, NULL);
     return true;
 }
 
 /**
-* Add the local driver data dispatcher to the list.
-*/
+ * Add the local driver data dispatcher to the list.
+ */
 DriverDataDispatcher* addLocalDriverDataDispatcher() {
     DriverDataDispatcher* result = addDriverDataDispatcher(
-                                    TRANSMIT_LOCAL,
-                                    "LOCAL_DISPATCHER",
-                                    NULL,
-                                    0,
-                                    NULL,
-                                    NULL,
-                                    _driverDataDispatcherTransmitLocal);
+            TRANSMIT_LOCAL,
+            "LOCAL_DISPATCHER",
+            NULL,
+            0,
+            NULL,
+            NULL,
+            _driverDataDispatcherTransmitLocal);
     return result;
 }
 

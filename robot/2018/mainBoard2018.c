@@ -57,10 +57,10 @@ static GameBoardElement gameBoardElementListArray[MAIN_BOARD_2018_GAME_BOARD_PRI
 
 Navigation* initNavigation2018(void) {
     // Navigation
-    initLocationList(&locationList, (Location(*)[]) &locationListArray, STRATEGY_2018_BIT_LIST_NAVIGATION_ARRAY_LENGTH);
-    initPathList(&pathList, (PathData(*)[]) &pathListArray, STRATEGY_2018_NAVIGATION_PATH_LIST_ARRAY_LENGTH);
-    initBitList(&outgoingPathBitList, (unsigned int(*)[]) &outgoingPathBitArray, STRATEGY_2018_BIT_LIST_NAVIGATION_ARRAY_LENGTH);
-    initBitList(&availablePathBitList, (unsigned int(*)[]) &availablePathBitArray, STRATEGY_2018_BIT_LIST_NAVIGATION_ARRAY_LENGTH);
+    initLocationList(&locationList, (Location(*)[]) & locationListArray, STRATEGY_2018_BIT_LIST_NAVIGATION_ARRAY_LENGTH);
+    initPathList(&pathList, (PathData(*)[]) & pathListArray, STRATEGY_2018_NAVIGATION_PATH_LIST_ARRAY_LENGTH);
+    initBitList(&outgoingPathBitList, (unsigned int(*)[]) & outgoingPathBitArray, STRATEGY_2018_BIT_LIST_NAVIGATION_ARRAY_LENGTH);
+    initBitList(&availablePathBitList, (unsigned int(*)[]) & availablePathBitArray, STRATEGY_2018_BIT_LIST_NAVIGATION_ARRAY_LENGTH);
 
     initNavigation(&navigation, &locationList, &pathList, &outgoingPathBitList, &availablePathBitList);
 
@@ -76,11 +76,11 @@ GameStrategyContext* initGameStrategyContext2018(RobotConfig* robotConfig, EndMa
 
 GameBoard* initGameBoard2018(GameStrategyContext* gameStrategyContext) {
     initGameBoard(&gameBoard,
-        &gameBoardCurve,
-        &gameBoardElementList,
-        (GameBoardElement(*)[]) &gameBoardElementListArray,
-        MAIN_BOARD_2018_GAME_BOARD_PRINT_ELEMENT_ARRAY_LENGTH,
-        gameStrategyContext);
+            &gameBoardCurve,
+            &gameBoardElementList,
+            (GameBoardElement(*)[]) & gameBoardElementListArray,
+            MAIN_BOARD_2018_GAME_BOARD_PRINT_ELEMENT_ARRAY_LENGTH,
+            gameStrategyContext);
 
     addGameBoardElements2018(&gameBoardElementList);
 

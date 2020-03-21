@@ -22,10 +22,10 @@
 
 void pca9685_init(I2cBusConnection* i2cBusConnection) {
     pca9685_reset(i2cBusConnection);
-    
+
     // set a default frequency : 50 Hz for a servo
     pca9685_setPWMFreq(i2cBusConnection, 50);
-    
+
     OutputStream* debugOutputStream = getInfoOutputStreamLogger();
     pca9685_debugMainRegisterList(debugOutputStream, i2cBusConnection);
 }
@@ -47,11 +47,12 @@ void pca9685_reset(I2cBusConnection* i2cBusConnection) {
 
     portableMasterStopI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     timerDelayMilliSeconds(10);
 }
 
 // TODO : BUGGED !!
+
 void pca9685_setPWMFreq(I2cBusConnection* i2cBusConnection, float frequency) {
     frequency *= 0.9; // Correct for overshoot in the frequency setting (see issue #11).
     float prescaleval = 25000000;
@@ -61,11 +62,11 @@ void pca9685_setPWMFreq(I2cBusConnection* i2cBusConnection, float frequency) {
 
     // unsigned char prescale = floor(prescaleval + 0.5);
     unsigned char prescale = 121;
- 
+
     // Frequency could only be change if sleep
     pca9685_write8(i2cBusConnection, PCA9685_MODE1, PCA9685_MODE1_MASK_ALLCALL | PCA9685_MODE1_MASK_SLEEP);
     delayMilliSecs(5);
-    pca9685_write8(i2cBusConnection, PCA9685_PRESCALE, prescale);            // set the prescaler
+    pca9685_write8(i2cBusConnection, PCA9685_PRESCALE, prescale); // set the prescaler
     delayMilliSecs(5);
     // Stop sleeping
     pca9685_write8(i2cBusConnection, PCA9685_MODE1, PCA9685_MODE1_MASK_ALLCALL | PCA9685_MODE1_MASK_AUTO_INC);
@@ -76,7 +77,7 @@ void pca9685_setPWM(I2cBusConnection* i2cBusConnection, unsigned char pwmIndex, 
 
     portableMasterStartI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     // Address
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
     WaitI2cBusConnection(i2cBusConnection);
@@ -150,7 +151,7 @@ void pca9685_write8(I2cBusConnection* i2cBusConnection, unsigned char reg, unsig
 unsigned char pca9685_read8(I2cBusConnection* i2cBusConnection, unsigned char reg) {
     unsigned char result;
     portableMasterWaitSendI2C(i2cBusConnection);
-    
+
     // Start
     portableMasterStartI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
@@ -162,18 +163,18 @@ unsigned char pca9685_read8(I2cBusConnection* i2cBusConnection, unsigned char re
     // Register
     portableMasterWriteI2C(i2cBusConnection, reg);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     // Restart in read mode
     portableMasterStartI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     // send read address (bit zero is set)
     portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress | 1);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     result = portableMasterReadI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     // portableMasterAckI2C(i2cBusConnection);
     portableMasterNackI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);

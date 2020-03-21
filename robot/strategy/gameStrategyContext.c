@@ -29,8 +29,7 @@ void initGameStrategyIndex(GameStrategyContext* gameStrategyContext) {
     unsigned int strategyMask = (configValue & CONFIG_STRATEGY_MASK);
     if (strategyMask == 0) {
         gameStrategyContext->strategyId = NO_STRATEGY_INDEX;
-    }
-    else {
+    } else {
         gameStrategyContext->strategyId = strategyMask;
     }
 }
@@ -43,16 +42,15 @@ void obstacleTimerCallbackFunc(Timer* timer) {
     pathListDecreaseObstacleCost(pathList);
 }
 
-
 void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
-    RobotConfig* robotConfig,
-    Navigation* navigation,
-    EndMatch* endMatch,
-    TofSensorList* tofSensorList,
-    Point* robotPosition,
-    Point* opponentRobotPosition,
-    Point* lastObstaclePosition,
-    ServoList* servoList) {
+        RobotConfig* robotConfig,
+        Navigation* navigation,
+        EndMatch* endMatch,
+        TofSensorList* tofSensorList,
+        Point* robotPosition,
+        Point* opponentRobotPosition,
+        Point* lastObstaclePosition,
+        ServoList* servoList) {
     gameStrategyContext->navigation = navigation;
     gameStrategyContext->robotConfig = robotConfig;
     gameStrategyContext->endMatch = endMatch;
@@ -111,5 +109,5 @@ void showGameStrategyContextTeamColorAndStrategy(GameStrategyContext* gameStrate
     unsigned int sonarIndex = (robotConfig->robotConfigReadInt(robotConfig) & CONFIG_SONAR_MASK) >> CONFIG_SONAR_SHIFT_BIT_VALUE;
     appendString(outputStream, "TOF:");
     appendDec(outputStream, sonarIndex);
-    appendSpace(outputStream);    
+    appendSpace(outputStream);
 }

@@ -21,15 +21,13 @@ int deviceServoGetInterface(unsigned char commandHeader, DeviceInterfaceMode mod
             setArgumentUnsignedHex4(4, "value");
         }
         return commandLengthValueForMode(mode, 10, 0);
-    }
-    else if (commandHeader == SERVO_COMMAND_WRITE_COMPACT) {
+    } else if (commandHeader == SERVO_COMMAND_WRITE_COMPACT) {
         if (fillDeviceArgumentList) {
             setFunction("updateAllServoCompact", 1, 0);
             setArgumentUnsignedHex4(0, "value");
         }
         return commandLengthValueForMode(mode, 4, 0);
-    }
-    else if (commandHeader == SERVO_COMMAND_WRITE_MAX_SPEED_UNDER_LOAD) {
+    } else if (commandHeader == SERVO_COMMAND_WRITE_MAX_SPEED_UNDER_LOAD) {
         if (fillDeviceArgumentList) {
             setFunction("update max Speed under load", 3, 0);
             setArgumentUnsignedHex2(0, "ServoIdx");
@@ -37,8 +35,7 @@ int deviceServoGetInterface(unsigned char commandHeader, DeviceInterfaceMode mod
             setArgumentUnsignedHex2(2, "value");
         }
         return commandLengthValueForMode(mode, 5, 0);
-    }
-    else if (commandHeader == SERVO_COMMAND_WRITE_ENABLE_DISABLE) {
+    } else if (commandHeader == SERVO_COMMAND_WRITE_ENABLE_DISABLE) {
         if (fillDeviceArgumentList) {
             setFunction("enable/disab. Servo", 3, 0);
             setArgumentUnsignedHex2(0, "ServoIdx");
@@ -46,15 +43,13 @@ int deviceServoGetInterface(unsigned char commandHeader, DeviceInterfaceMode mod
             setArgumentUnsignedChar1(2, "enabl.(1) / dis.(0)");
         }
         return commandLengthValueForMode(mode, 4, 0);
-    }
-    else if (commandHeader == SERVO_COMMAND_ENABLE_DISABLE_ALL) {
+    } else if (commandHeader == SERVO_COMMAND_ENABLE_DISABLE_ALL) {
         if (fillDeviceArgumentList) {
             setFunction("enable/disab. All Servo", 1, 0);
             setArgumentUnsignedChar1(0, "enabl.(1) / dis.(0)");
         }
         return commandLengthValueForMode(mode, 1, 0);
-    }
-    // READ_FUNCTIONS
+    }// READ_FUNCTIONS
     else if (commandHeader == SERVO_COMMAND_GET_COUNT) {
         if (fillDeviceArgumentList) {
             setFunction("servoCount", 0, 1);
@@ -62,8 +57,7 @@ int deviceServoGetInterface(unsigned char commandHeader, DeviceInterfaceMode mod
 
         }
         return commandLengthValueForMode(mode, 0, 2);
-    }
-    else if (commandHeader == SERVO_COMMAND_READ) {
+    } else if (commandHeader == SERVO_COMMAND_READ) {
         if (fillDeviceArgumentList) {
             setFunction("servoRead", 1, 9);
             setArgumentUnsignedHex2(0, "ServoIdx");
@@ -79,53 +73,46 @@ int deviceServoGetInterface(unsigned char commandHeader, DeviceInterfaceMode mod
 
         }
         return commandLengthValueForMode(mode, 2, 17);
-    }
-    else if (commandHeader == SERVO_COMMAND_READ_SPEED) {
+    } else if (commandHeader == SERVO_COMMAND_READ_SPEED) {
         if (fillDeviceArgumentList) {
             setFunction("servoReadSpeed", 1, 1);
             setArgumentUnsignedHex2(0, "ServoIdx");
             setResultUnsignedHex2(0, "Speed");
         }
         return commandLengthValueForMode(mode, 2, 2);
-    }
-    else if (commandHeader == SERVO_COMMAND_READ_MAX_SPEED_UNDER_LOAD) {
+    } else if (commandHeader == SERVO_COMMAND_READ_MAX_SPEED_UNDER_LOAD) {
         if (fillDeviceArgumentList) {
             setFunction("read max speed under load", 1, 1);
             setArgumentUnsignedHex2(0, "ServoIdx");
             setResultUnsignedHex2(0, "Max speed under load");
         }
         return commandLengthValueForMode(mode, 2, 2);
-    }
-    else if (commandHeader == SERVO_COMMAND_READ_CURRENT_POSITION) {
+    } else if (commandHeader == SERVO_COMMAND_READ_CURRENT_POSITION) {
         if (fillDeviceArgumentList) {
             setFunction("servoReadCurrentPosition", 1, 1);
             setArgumentUnsignedHex2(0, "ServoIdx");
             setResultUnsignedHex4(0, "Current Position");
         }
         return commandLengthValueForMode(mode, 2, 4);
-    }
-    else if (commandHeader == SERVO_COMMAND_READ_TARGET_POSITION) {
+    } else if (commandHeader == SERVO_COMMAND_READ_TARGET_POSITION) {
         if (fillDeviceArgumentList) {
             setFunction("servoReadTargetPosition", 1, 1);
             setArgumentUnsignedHex2(0, "ServoIdx");
             setResultUnsignedHex4(0, "Target Position");
         }
         return commandLengthValueForMode(mode, 2, 4);
-    }
-    // DEBUG FUNCTIONS
+    }// DEBUG FUNCTIONS
     else if (commandHeader == SERVO_COMMAND_TEST) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("servoTestAlls");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == SERVO_COMMAND_DEBUG) {
+    } else if (commandHeader == SERVO_COMMAND_DEBUG) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("servoDebugAlls");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // COMPUTE
+    }// COMPUTE
     else if (commandHeader == SERVO_COMMAND_GET_TIME_TO_REACH_UNDER_LOAD) {
         if (fillDeviceArgumentList) {
             setFunction("get time to reach under load", 3, 1);

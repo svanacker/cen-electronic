@@ -6,9 +6,9 @@
 #include "../../common/sensor/accelerometer/accelerometer.h"
 
 /**
-* Returns a descriptor on the device for the Accelerometer.
-* @return a descriptor on the device for the Accelerometer
-*/
+ * Returns a descriptor on the device for the Accelerometer.
+ * @return a descriptor on the device for the Accelerometer
+ */
 DeviceDescriptor* getAccelerometerDeviceDescriptor(Accelerometer* accelerometer);
 
 #endif

@@ -27,7 +27,7 @@ void openSerial(enum SerialPort serialPort, unsigned long baudRate) {
     if (serialPort == SERIAL_PORT_1) {
         serialInputPipeHandle1 = initClientPipe(PIPE_SERIAL_INPUT_NAME_1);
         serialOutputPipeHandle1 = initServerPipe(PIPE_SERIAL_OUTPUT_NAME_1);
-    }   
+    }
 }
 
 void openSerialAtDefaultSpeed(enum SerialPort serialPort) {

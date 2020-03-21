@@ -23,9 +23,11 @@
 
 #include "../../drivers/led/led.h"
 
-static LedArray* ledArray;
+// FORWARD DECLARATION
+LedArray* getLedArrayFromDeviceDescriptor(void);
 
 void deviceLedInit(void) {
+    LedArray* ledArray = getLedArrayFromDeviceDescriptor();
     if (ledArray == NULL) {
         writeError(LED_ARRAY_NULL);
         return;
@@ -41,29 +43,32 @@ bool deviceLedIsOk(void) {
 }
 
 void deviceLedHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
-    /** Only for PC */
     if (commandHeader == COMMAND_LED_WRITE) {
-        ackCommand(outputStream, COLOR_SENSOR_DEVICE_HEADER, COMMAND_LED_WRITE);
-        /*
-        unsigned charIndex = readHex2(inputStream);
-        appendHex2(outputStream, ledArray);
-        colorSensor->color->R = readHex4(inputStream);
+        ackCommand(outputStream, LED_DEVICE_HEADER, COMMAND_LED_WRITE);
+        LedArray* ledArray = getLedArrayFromDeviceDescriptor();
+        unsigned char ledIndex = readHex2(inputStream);
         checkIsSeparator(inputStream);
-        colorSensor->color->G = readHex4(inputStream);
+        unsigned char r = readHex2(inputStream);
         checkIsSeparator(inputStream);
-        colorSensor->color->B = readHex4(inputStream);
-        */
+        unsigned char g = readHex2(inputStream);
+        checkIsSeparator(inputStream);
+        unsigned char b = readHex2(inputStream);
+        ledArray->ledArrayWriteValue(ledArray, ledIndex, r, g, b);
     }
 }
 
-static DeviceDescriptor descriptor = {
-    .deviceInit = &deviceLedInit,
-    .deviceShutDown = &deviceLedShutDown,
-    .deviceIsOk = &deviceLedIsOk,
-    .deviceHandleRawData = &deviceLedHandleRawData,
-};
+static DeviceDescriptor descriptor;
+
+LedArray* getLedArrayFromDeviceDescriptor(void) {
+    return (LedArray*) descriptor.object;
+}
 
 DeviceDescriptor* getLedDeviceDescriptor(LedArray* ledArrayParam) {
-    ledArray = ledArrayParam;
+    initDeviceDescriptor(&descriptor,
+            &deviceLedInit,
+            &deviceLedShutDown,
+            &deviceLedIsOk,
+            &deviceLedHandleRawData,
+            (int*) ledArrayParam);
     return &descriptor;
 }

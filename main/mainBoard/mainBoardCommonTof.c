@@ -79,8 +79,8 @@ void mainBoardCommonUpdateTofMaxDistanceMM(GameStrategyContext* gameStrategyCont
 }
 
 TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, MultiplexerList* multiplexerList, IOExpanderList* ioExpanderList) {
-    (&tofSensorList)->tofSensorArray = (TofSensor(*)[]) &tofSensorArray;
-    
+    (&tofSensorList)->tofSensorArray = (TofSensor(*)[]) & tofSensorArray;
+
     float distanceFactor = (float) getSonarDistanceCheckFactor(robotConfig);
     bool collisionEnabled = isSonarActivated(robotConfig);
 
@@ -94,7 +94,7 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         // Same value than angleFromRobotCenter because placed on a circle
         frontRightSensor->orientationRadian = frontRightSensor->angleFromRobotCenterRadian;
         frontRightSensor->thresholdMinDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE;
-        frontRightSensor->thresholdMaxDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int)(distanceFactor * FRONT_RIGHT_SENSOR_DISTANCE_THRESHOLD);
+        frontRightSensor->thresholdMaxDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_RIGHT_SENSOR_DISTANCE_THRESHOLD);
         frontRightSensor->name = "FRONT RIGHT";
         frontRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
@@ -112,7 +112,7 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         // Same value than angleFromRobotCenter because placed on a circle
         frontMiddleSensor->orientationRadian = frontMiddleSensor->angleFromRobotCenterRadian;
         frontMiddleSensor->thresholdMinDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE;
-        frontMiddleSensor->thresholdMaxDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int)(distanceFactor * FRONT_MIDDLE_SENSOR_DISTANCE_THRESHOLD);
+        frontMiddleSensor->thresholdMaxDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_MIDDLE_SENSOR_DISTANCE_THRESHOLD);
         frontMiddleSensor->name = "FRONT MIDDLE";
         frontMiddleSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
@@ -130,7 +130,7 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         // Same value than angleFromRobotCenter because placed on a circle
         frontLeftSensor->orientationRadian = frontLeftSensor->angleFromRobotCenterRadian;
         frontLeftSensor->thresholdMinDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE;
-        frontLeftSensor->thresholdMaxDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int)(distanceFactor * FRONT_LEFT_SENSOR_DISTANCE_THRESHOLD);
+        frontLeftSensor->thresholdMaxDistanceMM = FRONT_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_LEFT_SENSOR_DISTANCE_THRESHOLD);
         frontLeftSensor->name = "FRONT LEFT";
         frontLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
@@ -148,7 +148,7 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         // Same value than angleFromRobotCenter because placed on a circle
         backRightSensor->orientationRadian = backRightSensor->angleFromRobotCenterRadian;
         backRightSensor->thresholdMinDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE;
-        backRightSensor->thresholdMaxDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int)(distanceFactor * BACK_RIGHT_SENSOR_DISTANCE_THRESHOLD);
+        backRightSensor->thresholdMaxDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_RIGHT_SENSOR_DISTANCE_THRESHOLD);
         backRightSensor->name = "BACK RIGHT";
         backRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
@@ -166,7 +166,7 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         // Same value than angleFromRobotCenter because placed on a circle
         backMiddleSensor->orientationRadian = backMiddleSensor->angleFromRobotCenterRadian;
         backMiddleSensor->thresholdMinDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE;
-        backMiddleSensor->thresholdMaxDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int)(distanceFactor * BACK_MIDDLE_SENSOR_DISTANCE_THRESHOLD);
+        backMiddleSensor->thresholdMaxDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_MIDDLE_SENSOR_DISTANCE_THRESHOLD);
         backMiddleSensor->name = "BACK MIDDLE";
         backMiddleSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
@@ -184,7 +184,7 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         // Same value than angleFromRobotCenter because placed on a circle
         backLeftSensor->orientationRadian = backLeftSensor->angleFromRobotCenterRadian;
         backLeftSensor->thresholdMinDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE;
-        backLeftSensor->thresholdMaxDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int)(distanceFactor * BACK_LEFT_SENSOR_DISTANCE_THRESHOLD);
+        backLeftSensor->thresholdMaxDistanceMM = BACK_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_LEFT_SENSOR_DISTANCE_THRESHOLD);
         backLeftSensor->name = "BACK LEFT";
         backLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
@@ -212,7 +212,7 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         frontSideLeftSensor->distanceFromRobotCenter = 150.0f;
         frontSideLeftSensor->orientationRadian = degToRad(FRONT_SIDE_LEFT_SENSOR_ANGLE_DEGREE);
         frontSideLeftSensor->thresholdMinDistanceMM = FRONT_SIDE_TOF_TO_FRONT_OF_ROBOT_DISTANCE;
-        frontSideLeftSensor->thresholdMaxDistanceMM = FRONT_SIDE_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int)(distanceFactor * FRONT_SIDE_LEFT_SENSOR_DISTANCE_THRESHOLD);
+        frontSideLeftSensor->thresholdMaxDistanceMM = FRONT_SIDE_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_SIDE_LEFT_SENSOR_DISTANCE_THRESHOLD);
         frontSideLeftSensor->name = "FRONT SIDE L";
         frontSideLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
@@ -229,7 +229,7 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         frontSideRightSensor->distanceFromRobotCenter = 150.0f;
         frontSideRightSensor->orientationRadian = degToRad(FRONT_SIDE_RIGHT_SENSOR_ANGLE_DEGREE);
         frontSideRightSensor->thresholdMinDistanceMM = FRONT_SIDE_TOF_TO_FRONT_OF_ROBOT_DISTANCE;
-        frontSideRightSensor->thresholdMaxDistanceMM = FRONT_SIDE_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int)(distanceFactor * FRONT_SIDE_RIGHT_SENSOR_DISTANCE_THRESHOLD);
+        frontSideRightSensor->thresholdMaxDistanceMM = FRONT_SIDE_TOF_TO_FRONT_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * FRONT_SIDE_RIGHT_SENSOR_DISTANCE_THRESHOLD);
         frontSideRightSensor->name = "FRONT SIDE R";
         frontSideRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
@@ -246,7 +246,7 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         backSideRightSensor->distanceFromRobotCenter = 150.0f;
         backSideRightSensor->orientationRadian = degToRad(BACK_SIDE_RIGHT_SENSOR_ANGLE_DEGREE);
         backSideRightSensor->thresholdMinDistanceMM = FRONT_SIDE_TOF_TO_BACK_OF_ROBOT_DISTANCE;
-        backSideRightSensor->thresholdMaxDistanceMM = FRONT_SIDE_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int)(distanceFactor * BACK_SIDE_RIGHT_SENSOR_DISTANCE_THRESHOLD);
+        backSideRightSensor->thresholdMaxDistanceMM = FRONT_SIDE_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_SIDE_RIGHT_SENSOR_DISTANCE_THRESHOLD);
         backSideRightSensor->name = "BACK SIDE R";
         backSideRightSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
@@ -264,7 +264,7 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         backSideLeftSensor->distanceFromRobotCenter = 150.0f;
         backSideLeftSensor->orientationRadian = degToRad(BACK_SIDE_LEFT_SENSOR_ANGLE_DEGREE);
         backSideLeftSensor->thresholdMinDistanceMM = FRONT_SIDE_TOF_TO_BACK_OF_ROBOT_DISTANCE;
-        backSideLeftSensor->thresholdMaxDistanceMM = FRONT_SIDE_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int)(distanceFactor * BACK_SIDE_LEFT_SENSOR_DISTANCE_THRESHOLD);
+        backSideLeftSensor->thresholdMaxDistanceMM = FRONT_SIDE_TOF_TO_BACK_OF_ROBOT_DISTANCE + (unsigned int) (distanceFactor * BACK_SIDE_LEFT_SENSOR_DISTANCE_THRESHOLD);
         backSideLeftSensor->name = "BACK SIDE L";
         backSideLeftSensor->detectionThreshold = STRATEGY_DETECTION_THRESHOLD;
 
@@ -274,7 +274,7 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         backSideLeftSensor->multiplexer = getMultiplexerByIndex(multiplexerList, 0);
         backSideLeftSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_5;
     }
-    
+
     return &tofSensorList;
 }
 

@@ -28,8 +28,7 @@ void loadRobotKinematicsParameters(RobotKinematics* robotKinematics, Eeprom* eep
             robotKinematics->motorReductorRatio = BIG_ROBOT_KINEMATICS_MOTOR_REDUCTOR_RATIO_DEFAULT_VALUE;
             // Robot Value
             robotKinematics->robotWeightGrams = BIG_ROBOT_KINEMATICS_ROBOT_WEIGHT_GRAMS;
-        }
-        else if (robotType == ROBOT_TYPE_SMALL) {
+        } else if (robotType == ROBOT_TYPE_SMALL) {
             // Coder Value
             robotKinematics->coderWheelAverageDiameterMM = SMALL_ROBOT_KINEMATICS_CODER_WHEEL_AVERAGE_DIAMETER_MM_DEFAULT_VALUE;
             robotKinematics->coderWheelAverageDeltaDiameterMM = SMALL_ROBOT_KINEMATICS_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM_DEFAULT_VALUE;
@@ -43,12 +42,10 @@ void loadRobotKinematicsParameters(RobotKinematics* robotKinematics, Eeprom* eep
             robotKinematics->motorReductorRatio = SMALL_ROBOT_KINEMATICS_MOTOR_REDUCTOR_RATIO_DEFAULT_VALUE;
             // Robot Value
             robotKinematics->robotWeightGrams = SMALL_ROBOT_KINEMATICS_ROBOT_WEIGHT_GRAMS;
-        }
-        else {
+        } else {
             writeError(ROBOT_TYPE_UNKNOWN_ERROR);
         }
-    }
-    else {
+    } else {
         bool eepromKinematicsAreaInitialized = isEepromAreaInitialized(eeprom_, EEPROM_KINEMATICS_AREA_MARKER_INDEX);
         if (!eepromKinematicsAreaInitialized) {
             writeError(ROBOT_KINEMATICS_EEPROM_NOT_INITIALIZED);

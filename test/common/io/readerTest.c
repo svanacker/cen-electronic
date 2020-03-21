@@ -37,7 +37,7 @@ void readerTestSuite(void) {
 }
 
 void initBufferForReaderTest(void) {
-    initBuffer(&bufferTest, (char(*)[]) &bufferArrayTest, TEST_BUFFER_SIZE, "readerTest", "readerTestType");
+    initBuffer(&bufferTest, (char(*)[]) & bufferArrayTest, TEST_BUFFER_SIZE, "readerTest", "readerTestType");
     outputStream = getOutputStream(&bufferTest);
     inputStream = getInputStream(&bufferTest);
 }
@@ -50,7 +50,7 @@ void test_readBool(void) {
     bool value = readBool(inputStream);
     TEST_ASSERT_FALSE(value);
     TEST_ASSERT_EQUAL(0, getLastError());
-    
+
     value = readBool(inputStream);
     TEST_ASSERT_TRUE(value);
     TEST_ASSERT_EQUAL(0, getLastError());
@@ -190,7 +190,6 @@ void test_readHex4(void) {
     TEST_ASSERT_EQUAL(0, getLastError());
 }
 
-
 void test_readSignedHex4(void) {
     initBufferForReaderTest();
 
@@ -280,7 +279,7 @@ void test_checkIsAck() {
     value = checkIsAck(inputStream);
     TEST_ASSERT_FALSE(value);
     TEST_ASSERT_EQUAL(IO_READER_CHECK_CHAR_PROBLEM, getLastError());
-    
+
     clearLastError();
     value = checkIsAck(inputStream);
     TEST_ASSERT_FALSE(value);

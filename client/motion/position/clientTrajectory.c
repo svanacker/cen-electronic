@@ -29,7 +29,7 @@
 
 bool clientTrajectorySetAbsolutePosition(float x, float y, float radian) {
     OutputStream* outputStream = getDriverRequestOutputStream();
-    
+
     append(outputStream, TRAJECTORY_DEVICE_HEADER);
     append(outputStream, COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION);
     appendHexFloat6(outputStream, x, POSITION_DIGIT_MM_PRECISION);
@@ -44,11 +44,12 @@ bool clientTrajectorySetAbsolutePosition(float x, float y, float radian) {
 }
 
 // UPDATE TRAJECTORY DEVICE -> ROBOT POSITION
+
 bool clientTrajectoryUpdateRobotPosition(RobotPosition* robotPosition) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* inputStream = getDriverResponseInputStream();
 
-    append(outputStream, TRAJECTORY_DEVICE_HEADER);    
+    append(outputStream, TRAJECTORY_DEVICE_HEADER);
     append(outputStream, COMMAND_TRAJECTORY_GET_ABSOLUTE_POSITION);
 
     bool result = transmitFromDriverRequestBuffer();
@@ -58,7 +59,7 @@ bool clientTrajectoryUpdateRobotPosition(RobotPosition* robotPosition) {
         float y = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
         readHex(inputStream);
         float angle = degToRad(readHexFloat4(inputStream, ANGLE_DIGIT_DEGREE_PRECISION));
-        
+
         robotPosition->angleRadian = angle;
         robotPosition->x = x;
         robotPosition->y = y;
@@ -68,6 +69,7 @@ bool clientTrajectoryUpdateRobotPosition(RobotPosition* robotPosition) {
 }
 
 // ADJUST
+
 bool clientTrajectoryAdjustAngleToClosest(void) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     InputStream* inputStream = getDriverResponseInputStream();
@@ -76,9 +78,9 @@ bool clientTrajectoryAdjustAngleToClosest(void) {
     append(outputStream, COMMAND_TRAJECTORY_ADJUST_ANGLE_TO_CLOSEST);
 
     transmitFromDriverRequestBuffer();
-    
+
     bool result = readBool(inputStream);
-    
+
     return result;
 }
 
@@ -89,11 +91,11 @@ bool clientTrajectoryAdjustXPosition(float x) {
     append(outputStream, TRAJECTORY_DEVICE_HEADER);
     append(outputStream, COMMAND_TRAJECTORY_ADJUST_X);
     appendHexFloat4(outputStream, x, POSITION_DIGIT_MM_PRECISION);
-    
+
     transmitFromDriverRequestBuffer();
-    
+
     bool result = readBool(inputStream);
-    
+
     return result;
 }
 
@@ -104,23 +106,23 @@ bool clientTrajectoryAdjustYPosition(float y) {
     append(outputStream, TRAJECTORY_DEVICE_HEADER);
     append(outputStream, COMMAND_TRAJECTORY_ADJUST_Y);
     appendHexFloat4(outputStream, y, POSITION_DIGIT_MM_PRECISION);
-    
+
     transmitFromDriverRequestBuffer();
-    
+
     bool result = readBool(inputStream);
-    
+
     return result;
 }
 
 // Notification management
+
 bool clientTrajectoryNotifySetEnabled(bool enabled) {
     OutputStream* outputStream = getDriverRequestOutputStream();
 
     append(outputStream, TRAJECTORY_DEVICE_HEADER);
     if (enabled) {
         append(outputStream, COMMAND_TRAJECTORY_NOTIFY_ON);
-    }
-    else {
+    } else {
         append(outputStream, COMMAND_TRAJECTORY_NOTIFY_OFF);
     }
     return transmitFromDriverRequestBuffer();

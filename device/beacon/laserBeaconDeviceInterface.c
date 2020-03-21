@@ -19,15 +19,13 @@ int deviceBeaconGetInterface(char commandHeader, int mode, bool fillDeviceArgume
             setFunctionNoArgumentAndNoResult("InitJennicAsCoordinater");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_SEND_ROBOT_POSITION_FROM_COORDINATER_TO_ROUTER) {
+    } else if (commandHeader == COMMAND_SEND_ROBOT_POSITION_FROM_COORDINATER_TO_ROUTER) {
         // both input/output
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("sendRobotPositionFromCoordinaterToRouter");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_BEACON_POSITION) {
+    } else if (commandHeader == COMMAND_BEACON_POSITION) {
         if (fillDeviceArgumentList) {
             setFunction("robotPosition", 0, 3);
             setResultUnsignedHex4(0, "x (mm)");
@@ -35,17 +33,15 @@ int deviceBeaconGetInterface(char commandHeader, int mode, bool fillDeviceArgume
             setResultUnsignedHex4(2, "y (mm)");
         }
         return commandLengthValueForMode(mode, 0, 9);
-    }
-    // Show the configuration of the both laser and general configuration
+    }// Show the configuration of the both laser and general configuration
     else if (commandHeader == COMMAND_BEACON_CONFIGURATION) {
         // both input/output
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("beaconConfiguration");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // Set the configuration to define distance between beacon, and position
-    // of point calibration
+    }// Set the configuration to define distance between beacon, and position
+        // of point calibration
     else if (commandHeader == COMMAND_BEACON_SET_CONFIGURATION) {
         if (fillDeviceArgumentList) {
             setFunction("setBeaconConfiguration", 5, 0);
@@ -56,29 +52,25 @@ int deviceBeaconGetInterface(char commandHeader, int mode, bool fillDeviceArgume
             setArgumentUnsignedHex4(4, "calibration->y");
         }
         return commandLengthValueForMode(mode, 14, 0);
-    }
-    else if (commandHeader == COMMAND_BEACON_CALIBRATION) {
+    } else if (commandHeader == COMMAND_BEACON_CALIBRATION) {
         // both input/output
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("beaconCalibration");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_ROUTER_LIGHT) {
+    } else if (commandHeader == COMMAND_ROUTER_LIGHT) {
         if (fillDeviceArgumentList) {
             setFunction("routerLight", 1, 0);
             setArgumentUnsignedHex2(0, "on/off");
         }
         return commandLengthValueForMode(mode, 2, 0);
-    }
-    else if (commandHeader == COMMAND_BEACON_SERVO_RUN) {
+    } else if (commandHeader == COMMAND_BEACON_SERVO_RUN) {
         // both input/output
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("beaconServoRun");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_BEACON_SERVO_STOP) {
+    } else if (commandHeader == COMMAND_BEACON_SERVO_STOP) {
         // both input/output
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("beaconServoStop");

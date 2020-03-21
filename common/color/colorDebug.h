@@ -9,8 +9,8 @@
 #include "../../common/io/printWriter.h"
 
 /**
-* Print the value of the color to the outputStream.
-*/
+ * Print the value of the color to the outputStream.
+ */
 void printColorType(OutputStream* outputStream, enum ColorType colorType);
 
 #endif

@@ -13,14 +13,14 @@
 bool updateRobotPositionFromMainBoardToMotorBoard(GameStrategyContext* gameStrategyContext);
 
 /**
-* This method must be frequently called by the main Board to be sure to have the right position.
-*/
+ * This method must be frequently called by the main Board to be sure to have the right position.
+ */
 void updateIfNeededRobotPositionFromMotorBoardToMainBoard(GameStrategyContext* gameStrategyContext);
 
 /**
-* Compute the nearest location in the path finding from the current position of the robot
-* The location is the lowest only in terms of "Time of Flight", and not in terms of complexity to reach it
-*/
+ * Compute the nearest location in the path finding from the current position of the robot
+ * The location is the lowest only in terms of "Time of Flight", and not in terms of complexity to reach it
+ */
 Location* getNearestLocationFromGameStrategyContext(GameStrategyContext* gameStrategyContext);
 
 #endif

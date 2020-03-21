@@ -5,14 +5,14 @@
 #include "../../device/device.h"
 
 /**
-* Returns a descriptor on the config.
-* @return the descriptor of the device.
-*/
+ * Returns a descriptor on the config.
+ * @return the descriptor of the device.
+ */
 DeviceDescriptor* getRobotConfigDeviceDescriptor(RobotConfig* robotConfigParam);
 
 /**
-* Returns the strategy which must be used by the robot.
-*/
+ * Returns the strategy which must be used by the robot.
+ */
 unsigned char getStrategy();
 
 #endif

@@ -19,22 +19,22 @@
 #include "../../robot/config/robotConfig.h"
 
 /**
-* Returns the deviceDescriptor of the end Match Detector.
-* @param startMatch the startMatch structure with all information needed.
-* @return a device descriptor on startMatch Device
-*/
+ * Returns the deviceDescriptor of the end Match Detector.
+ * @param startMatch the startMatch structure with all information needed.
+ * @return a device descriptor on startMatch Device
+ */
 DeviceDescriptor* getStartMatchDeviceDescriptor(StartMatch* startMatch);
 
 /**
-* Show the message to indicate that we wait for the match.
-* @param pcOutputStream the stream to the pc motherboard
-*/
+ * Show the message to indicate that we wait for the match.
+ * @param pcOutputStream the stream to the pc motherboard
+ */
 void notifyWaitingStart(StartMatch* startMatch, OutputStream* pcOutputStream);
 
 /**
-* Inform user that the match is started.
-* @param the stream to the pc motherboard
-*/
+ * Inform user that the match is started.
+ * @param the stream to the pc motherboard
+ */
 void notifyStarted(StartMatch* startMatch, OutputStream* pcOutputStream);
 
 #endif

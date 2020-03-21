@@ -5,9 +5,8 @@
 
 /**
  * The profile of the motion. If we reach the speed max, it will be a Trapeze, if we don't have time to reach speed max, it will be a triangle
-*/
+ */
 enum ProfileType {
-    
     /** Undefined profile */
     PROFILE_TYPE_UNDEFINED = 0,
 

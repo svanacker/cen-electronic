@@ -27,9 +27,9 @@ I2cBusConnection* getTofSensorVL53L0XI2cBusConnection(TofSensor* tofSensor);
  * @param debug
  * @return 
  */
-I2cBusConnection* tofSensorSelectRightI2cBusConnection(TofSensor* tofSensor, 
-                                                       unsigned char tofI2cSlaveAddress,
-                                                       bool debug);
+I2cBusConnection* tofSensorSelectRightI2cBusConnection(TofSensor* tofSensor,
+        unsigned char tofI2cSlaveAddress,
+        bool debug);
 /**
  * Change the address of the current Time of Flight
  * @param newAddr

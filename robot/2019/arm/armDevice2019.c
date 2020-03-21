@@ -46,8 +46,7 @@ void deviceArm2019HandleRawData(unsigned char commandHeader, InputStream* inputS
         ackCommand(outputStream, ARM_2019_DEVICE_HEADER, COMMAND_2019_ARM_ON);
         unsigned int side = readHex(inputStream);
         arm2019On(servoList, side);
-    }
-    else if (commandHeader == COMMAND_2019_ARM_OFF) {
+    } else if (commandHeader == COMMAND_2019_ARM_OFF) {
         ackCommand(outputStream, ARM_2019_DEVICE_HEADER, COMMAND_2019_ARM_OFF);
         unsigned int side = readHex(inputStream);
         arm2019Off(servoList, side);
@@ -60,7 +59,6 @@ static DeviceDescriptor descriptor = {
     .deviceIsOk = &deviceArm2019IsOk,
     .deviceHandleRawData = &deviceArm2019HandleRawData,
 };
-
 
 DeviceDescriptor* getArm2019DeviceDescriptor(ServoList* servoListParam) {
     servoList = servoListParam;

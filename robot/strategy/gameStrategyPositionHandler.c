@@ -41,7 +41,7 @@ void interruptGameStrategyMotionCallbackFunc(Timer* timer) {
         writeError(TIMER_NULL);
         return;
     }
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)timer->object;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) timer->object;
     if (gameStrategyContext == NULL) {
         writeError(TIMER_OBJECT_NULL);
         return;
@@ -59,13 +59,12 @@ void interruptGameStrategyMotionCallbackFunc(Timer* timer) {
 
 void initGameStrategyMotionHandler(GameStrategyContext* gameStrategyContext) {
     Timer* timer = addTimer(TIMER_STRATEGY_MOTION_HANDLER_UPDATE_ROBOT_POSITION,
-        TIME_DIVIDER_3_HERTZ,
-        &interruptGameStrategyMotionCallbackFunc,
-        "MOTION UPDATE",
-        (int*)gameStrategyContext);
+            TIME_DIVIDER_3_HERTZ,
+            &interruptGameStrategyMotionCallbackFunc,
+            "MOTION UPDATE",
+            (int*) gameStrategyContext);
     timer->enabled = true;
 }
-
 
 bool updateRobotPositionFromMainBoardToMotorBoard(GameStrategyContext* gameStrategyContext) {
     if (gameStrategyContext == NULL) {

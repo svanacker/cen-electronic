@@ -10,14 +10,15 @@ bool stringEquals(const char* s1, const char* s2) {
 }
 
 // TODO : Add Unit Test
+
 bool fixedCharArrayEquals(FixedCharArray* fixedCharArray1, FixedCharArray* fixedCharArray2) {
     if (fixedCharArray1 == NULL || fixedCharArray2 == NULL) {
         // TODO : Throw an error
         return false;
     }
     int i;
-    char* cPointer1 = (char*)fixedCharArray1;
-    char* cPointer2 = (char*)fixedCharArray2;
+    char* cPointer1 = (char*) fixedCharArray1;
+    char* cPointer2 = (char*) fixedCharArray2;
 
     for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
         unsigned char c1 = *cPointer1;
@@ -34,7 +35,7 @@ bool fixedCharArrayEquals(FixedCharArray* fixedCharArray1, FixedCharArray* fixed
 
 void clearFixedCharArray(FixedCharArray* fixedCharArray) {
     int i;
-    char* cPointer = (char*)fixedCharArray;
+    char* cPointer = (char*) fixedCharArray;
     for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
         *cPointer = '\0';
         cPointer++;
@@ -47,8 +48,8 @@ void copyFixedCharArray(FixedCharArray* source, FixedCharArray* target) {
         return;
     }
     int i;
-    char* sourcePointer = (char*)source;
-    char* targetPointer = (char*)target;
+    char* sourcePointer = (char*) source;
+    char* targetPointer = (char*) target;
     for (i = 0; i < FIXED_CHAR_ARRAY_LENGTH; i++) {
         *targetPointer = *sourcePointer;
         sourcePointer++;
@@ -62,7 +63,7 @@ bool stringToFixedCharArray(const char* s, FixedCharArray* fixedCharArray) {
         return false;
     }
     int index = 0;
-    char* pointer = (char*)fixedCharArray;
+    char* pointer = (char*) fixedCharArray;
     while (*s != '\0') {
         *pointer = *s++;
         pointer++;

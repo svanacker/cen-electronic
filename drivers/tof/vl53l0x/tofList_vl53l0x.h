@@ -14,10 +14,10 @@
 
 #include "../../../drivers/i2c/multiplexer/multiplexerList.h"
 
-void initTofSensorListVL53L0X(TofSensorList* tofSensorList, 
-                              TofSensor(*tofSensorArray)[],
-                              TofSensorVL53L0X(*tofSensorVL53L0XArray)[],
-                              unsigned int size,
-                              bool debug);
+void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
+        TofSensor(*tofSensorArray)[],
+        TofSensorVL53L0X(*tofSensorVL53L0XArray)[],
+        unsigned int size,
+        bool debug);
 
 #endif

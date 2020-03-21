@@ -15,16 +15,14 @@ int deviceGoldenium2019GetInterface(unsigned char commandHeader, DeviceInterface
             setFunctionNoArgumentAndNoResult("Prep Take Gold.");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_2019_FORK_TAKE_GOLDENIUM) {
+    } else if (commandHeader == COMMAND_2019_FORK_TAKE_GOLDENIUM) {
         if (fillDeviceArgumentList) {
             setFunction("Take Goldenium", 1, 1);
             setArgumentUnsignedChar1(0, "Side (1=L, 2=R)");
             setResultUnsignedChar1(0, "not found=0, found=1");
         }
         return commandLengthValueForMode(mode, 1, 1);
-    }
-    else if (commandHeader == COMMAND_2019_FORK_DROP_GOLDENIUM) {
+    } else if (commandHeader == COMMAND_2019_FORK_DROP_GOLDENIUM) {
         if (fillDeviceArgumentList) {
             setFunction("Drop Goldenium", 1, 0);
             setArgumentUnsignedChar1(0, "Side (1=L, 2=R)");

@@ -1,21 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="ja">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta http-equiv="Content-Style-Type" content="text/css">
-<link rel="up" title="FatFs" href="../00index_j.html">
-<link rel="alternate" hreflang="en" title="English" href="../en/sfatfs.html">
-<link rel="stylesheet" href="../css_j.css" type="text/css" media="screen" title="ELM Default">
-<title>FatFs - FATFS</title>
-</head>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="Content-Style-Type" content="text/css">
+        <link rel="up" title="FatFs" href="../00index_j.html">
+        <link rel="alternate" hreflang="en" title="English" href="../en/sfatfs.html">
+        <link rel="stylesheet" href="../css_j.css" type="text/css" media="screen" title="ELM Default">
+        <title>FatFs - FATFS</title>
+    </head>
 
-<body>
+    <body>
 
-<div class="para">
-<h2>FATFS</h2>
-<p><tt>FATFS</tt>構造体(ファイル システム オブジェクト)は、個々の論理ドライブのダイナミック ワーク エリアを保持し、<tt>f_mount</tt>関数でFatFsモジュールに登録されます。初期化が行われるタイミングは、<tt>f_mount</tt>関数(強制マウント指定)の実行またはメディア交換の後の最初のファイル アクセスの時です。アプリケーションは、この構造体のメンバを書き換えてはなりません。</p>
+        <div class="para">
+            <h2>FATFS</h2>
+            <p><tt>FATFS</tt>構造体(ファイル システム オブジェクト)は、個々の論理ドライブのダイナミック ワーク エリアを保持し、<tt>f_mount</tt>関数でFatFsモジュールに登録されます。初期化が行われるタイミングは、<tt>f_mount</tt>関数(強制マウント指定)の実行またはメディア交換の後の最初のファイル アクセスの時です。アプリケーションは、この構造体のメンバを書き換えてはなりません。</p>
 
-<pre>
+            <pre>
 <span class="k">typedef</span> <span class="k">struct</span> {
     BYTE    fs_type;      <span class="c">/* FATタイプ (0:無効, FS_FAT12, FS_FAT16 or FS_FAT32) */</span>
     BYTE    drv;          <span class="c">/* 物理ドライブ番号 */</span>
@@ -47,9 +47,9 @@
     DWORD   winsect;      <span class="c">/* win[]に現れているセクタ番号 */</span>
     BYTE    win[_MAX_SS]; <span class="c">/* ディスク アクセス ウィンドウ */</span>
 } FATFS;
-</pre>
-</div>
+            </pre>
+        </div>
 
-<p class="foot"><a href="../00index_j.html">戻る</a></p>
-</body>
+        <p class="foot"><a href="../00index_j.html">戻る</a></p>
+    </body>
 </html>

@@ -9,22 +9,22 @@
 enum DetectedMotionType {
     /** No position to reach. */
     DETECTED_MOTION_TYPE_NO_POSITION_TO_REACH = 0,
-    
+
     /** No position to reach, but a position to maintain. */
     DETECTED_MOTION_TYPE_POSITION_TO_MAINTAIN = 1,
-    
+
     /** The trajectory is in progress. */
     DETECTED_MOTION_TYPE_POSITION_IN_PROGRESS = 2,
-    
+
     /** The robot reach the position. */
     DETECTED_MOTION_TYPE_POSITION_REACHED = 3,
 
     /** The robot seems to get a shock. */
     DETECTED_MOTION_TYPE_POSITION_SHOCK_WHEELS = 4,
-    
+
     /** The robot seems to have his wheels blocked. */
     DETECTED_MOTION_TYPE_POSITION_BLOCKED_WHEELS = 5,
-    
+
     /** The robot will hurt something (detection by RobotDetector). */
     DETECTED_MOTION_TYPE_POSITION_OBSTACLE = 6,
 

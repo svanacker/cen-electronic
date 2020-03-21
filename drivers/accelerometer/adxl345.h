@@ -55,12 +55,12 @@
  * @param rangeMask         : ADXL345_RANGE_2G / ADXL345_RANGE_4G / ADXL345_RANGE_8G / ADXL345_RANGE_16G
  * @param accelerometerData : the pointer on the structure containing the data
  */
-void adxl345_setupInterruptOnSingleTapOnInt1(Accelerometer* accelerometer, 
-                                       unsigned int thresholdMilliG,
-                                       unsigned int thresholdDurationMilliSec,
-                                       unsigned char tapAxesMap,
-                                       unsigned char rate,
-                                       unsigned char rangeMask);
+void adxl345_setupInterruptOnSingleTapOnInt1(Accelerometer* accelerometer,
+        unsigned int thresholdMilliG,
+        unsigned int thresholdDurationMilliSec,
+        unsigned char tapAxesMap,
+        unsigned char rate,
+        unsigned char rangeMask);
 
 unsigned int adxl345_getThresholdInMilliG(Accelerometer* accelerometer);
 
@@ -121,8 +121,8 @@ void adxl345_readAccelerometerData(Accelerometer* accelerometer);
  * @param accelerometerData the structure to store the accelerometer Data
  * @param i2cBusConnection the i2c bus connection to reach the ADXL345
  */
-void initADXL345AsAccelerometer(Accelerometer* accelerometer, 
-                                AccelerometerData* accelerometerData,
-                                I2cBusConnection* i2cBusConnection);
+void initADXL345AsAccelerometer(Accelerometer* accelerometer,
+        AccelerometerData* accelerometerData,
+        I2cBusConnection* i2cBusConnection);
 
 #endif

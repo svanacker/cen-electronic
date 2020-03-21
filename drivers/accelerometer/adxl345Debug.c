@@ -17,20 +17,20 @@
 // DEBUG CONFIG / REGISTERS
 
 /**
-* Private.
-*/
+ * Private.
+ */
 void adxl345_printRegisterListHeader(OutputStream* outputStream) {
-	println(outputStream);
-	appendTableHeaderSeparatorLine(outputStream);
-	appendStringHeader(outputStream, "#Reg", ADXL345_DEBUG_REG_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "#Reg Hex", ADXL345_DEBUG_REG_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Reg Name", ADXL345_DEBUG_REG_NAME_COLUMN_LENGTH); 
-	appendStringHeader(outputStream, "R/W", ADXL345_DEBUG_REG_RW_COLUMN_LENGTH);       
+    println(outputStream);
+    appendTableHeaderSeparatorLine(outputStream);
+    appendStringHeader(outputStream, "#Reg", ADXL345_DEBUG_REG_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "#Reg Hex", ADXL345_DEBUG_REG_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Reg Name", ADXL345_DEBUG_REG_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "R/W", ADXL345_DEBUG_REG_RW_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Dec Value", ADXL345_DEBUG_REG_VALUE_DEC_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Hex Value", ADXL345_DEBUG_REG_VALUE_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Bin Value", ADXL345_DEBUG_REG_VALUE_BIN_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, 0);
-	appendTableHeaderSeparatorLine(outputStream);
+    appendStringHeader(outputStream, "Bin Value", ADXL345_DEBUG_REG_VALUE_BIN_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, 0);
+    appendTableHeaderSeparatorLine(outputStream);
 }
 
 /**
@@ -39,14 +39,14 @@ void adxl345_printRegisterListHeader(OutputStream* outputStream) {
  */
 void adxl345_debugMainRegister(OutputStream* outputStream, I2cBusConnection* i2cBusConnection, unsigned char reg, const char* regName, const char* rw) {
     unsigned char value = adxl345_read8(i2cBusConnection, reg);
-	appendDecTableData(outputStream, reg, ADXL345_DEBUG_REG_COLUMN_LENGTH);
-	appendHex2TableData(outputStream, reg, ADXL345_DEBUG_REG_HEX_COLUMN_LENGTH);
-	appendStringTableData(outputStream, regName, ADXL345_DEBUG_REG_NAME_COLUMN_LENGTH);
-	appendStringTableData(outputStream, rw, ADXL345_DEBUG_REG_RW_COLUMN_LENGTH);
+    appendDecTableData(outputStream, reg, ADXL345_DEBUG_REG_COLUMN_LENGTH);
+    appendHex2TableData(outputStream, reg, ADXL345_DEBUG_REG_HEX_COLUMN_LENGTH);
+    appendStringTableData(outputStream, regName, ADXL345_DEBUG_REG_NAME_COLUMN_LENGTH);
+    appendStringTableData(outputStream, rw, ADXL345_DEBUG_REG_RW_COLUMN_LENGTH);
     appendDecTableData(outputStream, value, ADXL345_DEBUG_REG_VALUE_DEC_COLUMN_LENGTH);
     appendHex2TableData(outputStream, value, ADXL345_DEBUG_REG_VALUE_HEX_COLUMN_LENGTH);
-	appendBinary8TableData(outputStream, value, 4, ADXL345_DEBUG_REG_VALUE_BIN_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, 0);
+    appendBinary8TableData(outputStream, value, 4, ADXL345_DEBUG_REG_VALUE_BIN_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, 0);
 }
 
 void adxl345_debugMainRegisterList(OutputStream* outputStream, Accelerometer* accelerometer) {
@@ -78,7 +78,7 @@ void adxl345_debugMainRegisterList(OutputStream* outputStream, Accelerometer* ac
 
     appendTableHeaderSeparatorLine(outputStream);
     adxl345_debugMainRegister(outputStream, i2cBusConnection, REG_DATAX0, "REG_DATAX0", "R");
-    adxl345_debugMainRegister(outputStream, i2cBusConnection, REG_DATAX1, "REG_DATAX1", "R");    
+    adxl345_debugMainRegister(outputStream, i2cBusConnection, REG_DATAX1, "REG_DATAX1", "R");
     appendTableHeaderSeparatorLine(outputStream);
     adxl345_debugMainRegister(outputStream, i2cBusConnection, REG_DATAY0, "REG_DATAY0", "R");
     adxl345_debugMainRegister(outputStream, i2cBusConnection, REG_DATAY1, "REG_DATAY1", "R");
@@ -86,7 +86,7 @@ void adxl345_debugMainRegisterList(OutputStream* outputStream, Accelerometer* ac
     adxl345_debugMainRegister(outputStream, i2cBusConnection, REG_DATAZ0, "REG_DATAZ0", "R");
     adxl345_debugMainRegister(outputStream, i2cBusConnection, REG_DATAZ1, "REG_DATAZ1", "R");
     appendTableHeaderSeparatorLine(outputStream);
-    
+
     adxl345_debugMainRegister(outputStream, i2cBusConnection, REG_FIFO_CTL, "REG_FIFO_CTL", "R/W");
     adxl345_debugMainRegister(outputStream, i2cBusConnection, REG_FIFO_STATUS, "REG_FIFO_STATUS", "R");
 
@@ -96,19 +96,19 @@ void adxl345_debugMainRegisterList(OutputStream* outputStream, Accelerometer* ac
 // DEBUG VALUES
 
 /**
-* Private.
-*/
+ * Private.
+ */
 void adxl345_printAccelerometerDataListHeader(OutputStream* outputStream) {
-	println(outputStream);
-	appendTableHeaderSeparatorLine(outputStream);
-	appendStringHeader(outputStream, "X/Y/Z", ADXL345_DEBUG_REG_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "HIGH", ADXL345_DEBUG_REG_VALUE_HEX_COLUMN_LENGTH);    
-	appendStringHeader(outputStream, "LOW", ADXL345_DEBUG_REG_VALUE_HEX_COLUMN_LENGTH);
+    println(outputStream);
+    appendTableHeaderSeparatorLine(outputStream);
+    appendStringHeader(outputStream, "X/Y/Z", ADXL345_DEBUG_REG_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "HIGH", ADXL345_DEBUG_REG_VALUE_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "LOW", ADXL345_DEBUG_REG_VALUE_HEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Hex Value", ADXL345_DEBUG_REG_VALUE_HEX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Dec Value", ADXL345_DEBUG_REG_VALUE_DEC_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Acc Value (mg)", ADXL345_DEBUG_REG_VALUE_MG_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, 0);
-	appendTableHeaderSeparatorLine(outputStream);
+    appendStringHeader(outputStream, "Acc Value (mg)", ADXL345_DEBUG_REG_VALUE_MG_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, 0);
+    appendTableHeaderSeparatorLine(outputStream);
 }
 
 /**
@@ -116,13 +116,13 @@ void adxl345_printAccelerometerDataListHeader(OutputStream* outputStream) {
  * @param i2cBusConnection
  */
 void adxl345_debugMainRegisterAcceleratorData(OutputStream* outputStream, unsigned char low, unsigned char high, int value, float mgValue, const char* regName) {
-	appendStringTableData(outputStream, regName, ADXL345_DEBUG_REG_COLUMN_LENGTH);
+    appendStringTableData(outputStream, regName, ADXL345_DEBUG_REG_COLUMN_LENGTH);
     appendHex2TableData(outputStream, high, ADXL345_DEBUG_REG_HEX_COLUMN_LENGTH);
     appendHex2TableData(outputStream, low, ADXL345_DEBUG_REG_HEX_COLUMN_LENGTH);
-	appendHex4TableData(outputStream, value, ADXL345_DEBUG_REG_HEX_COLUMN_LENGTH);
-	appendDecTableData(outputStream, value, ADXL345_DEBUG_REG_VALUE_DEC_COLUMN_LENGTH);
+    appendHex4TableData(outputStream, value, ADXL345_DEBUG_REG_HEX_COLUMN_LENGTH);
+    appendDecTableData(outputStream, value, ADXL345_DEBUG_REG_VALUE_DEC_COLUMN_LENGTH);
     appendDecfTableData(outputStream, mgValue, ADXL345_DEBUG_REG_VALUE_MG_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, 0);
+    appendEndOfTableColumn(outputStream, 0);
 }
 
 void adxl345_debugValueRegisterList(OutputStream* outputStream, Accelerometer* accelerometer) {
@@ -152,4 +152,4 @@ void adxl345_debugValueRegisterListIfShock(OutputStream* outputStream, I2cBusCon
         appendTableHeaderSeparatorLine(outputStream);
     }
 }
-*/
+ */

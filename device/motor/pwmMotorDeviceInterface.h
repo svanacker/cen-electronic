@@ -5,18 +5,18 @@
 #include "../../device/deviceConstants.h"
 
 /**
-* Defines the header to move the motor.
-*/
+ * Defines the header to move the motor.
+ */
 #define COMMAND_MOVE_MOTOR         'w'
 
 /**
-* Defines the header to move the motor.
-*/
+ * Defines the header to move the motor.
+ */
 #define COMMAND_READ_MOTOR_VALUE   'r'
 
 /**
-* Defines the header to stop the motors.
-*/
+ * Defines the header to stop the motors.
+ */
 #define COMMAND_STOP_MOTOR         'c'
 
 /**
@@ -35,8 +35,8 @@
 #define COMMAND_SET_PIN_USAGE_MOTOR  'p'
 
 /**
-* Interface for Device.
-*/
+ * Interface for Device.
+ */
 DeviceInterface* getMotorDeviceInterface();
 
 #endif

@@ -25,8 +25,8 @@
 static char eepromPc[EEPROM_PC_MAX_INDEX];
 
 /**
-* Creates or Open the File when initializing.
-*/
+ * Creates or Open the File when initializing.
+ */
 FILE* eepromPCGetOrCreateFile(Eeprom* eeprom_, bool load) {
     char fileName[255];
     // TODO ! Change the Path !
@@ -39,13 +39,11 @@ FILE* eepromPCGetOrCreateFile(Eeprom* eeprom_, bool load) {
 
     FILE* file = fopen(fileName, "rb+");
     // if file does not exist, create it
-    if (file == NULL)
-    {
+    if (file == NULL) {
         file = fopen(fileName, "wb");
         // Fill data
         fwrite(&eepromPc, 1, EEPROM_PC_MAX_INDEX, file);
-    }
-    // we read it !
+    }// we read it !
     else {
         if (load) {
             fread(&eepromPc, 1, EEPROM_PC_MAX_INDEX, file);
@@ -100,17 +98,17 @@ void eepromPcWriteBlock(Eeprom* eeprom_, unsigned long index, unsigned int lengt
 }
 
 /**
-* Reload the content (usefull for Windows).
-*/
+ * Reload the content (usefull for Windows).
+ */
 void eepromPcReload(Eeprom* eeprom_) {
     FILE* file = eepromPCGetOrCreateFile(eeprom_, true);
     fclose(file);
 }
 
 /**
-* Dump the content of the eeprom_ into a file (always the same).
-* Only available on PC.
-*/
+ * Dump the content of the eeprom_ into a file (always the same).
+ * Only available on PC.
+ */
 void eepromPcDump(Eeprom* eeprom_) {
     for (int i = 0; i < EEPROM_PC_MAX_INDEX; i++) {
         eepromPcWriteCharIntoFile(eeprom_, i, eepromPc[i]);
@@ -119,14 +117,14 @@ void eepromPcDump(Eeprom* eeprom_) {
 
 void initEepromPc(Eeprom* eepromPcParam, char* fileName) {
     initEeprom(eepromPcParam,
-        EEPROM_TYPE_FILE,
-        EEPROM_PC_MAX_INDEX,
-        eepromPcWriteChar,
-        eepromPcReadChar,
-        eepromPcReadBlock,
-        eepromPcWriteBlock,
-        eepromPcReload,
-        eepromPcDump,
-        fileName);
+            EEPROM_TYPE_FILE,
+            EEPROM_PC_MAX_INDEX,
+            eepromPcWriteChar,
+            eepromPcReadChar,
+            eepromPcReadBlock,
+            eepromPcWriteBlock,
+            eepromPcReload,
+            eepromPcDump,
+            fileName);
     eepromPcReload(eepromPcParam);
 }

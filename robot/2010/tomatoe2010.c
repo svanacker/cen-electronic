@@ -23,12 +23,12 @@ void setTomatoeEnabled(int value) {
     setRelayState(TOMATOE_RELAY_INDEX, value);
 }
 
-const char* getTomatoe2010DeviceName( void ) {
+const char* getTomatoe2010DeviceName(void) {
     return "Tomatoe2010";
 }
 
 unsigned int getTomatoe2010SoftwareRevision(void) {
-    return 1; 
+    return 1;
 }
 
 unsigned int isTomatoe2010DeviceOk() {

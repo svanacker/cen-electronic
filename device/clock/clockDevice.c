@@ -14,9 +14,11 @@
 
 #include "../../device/device.h"
 
-static Clock* clock;
+// FORWARD DECLARATION
+Clock* getClockFromDeviceDescriptor(void);
 
 void _deviceClockCheckInitialized() {
+    Clock* clock = getClockFromDeviceDescriptor();
     if (clock == NULL) {
         writeError(CLOCK_NULL);
     }
@@ -36,28 +38,29 @@ bool isClockDeviceOk(void) {
     return true;
 }
 
-void deviceClockHandleRawData(unsigned char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream){
+void deviceClockHandleRawData(unsigned char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+    Clock* clock = getClockFromDeviceDescriptor();
     _deviceClockCheckInitialized();
     if (header == COMMAND_READ_CLOCK) {
         ackCommand(outputStream, CLOCK_DEVICE_HEADER, COMMAND_READ_CLOCK);
         ClockData* clockData = clock->readClock(clock);
         appendHex2(outputStream, clockData->hour);
-        append(outputStream,':');
+        append(outputStream, ':');
         appendHex2(outputStream, clockData->minute);
-        append(outputStream,':');
+        append(outputStream, ':');
         appendHex2(outputStream, clockData->second);
-        append(outputStream,' ');
+        append(outputStream, ' ');
         appendHex2(outputStream, clockData->day);
-        append(outputStream,'/');
+        append(outputStream, '/');
         appendHex2(outputStream, clockData->month);
-        append(outputStream,'/');
+        append(outputStream, '/');
         appendHex2(outputStream, clockData->year);
     } else if (header == COMMAND_WRITE_TIME) {
         ClockData* clockData = &(clock->clockData);
         clockData->hour = readHex2(inputStream);
         clockData->minute = readHex2(inputStream);
         clockData->second = readHex2(inputStream);
-        
+
         ackCommand(outputStream, CLOCK_DEVICE_HEADER, COMMAND_WRITE_TIME);
         clock->writeClock(clock);
     } else if (header == COMMAND_WRITE_DATE) {
@@ -65,20 +68,25 @@ void deviceClockHandleRawData(unsigned char header, InputStream* inputStream, Ou
         clockData->day = readHex2(inputStream);
         clockData->month = readHex2(inputStream);
         clockData->year = readHex2(inputStream);
-        
+
         ackCommand(outputStream, CLOCK_DEVICE_HEADER, COMMAND_WRITE_DATE);
         clock->writeClock(clock);
     }
 }
 
-static DeviceDescriptor descriptor = {
-    .deviceInit = &deviceClockInit,
-    .deviceShutDown = &deviceClockShutDown,
-    .deviceIsOk = &isClockDeviceOk,
-    .deviceHandleRawData = &deviceClockHandleRawData,
-};
+static DeviceDescriptor descriptor;
 
-DeviceDescriptor* getClockDeviceDescriptor(Clock* clockParam) {
-    clock = clockParam;
+DeviceDescriptor* getClockDeviceDescriptor(Clock* clock) {
+    initDeviceDescriptor(&descriptor,
+            &deviceClockInit,
+            &deviceClockShutDown,
+            &isClockDeviceOk,
+            &deviceClockHandleRawData,
+            (int*) clock);
+
     return &descriptor;
+}
+
+Clock* getClockFromDeviceDescriptor(void) {
+    return (Clock*) (descriptor.object);
 }

@@ -13,19 +13,19 @@ typedef struct Relay Relay;
 typedef bool relayInitFunction(Relay* relay);
 
 /**
-* Read if the relay is on or off for the specified relayIndex.
-* @return relayIndex the value of the relay
-*/
+ * Read if the relay is on or off for the specified relayIndex.
+ * @return relayIndex the value of the relay
+ */
 typedef bool relayReadValueFunction(Relay* relay, unsigned int relayIndex);
 
 /**
-* Write a fake value to replace the switch configuration.
-*/
+ * Write a fake value to replace the switch configuration.
+ */
 typedef void relayWriteValueFunction(Relay* relay, unsigned int relayIndex, bool value);
 
 /**
-* Defines the contract for switch robot configuration.
-*/
+ * Defines the contract for switch robot configuration.
+ */
 struct Relay {
     /** The function which must be used to init the relay */
     relayInitFunction* relayInit;
@@ -42,11 +42,11 @@ struct Relay {
 /** 
  * Init the wrapper around Relay. 
  */
-void initRelay(Relay* relay, 
-               relayInitFunction* relayInit,
-               relayReadValueFunction* relayReadValue,
-               relayWriteValueFunction* relayWriteValue,
-               unsigned int count,
-               int* object);
+void initRelay(Relay* relay,
+        relayInitFunction* relayInit,
+        relayReadValueFunction* relayReadValue,
+        relayWriteValueFunction* relayWriteValue,
+        unsigned int count,
+        int* object);
 
 #endif

@@ -107,7 +107,7 @@ bool _bufferAvailableData(InputStream* inputStream) {
 
 void initBuffer(Buffer* buffer, unsigned char (*s)[], unsigned int length, const char* name, const char* type) {
     if (!checkBufferNotNull(buffer)) {
-        return;    
+        return;
     }
     buffer->s = s;
     buffer->length = length;
@@ -155,7 +155,7 @@ bool isBufferEmpty(const Buffer* buffer) {
 
 bool isBufferEqualsToString(const Buffer* buffer, char* s) {
     int i = 0;
-    unsigned char c  = *s;
+    unsigned char c = *s;
     while (c != '\0') {
         if (getBufferElementsCount(buffer) <= i) {
             return false;
@@ -187,7 +187,7 @@ int getBufferCapacity(const Buffer* buffer) {
 }
 
 void bufferWriteChar(Buffer* buffer, unsigned char c) {
-	bool isFull = isBufferFull(buffer);
+    bool isFull = isBufferFull(buffer);
     if (!isFull) {
         char* sPointer = (char*) buffer->s;
         // Shift to the right cell index
@@ -210,7 +210,7 @@ unsigned char bufferReadChar(Buffer* buffer) {
         unsigned char* sPointer = (unsigned char*) buffer->s;
         // Shift to the right cell index
         sPointer += buffer->readIndex;
-        unsigned char result = *sPointer;        
+        unsigned char result = *sPointer;
 
         buffer->readIndex++;
         buffer->readIndex %= buffer->length;

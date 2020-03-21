@@ -7,25 +7,25 @@
 // List of CLOCK COMMAND HEADER
 
 /**
-* Defines the header to read the clock.
-*/
+ * Defines the header to read the clock.
+ */
 #define COMMAND_READ_CLOCK         'r'
 
 /**
-* Defines the header to write the time on the clock.
-*/
+ * Defines the header to write the time on the clock.
+ */
 #define COMMAND_WRITE_TIME         't'
 
 /**
-* Defines the header to write the Hours on the clock.
-*/
+ * Defines the header to write the Hours on the clock.
+ */
 #define COMMAND_WRITE_DATE         'd'
 
 // Function to get the specific Device Interface
 
 /**
-* Interface for Device.
-*/
+ * Interface for Device.
+ */
 DeviceInterface* getClockDeviceInterface();
 
 #endif

@@ -105,8 +105,8 @@
 #include "../../drivers/ioExpander/pcf8574.h"
 
 /**
-* Device list.
-*/
+ * Device list.
+ */
 static DeviceList devices;
 
 // SERIAL
@@ -197,13 +197,12 @@ void initDevicesDescriptor() {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTimerDeviceInterface(), getTimerDeviceDescriptor());
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom_));
-    
+
     addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
 
     initDevices();
 }
-
 
 int main(void) {
     setBoardName(MECA_BOARD_32_1_NAME);
@@ -213,13 +212,13 @@ int main(void) {
 
     // enable interrupts
     INTEnableInterrupts();
-    
+
     // Init the serial List
     initSerialLinkList(&serialLinkListArray, MECA_BOARD_32_1_SERIAL_LINK_LIST_LENGTH);
 
     // Open Standard Serial Link
     openSerialLink(&standardSerialStreamLink,
-		    "SERIAL_MAIN",
+            "SERIAL_MAIN",
             &standardInputBuffer, &standardInputBufferArray, MECA_BOARD_32_1_STANDARD_INPUT_BUFFER_LENGTH,
             &standardOutputBuffer, &standardOutputBufferArray, MECA_BOARD_32_1_STANDARD_OUTPUT_BUFFER_LENGTH,
             &standardOutputStream,
@@ -227,13 +226,13 @@ int main(void) {
             DEFAULT_SERIAL_SPEED);
 
     // Open Serial Link to enable the Serial LOGS !
-    openSerialLink( &debugSerialStreamLink,
-                    "SERIAL_DEBUG",
-                    &debugInputBuffer, &debugInputBufferArray, MECA_BOARD_32_1_DEBUG_INPUT_BUFFER_LENGTH,
-                    &debugOutputBuffer, &debugOutputBufferArray, MECA_BOARD_32_1_DEBUG_OUTPUT_BUFFER_LENGTH,
-                    &debugOutputStream,
-                    MECA_BOARD_32_1_SERIAL_PORT_DEBUG,
-                    DEFAULT_SERIAL_SPEED);
+    openSerialLink(&debugSerialStreamLink,
+            "SERIAL_DEBUG",
+            &debugInputBuffer, &debugInputBufferArray, MECA_BOARD_32_1_DEBUG_INPUT_BUFFER_LENGTH,
+            &debugOutputBuffer, &debugOutputBufferArray, MECA_BOARD_32_1_DEBUG_OUTPUT_BUFFER_LENGTH,
+            &debugOutputStream,
+            MECA_BOARD_32_1_SERIAL_PORT_DEBUG,
+            DEFAULT_SERIAL_SPEED);
 
     // Init the logs
     initLogs(LOG_LEVEL_DEBUG, &logHandlerListArray, MECA_BOARD_32_1_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
@@ -241,12 +240,12 @@ int main(void) {
     appendString(getDebugOutputStreamLogger(), getBoardName());
     appendCRLF(getDebugOutputStreamLogger());
 
-    initTimerList((Timer(*)[]) &timerListArray, MECA_BOARD_32_1_TIMER_LENGTH);
+    initTimerList((Timer(*)[]) & timerListArray, MECA_BOARD_32_1_TIMER_LENGTH);
 
     // I2c
-	initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MECA_BOARD_32_1_I2C_BUS_LIST_LENGTH);
-	initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MECA_BOARD_32_1_I2C_BUS_CONNECTION_LIST_LENGTH);
-    
+    initI2cBusList((I2cBus(*)[]) & i2cBusListArray, MECA_BOARD_32_1_I2C_BUS_LIST_LENGTH);
+    initI2cBusConnectionList((I2cBusConnection(*)[]) & i2cBusConnectionListArray, MECA_BOARD_32_1_I2C_BUS_CONNECTION_LIST_LENGTH);
+
     // I2C Slave (to connect with MainBoard32)
     mechanicalBoard1SlaveI2cBus = addI2cBus(I2C_BUS_TYPE_SLAVE, I2C_BUS_PORT_1);
     mechanicalBoard1SlaveI2cBusConnection = addI2cBusConnection(mechanicalBoard1SlaveI2cBus, MECHANICAL_BOARD_1_I2C_ADDRESS, true);
@@ -263,17 +262,17 @@ int main(void) {
 
     // Debug of I2C : Only if there is problems
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
-        (char(*)[]) &i2cMasterDebugInputBufferArray,
-        MECA_BOARD_32_1_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
-        &i2cMasterDebugOutputBuffer,
-        (char(*)[]) &i2cMasterDebugOutputBufferArray,
-        MECA_BOARD_32_1_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
+            (char(*)[]) & i2cMasterDebugInputBufferArray,
+            MECA_BOARD_32_1_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
+            &i2cMasterDebugOutputBuffer,
+            (char(*)[]) & i2cMasterDebugOutputBufferArray,
+            MECA_BOARD_32_1_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
 
     setDebugI2cEnabled(false);
 
     // Clock
     initSoftClock(&clock);
-    
+
     // I2C Master
     masterI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, MECA_BOARD_32_1_I2C_MASTER_PORT);
     i2cMasterInitialize(masterI2cBus);
@@ -281,27 +280,27 @@ int main(void) {
     // Eeprom
     eepromI2cBusConnection = addI2cBusConnection(masterI2cBus, ST24C512_ADDRESS_0, true);
     init24C512Eeprom(&eeprom_, eepromI2cBusConnection);
-    
+
     // IO Expander
     ioExpanderBusConnection = addI2cBusConnection(masterI2cBus, PCF8574_ADDRESS_1, true);
-    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MECA_BOARD_32_1_IO_EXPANDER_LIST_LENGTH);
+    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) & ioExpanderArray, MECA_BOARD_32_1_IO_EXPANDER_LIST_LENGTH);
     IOExpander* launcherIoExpander = getIOExpanderByIndex(&ioExpanderList, MECA_BOARD_32_1_IO_EXPANDER_LAUNCHER_INDEX);
     initIOExpanderPCF8574(launcherIoExpander, ioExpanderBusConnection);
-    
+
     // TOF
     initTofSensorListVL53L0X(&tofSensorList,
-                             (TofSensor(*)[]) &tofSensorArray,
-                             (TofSensorVL53L0X(*)[]) &tofSensorVL53L0XArray,
-                              MECA_BOARD_32_1_TOF_SENSOR_LIST_LENGTH,
-                              masterI2cBus,
-                              launcherIoExpander,
-                              true,
-                              true,
-                              true);
+            (TofSensor(*)[]) & tofSensorArray,
+            (TofSensorVL53L0X(*)[]) & tofSensorVL53L0XArray,
+            MECA_BOARD_32_1_TOF_SENSOR_LIST_LENGTH,
+            masterI2cBus,
+            launcherIoExpander,
+            true,
+            true,
+            true);
 
     // init the devices
     initDevicesDescriptor();
-    
+
     // Init the timers management
     startTimerList(true);
 
@@ -309,27 +308,27 @@ int main(void) {
 
         // I2C Stream
         handleStreamInstruction(&i2cSlaveInputBuffer,
-                                &i2cSlaveOutputBuffer,
-                                NULL,
-                                NULL,
-                                &filterRemoveCRLF,
-                                NULL);
+                &i2cSlaveOutputBuffer,
+                NULL,
+                NULL,
+                &filterRemoveCRLF,
+                NULL);
 
         // UART Stream
         handleStreamInstruction(&standardInputBuffer,
-                                &standardOutputBuffer,
-                                &standardOutputStream,
-                                &standardOutputStream,
-                                &filterRemoveCRLF,
-                                NULL);
+                &standardOutputBuffer,
+                &standardOutputStream,
+                &standardOutputStream,
+                &filterRemoveCRLF,
+                NULL);
 
         // UART Stream
         handleStreamInstruction(&debugInputBuffer,
-                                &debugOutputBuffer,
-                                &debugOutputStream,
-                                &debugOutputStream,
-                                &filterRemoveCRLF,
-                                NULL);
+                &debugOutputBuffer,
+                &debugOutputStream,
+                &debugOutputStream,
+                &filterRemoveCRLF,
+                NULL);
     }
     return (0);
 }

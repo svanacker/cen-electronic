@@ -15,24 +15,24 @@
 // PARAMETERS
 
 /**
-* Private.
-*/
+ * Private.
+ */
 void printMotionEndDetectionParameterHeader(OutputStream* outputStream) {
-	println(outputStream);
-	appendTableHeaderSeparatorLine(outputStream);
+    println(outputStream);
+    appendTableHeaderSeparatorLine(outputStream);
     appendStringHeader(outputStream, "Key", MOTION_END_DETECTION_PARAMETERS_KEY_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Value (Hex) x1000", MOTION_END_DETECTION_PARAMETERS_HEX_VALUE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Value (Dec)", MOTION_END_DETECTION_PARAMETERS_DEC_VALUE_COLUMN_LENGTH);
 
-	appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_PARAMETERS_LAST_COLUMN_LENGTH);
-	appendTableHeaderSeparatorLine(outputStream);
+    appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_PARAMETERS_LAST_COLUMN_LENGTH);
+    appendTableHeaderSeparatorLine(outputStream);
 }
 
 void printMotionEndDetectionParameterLine(OutputStream* outputStream, char* keyName, float value) {
-	appendStringTableData(outputStream, keyName, MOTION_END_DETECTION_PARAMETERS_KEY_COLUMN_LENGTH);
-	appendHexFloat4TableData(outputStream, value, MOTION_END_DETECTION_PARAMETER_DIGIT, MOTION_END_DETECTION_PARAMETERS_DEC_VALUE_COLUMN_LENGTH);
-	appendDecfTableData(outputStream, value, MOTION_END_DETECTION_PARAMETERS_HEX_VALUE_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_PARAMETERS_LAST_COLUMN_LENGTH);        
+    appendStringTableData(outputStream, keyName, MOTION_END_DETECTION_PARAMETERS_KEY_COLUMN_LENGTH);
+    appendHexFloat4TableData(outputStream, value, MOTION_END_DETECTION_PARAMETER_DIGIT, MOTION_END_DETECTION_PARAMETERS_DEC_VALUE_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, value, MOTION_END_DETECTION_PARAMETERS_HEX_VALUE_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, MOTION_END_DETECTION_PARAMETERS_LAST_COLUMN_LENGTH);
 }
 
 void printMotionEndDetectionParameter(OutputStream* outputStream, MotionEndDetectionParameter* parameter) {
@@ -45,7 +45,7 @@ void printMotionEndDetectionParameter(OutputStream* outputStream, MotionEndDetec
     printMotionEndDetectionParameterLine(outputStream, "Speed min Threshold Factor", parameter->speedMinThreshold);
     printMotionEndDetectionParameterLine(outputStream, "U Min Threshold Value", parameter->uMinThresholdValue);
     appendTableHeaderSeparatorLine(outputStream);
-    
+
     // AGGREGATION PHASE
     printMotionEndDetectionParameterLine(outputStream, "Abs Delta Position Integral Factor Threshold", parameter->absDeltaPositionIntegralFactorThreshold);
     printMotionEndDetectionParameterLine(outputStream, "Max U Integral Factor Threshold", parameter->maxUIntegralFactorThreshold);
@@ -59,20 +59,17 @@ void printMotionEndDetectionParameter(OutputStream* outputStream, MotionEndDetec
 unsigned int appendMotionEndDetectionStatusRegister(OutputStream* outputStream, MotionEndDetectionStatusRegister motionEndDetectionStatusRegister) {
     if (motionEndDetectionStatusRegister.absAccelerationTooHighThanExpected) {
         append(outputStream, 'A');
-    }
-    else {
+    } else {
         appendSeparator(outputStream);
     }
     if (motionEndDetectionStatusRegister.absSpeedTooLowThanExpected) {
         append(outputStream, 'S');
-    }
-    else {
+    } else {
         appendSeparator(outputStream);
     }
     if (motionEndDetectionStatusRegister.absUTooHighThanExpected) {
         append(outputStream, 'U');
-    }
-    else {
+    } else {
         appendSeparator(outputStream);
     }
     // Length of written chars
@@ -81,9 +78,9 @@ unsigned int appendMotionEndDetectionStatusRegister(OutputStream* outputStream, 
 
 // For Table Data
 
-unsigned int appendMotionEndDetectionStatusRegisterTableData(OutputStream* outputStream, 
-                                                             MotionEndDetectionStatusRegister motionEndDetectionStatusRegister,
-                                                             unsigned int columnSize) {
+unsigned int appendMotionEndDetectionStatusRegisterTableData(OutputStream* outputStream,
+        MotionEndDetectionStatusRegister motionEndDetectionStatusRegister,
+        unsigned int columnSize) {
     appendTableSeparator(outputStream);
     appendSpace(outputStream);
     unsigned int length = appendMotionEndDetectionStatusRegister(outputStream, motionEndDetectionStatusRegister);

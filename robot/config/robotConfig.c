@@ -9,8 +9,8 @@
 #include "../../robot/robot.h"
 
 void initRobotConfig(RobotConfig* robotConfig,
-                     enum RobotType robotType, 
-                robotConfigReadIntFunction* robotConfigReadInt, robotConfigWriteIntFunction* robotConfigWriteInt){
+        enum RobotType robotType,
+        robotConfigReadIntFunction* robotConfigReadInt, robotConfigWriteIntFunction* robotConfigWriteInt) {
     setRobotType(robotType);
     robotConfig->robotConfigReadInt = robotConfigReadInt;
     robotConfig->robotConfigWriteInt = robotConfigWriteInt;
@@ -23,7 +23,8 @@ bool isConfigSet(RobotConfig* robotConfig, unsigned int configMask) {
 }
 
 unsigned int getConfigValue(RobotConfig* robotConfig) {
-    return robotConfig->robotConfigReadInt(robotConfig);;
+    return robotConfig->robotConfigReadInt(robotConfig);
+    ;
 }
 
 bool isSonarActivated(RobotConfig* robotConfig) {

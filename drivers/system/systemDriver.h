@@ -10,15 +10,15 @@
 void systemDeviceList(void);
 
 /**
-* PING a data dispatcher.
-* @param dispatcher the dispatcher that we want to PING
-*/ 
+ * PING a data dispatcher.
+ * @param dispatcher the dispatcher that we want to PING
+ */
 bool pingDriverDataDispatcher(DriverDataDispatcher* dispatcher);
 
 /**
-* Ping all dispatcher.
-* @param debugOutputStream the stream in which we writes the debug information
-*/
+ * Ping all dispatcher.
+ * @param debugOutputStream the stream in which we writes the debug information
+ */
 void pingDriverDataDispatcherList(OutputStream* debugOutputStream);
 
 #endif

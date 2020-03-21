@@ -31,8 +31,8 @@
 #define NAVIGATION_DEBUG_LIST_OF_LAST_COLUMN_LENGTH                         0
 
 /**
-* Private.
-*/
+ * Private.
+ */
 void printNavigationDebugLocationAndOutgoingPathListHeader(OutputStream* outputStream) {
     println(outputStream);
     // Table Header
@@ -74,8 +74,7 @@ void printNavigationDebugLocationAndOutgoingPathList(OutputStream* outputStream,
         Location* location1 = pathData->location1;
         if (location1 != NULL) {
             charCount += appendFixedCharArray(outputStream, &(location1->name));
-        }
-        else {
+        } else {
             charCount += appendString(outputStream, "NULL");
         }
 
@@ -85,8 +84,7 @@ void printNavigationDebugLocationAndOutgoingPathList(OutputStream* outputStream,
         Location* location2 = pathData->location2;
         if (location2 != NULL) {
             charCount += appendFixedCharArray(outputStream, &(location2->name));
-        }
-        else {
+        } else {
             charCount += appendString(outputStream, "NULL");
         }
     }

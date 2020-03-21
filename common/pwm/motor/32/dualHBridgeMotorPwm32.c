@@ -41,14 +41,14 @@ bool initPwmForMotor(DualHBridgeMotor* dualHBridgeMotor) {
     TRISDbits.TRISD6 = 0;
     TRISDbits.TRISD7 = 0;
 
-    OpenOC1( OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
-    OpenOC2( OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
+    OpenOC1(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
+    OpenOC2(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
 
-    OpenTimer2(T2_ON|T2_PS_1_64 | T2_SOURCE_INT, PWM_TIMER_FOR_MOTOR);
+    OpenTimer2(T2_ON | T2_PS_1_64 | T2_SOURCE_INT, PWM_TIMER_FOR_MOTOR);
 
     OC1RS = (0x0000); // 0 % duty cycle
     OC2RS = (0x0000); // 0 % duty cycle
-    
+
     return true;
 }
 
@@ -73,13 +73,12 @@ void pwmMotor4(int dutyms) {
 void pwmDualHBridgeMotor(DualHBridgeMotor* dualHBridgeMotor, signed int hBridgeSpeed1, signed int hBridgeSpeed2) {
     if (hBridgeSpeed1 < 0) {
         HBRIGE_1_DIRECTION_PIN = 0;
-        if (hBridgeSpeed1 < - DUAL_HBRIDGE_MOTOR_PWM_MAX) {
+        if (hBridgeSpeed1 < -DUAL_HBRIDGE_MOTOR_PWM_MAX) {
             pwmMotor1(DUAL_HBRIDGE_MOTOR_PWM_MAX);
         } else {
             pwmMotor1(-hBridgeSpeed1);
         }
-    }
-    else {
+    } else {
         HBRIGE_1_DIRECTION_PIN = 1;
         if (hBridgeSpeed1 > DUAL_HBRIDGE_MOTOR_PWM_MAX) {
             pwmMotor1(DUAL_HBRIDGE_MOTOR_PWM_MAX);
@@ -88,14 +87,13 @@ void pwmDualHBridgeMotor(DualHBridgeMotor* dualHBridgeMotor, signed int hBridgeS
         }
     }
     if (hBridgeSpeed2 < 0) {
-       HBRIGE_2_DIRECTION_PIN = 0;
-       if (hBridgeSpeed2 < -DUAL_HBRIDGE_MOTOR_PWM_MAX) {
+        HBRIGE_2_DIRECTION_PIN = 0;
+        if (hBridgeSpeed2 < -DUAL_HBRIDGE_MOTOR_PWM_MAX) {
             pwmMotor2(DUAL_HBRIDGE_MOTOR_PWM_MAX);
         } else {
             pwmMotor2(-hBridgeSpeed2);
         }
-    }
-    else {
+    } else {
         HBRIGE_2_DIRECTION_PIN = 1;
         if (hBridgeSpeed2 > DUAL_HBRIDGE_MOTOR_PWM_MAX) {
             pwmMotor2(DUAL_HBRIDGE_MOTOR_PWM_MAX);
@@ -110,8 +108,7 @@ void pwmDualHBridgeMotor(DualHBridgeMotor* dualHBridgeMotor, signed int hBridgeS
 signed int dualHBridgeMotorReadValuePwm32(DualHBridgeMotor* dualHBridgeMotor, unsigned int motorIndex) {
     if (motorIndex == HBRIDGE_1) {
         return dualHBridgeMotor->motorSpeed1;
-    }
-    else if (motorIndex == HBRIDGE_2) {
+    } else if (motorIndex == HBRIDGE_2) {
         return dualHBridgeMotor->motorSpeed2;
     }
     // TODO : raise an error
@@ -119,18 +116,18 @@ signed int dualHBridgeMotorReadValuePwm32(DualHBridgeMotor* dualHBridgeMotor, un
 }
 
 /**
-* DualHBridgeMotor implementation (POO)
-* @private
-*/
+ * DualHBridgeMotor implementation (POO)
+ * @private
+ */
 unsigned char dualHBridgeMotorGetSoftwareRevisionPwm32(DualHBridgeMotor* dualHBridgeMotor) {
     return 1;
 }
 
 void initDualHBridgeMotorPWM(DualHBridgeMotor* dualHBridgeMotor) {
     initDualHBridge(dualHBridgeMotor,
-                    &initPwmForMotor,
-                    &dualHBridgeMotorReadValuePwm32,
-                    &pwmDualHBridgeMotor,
-                    &dualHBridgeMotorGetSoftwareRevisionPwm32,
-                    NULL);
+            &initPwmForMotor,
+            &dualHBridgeMotorReadValuePwm32,
+            &pwmDualHBridgeMotor,
+            &dualHBridgeMotorGetSoftwareRevisionPwm32,
+            NULL);
 }

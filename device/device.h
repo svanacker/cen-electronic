@@ -14,17 +14,17 @@ struct Device;
 typedef struct Device Device;
 
 /**
-* The function used to handle the data which are transmit asynchronously to the master.
-* We don't have any OutputStream, because we don't want to have a ping-pong communication between client 
-* and master without control. So it is mainly intended to update state, or forward to other card (for example PC)
+ * The function used to handle the data which are transmit asynchronously to the master.
+ * We don't have any OutputStream, because we don't want to have a ping-pong communication between client 
+ * and master without control. So it is mainly intended to update state, or forward to other card (for example PC)
 
-* @param device the device from which data comes
-* @param commandHeader header the command header which is called
-* @param inputStream the inputStream to get data from the client
-*/
-typedef void DeviceHandleNotificationFunction(const Device* device, 
-                                                 const unsigned char commandHeader,
-                                                  InputStream* inputStream);
+ * @param device the device from which data comes
+ * @param commandHeader header the command header which is called
+ * @param inputStream the inputStream to get data from the client
+ */
+typedef void DeviceHandleNotificationFunction(const Device* device,
+        const unsigned char commandHeader,
+        InputStream* inputStream);
 
 /**
  * Send a ack, and add the deviceHeader, and the commandHeader.
@@ -35,8 +35,8 @@ typedef void DeviceHandleNotificationFunction(const Device* device,
 void ackCommand(OutputStream* deviceOutputStream, const unsigned char deviceHeader, const unsigned char commandHeader);
 
 /**
-* Defines the structure used to describe a device.
-*/
+ * Defines the structure used to describe a device.
+ */
 struct Device {
     /** The interface of the device for a remote caller (without implementation). */
     DeviceInterface* deviceInterface;
@@ -54,20 +54,20 @@ struct Device {
 
 
 /**
-* Init the device with the information given by deviceDescriptor.
-* We consider that there is a LCD03 on the I2C bus and a serial bus
-* connected to send debug information.
-* @param device the descriptor for the device.
-* @return true if the device was successfully initialized, false else
-*/
+ * Init the device with the information given by deviceDescriptor.
+ * We consider that there is a LCD03 on the I2C bus and a serial bus
+ * connected to send debug information.
+ * @param device the descriptor for the device.
+ * @return true if the device was successfully initialized, false else
+ */
 bool initDevice(const Device *device);
 
 /**
-* Stop the device with the information given by deviceDescriptor.
-* We consider that there is a LCD03 on the I2C bus and a serial bus
-* connected to send debug information.
-* @param device the descriptor for the device.
-*/
+ * Stop the device with the information given by deviceDescriptor.
+ * We consider that there is a LCD03 on the I2C bus and a serial bus
+ * connected to send debug information.
+ * @param device the descriptor for the device.
+ */
 void stopDevice(const Device *device);
 
 #endif

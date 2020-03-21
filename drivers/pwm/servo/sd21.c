@@ -20,74 +20,74 @@
 #define BATTERY_MULTIPLY_FACTOR 39
 
 unsigned int getSD21SoftwareRevision(void) {
-  unsigned int version;
-  IdleI2C();
-  StartI2C();
-  /* Wait till Start sequence is completed */
-  while(I2CCONbits.SEN);
-  MasterWriteI2C(SD21_ADDRESS_WRITE);
-  IdleI2C();
-  MasterWriteI2C(REGISTER_SOFTWARE_REVISION);
-  IdleI2C();  
-  StopI2C();
+    unsigned int version;
+    IdleI2C();
+    StartI2C();
+    /* Wait till Start sequence is completed */
+    while (I2CCONbits.SEN);
+    MasterWriteI2C(SD21_ADDRESS_WRITE);
+    IdleI2C();
+    MasterWriteI2C(REGISTER_SOFTWARE_REVISION);
+    IdleI2C();
+    StopI2C();
 
-  IdleI2C();
-  StartI2C();
-  /* Wait till Start sequence is completed */
-  while(I2CCONbits.SEN)
-  //adddresse I2C de la carte
-  MasterWriteI2C(SD21_ADDRESS_READ);
-  IdleI2C();
-  version = MasterReadI2C();
-  IdleI2C();
-  StopI2C();
-  return (version);
+    IdleI2C();
+    StartI2C();
+    /* Wait till Start sequence is completed */
+    while (I2CCONbits.SEN)
+        //adddresse I2C de la carte
+        MasterWriteI2C(SD21_ADDRESS_READ);
+    IdleI2C();
+    version = MasterReadI2C();
+    IdleI2C();
+    StopI2C();
+    return (version);
 }
 
-char getSD21BatteryLevel (void) {
-  unsigned char result;
- 
-  IdleI2C();
-  StartI2C();
-  /* Wait till Start sequence is completed */
-  while(I2CCONbits.SEN);
-  MasterWriteI2C(SD21_ADDRESS_WRITE);
-  IdleI2C();
-  MasterWriteI2C(REGISTER_VOLTAGE);
-  IdleI2C();
-  StopI2C();
-  IdleI2C();
+char getSD21BatteryLevel(void) {
+    unsigned char result;
 
-  StartI2C();
-  /* Wait till Start sequence is completed */
-  while(I2CCONbits.SEN)
-  MasterWriteI2C(SD21_ADDRESS_READ);
-  IdleI2C();
-  result = MasterReadI2C();// * BATTERY_MULTIPLY_FACTOR;
-  IdleI2C();
+    IdleI2C();
+    StartI2C();
+    /* Wait till Start sequence is completed */
+    while (I2CCONbits.SEN);
+    MasterWriteI2C(SD21_ADDRESS_WRITE);
+    IdleI2C();
+    MasterWriteI2C(REGISTER_VOLTAGE);
+    IdleI2C();
+    StopI2C();
+    IdleI2C();
 
-  return result;
+    StartI2C();
+    /* Wait till Start sequence is completed */
+    while (I2CCONbits.SEN)
+        MasterWriteI2C(SD21_ADDRESS_READ);
+    IdleI2C();
+    result = MasterReadI2C(); // * BATTERY_MULTIPLY_FACTOR;
+    IdleI2C();
+
+    return result;
 }
 
 void commandSD21(char servo, char speed, int position) {
-  char dataHigh = position >> 8;
-  char dataLow = position & 0xFF;
-  IdleI2C();
-  StartI2C();
-  /* Wait till Start sequence is completed */
-  while(I2CCONbits.SEN);
-  MasterWriteI2C(SD21_ADDRESS_WRITE);
-  IdleI2C();
-  MasterWriteI2C((servo-1) * 3);
-  IdleI2C();
-  MasterWriteI2C(speed);        
-  IdleI2C();
-  MasterWriteI2C(dataLow);        
-  IdleI2C();
-  MasterWriteI2C(dataHigh);        
-  IdleI2C();
+    char dataHigh = position >> 8;
+    char dataLow = position & 0xFF;
+    IdleI2C();
+    StartI2C();
+    /* Wait till Start sequence is completed */
+    while (I2CCONbits.SEN);
+    MasterWriteI2C(SD21_ADDRESS_WRITE);
+    IdleI2C();
+    MasterWriteI2C((servo - 1) * 3);
+    IdleI2C();
+    MasterWriteI2C(speed);
+    IdleI2C();
+    MasterWriteI2C(dataLow);
+    IdleI2C();
+    MasterWriteI2C(dataHigh);
+    IdleI2C();
 
-  StopI2C();
+    StopI2C();
 }
 
 // Device Interface
@@ -101,7 +101,7 @@ void stopSD21(void) {
     // We can not know the value of stop for every servo, so we don't do anything.
 }
 
-const char* getSD21DeviceName( void ) {
+const char* getSD21DeviceName(void) {
     return "SD21";
 }
 

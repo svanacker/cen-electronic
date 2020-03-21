@@ -61,14 +61,12 @@ void deviceStartMatchDetectorHandleRawData(unsigned char commandHeader, InputStr
         bool checkListResult = startMatch->startupCheckListFunction(startMatch);
         ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_CHECKLIST_MATCH);
         appendHex2(outputStream, checkListResult);
-    }
-    else if (commandHeader == COMMAND_MATCH_IS_STARTED) {
+    } else if (commandHeader == COMMAND_MATCH_IS_STARTED) {
         StartMatch* startMatch = getStartMatchDetectorStartMatchObject();
         int value = isMatchStarted(startMatch);
         ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_MATCH_IS_STARTED);
         appendHex2(outputStream, value);
-    }
-    else if (commandHeader == COMMAND_START_MATCH_DEBUG) {
+    } else if (commandHeader == COMMAND_START_MATCH_DEBUG) {
         StartMatch* startMatch = getStartMatchDetectorStartMatchObject();
         ackCommand(outputStream, START_MATCH_DEVICE_HEADER, COMMAND_START_MATCH_DEBUG);
         OutputStream* debugOutputStream = getDebugOutputStreamLogger();
@@ -84,7 +82,7 @@ DeviceDescriptor startMatchDetectorDevice = {
 };
 
 StartMatch* getStartMatchDetectorStartMatchObject(void) {
-    return (StartMatch*)startMatchDetectorDevice.object;
+    return (StartMatch*) startMatchDetectorDevice.object;
 }
 
 DeviceDescriptor* getStartMatchDeviceDescriptor(StartMatch* startMatchParam) {

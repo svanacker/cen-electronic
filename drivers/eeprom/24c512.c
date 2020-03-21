@@ -32,16 +32,16 @@ I2cBusConnection* _24c512GetI2cBusConnection(Eeprom* eeprom_) {
 }
 
 /**
-* @private
-* Calculate the chip address to select
-* @param index the index to calculate the chip Address
-* @return the chip address to select
-*/
-unsigned long get24C512BlockAddress (unsigned long index) {
+ * @private
+ * Calculate the chip address to select
+ * @param index the index to calculate the chip Address
+ * @return the chip address to select
+ */
+unsigned long get24C512BlockAddress(unsigned long index) {
     unsigned long blocAddress = ST24C512_ADDRESS_0;
 
     // step of 64 KBytes
-    if (index < 0x010000 ) {
+    if (index < 0x010000) {
     } else if (index < 0x020000) {
         blocAddress = ST24C512_ADDRESS_1;
     } else if (index < 0x030000) {
@@ -63,16 +63,16 @@ unsigned long get24C512BlockAddress (unsigned long index) {
 }
 
 /**
-* @private
-* Calculate the address in the chip to select.
-* @param index the index to calculate the address
-* @return the address result
-*/
+ * @private
+ * Calculate the address in the chip to select.
+ * @param index the index to calculate the address
+ * @return the address result
+ */
 unsigned long get24C512Address(unsigned long index) {
     unsigned long address = index;
 
     // step of 64 KBytes
-    if (index < 0x010000 ) {
+    if (index < 0x010000) {
     } else if (index < 0x020000) {
         address -= 0x010000;
     } else if (index < 0x030000) {
@@ -169,7 +169,7 @@ unsigned char _readEeprom24C512Char(Eeprom* eeprom_, unsigned long index) {
  * @see eeprom.h
  * @private
  */
-void _writeEeprom24C512Block (Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer) {
+void _writeEeprom24C512Block(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer) {
     I2cBusConnection* i2cBusConnection = _24c512GetI2cBusConnection(eeprom_);
 
     int blockAddress = get24C512BlockAddress(index);
@@ -182,7 +182,7 @@ void _writeEeprom24C512Block (Eeprom* eeprom_, unsigned long index, unsigned int
     portableMasterWriteI2C(i2cBusConnection, address);
     WaitI2cBusConnection(i2cBusConnection);
     int i;
-    for (i = 0; i <(length) ; i++) {
+    for (i = 0; i < (length); i++) {
         char c = bufferReadChar(buffer);
         portableMasterWriteI2C(i2cBusConnection, c);
         WaitI2cBusConnection(i2cBusConnection);
@@ -196,7 +196,7 @@ void _writeEeprom24C512Block (Eeprom* eeprom_, unsigned long index, unsigned int
  * @see eeprom.h
  * @private
  */
-void _readEeprom24C512Block(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer){
+void _readEeprom24C512Block(Eeprom* eeprom_, unsigned long index, unsigned int length, Buffer* buffer) {
     I2cBusConnection* i2cBusConnection = _24c512GetI2cBusConnection(eeprom_);
 
     portableMasterWaitSendI2C(i2cBusConnection);
@@ -241,25 +241,25 @@ void _loadEeprom24C512(Eeprom* eeprom_) {
     if (eeprom_ == NULL) {
         writeError(UNIMPLETEMENTED_EXCEPTION);
         return;
-    }  
+    }
 }
 
 void _dumpEeprom24C512(Eeprom* eeprom_) {
     if (eeprom_ == NULL) {
         writeError(UNIMPLETEMENTED_EXCEPTION);
         return;
-    }  
+    }
 }
 
 void init24C512Eeprom(Eeprom* eeprom_, I2cBusConnection* i2cBusConnection) {
     initEeprom(eeprom_,
-               EEPROM_TYPE_HARDWARE,
-               EEPROM_24C512_MAX_INDEX,
-               _writeEeprom24C512Char,
-               _readEeprom24C512Char,
-               _writeEeprom24C512Block,
-               _readEeprom24C512Block,
-               _loadEeprom24C512,
-               _dumpEeprom24C512,
-                 (int*) i2cBusConnection);
+            EEPROM_TYPE_HARDWARE,
+            EEPROM_24C512_MAX_INDEX,
+            _writeEeprom24C512Char,
+            _readEeprom24C512Char,
+            _writeEeprom24C512Block,
+            _readEeprom24C512Block,
+            _loadEeprom24C512,
+            _dumpEeprom24C512,
+            (int*) i2cBusConnection);
 }

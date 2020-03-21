@@ -54,7 +54,7 @@ void initMainBoardDevicesDescriptor() {
     mainBoardCommonLcdAddDevices();
     mainBoardCommonMotorAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
     mainBoardCommonStrategyAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
-	mainBoardCommonMatchAddDevices();
+    mainBoardCommonMatchAddDevices();
     mainBoardCommonTofAddDevices32();
     mainBoardCommonMeca1AddDevices();
 
@@ -64,8 +64,8 @@ void initMainBoardDevicesDescriptor() {
 
 void initMainBoardDriverDataDispatcherList(void) {
     mainBoardCommonInitDriverDataDispatcherList();
- 
-    mainBoardCommonMotorAddDispatcher();    
+
+    mainBoardCommonMotorAddDispatcher();
     // mainBoardCommonMeca1AddDispatcher();
 }
 
@@ -77,7 +77,7 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
     // mainBoardCommonHandleAccelerometer();
     mainBoardCommonMotorHandleStreamInstruction();
     mainBoardCommonStrategyHandleStreamInstruction();
-    
+
     return true;
 }
 
@@ -92,19 +92,19 @@ bool loopUnWaitForInstruction(StartMatch* startMatchParam) {
  */
 void mainBoardMainPhase1(void) {
     setBoardName("MAIN BIG ROBOT 32");
- 
+
     // CONFIG
     initRobotConfigPic32(&robotConfig, ROBOT_TYPE_BIG);
-    
+
     // BASE LOGS
     mainBoardCommonInitLogs();
-    
+
     // LCD
     mainBoardCommonLcdInit(&robotConfig);
 
     // SERIAL
     mainBoardCommonInitSerialList();
-    mainBoardCommonDebugOpenSerialLink(); 
+    mainBoardCommonDebugOpenSerialLink();
 }
 
 /**
@@ -112,28 +112,28 @@ void mainBoardMainPhase1(void) {
  */
 void mainBoardMainPhase2(void) {
     mainBoardCommonMainInit(&robotConfig);
-    
+
     // OTHER SERIAL LINKS
     mainBoardCommonMotorNotifyOpenSerialLink();
     mainBoardCommonMotorOpenSerialLink();
-   
+
     mainBoardCommonInitBusList();
     mainBoardCommonInitTimerList();
     mainBoardCommonInitCommonDrivers();
-    
+
     mainBoardCommonStrategyMainInitDrivers(&robotConfig);
-    
+
     // ROBOT2019 : PCA9685
     ServoList* servoList = mainBoardCommonGetServoList();
     // I2cBus* i2cBus = mainBoardCommonGetMainI2cBus();
     I2cBus* i2cBus = getI2cBusByIndex(MAIN_BOARD_SERVO_I2C_BUS_INDEX);
     I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
     addServoAllPca9685(servoList, servoI2cBusConnection);
-    
+
     // Initialise the Strategy first so that we could show the color & stragegy
     // index at a very early stage
     mainBoardCommonTofInitDrivers32(&robotConfig);
-    mainBoardCommonMatchMainInitDrivers(&robotConfig, &startupCheckList2020, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);    
+    mainBoardCommonMatchMainInitDrivers(&robotConfig, &startupCheckList2020, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
 }
 
 void mainBoardMainPhase3(void) {
@@ -148,7 +148,7 @@ int main(void) {
     mainBoardMainPhase1();
     mainBoardMainPhase2();
     mainBoardMainPhase3();
-    
+
     // Initialise the 2020 specific Devices
     TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
     ServoList* servoList = mainBoardCommonGetServoList();

@@ -48,14 +48,12 @@ void deviceRelayHandleRawData(unsigned char commandHeader, InputStream* inputStr
         checkIsSeparator(inputStream);
         bool value = readBool(inputStream);
         relay->relayWriteValue(relay, relayIndex, value);
-    }
-    else if (commandHeader == COMMAND_READ_RELAY) {
+    } else if (commandHeader == COMMAND_READ_RELAY) {
         ackCommand(outputStream, RELAY_DEVICE_HEADER, COMMAND_READ_RELAY);
         int relayIndex = readHex2(inputStream);
         bool value = relay->relayReadValue(relay, relayIndex);
         appendDec(outputStream, value);
-    }
-    else if (commandHeader == COMMAND_RELAY_DEBUG) {
+    } else if (commandHeader == COMMAND_RELAY_DEBUG) {
         ackCommand(outputStream, RELAY_DEVICE_HEADER, COMMAND_RELAY_DEBUG);
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         printRelayStatesTable(debugOutputStream, relay);

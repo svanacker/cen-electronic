@@ -42,12 +42,12 @@ Buffer* getJennicInDataBuffer() {
 }
 
 void addJennicEvent(JennicEvent* jennicEvent,
-                     char* eventCommand,
-                     char* argument0,
-                     char* argument1,
-                     char* argument2,
-                     char payLoadArgumentIndex,
-                    JennicEventFunction* onEvent) {
+        char* eventCommand,
+        char* argument0,
+        char* argument1,
+        char* argument2,
+        char payLoadArgumentIndex,
+        JennicEventFunction* onEvent) {
     unsigned char size = jennicEventList.size;
     if (size < MAX_JENNIC_EVENT) {
         jennicEventList.events[size] = jennicEvent;
@@ -89,7 +89,7 @@ void clearJennicEventSearch() {
     jennicEventList.currentCommand[0] = 0;
     jennicEventList.currentCommand[1] = 0;
     jennicEventList.currentCommand[2] = 0;
-}    
+}
 
 /**
  * @private
@@ -97,7 +97,7 @@ void clearJennicEventSearch() {
 void initJennic5139DataSearch(JennicEvent* matchEvent) {
     if (matchEvent == NULL) {
         return;
-    } 
+    }
     OutputStream* searchOutputStream = &(jennicEventList.searchDataBuffer.outputStream);
     clearBuffer(&(jennicEventList.searchDataBuffer));
     // Command / Event
@@ -167,7 +167,7 @@ void handleJennicNextChar(char c) {
                 // if we found a difference
                 if (event->eventCommand[charIndex] != jennicEventList.currentCommand[charIndex]) {
                     matchCompletely = false;
-                    break; 
+                    break;
                 }
             }
             if (matchCompletely) {
@@ -186,16 +186,14 @@ void handleJennicNextChar(char c) {
         // This is another event which is not search, or unknown string
         if (!foundPossibleCandidate) {
             clearJennicEventSearch();
-            return;    
+            return;
         }
-    }
-    else {
+    } else {
         // Data >= dataBlockLength (after arguments) is payLoad data
         if (jennicEventList.matchEvent->payLoadArgumentIndex == jennicEventList.currentArgumentIndex) {
             // can only occured if payLoadArgumentIndex != NO_PAYLOAD
             bufferWriteChar(&(jennicEventList.dataRawInputBuffer), c);
-        }
-        // avoid comparing data beyond dataBlockLength (=> wrong access to memory !!!)
+        }// avoid comparing data beyond dataBlockLength (=> wrong access to memory !!!)
         else if (jennicEventList.dataBlockBeginMatchIndex < dataBlockLength) {
             // Get the searched Data Char : We used the normally internal s array
             // because we do not use the rotating aspect of the buffer (we don't 
@@ -219,7 +217,7 @@ void handleJennicNextChar(char c) {
                 append(getDebugOutputStreamLogger(), c);
                 println(getDebugOutputStreamLogger());
                 // END DEBUG ONLY
-    
+
                 // reset : we consider that the strings does not match
                 clearJennicEventSearch();
                 return;
@@ -229,7 +227,7 @@ void handleJennicNextChar(char c) {
             jennicEventList.currentArgumentIndex++;
         }
     }
-    
+
     jennicRawDataToData();
 }
 
@@ -258,7 +256,7 @@ void printJennicEvent(JennicEvent* event, OutputStream* outputStream) {
 void printJennicEventList(OutputStream* outputStream) {
     appendString(outputStream, "JENNIC EVENT LIST:\n");
 
-    int index;    
+    int index;
     for (index = 0; index < jennicEventList.size; index++) {
         JennicEvent* event = jennicEventList.events[index];
         printJennicEvent(event, outputStream);

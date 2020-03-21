@@ -16,7 +16,7 @@ void gameStrategyCreateOutsideTemporaryPaths(GameStrategyContext* gameStrategyCo
     LocationList* locationList = navigation->locationList;
     float startAngleRadian = gameStrategyContext->robotAngleRadian;
     Point* robotPosition = gameStrategyContext->robotPosition;
-    
+
     PathData* currentPath = gameStrategyContext->currentPath;
     if (currentPath == NULL) {
         writeError(PATH_NULL);

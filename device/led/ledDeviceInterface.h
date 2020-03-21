@@ -8,8 +8,8 @@
 #define COMMAND_LED_WRITE             'w'
 
 /**
-* Interface for Led Device.
-*/
+ * Interface for Led Device.
+ */
 DeviceInterface* getLedDeviceInterface(void);
 
 #endif

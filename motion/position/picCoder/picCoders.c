@@ -26,10 +26,10 @@ static unsigned char CODERS_MASKZ[MAX_CODERS];
 #define CODERS_PORT    PORTB
 
 // the current value of the input canal for the two coder
-static volatile unsigned char canal;                                
+static volatile unsigned char canal;
 // the saved value of the input canal for the two coder
 static volatile unsigned char oldCanal;
-                            
+
 static volatile signed long codersPositions[MAX_CODERS];
 static volatile signed long initialPositions[MAX_CODERS];
 static volatile signed long lastZPositions[MAX_CODERS];
@@ -44,58 +44,52 @@ void updateCoders(void) {
     canal = CODERS_PORT;
 
     int i;
-    for (i=0; i<MAX_CODERS; i++) {
+    for (i = 0; i < MAX_CODERS; i++) {
         // Codeur0
         if ((canal & CODERS_MASKA[i]) > 0) {
             if ((oldCanal & CODERS_MASKA[i]) == 0) {
                 // coderPosition++;
-                if ((canal & CODERS_MASKB[i]) == 0) {                // CASE (1)
+                if ((canal & CODERS_MASKB[i]) == 0) { // CASE (1)
                     codersPositions[i]++;
-                }
-                else {                                    // CASE (6)
+                } else { // CASE (6)
                     codersPositions[i]--;
                 }
             }
-        }
-        else {
+        } else {
             if ((oldCanal & CODERS_MASKA[i]) > 0) {
-                if ((canal & CODERS_MASKB[i]) == 0) {                // CASE (8)
+                if ((canal & CODERS_MASKB[i]) == 0) { // CASE (8)
                     codersPositions[i]--;
-                }
-                else {                                    // CASE (3)
+                } else { // CASE (3)
                     codersPositions[i]++;
                 }
             }
         }
         if ((canal & CODERS_MASKB[i]) > 0) {
             if ((oldCanal & CODERS_MASKB[i]) == 0) {
-                if ((canal & CODERS_MASKA[i]) == 0) {                // CASE (5)
+                if ((canal & CODERS_MASKA[i]) == 0) { // CASE (5)
                     codersPositions[i]--;
-                }
-                else {                                    // CASE (2)
+                } else { // CASE (2)
                     codersPositions[i]++;
                 }
             }
-        }
-        else {
+        } else {
             if ((oldCanal & CODERS_MASKB[i]) > 0) {
-                if ((canal & CODERS_MASKA[i]) == 0) {                // CASE (4)
+                if ((canal & CODERS_MASKA[i]) == 0) { // CASE (4)
                     codersPositions[i]++;
-                }        
-                else {                                    // CASE (7)
+                } else { // CASE (7)
                     codersPositions[i]--;
                 }
             }
         }
 
         // Test du passage de 0 à 1 du bit Z
-        if (((oldCanal & CODERS_MASKZ[i]) == 0 ) && ((canal & CODERS_MASKZ[i]) != 0)) {
+        if (((oldCanal & CODERS_MASKZ[i]) == 0) && ((canal & CODERS_MASKZ[i]) != 0)) {
             if (initialPositions[i] == 0) {
-                initialPositions[i]=codersPositions[i];
+                initialPositions[i] = codersPositions[i];
             }
-            lastZPositions[i]=codersPositions[i];
+            lastZPositions[i] = codersPositions[i];
             codersZCounts[i]++;
-            checkCodersFlags[i]=true;
+            checkCodersFlags[i] = true;
         }
     }
 }
@@ -106,14 +100,14 @@ signed long getCoderValue(int index) {
 
 void clearCoders() {
     int i;
-    for (i=0; i<MAX_CODERS; i++) {
-        codersPositions[i]=0;
-        codersErrorCounts[i]=0;
-        codersErrorValues[i]=0;
-        initialPositions[i]=0;
-        lastZPositions[i]=0;
-        codersZCounts[i]=0;
-        checkCodersFlags[i]=false;
+    for (i = 0; i < MAX_CODERS; i++) {
+        codersPositions[i] = 0;
+        codersErrorCounts[i] = 0;
+        codersErrorValues[i] = 0;
+        initialPositions[i] = 0;
+        lastZPositions[i] = 0;
+        codersZCounts[i] = 0;
+        checkCodersFlags[i] = false;
     }
 }
 
@@ -124,10 +118,10 @@ void initCoders(void) {
 
     canal = CODERS_PORT;
 
-    CODERS_MASKA[0] = CODERS_MASKA_1;    
-    CODERS_MASKB[0] = CODERS_MASKB_1;    
-    CODERS_MASKZ[0] = CODERS_MASKZ_1;    
-    CODERS_MASKA[1] = CODERS_MASKA_2;    
+    CODERS_MASKA[0] = CODERS_MASKA_1;
+    CODERS_MASKB[0] = CODERS_MASKB_1;
+    CODERS_MASKZ[0] = CODERS_MASKZ_1;
+    CODERS_MASKA[1] = CODERS_MASKA_2;
     CODERS_MASKB[1] = CODERS_MASKB_2;
     CODERS_MASKZ[1] = CODERS_MASKZ_2;
 
@@ -137,39 +131,38 @@ void initCoders(void) {
 
 void checkCoders() {
     int i;
-    for (i=0; i<MAX_CODERS; i++) {
+    for (i = 0; i < MAX_CODERS; i++) {
         if (!checkCodersFlags[i]) {
             continue;
         }
-    
-        checkCodersFlags[i]=false;
+
+        checkCodersFlags[i] = false;
 
         long position;
         long initial;
         long position2;
         long initial2;
-        
-        do
-        {
-            position=lastZPositions[i];
-            initial=initialPositions[i];
-            position2=lastZPositions[i];
-            initial2=initialPositions[i];
+
+        do {
+            position = lastZPositions[i];
+            initial = initialPositions[i];
+            position2 = lastZPositions[i];
+            initial2 = initialPositions[i];
         } while ((position != position2) || (initial != initial2));
 
         position %= CODERS_RESOLUTION;
-        if (position<0) {
+        if (position < 0) {
             position += CODERS_RESOLUTION;
         }
         initial %= CODERS_RESOLUTION;
-        if (initial<0) {
+        if (initial < 0) {
             initial += CODERS_RESOLUTION;
         }
-        long diff=position-initial;
+        long diff = position - initial;
         if ((diff < -CODERS_ERROR) || (diff > CODERS_ERROR)) {
             codersErrorCounts[i]++;
             codersErrorValues[i] += absLong(diff);
-            initialPositions[i]=0;
+            initialPositions[i] = 0;
         }
     }
 }
@@ -194,13 +187,13 @@ int getCodersZCount(int index) {
 
 void stopCoders(void) {
 
-}    
+}
 
-unsigned int getCodersSoftwareRevision( void ) {
+unsigned int getCodersSoftwareRevision(void) {
     return 1;
 }
 
-unsigned int isCodersDeviceOk( void ) {
+unsigned int isCodersDeviceOk(void) {
     return 1;
 }
 
@@ -214,7 +207,7 @@ DeviceDescriptor getCodersDeviceDescriptor() {
     result.deviceShutDown = &stopCoders;
     result.deviceIsOk = &isCodersDeviceOk;
     result.deviceGetSoftwareRevision = &getCodersSoftwareRevision;
-    result.deviceGetName = &getCodersDeviceName;  
+    result.deviceGetName = &getCodersDeviceName;
     result.enabled = 1;
 
     return result;

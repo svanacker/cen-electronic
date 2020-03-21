@@ -7,8 +7,8 @@
 #include "../../device/deviceConstants.h"
 
 /**
-* Command to write on the LCD
-*/
+ * Command to write on the LCD
+ */
 #define COMMAND_LCD                  'w'
 
 /**
@@ -27,14 +27,14 @@
 #define COMMAND_BACKLIGHT_LCD        'b' 
 
 /**
-* Define the number of fixed count of char used
-* for each message.
-*/
+ * Define the number of fixed count of char used
+ * for each message.
+ */
 #define LCD_CHAR_COUNT_BY_MESSAGE    FIXED_CHAR_ARRAY_LENGTH 
 
 /**
-* Interface for Device.
-*/
+ * Interface for Device.
+ */
 DeviceInterface* getLCDDeviceInterface();
 
 #endif

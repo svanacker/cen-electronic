@@ -33,8 +33,7 @@ OutgoingPathData* addOutgoingPath(OutgoingPathList* outgoingPathList, PathData* 
         outgoingPathData->pathData = pathData;
         outgoingPathList->size++;
         return outgoingPathData;
-    }
-    else {
+    } else {
         writeError(TOO_MUCH_PATHS);
         return NULL;
     }

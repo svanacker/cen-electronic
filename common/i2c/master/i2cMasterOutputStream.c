@@ -30,7 +30,7 @@ I2cMasterOutputStream* _i2cMasterGetMasterOutputStream(OutputStream* outputStrea
  */
 Buffer* _i2cMasterGetOutputBuffer(OutputStream* outputStream) {
     I2cMasterOutputStream* i2cMasterOutputStream = _i2cMasterGetMasterOutputStream(outputStream);
-    
+
     Buffer* result = i2cMasterOutputStream->outputBuffer;
 
     return result;
@@ -41,12 +41,11 @@ Buffer* _i2cMasterGetOutputBuffer(OutputStream* outputStream) {
  */
 I2cBusConnection* _i2cMasterGetI2cBusConnection(OutputStream* outputStream) {
     I2cMasterOutputStream* i2cMasterOutputStream = _i2cMasterGetMasterOutputStream(outputStream);
-    
+
     I2cBusConnection* result = i2cMasterOutputStream->i2cBusConnection;
 
     return result;
 }
-
 
 /**
  * @private

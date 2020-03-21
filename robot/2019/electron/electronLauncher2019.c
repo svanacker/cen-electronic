@@ -29,8 +29,7 @@ void updateElectronLauncherState(ElectronLauncher2019* launcher, enum ElectronLa
     }
     if (launcher->state == newState) {
         return;
-    }
-    else {
+    } else {
         OutputStream* outputStream = getDebugOutputStreamLogger();
         printElectronLauncherState(outputStream, launcher->state);
         launcher->state = newState;
@@ -69,7 +68,7 @@ void checkElectronLauncher2019RobotPlaced(ElectronLauncher2019* launcher) {
     launcher->robotPlacedAnalysisCount++;
     tofSensor->thresholdMinDistanceMM = ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MIN;
     tofSensor->thresholdMaxDistanceMM = ELECTRON_LAUNCHER_2019_ROBOT_PLACED_DISTANCE_MAX;
-    
+
     unsigned int distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
     if (isTofDistanceInRange(tofSensor)) {
         // We only notify one time
@@ -97,7 +96,7 @@ void checkElectronLauncher2019RobotMoved(ElectronLauncher2019* launcher) {
     distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
     tofSensor->thresholdMinDistanceMM = ELECTRON_LAUNCHER_2019_ROBOT_MOVED_DISTANCE_MIN;
     tofSensor->thresholdMaxDistanceMM = ELECTRON_LAUNCHER_2019_ROBOT_MOVED_DISTANCE_MAX;
-    
+
     if (isTofDistanceInRange(tofSensor)) {
         launcher->robotMovedDetectionCount++;
         // Store how many Count the detect
@@ -106,8 +105,7 @@ void checkElectronLauncher2019RobotMoved(ElectronLauncher2019* launcher) {
             appendStringCRLF(getAlwaysOutputStreamLogger(), " mm");
             updateElectronLauncherState(launcher, LAUNCHER_STATE_ROBOT_MOVED);
         }
-    }
-    else {
+    } else {
         launcher->robotMovedDetectionCount -= ELECTRON_LAUNCHER_2019_MISSED_DECREMENT_VALUE;
         if (launcher->robotMovedDetectionCount < 0) {
             launcher->robotMovedDetectionCount = 0;
@@ -142,9 +140,9 @@ void checkElectronLauncher2019ShowRemainingTime(ElectronLauncher2019* launcher) 
     if (endMatch == NULL) {
         writeError(ROBOT_END_MATCH_NULL);
     }
-    if (launcher->timerCount %10 == 0) {
+    if (launcher->timerCount % 10 == 0) {
         showRemainingTime(endMatch, getAlwaysOutputStreamLogger());
-        
+
     }
 }
 
@@ -199,7 +197,7 @@ void electronLauncher2019Reset(ElectronLauncher2019* launcher) {
     Servo* electronServo = getServo(servoList, ELECTRON_LAUNCHER_2019_ELECTRON_SERVO_INDEX);
     pwmServo(electronServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_ELECTRON_LOCKED_SERVO_VALUE, true);
     electronServo->maxSpeedUnderLoad = MAX_SPEED_UNDER_LOAD__1_SECOND_60_DEG;
-    
+
     // Experience
     Servo* experienceShowServo = getServo(servoList, ELECTRON_LAUNCHER_2019_EXPERIENCE_SHOW_SERVO_INDEX);
     pwmServo(experienceShowServo, PWM_SERVO_SPEED_MAX, ELECTRON_LAUNCHER_2019_EXPERIENCE_INIT_VALUE, true);
@@ -209,12 +207,11 @@ void electronLauncher2019Reset(ElectronLauncher2019* launcher) {
 
 // TIMER INTERRUPT
 
-
 /**
  * The interrupt timer.
  */
 void electronLauncher2019CallbackFunc(Timer* timer) {
-    ElectronLauncher2019* launcher = (ElectronLauncher2019*)timer->object;
+    ElectronLauncher2019* launcher = (ElectronLauncher2019*) timer->object;
     if (launcher == NULL) {
         writeError(ELECTRON_LAUNCHER_2019_NULL);
         return;
@@ -226,10 +223,10 @@ void electronLauncher2019CallbackFunc(Timer* timer) {
 // INIT
 
 void initElectronLauncher2019(ElectronLauncher2019* launcher,
-    EndMatch* endMatch,
-    RobotConfig* robotConfig,
-    ServoList* servoList,
-    TofSensorList* tofSensorList) {
+        EndMatch* endMatch,
+        RobotConfig* robotConfig,
+        ServoList* servoList,
+        TofSensorList* tofSensorList) {
     launcher->endMatch = endMatch;
     launcher->robotConfig = robotConfig;
     launcher->servoList = servoList;
@@ -237,8 +234,7 @@ void initElectronLauncher2019(ElectronLauncher2019* launcher,
     if (isConfigSet(robotConfig, CONFIG_COLOR_YELLOW_MASK)) {
         appendStringCRLF(getAlwaysOutputStreamLogger(), "YELLOW->RIGHT");
         launcher->tofIndex = 0;
-    }
-    else {
+    } else {
         appendStringCRLF(getAlwaysOutputStreamLogger(), "VIOLET->LEFT");
         launcher->tofIndex = 1;
     }
@@ -247,10 +243,10 @@ void initElectronLauncher2019(ElectronLauncher2019* launcher,
     Timer* timer = getTimerByCode(ELECTRON_LAUNCHER_2019_TIMER_CODE);
     if (timer == NULL) {
         timer = addTimer(ELECTRON_LAUNCHER_2019_TIMER_CODE,
-            TIME_DIVIDER_10_HERTZ,
-            &electronLauncher2019CallbackFunc,
-            "ELEC LAUNC 2019",
-            (int*)launcher);
+                TIME_DIVIDER_10_HERTZ,
+                &electronLauncher2019CallbackFunc,
+                "ELEC LAUNC 2019",
+                (int*) launcher);
         timer->enabled = true;
     }
     electronLauncher2019Reset(launcher);

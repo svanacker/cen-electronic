@@ -17,14 +17,12 @@ int deviceElevator2019GetInterface(unsigned char commandHeader, DeviceInterfaceM
             setArgumentUnsignedHex4(0, "Servo Pos value");
         }
         return commandLengthValueForMode(mode, 4, 0);
-    }
-    else if (commandHeader == COMMAND_2019_ELEVATOR_BOTTOM) {
+    } else if (commandHeader == COMMAND_2019_ELEVATOR_BOTTOM) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("ELEVATOR Bottom");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_2019_ELEVATOR_DISTRIBUTOR_SCAN) {
+    } else if (commandHeader == COMMAND_2019_ELEVATOR_DISTRIBUTOR_SCAN) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("ELEVATOR Distributor Scan");
         }
@@ -37,50 +35,42 @@ int deviceElevator2019GetInterface(unsigned char commandHeader, DeviceInterfaceM
             setArgumentUnsignedHex4(0, "Servo Position Value");
         }
         return commandLengthValueForMode(mode, 4, 0);
-    }
-    else if (commandHeader == COMMAND_2019_ELEVATOR_LEFT) {
+    } else if (commandHeader == COMMAND_2019_ELEVATOR_LEFT) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("ELEVATOR Left");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_2019_ELEVATOR_MIDDLE) {
+    } else if (commandHeader == COMMAND_2019_ELEVATOR_MIDDLE) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("ELEVATOR Middle");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_2019_ELEVATOR_RIGHT) {
+    } else if (commandHeader == COMMAND_2019_ELEVATOR_RIGHT) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("ELEVATOR Right");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_2019_ELEVATOR_GOLDENIUM_POSITION) {
+    } else if (commandHeader == COMMAND_2019_ELEVATOR_GOLDENIUM_POSITION) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("ELEVATOR Gold Take Pos.");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_2019_ELEVATOR_SCAN_GOLDENIUM_POSITION) {
+    } else if (commandHeader == COMMAND_2019_ELEVATOR_SCAN_GOLDENIUM_POSITION) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("ELEVATOR Gold Scan Pos.");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_2019_ELEVATOR_INIT_POSITION) {
+    } else if (commandHeader == COMMAND_2019_ELEVATOR_INIT_POSITION) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("ELEVATOR Init Position");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_2019_ELEVATOR_ACCELERATOR_SECOND_DROP) {
+    } else if (commandHeader == COMMAND_2019_ELEVATOR_ACCELERATOR_SECOND_DROP) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("ELEVATOR ACC SECOND DROP");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_2019_ELEVATOR_UP) {
+    } else if (commandHeader == COMMAND_2019_ELEVATOR_UP) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("ELEVATOR Up");
         }

@@ -20,7 +20,7 @@
 // Définition de la vitesse du port serie
 #define BAUDERATE 115200
 
-    
+
 // DEFINITION DU PORT A TESTER
 #define UARTTEST UART1 
 
@@ -52,18 +52,17 @@
 // Section: Constant Data
 // *****************************************************************************
 // *****************************************************************************
-const char mainMenu[] =
-{
+const char mainMenu[] = {
     "Welcome to PIC32 UART Peripheral Test Program!\r"
     "Do you want to continue ? (Yes/No)\r\n"
 };
 
-static const char* Str1="\rLecture Switch :\n";
-static const char* Str2="0\n";
-static const char* Str3="1\n";
+static const char* Str1 = "\rLecture Switch :\n";
+static const char* Str2 = "0\n";
+static const char* Str3 = "1\n";
 
-static const char* Str4="   GO\n";
-static const char* Str5="   NOGO\n";
+static const char* Str4 = "   GO\n";
+static const char* Str5 = "   NOGO\n";
 
 // *****************************************************************************
 // void SendDataBuffer(const UARTx, const char *buffer)
@@ -72,15 +71,14 @@ static const char* Str5="   NOGO\n";
 //                    UART1,UART2,UART3,UART4,UART5,UART6
 //              buffer : chaine de caractère
 // *****************************************************************************
-void SendDataBuffer(const UARTx, const char *buffer)
-{
-    while(*buffer != '\n')
-    {
-        while(!UARTTransmitterIsReady(UARTx));
+
+void SendDataBuffer(const UARTx, const char *buffer) {
+    while (*buffer != '\n') {
+        while (!UARTTransmitterIsReady(UARTx));
         UARTSendDataByte(UARTx, *buffer);
-        buffer++; 
+        buffer++;
     }
-    while(!UARTTransmissionHasCompleted(UARTx));
+    while (!UARTTransmissionHasCompleted(UARTx));
 }
 
 
@@ -93,15 +91,14 @@ void SendDataBuffer(const UARTx, const char *buffer)
 //                1200,2400,4800,9600,19200,38400,57600,115200
 //                
 //******************************************************
-void OpenUart ( const UARTx,long BaudRate)
-{
+
+void OpenUart(const UARTx, long BaudRate) {
     UARTConfigure(UARTx, UART_ENABLE_PINS_TX_RX_ONLY);
     UARTSetFifoMode(UARTx, UART_INTERRUPT_ON_TX_NOT_FULL | UART_INTERRUPT_ON_RX_NOT_EMPTY);
     UARTSetLineControl(UARTx, UART_DATA_SIZE_8_BITS | UART_PARITY_NONE | UART_STOP_BITS_1);
     UARTSetDataRate(UARTx, GetPeripheralClock(), BAUDERATE);
     UARTEnable(UARTx, UART_ENABLE_FLAGS(UART_PERIPHERAL | UART_RX | UART_TX));
 }
-
 
 void delaymSec(unsigned int mSecond) {
     unsigned int i;
@@ -116,60 +113,56 @@ void delaymSec(unsigned int mSecond) {
     }
 }
 
+void testBitSwitch(int IOPORT, int BIT) {
 
-void testBitSwitch (int IOPORT , int BIT) {
-
-    if  (PORTReadBits(IOPORT, BIT) == 0){
-        if (UARTTransmitterIsReady(UARTTEST)){
-            SendDataBuffer(UARTTEST,Str2);
+    if (PORTReadBits(IOPORT, BIT) == 0) {
+        if (UARTTransmitterIsReady(UARTTEST)) {
+            SendDataBuffer(UARTTEST, Str2);
         }
-    }
-    else {
-        if (UARTTransmitterIsReady(UARTTEST)){
-            SendDataBuffer(UARTTEST,Str3);
-          }
+    } else {
+        if (UARTTransmitterIsReady(UARTTEST)) {
+            SendDataBuffer(UARTTEST, Str3);
+        }
     }
 }
 
-int main(void)
-{
+int main(void) {
 
-        OpenUart(UARTTEST,BAUDERATE);
-        PORTSetPinsDigitalIn(IOPORT_D,SW0|SW1|SW2|SW3);  
-        PORTSetPinsDigitalIn(IOPORT_B,SW4|SW5|SW6|SW7|SW8|SW9|SW10|SW11);  
-        PORTSetPinsDigitalIn(IOPORT_C,SW12);  
-        PORTSetPinsDigitalIn(IOPORT_G,SW13|BIT_3);
+    OpenUart(UARTTEST, BAUDERATE);
+    PORTSetPinsDigitalIn(IOPORT_D, SW0 | SW1 | SW2 | SW3);
+    PORTSetPinsDigitalIn(IOPORT_B, SW4 | SW5 | SW6 | SW7 | SW8 | SW9 | SW10 | SW11);
+    PORTSetPinsDigitalIn(IOPORT_C, SW12);
+    PORTSetPinsDigitalIn(IOPORT_G, SW13 | BIT_3);
 
-    while (1){
+    while (1) {
 
-        SendDataBuffer(UARTTEST,Str1);
+        SendDataBuffer(UARTTEST, Str1);
 
-        testBitSwitch (IOPORT_G , SW13);
-        testBitSwitch (IOPORT_C , SW12);
-        testBitSwitch (IOPORT_B , SW11);
-        testBitSwitch (IOPORT_B , SW10);
-        testBitSwitch (IOPORT_B , SW9);
-        testBitSwitch (IOPORT_B , SW8);
-        testBitSwitch (IOPORT_B , SW7);
-        testBitSwitch (IOPORT_B , SW6);
-        testBitSwitch (IOPORT_B , SW5);
-        testBitSwitch (IOPORT_B , SW4);
-        testBitSwitch (IOPORT_D , SW3);
-        testBitSwitch (IOPORT_D , SW2);
-        testBitSwitch (IOPORT_D , SW1);
-        testBitSwitch (IOPORT_D , SW0);
+        testBitSwitch(IOPORT_G, SW13);
+        testBitSwitch(IOPORT_C, SW12);
+        testBitSwitch(IOPORT_B, SW11);
+        testBitSwitch(IOPORT_B, SW10);
+        testBitSwitch(IOPORT_B, SW9);
+        testBitSwitch(IOPORT_B, SW8);
+        testBitSwitch(IOPORT_B, SW7);
+        testBitSwitch(IOPORT_B, SW6);
+        testBitSwitch(IOPORT_B, SW5);
+        testBitSwitch(IOPORT_B, SW4);
+        testBitSwitch(IOPORT_D, SW3);
+        testBitSwitch(IOPORT_D, SW2);
+        testBitSwitch(IOPORT_D, SW1);
+        testBitSwitch(IOPORT_D, SW0);
 
 
-    if  (PORTReadBits(IOPORT_G, BIT_3) == 0){
-        if (UARTTransmitterIsReady(UARTTEST)){
-            SendDataBuffer(UARTTEST,Str4);
+        if (PORTReadBits(IOPORT_G, BIT_3) == 0) {
+            if (UARTTransmitterIsReady(UARTTEST)) {
+                SendDataBuffer(UARTTEST, Str4);
+            }
+        } else {
+            if (UARTTransmitterIsReady(UARTTEST)) {
+                SendDataBuffer(UARTTEST, Str5);
+            }
         }
-    }
-    else {
-        if (UARTTransmitterIsReady(UARTTEST)){
-            SendDataBuffer(UARTTEST,Str5);
-          }
-    }
 
         delaymSec(400);
     }

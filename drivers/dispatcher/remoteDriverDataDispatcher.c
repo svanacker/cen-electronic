@@ -23,11 +23,11 @@
  * Transmit the buffer through Remote OutputStream and fill Response Buffer through InputStream
  */
 bool remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
-                                        Buffer* requestBuffer,
-                                        Buffer* responseBuffer,
-                                        int dataToTransferCount,
-                                        int dataToReceiveCount
-                                        ) {
+        Buffer* requestBuffer,
+        Buffer* responseBuffer,
+        int dataToTransferCount,
+        int dataToReceiveCount
+        ) {
     InputStream* requestInputStream = getInputStream(requestBuffer);
     OutputStream* dispatcherOutputStream = dispatcher->outputStream;
 
@@ -55,7 +55,7 @@ bool remoteDriverDataDispatcherTransmit(DriverDataDispatcher* dispatcher,
         // a response !
         if (counter > 20000) {
             writeError(DISPATCHER_LINK_ERROR);
-            appendString (getErrorOutputStreamLogger(), "Dispatcher:");
+            appendString(getErrorOutputStreamLogger(), "Dispatcher:");
             appendString(getErrorOutputStreamLogger(), dispatcher->name);
             appendString(getErrorOutputStreamLogger(), "Time out:");
             appendStringAndDec(getErrorOutputStreamLogger(), "Not enough Data :wanted=", dataToReceiveCount);

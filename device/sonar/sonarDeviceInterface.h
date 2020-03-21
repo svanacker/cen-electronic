@@ -11,8 +11,8 @@
 #define COMMAND_SONAR_CHANGE_ADDRESS    '@'
 
 /**
-* Interface for Device "Sonar".
-*/
+ * Interface for Device "Sonar".
+ */
 DeviceInterface* getSonarDeviceInterface();
 
 #endif

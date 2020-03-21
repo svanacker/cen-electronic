@@ -4,9 +4,9 @@
 #include "../../device/deviceDescriptor.h"
 
 /**
-* Returns a descriptor on the File device.
-* @return a pointer on the deviceDescriptor (which does the job with the hardware)
-*/
+ * Returns a descriptor on the File device.
+ * @return a pointer on the deviceDescriptor (which does the job with the hardware)
+ */
 DeviceDescriptor* getFileDeviceDescriptor(void);
 
 #endif

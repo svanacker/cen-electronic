@@ -46,8 +46,8 @@
 
 
 /**
-* Interface for Device
-*/
+ * Interface for Device
+ */
 DeviceInterface* getExtendedMotionDeviceInterface();
 
 #endif

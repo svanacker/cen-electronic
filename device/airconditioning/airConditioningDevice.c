@@ -51,12 +51,10 @@ void deviceAirConditioningHandleRawData(char commandHeader, InputStream* inputSt
             airConditioningToggleOff();
         }
         ackCommand(outputStream, AIR_CONDITIONING_DEVICE_HEADER, AIR_CONDITIONING_COMMAND_WRITE);
-    }
-    else if (commandHeader == AIR_CONDITIONING_COMMAND_ON) {
+    } else if (commandHeader == AIR_CONDITIONING_COMMAND_ON) {
         airConditioningToggleOn();
         ackCommand(outputStream, AIR_CONDITIONING_DEVICE_HEADER, AIR_CONDITIONING_COMMAND_ON);
-    }
-    else if (commandHeader == AIR_CONDITIONING_COMMAND_OFF) {
+    } else if (commandHeader == AIR_CONDITIONING_COMMAND_OFF) {
         airConditioningToggleOff();
         ackCommand(outputStream, AIR_CONDITIONING_DEVICE_HEADER, AIR_CONDITIONING_COMMAND_OFF);
     }

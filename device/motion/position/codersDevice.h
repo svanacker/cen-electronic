@@ -4,8 +4,8 @@
 #include "../../../device/deviceDescriptor.h"
 
 /**
-* Returns the device descriptor on the coders.
-*/
+ * Returns the device descriptor on the coders.
+ */
 DeviceDescriptor* getCodersDeviceDescriptor();
 
 #endif

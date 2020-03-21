@@ -32,10 +32,10 @@ static Buffer asciiDataBuffer;
  * Add the i2c driver data dispatcher to the list.
  */
 void addZigbeeDriverDataDispatcher(DriverDataDispatcher* dispatcher,
-                                    const char* dispatcherName,
-                                    InputStream* zigbeeInputStream,
-                                    OutputStream* zigbeeOutputStream,
-                                    char* addressString) {
+        const char* dispatcherName,
+        InputStream* zigbeeInputStream,
+        OutputStream* zigbeeOutputStream,
+        char* addressString) {
     /* TODO
     dispatcher->transmitMode = TRANSMIT_ZIGBEE;
     dispatcher->name = dispatcherName;
@@ -57,6 +57,6 @@ void addZigbeeDriverDataDispatcher(DriverDataDispatcher* dispatcher,
 
     // add the dispatcher to the list
     addDriverDataDispatcher(dispatcher);
-    */
+     */
 }
 

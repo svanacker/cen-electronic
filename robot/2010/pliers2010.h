@@ -1,27 +1,27 @@
 /**
-* Pliers for 2010 Edition of the robot cup.
-* PREPARATION OF PLIER
-* - Down the plier
-* - Open plier
-* - Wait for taken mais
-* TAKE_LOAD CORN
-* - Close plier
-* - Wait for 500 ms
-* - Up the plier
-* - Wait for 500 ms
-* - Open the plier middle position
-* - Wait for 100 ms
-* - Down the plier lightly (position 1)
-* - Wait for 100 ms
-* - Open plier completely
-* - Wait for 100 ms
-* - Down the plier to the middle
-* - Close plier
-* - Wait for 300 ms
-* - Up the plier
-* - Wait for 500 ms
-* - Down the plier position 1
-*/
+ * Pliers for 2010 Edition of the robot cup.
+ * PREPARATION OF PLIER
+ * - Down the plier
+ * - Open plier
+ * - Wait for taken mais
+ * TAKE_LOAD CORN
+ * - Close plier
+ * - Wait for 500 ms
+ * - Up the plier
+ * - Wait for 500 ms
+ * - Open the plier middle position
+ * - Wait for 100 ms
+ * - Down the plier lightly (position 1)
+ * - Wait for 100 ms
+ * - Open plier completely
+ * - Wait for 100 ms
+ * - Down the plier to the middle
+ * - Close plier
+ * - Wait for 300 ms
+ * - Up the plier
+ * - Wait for 500 ms
+ * - Down the plier position 1
+ */
 #ifndef PLIERS_2010_H
 #define PLIERS_2010_H
 
@@ -59,101 +59,101 @@
 #define CORN_TO_TAKE_COUNT 4
 
 /**
-* Init the pliers.
-*/
+ * Init the pliers.
+ */
 void initPliers2010();
 
 /**
-* Take the corn for the plier Index.
-*/
+ * Take the corn for the plier Index.
+ */
 void takeAndLoadCorn(int plierIndex);
 
 /**
-* Load the corn for the plier Index into the bot.
-*/
+ * Load the corn for the plier Index into the bot.
+ */
 void preparePlier(int plierIndex);
 
 void pliersInTheRobot(void);
 
-void pliersAfterStart( void );
+void pliersAfterStart(void);
 
 // TEMPORISATION
 
-void longTemp( void );
+void longTemp(void);
 
-void middleTemp( void );
+void middleTemp(void);
 
-void shortTemp( void );
+void shortTemp(void);
 
 // UP / DOWN
 
 /**
-* Up the plier.
-*/
+ * Up the plier.
+ */
 void upPlier(int plierIndex);
 
 /**
-* Down the plier.
-*/
+ * Down the plier.
+ */
 void downPlier(int plierIndex);
 
 /**
-* Down the plier to the position 1
-*/
+ * Down the plier to the position 1
+ */
 void downPlierPosition1(int plierIndex);
 
 /**
-* Down the plier to the position 2
-*/
+ * Down the plier to the position 2
+ */
 void downPlierPosition2(int plierIndex);
 
 // OPEN / CLOSE
 
 /**
-* Open the plier.
-*/
+ * Open the plier.
+ */
 void openPlier(int plierIndex);
 
 /**
-* Open the plier to a middle position.
-*/
+ * Open the plier to a middle position.
+ */
 void openPlierMiddlePosition(int plierIndex);
 
 void openPlierMiddleSmallPosition(int plierIndex);
 
 /**
-* Close and wait.
-*/
+ * Close and wait.
+ */
 void closePlier(int plierIndex);
 
 // SENSOR OPEN / CLOSE
 
 /**
-* Begin up the sensor to not be to large.
-*/
+ * Begin up the sensor to not be to large.
+ */
 void beginUpSensor(int plierIndex);
 
 
 /**
-* Up the sensor
-*/
+ * Up the sensor
+ */
 void upSensor(int plierIndex);
 
 /**
-* Down the sensor.
-*/
+ * Down the sensor.
+ */
 void downSensor(int plierIndex);
 
 /**
-* Returns if we detect metal (black corn)
-*/
+ * Returns if we detect metal (black corn)
+ */
 unsigned char isMetalDetected(int plierIndex);
 
 // DEVICE INTERFACE
 
 /**
-* Returns a device descriptor on the pliers.
-*/
+ * Returns a device descriptor on the pliers.
+ */
 DeviceDescriptor getPliers2010DeviceDescriptor();
 
 #endif

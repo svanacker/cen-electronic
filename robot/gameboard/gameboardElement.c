@@ -9,41 +9,41 @@
 // UTILS FUNCTIONS
 
 float getXResolutionLength(void) {
-    return GAMEBOARD_WIDTH / (float)GAMEBOARD_COLUMN_COUNT;
+    return GAMEBOARD_WIDTH / (float) GAMEBOARD_COLUMN_COUNT;
 }
 
 float getYResolutionLength(void) {
-    return GAMEBOARD_HEIGHT / (float)GAMEBOARD_LINE_COUNT;
+    return GAMEBOARD_HEIGHT / (float) GAMEBOARD_LINE_COUNT;
 }
 
 /**
-* @private
-* Convert X into print coordinates
-* @param x (mm)
-*/
+ * @private
+ * Convert X into print coordinates
+ * @param x (mm)
+ */
 int convertXToColumn(float x) {
     return (int) (x / getXResolutionLength());
 }
 
 /**
-* @private
-* Convert Y into print coordinates
-*/
+ * @private
+ * Convert Y into print coordinates
+ */
 int convertYToLine(float y) {
     return (int) ((GAMEBOARD_HEIGHT - y) / getYResolutionLength());
 }
 
 /**
-* Convert print coordinates into X
-* @param x (mm)
-*/
+ * Convert print coordinates into X
+ * @param x (mm)
+ */
 float convertColumnToX(unsigned int column) {
     return getXResolutionLength() * (float) column;
 }
 
 /**
-* Convert Line print coordinates into Y
-*/
+ * Convert Line print coordinates into Y
+ */
 float convertLineToY(unsigned int line) {
     return (getYResolutionLength() * (float) (GAMEBOARD_LINE_COUNT - line));
 }
@@ -61,10 +61,11 @@ void setGameBoardPixel(GameBoard* gameBoard, float x, float y, unsigned char c) 
 
 void setGameBoardArray(GameBoard* gameBoard, int column, int line, unsigned char c) {
     if (column >= 0 && column < GAMEBOARD_COLUMN_COUNT && line >= 0 && line < GAMEBOARD_LINE_COUNT)
-    gameBoard->pixels[column][line] = c;
+        gameBoard->pixels[column][line] = c;
 }
 
 // TEXT
+
 void drawString(GameBoard* gameBoard, float x, float y, unsigned char* s) {
     unsigned int count = 2;
     unsigned char column = convertXToColumn(x);

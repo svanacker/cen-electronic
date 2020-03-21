@@ -20,8 +20,8 @@
 #define COMMAND_I2C_DEBUG_SLAVE_READ_CHAR_I2C_FROM_MASTER     'r'
 
 /**
-* Get the I2C debug device interface.
-*/
+ * Get the I2C debug device interface.
+ */
 DeviceInterface* getI2cSlaveDebugDeviceInterface();
 
 #endif

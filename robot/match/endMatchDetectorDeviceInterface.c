@@ -19,37 +19,32 @@ int deviceEndMatchDetectorGetInterface(unsigned char header, DeviceInterfaceMode
             setFunctionNoArgumentAndNoResult("End Match Debug");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (header == COMMAND_SHOW_MATCH_ENDED) {
+    } else if (header == COMMAND_SHOW_MATCH_ENDED) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("show Match End");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // Getters
+    }// Getters
     else if (header == COMMAND_GET_TIME_LEFT) {
         if (fillDeviceArgumentList) {
             setFunction("get Time Left", 0, 1);
             setResultUnsignedHex2(0, "timeLeft");
         }
         return commandLengthValueForMode(mode, 0, 2);
-    }
-    // Setters
+    }// Setters
     else if (header == COMMAND_SET_CURRENT_TIME_IN_SECOND) {
         if (fillDeviceArgumentList) {
             setFunction("set Current Time", 1, 0);
             setArgumentUnsignedHex2(0, "new current Time (second)");
         }
         return commandLengthValueForMode(mode, 2, 0);
-    }
-    else if (header == COMMAND_SET_MATCH_DURATION) {
+    } else if (header == COMMAND_SET_MATCH_DURATION) {
         if (fillDeviceArgumentList) {
             setFunction("set Match Duration", 1, 0);
             setArgumentUnsignedHex2(0, "new match Duration (second)");
         }
         return commandLengthValueForMode(mode, 2, 0);
-    }
-    // Notifications
+    }// Notifications
     else if (mode == DEVICE_MODE_OUTPUT) {
         if (header == COMMAND_SHOW_MATCH_ENDED) {
             if (fillDeviceArgumentList) {
@@ -64,7 +59,7 @@ int deviceEndMatchDetectorGetInterface(unsigned char header, DeviceInterfaceMode
 static DeviceInterface deviceInterface = {
     .deviceGetName = &getEndMatchDetectorDeviceName,
     .deviceHeader = END_MATCH_DETECTOR_DEVICE_HEADER,
-//    .deviceGetSoftwareRevision = &getEndMatchDetectorSoftwareRevision,
+    //    .deviceGetSoftwareRevision = &getEndMatchDetectorSoftwareRevision,
     .deviceGetInterface = &deviceEndMatchDetectorGetInterface
 };
 

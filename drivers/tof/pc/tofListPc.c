@@ -17,19 +17,19 @@
 
 void initTofSensorListPc(TofSensorList* tofSensorList, TofSensor(*tofSensorArray)[], unsigned int size, int* object) {
     initTofSensorList(tofSensorList, tofSensorArray,
-                      size,
-                      true,
-                      &printTofSensorConfigTablePc,
-                      &printTofSensorNetworkTablePc,
-                      &printTofSensorDetectionTablePc
-                      );
+            size,
+            true,
+            &printTofSensorConfigTablePc,
+            &printTofSensorNetworkTablePc,
+            &printTofSensorDetectionTablePc
+            );
     unsigned int tofIndex;
     for (tofIndex = 0; tofIndex < size; tofIndex++) {
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
         initTofSensorPc(tofSensor, object);
 
         if (tofSensor->name == NULL) {
-            char* tofName = (char*)malloc(TOF_NAME_PC_STRING_LENGTH * sizeof(char));
+            char* tofName = (char*) malloc(TOF_NAME_PC_STRING_LENGTH * sizeof (char));
             snprintf(tofName, TOF_NAME_PC_STRING_LENGTH, "TOF PC ");
             snprintf(tofName + strlen(tofName), TOF_NAME_PC_STRING_LENGTH, "%d", tofIndex);
             tofSensor->name = tofName;

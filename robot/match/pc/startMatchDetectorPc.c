@@ -31,7 +31,7 @@ bool isMatchStartedPc(StartMatch* startMatch) {
 
     if (fileLength != START_MATCH_DETECTOR_PC_FILE_LENGTH) {
         writeError(ROBOT_START_MATCH_DETECTOR_PC_FILE_LENGTH_ERROR);
-        
+
         OutputStream* debugOutputStream = getErrorOutputStreamLogger();
         appendStringAndDecLN(debugOutputStream, "fileLength = ", fileLength);
 

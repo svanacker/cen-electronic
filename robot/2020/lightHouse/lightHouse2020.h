@@ -60,11 +60,10 @@ enum LightHouse2020State {
     LIGHT_HOUSE_STATE_TO_LAUNCH = 6,
     // The launcher was launched
     LIGHT_HOUSE_STATE_LAUNCHED = 7,
-    
+
     // SHOW REMAINING TIME
     LIGHT_HOUSE_STATE_SHOW_REMAINING_TIME = 8
 };
-
 
 /**
  * The struct defining the Light House 2020 Robot.
@@ -97,23 +96,23 @@ typedef struct {
 } LightHouse2020;
 
 /**
-* Initialize the Electron Launcher 2019 and add a timer to check every 100 ms
-*/
+ * Initialize the Electron Launcher 2019 and add a timer to check every 100 ms
+ */
 void initLightHouse2020(LightHouse2020* lightHouse,
-                              EndMatch* endMatch,
-                              RobotConfig* robotConfig,
-                              ServoList* servoList,
-                              TofSensorList* tofSensorList);
+        EndMatch* endMatch,
+        RobotConfig* robotConfig,
+        ServoList* servoList,
+        TofSensorList* tofSensorList);
 
 /**
-* Main method which must be called in the main processing loop so that
-* we could manage the state and find actions to do.
-*/
+ * Main method which must be called in the main processing loop so that
+ * we could manage the state and find actions to do.
+ */
 void handleElectronLauncherActions(LightHouse2020* lightHouse);
 
 /**
-* Handle all Change of state to be able to debug the workflow.
-*/
+ * Handle all Change of state to be able to debug the workflow.
+ */
 void updateElectronLauncherState(LightHouse2020* lightHouse, enum LightHouse2020State newState);
 
 // ACTIONS

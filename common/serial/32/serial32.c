@@ -12,7 +12,7 @@
 #include "../../../common/setup/32/clockConstants32.h"
 
 // Map between SERIAL_PORT_X and UARTX
-static UART_MODULE     UART_MODULES[] = { UART1, UART2, UART3, UART4, UART5, UART6 };
+static UART_MODULE UART_MODULES[] = {UART1, UART2, UART3, UART4, UART5, UART6};
 
 UART_MODULE getUartModule(enum SerialPort serialPort) {
     return UART_MODULES[(int) serialPort - 1];
@@ -56,7 +56,7 @@ void serialPutc(enum SerialPort serialPort, unsigned char c) {
     UART_MODULE uart = getUartModule(serialPort);
 
     while (!UARTTransmitterIsReady(uart)) {
-    
+
     }
     UARTSendDataByte(uart, c);
     // Avoid to saturate the serial output buffer
@@ -65,7 +65,7 @@ void serialPutc(enum SerialPort serialPort, unsigned char c) {
     delayMicroSecs(100);
 
     while (!UARTTransmissionHasCompleted(uart)) {
-    
+
     }
 }
 

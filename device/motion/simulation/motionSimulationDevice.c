@@ -31,9 +31,9 @@ bool deviceMotionSimulationIsOk(void) {
 }
 
 void deviceMotionSimulationHandleRawData(unsigned char commandHeader,
-                                        InputStream* inputStream,
-                                        OutputStream* outputStream,
-                                        OutputStream* notificationOutputStream) {
+        InputStream* inputStream,
+        OutputStream* outputStream,
+        OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_MOTION_SIMULATION_GET) {
         // send acknowledge
         ackCommand(outputStream, MOTION_SIMULATION_DEVICE_HEADER, COMMAND_MOTION_SIMULATION_GET);
@@ -43,8 +43,7 @@ void deviceMotionSimulationHandleRawData(unsigned char commandHeader,
         appendHex(outputStream, motionSimulationParameter->simulateMotors);
         appendHex(outputStream, motionSimulationParameter->simulateCoders);
         appendHex(outputStream, motionSimulationParameter->simulateRobotPosition);
-    }
-    else if (commandHeader == COMMAND_MOTION_SIMULATION_SET) {
+    } else if (commandHeader == COMMAND_MOTION_SIMULATION_SET) {
         // send acknowledge
         ackCommand(outputStream, MOTION_SIMULATION_DEVICE_HEADER, COMMAND_MOTION_SIMULATION_SET);
 

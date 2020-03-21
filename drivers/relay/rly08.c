@@ -27,13 +27,12 @@ void setRelayStates(I2cBusConnection* i2cBusConnection, unsigned int relayStates
     portableMasterStopI2C(i2cBusConnection);
 }
 
-  void setRelayState(I2cBusConnection* i2cBusConnection, unsigned int relay, unsigned int value) {
+void setRelayState(I2cBusConnection* i2cBusConnection, unsigned int relay, unsigned int value) {
     if (value)
-      sendRLY08Command(i2cBusConnection, RELAY_1_ON - 1 + relay);
+        sendRLY08Command(i2cBusConnection, RELAY_1_ON - 1 + relay);
     else
-      sendRLY08Command(i2cBusConnection, RELAY_1_OFF - 1 + relay);
-  }
-
+        sendRLY08Command(i2cBusConnection, RELAY_1_OFF - 1 + relay);
+}
 
 void sendRLY08Command(I2cBusConnection* i2cBusConnection, int command) {
     portableMasterStartI2C(i2cBusConnection);
@@ -68,7 +67,7 @@ int getRelayStates(I2cBusConnection* i2cBusConnection) {
     // read the data - and send an ACK
     int data = portableMasterReadI2C(i2cBusConnection);
     portableMasterStopI2C(i2cBusConnection);
-    return(data);
+    return (data);
 }
 
 void changeRLY08Address(I2cBusConnection* i2cBusConnection, int newAddress) {
@@ -91,19 +90,19 @@ void changeRLY08Address(I2cBusConnection* i2cBusConnection, int newAddress) {
     portableMasterStopI2C(i2cBusConnection);
 }
 
-  /**
-  * Gets the software revision of the software in the RLY08
-  */
+/**
+ * Gets the software revision of the software in the RLY08
+ */
 unsigned int getRLY08SoftwareRevision(I2cBusConnection* i2cBusConnection) {
     portableMasterStartI2C(i2cBusConnection);
-    
+
     WaitI2cBusConnection(i2cBusConnection);
     portableMasterWriteI2C(i2cBusConnection, writeAddr);
     WaitI2cBusConnection(i2cBusConnection);
     // send the register
     portableMasterWriteI2C(i2cBusConnection, RLY08_REGISTER_SOFTWARE_REVISION);
     WaitI2cBusConnection(i2cBusConnection);
-    
+
     portableMasterStartI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
     // send the address again with read bit
@@ -150,15 +149,15 @@ bool relayRLY08ReadValue(Relay* relay, unsigned int relayIndex) {
 
 void relayRLY08WriteValue(Relay* relay, unsigned int relayIndex, bool value) {
     I2cBusConnection* i2cBusConnection = getRLY08I2cBusConnection(relay);
-    
+
     setRelayState(i2cBusConnection, relayIndex, value);
 }
 
 void initRelayRLY08(Relay* relay, I2cBusConnection* busConnection) {
     initRelay(relay,
-              relayRLY08Init,
-              relayRLY08ReadValue,
-              relayRLY08WriteValue,
-              RLY08_RELAY_COUNT,
+            relayRLY08Init,
+            relayRLY08ReadValue,
+            relayRLY08WriteValue,
+            RLY08_RELAY_COUNT,
             (int*) busConnection);
 }

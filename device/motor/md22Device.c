@@ -42,20 +42,17 @@ void deviceMD22HandleRawData(unsigned char commandHeader, InputStream* inputStre
         signed int right = readSignedHex2(inputStream);
         ackCommand(outputStream, MD22_DEVICE_HEADER, COMMAND_MD22_MOVE);
         dualHBridgeMotorMD22->dualHBridgeMotorWriteValue(dualHBridgeMotorMD22, left, right);
-    }
-    else if (commandHeader == COMMAND_MD22_READ_VALUE) {
+    } else if (commandHeader == COMMAND_MD22_READ_VALUE) {
         ackCommand(outputStream, MD22_DEVICE_HEADER, COMMAND_MD22_READ_VALUE);
         signed int left = dualHBridgeMotorMD22->dualHBridgeMotorReadValue(dualHBridgeMotorMD22, HBRIDGE_1);
         signed int right = dualHBridgeMotorMD22->dualHBridgeMotorReadValue(dualHBridgeMotorMD22, HBRIDGE_2);
         appendHex2(outputStream, left);
         appendHex2(outputStream, right);
-    }
-    else if (commandHeader == COMMAND_MD22_STOP) {
+    } else if (commandHeader == COMMAND_MD22_STOP) {
         ackCommand(outputStream, MD22_DEVICE_HEADER, COMMAND_MD22_STOP);
 
         stopMotors(dualHBridgeMotorMD22);
-    }
-    else if (commandHeader == COMMAND_MD22_SOFTWARE_REVISION) {
+    } else if (commandHeader == COMMAND_MD22_SOFTWARE_REVISION) {
         ackCommand(outputStream, MD22_DEVICE_HEADER, COMMAND_MD22_SOFTWARE_REVISION);
         unsigned softwareRevision = dualHBridgeMotorMD22->dualHBridgeMotorGetSoftwareRevision(dualHBridgeMotorMD22);
         appendHex2(outputStream, softwareRevision);

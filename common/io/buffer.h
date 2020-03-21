@@ -20,7 +20,7 @@ typedef struct {
     /** a name to identify the struct. */
     const char* name;
     /** A type if name are equals. */
-	const char* type;
+    const char* type;
     /** A pointer on an array of char. */
     unsigned char (*s)[];
     /** The max length of the buffer. */

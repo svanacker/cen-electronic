@@ -88,9 +88,9 @@ bool forwardDetection(void) {
     float centerDistance = gp2y0a02ykGetCentimerDistanceForTension(centerMilliVolt);
     float rightDistance = gp2d12GetCentimerDistanceForTension(rightMilliVolt);
 
-    bool result = (leftDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_LEFT_CM 
-                || rightDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_RIGHT_CM 
-                || centerDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_CENTER_CM);
+    bool result = (leftDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_LEFT_CM
+            || rightDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_RIGHT_CM
+            || centerDistance < ROBOT_INFRARED_DETECTOR_DISTANCE_THRESHOLD_CENTER_CM);
 
     return result;
 }
@@ -110,19 +110,17 @@ void updateInfraredDetector(InfraredDetectorGroup* group) {
     if ((group->type == DETECTOR_GROUP_TYPE_FORWARD) & (group->nextNotifyCounter % 15 == 0)) {
         printRobotInfraredDetectorGroup(getDebugOutputStreamLogger(), group);
     }
-    */
+     */
 
     // Call the detect function
     bool currentDetection = group->function();
     if (currentDetection) {
         group->detectedCount++;
-    }
-    else {
+    } else {
         // Try to balance that we see more than X% of time something
         if (group->detectedCount >= NEG_VALUE) {
             group->detectedCount -= NEG_VALUE;
-        }
-        else {
+        } else {
             group->detectedCount = 0;
         }
     }
@@ -134,7 +132,7 @@ void updateInfraredDetector(InfraredDetectorGroup* group) {
         group->result = true;
 
         // reset the value of detection
-        group->detectedCount = 0;        
+        group->detectedCount = 0;
 
         // We can only notify if the delay is ok
         if (group->nextNotifyCounter >= NOTIFY_INFRARED_DETECTOR_TIMER_CYCLE) {
@@ -144,13 +142,12 @@ void updateInfraredDetector(InfraredDetectorGroup* group) {
             // delay next notification
             group->nextNotifyCounter = 0;
         }
-    }
-    else {
+    } else {
         if (group->nextNotifyCounter >= NOTIFY_INFRARED_DETECTOR_TIMER_CYCLE) {
             // only after a time, we consider that there is no value anymore and that we dont notify anymore
             group->result = false;
         }
-    }    
+    }
 }
 
 void robotInfraredDetectorCallback(Timer* timer) {
@@ -176,8 +173,7 @@ void initRobotInfraredDetector(RobotInfraredDetector* robotInfraredDetectorParam
 void setInfraredRobotNotification(enum InfraredDetectorGroupType type, bool enabled) {
     if (type == DETECTOR_GROUP_TYPE_FORWARD) {
         robotInfraredDetector->forwardDetectorGroup.notifyIfDetected = enabled;
-    }
-    else if (type == DETECTOR_GROUP_TYPE_BACKWARD) {
+    } else if (type == DETECTOR_GROUP_TYPE_BACKWARD) {
         robotInfraredDetector->backwardDetectorGroup.notifyIfDetected = enabled;
     }
 }

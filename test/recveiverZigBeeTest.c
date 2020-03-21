@@ -35,7 +35,7 @@
 #define BEACON_SERVO_2_ANGLE_DEGREE 90
 #define BEACON_SERVO_2_INIT_COMPUTE_VALUE 1670
 #define BEACON_SERVO_2_FACTOR 10.2
- 
+
 /** Defines the interval to search, when we are in tracking mode. */
 #define SHORT_TRACKING_INTERVAL 50
 
@@ -63,8 +63,8 @@ int receiverZigbeeTest(void) {
     char receiveChar;
     char valide;
     int toto;
-    */
-    
+     */
+
     TRISB = 0;
     TRISB = 0;
 
@@ -80,7 +80,7 @@ int receiverZigbeeTest(void) {
     setSerialBuffer(&debugBuffer);
     putString("Beacon Receiver start rs232\n");
 
-    initPwmForServo(1500);    
+    initPwmForServo(1500);
 
     // Initialization of laserDetector
     // Laser 1
@@ -88,13 +88,13 @@ int receiverZigbeeTest(void) {
             LASER_INDEX_1,
             LASER_SERVO_INDEX_1,
             &getLaserPin1,
-            SERVO_LASER_1_MAX_LEFT_POSITION_DEFAULT_VALUE, 
+            SERVO_LASER_1_MAX_LEFT_POSITION_DEFAULT_VALUE,
             SERVO_LASER_1_MAX_RIGHT_POSITION_DEFAULT_VALUE,
             SHORT_TRACKING_INTERVAL,
             BEACON_SERVO_1_FACTOR,
             BEACON_SERVO_1_INIT_COMPUTE_VALUE,
             BEACON_SERVO_1_ANGLE_DEGREE
-    );
+            );
     // Laser 2
     initLaserDetectorStruct(
             LASER_INDEX_2,
@@ -106,7 +106,7 @@ int receiverZigbeeTest(void) {
             BEACON_SERVO_2_FACTOR,
             BEACON_SERVO_2_INIT_COMPUTE_VALUE,
             BEACON_SERVO_2_ANGLE_DEGREE
-    );
+            );
 
     while (1) {
         int laserIndex;
@@ -120,7 +120,7 @@ int receiverZigbeeTest(void) {
             putString("---------\n");
             Laser* laser1 = getLaser(LASER_INDEX_1);
             Laser* laser2 = getLaser(LASER_INDEX_2);
-    
+
             printLaserStruct(&debugBuffer, laser1);
             println();
             printLaserStruct(&debugBuffer, laser2);
@@ -132,7 +132,7 @@ int receiverZigbeeTest(void) {
                 putString(", ");
                 sendDec(p.y);
                 println();
-            }    
+            }
         }
     }
 
@@ -148,7 +148,7 @@ int receiverZigbeeTest(void) {
                 putc (valide);
         }
     }
-    */
+     */
 }
 
 //    initZigbee(macAdresse,panId,channel,function,adresse);

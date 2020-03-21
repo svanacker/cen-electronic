@@ -72,7 +72,7 @@ static Location* buildingMiddle1Location;
 static Location* buildingMiddle2Location;
 static Location* buildingRight1Location;
 static Location* buildingRight2Location;
-*/
+ */
 // ------------------------------------------------------- PATHS -------------------------------------------------------------------------
 
 PathData* startArea_to_switch_Path;
@@ -155,8 +155,7 @@ void initColorAndStartPosition2018(GameStrategyContext* gameStrategyContext) {
 
     if (configValue & CONFIG_COLOR_YELLOW_MASK) {
         gameStrategyContext->color = TEAM_COLOR_2018_GREEN;
-    }
-    else {
+    } else {
         gameStrategyContext->color = TEAM_COLOR_2018_ORANGE;
     }
     float angleDeciDegree = ANGLE_DECI_DEG_270;
@@ -164,10 +163,10 @@ void initColorAndStartPosition2018(GameStrategyContext* gameStrategyContext) {
     gameStrategyContext->robotPosition->y = START_AREA_Y;
 
     // Symetry
-	if (!isGreen(gameStrategyContext)) {
+    if (!isGreen(gameStrategyContext)) {
         angleDeciDegree = ANGLE_DECI_DEG_90;
         gameStrategyContext->robotPosition->y = GAMEBOARD_HEIGHT - gameStrategyContext->robotPosition->y;
-	}
+    }
     float angleRadian = deciDegreeToRad(angleDeciDegree);
     gameStrategyContext->robotAngleRadian = angleRadian;
 }
@@ -180,7 +179,6 @@ Location* addNavigationWithColors(enum TeamColor teamColor, Navigation* navigati
     Location* result = addNamedLocation(locationList, name, x, y);
     return result;
 }
-
 
 void initLocations2018(GameStrategyContext* gameStrategyContext) {
     Navigation* navigation = gameStrategyContext->navigation;
@@ -195,7 +193,7 @@ void initLocations2018(GameStrategyContext* gameStrategyContext) {
 
     // Bee Border
     beeBorderAlignYLocation = addNavigationWithColors(teamColor, navigation, BEE_BORDER_Y_ALIGN, BEE_BORDER_Y_ALIGN_X, BEE_BORDER_Y_ALIGN_Y);
-    
+
     // Bee
     beeLocation = addNavigationWithColors(teamColor, navigation, BEE, BEE_X, BEE_Y);
 
@@ -211,17 +209,17 @@ void initLocations2018(GameStrategyContext* gameStrategyContext) {
 // PATHS
 
 PathData* addNavigationPathWithColor(
-    enum TeamColor teamColor,
-    Navigation* navigation,
-    Location* location1,
-    Location* location2,
-    float cost,
-    float controlPointDistance1,
-    float controlPointDistance2,
-    float angle1,
-    float angle2,
-    float accelerationFactor,
-    float speedFactor) {
+        enum TeamColor teamColor,
+        Navigation* navigation,
+        Location* location1,
+        Location* location2,
+        float cost,
+        float controlPointDistance1,
+        float controlPointDistance2,
+        float angle1,
+        float angle2,
+        float accelerationFactor,
+        float speedFactor) {
     PathData* pathData = addPath(navigation->paths);
 
     if (teamColor == TEAM_COLOR_2018_ORANGE) {
@@ -235,109 +233,109 @@ PathData* addNavigationPathWithColor(
 
 void initPaths2018(GameStrategyContext* gameStrategyContext, int index) {
     Navigation* navigation = gameStrategyContext->navigation;
-    
+
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
     enum TeamColor teamColor = gameStrategyContext->color;
     float aFactor = getAccelerationFactor(robotConfig);
     float speedFactor = getSpeedFactor(robotConfig);
-    
+
     startArea_to_switch_Path = addNavigationPathWithColor(teamColor,
-                                                 navigation,
-                                                 startAreaLocation, 
-                                                 switchLocation,
-                                                 DEFAULT_NAVIGATION_COST,
-                                                 STARTAREA_TO_SWITCH_CP1, 
-                                                 STARTAREA_TO_SWITCH_CP2,
-                                                 deciDegreeToRad(START_AREA_ANGLE_DECI_DEG),
-                                                 deciDegreeToRad(SWITCH_ANGLE_DECI_DEG),
-                                                 aFactor * STARTAREA_TO_SWITCH_ACCELERATION_FACTOR,
-                                                 speedFactor * STARTAREA_TO_SWITCH_SPEED_FACTOR);
+            navigation,
+            startAreaLocation,
+            switchLocation,
+            DEFAULT_NAVIGATION_COST,
+            STARTAREA_TO_SWITCH_CP1,
+            STARTAREA_TO_SWITCH_CP2,
+            deciDegreeToRad(START_AREA_ANGLE_DECI_DEG),
+            deciDegreeToRad(SWITCH_ANGLE_DECI_DEG),
+            aFactor * STARTAREA_TO_SWITCH_ACCELERATION_FACTOR,
+            speedFactor * STARTAREA_TO_SWITCH_SPEED_FACTOR);
     switch_to_distributor1_Path = addNavigationPathWithColor(teamColor,
-                                                    navigation,
-                                                    switchLocation,
-                                                    distributor1Location,
-                                                    DEFAULT_NAVIGATION_COST,
-                                                    SWITCH_TO_DISTRIBUTOR_1_CP1, 
-                                                    SWITCH_TO_DISTRIBUTOR_1_CP2,
-                                                    deciDegreeToRad(SWITCH_ANGLE_DECI_DEG),
-                                                    deciDegreeToRad(DISTRIBUTOR_1_ANGLE_DECI_DEG),
-                                                    aFactor * SWITCH_TO_DISTRIBUTOR_1_ACCELERATION_FACTOR,
-                                                    speedFactor * SWITCH_TO_DISTRIBUTOR_1_SPEED_FACTOR);
+            navigation,
+            switchLocation,
+            distributor1Location,
+            DEFAULT_NAVIGATION_COST,
+            SWITCH_TO_DISTRIBUTOR_1_CP1,
+            SWITCH_TO_DISTRIBUTOR_1_CP2,
+            deciDegreeToRad(SWITCH_ANGLE_DECI_DEG),
+            deciDegreeToRad(DISTRIBUTOR_1_ANGLE_DECI_DEG),
+            aFactor * SWITCH_TO_DISTRIBUTOR_1_ACCELERATION_FACTOR,
+            speedFactor * SWITCH_TO_DISTRIBUTOR_1_SPEED_FACTOR);
 
     distributor1_to_beeBorderAlignY_Path = addNavigationPathWithColor(teamColor,
-                                                             navigation,
-                                                             distributor1Location,
-                                                             beeBorderAlignYLocation,
-                                                             DEFAULT_NAVIGATION_COST,
-                                                             DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_CP1,
-                                                             DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_CP2,
-                                                             deciDegreeToRad(DISTRIBUTOR_1_ANGLE_DECI_DEG),
-                                                             deciDegreeToRad(BEE_BORDER_Y_ALIGN_ANGLE_DECI_DEG),
-                                                             aFactor * DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_COST_ACCELERATION_FACTOR,
-                                                             speedFactor * DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_COST_SPEED_FACTOR);
+            navigation,
+            distributor1Location,
+            beeBorderAlignYLocation,
+            DEFAULT_NAVIGATION_COST,
+            DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_CP1,
+            DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_CP2,
+            deciDegreeToRad(DISTRIBUTOR_1_ANGLE_DECI_DEG),
+            deciDegreeToRad(BEE_BORDER_Y_ALIGN_ANGLE_DECI_DEG),
+            aFactor * DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_COST_ACCELERATION_FACTOR,
+            speedFactor * DISTRIBUTOR_1_TO_BEE_BORDER_ALIGN_Y_COST_SPEED_FACTOR);
 
     beeBorderAlignY_to_bee_Path = addNavigationPathWithColor(teamColor,
-                                                             navigation,
-                                                             beeBorderAlignYLocation,
-                                                             beeLocation,
-                                                             DEFAULT_NAVIGATION_COST,
-                                                             BEE_BORDER_ALIGN_Y_TO_BEE_CP1,
-                                                             BEE_BORDER_ALIGN_Y_TO_BEE_CP2,
-                                                             deciDegreeToRad(BEE_BORDER_Y_ALIGN_ANGLE_DECI_DEG),
-                                                             deciDegreeToRad(BEE_ANGLE_DECI_DEG),
-                                                             aFactor * BEE_BORDER_ALIGN_Y_TO_BEE_ACCELERATION_FACTOR,
-                                                             speedFactor * BEE_BORDER_ALIGN_Y_TO_BEE_SPEED_FACTOR);
+            navigation,
+            beeBorderAlignYLocation,
+            beeLocation,
+            DEFAULT_NAVIGATION_COST,
+            BEE_BORDER_ALIGN_Y_TO_BEE_CP1,
+            BEE_BORDER_ALIGN_Y_TO_BEE_CP2,
+            deciDegreeToRad(BEE_BORDER_Y_ALIGN_ANGLE_DECI_DEG),
+            deciDegreeToRad(BEE_ANGLE_DECI_DEG),
+            aFactor * BEE_BORDER_ALIGN_Y_TO_BEE_ACCELERATION_FACTOR,
+            speedFactor * BEE_BORDER_ALIGN_Y_TO_BEE_SPEED_FACTOR);
     bee_to_distributor2Front_Path = addNavigationPathWithColor(teamColor,
-                                                             navigation,
-                                                             beeLocation,
-                                                             distributor2FrontLocation,
-                                                             DEFAULT_NAVIGATION_COST,
-                                                             BEE_TO_DISTRIBUTOR_2_FRONT_CP1,
-                                                             BEE_TO_DISTRIBUTOR_2_FRONT_CP2,
-                                                             deciDegreeToRad(BEE_ANGLE_DECI_DEG),
-                                                             deciDegreeToRad(DISTRIBUTOR_2_FRONT_ANGLE_DECI_DEG),
-                                                             aFactor * BEE_TO_DISTRIBUTOR_2_FRONT_ACCELERATION_FACTOR,
-                                                             speedFactor * BEE_TO_DISTRIBUTOR_2_FRONT_SPEED_FACTOR);
-                                                             
+            navigation,
+            beeLocation,
+            distributor2FrontLocation,
+            DEFAULT_NAVIGATION_COST,
+            BEE_TO_DISTRIBUTOR_2_FRONT_CP1,
+            BEE_TO_DISTRIBUTOR_2_FRONT_CP2,
+            deciDegreeToRad(BEE_ANGLE_DECI_DEG),
+            deciDegreeToRad(DISTRIBUTOR_2_FRONT_ANGLE_DECI_DEG),
+            aFactor * BEE_TO_DISTRIBUTOR_2_FRONT_ACCELERATION_FACTOR,
+            speedFactor * BEE_TO_DISTRIBUTOR_2_FRONT_SPEED_FACTOR);
+
     distributor2Front_to_distributor2_Path = addNavigationPathWithColor(teamColor,
-                                                             navigation,
-                                                             distributor2FrontLocation,
-                                                             distributor2Location,
-                                                             DEFAULT_NAVIGATION_COST,
-                                                             DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_CP1,
-                                                             DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_CP2,
-                                                             deciDegreeToRad(DISTRIBUTOR_2_FRONT_ANGLE_DECI_DEG),
-                                                             deciDegreeToRad(DISTRIBUTOR_2_ANGLE_DECI_DEG),
-                                                             aFactor * DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_ACCELERATION_FACTOR,
-                                                             speedFactor * DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_SPEED_FACTOR);
-                                                             
-     distributor2_to_garbageFront_Path = addNavigationPathWithColor(teamColor,
-                                                             navigation,
-                                                             distributor2Location,
-                                                             garbageFrontLocation,
-                                                             DEFAULT_NAVIGATION_COST,
-                                                             DISTRIBUTOR_2_TO_GARBAGE_FRONT_CP1,
-                                                             DISTRIBUTOR_2_TO_GARBAGE_FRONT_CP2,
-                                                             deciDegreeToRad(DISTRIBUTOR_2_ANGLE_DECI_DEG),
-                                                             deciDegreeToRad(GARGAGE_FRONT_POINT_ANGLE_DECI_DEG),
-                                                             aFactor * DISTRIBUTOR_2_TO_GARBAGE_FRONT_ACCELERATION_FACTOR,
-                                                             speedFactor * DISTRIBUTOR_2_TO_GARBAGE_FRONT_SPEED_FACTOR);
-                                                             
-     garbageFront_to_garbageRelease_Path = addNavigationPathWithColor(teamColor,
-                                                             navigation,
-                                                             garbageFrontLocation,
-                                                             garbageReleaseLocation,
-                                                             DEFAULT_NAVIGATION_COST,
-                                                             GARBAGE_FRONT_TO_GARBAGE_RELEASE_CP1,
-                                                             GARBAGE_FRONT_TO_GARBAGE_RELEASE_CP2,
-                                                             deciDegreeToRad(GARGAGE_RELEASE_POINT_ANGLE_DECI_DEG),
-                                                             deciDegreeToRad(GARGAGE_RELEASE_POINT_ANGLE_DECI_DEG),
-                                                             GARBAGE_FRONT_TO_GARBAGE_RELEASE_ACCELERATION_FACTOR,
-                                                             GARBAGE_FRONT_TO_GARBAGE_RELEASE_SPEED_FACTOR);
+            navigation,
+            distributor2FrontLocation,
+            distributor2Location,
+            DEFAULT_NAVIGATION_COST,
+            DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_CP1,
+            DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_CP2,
+            deciDegreeToRad(DISTRIBUTOR_2_FRONT_ANGLE_DECI_DEG),
+            deciDegreeToRad(DISTRIBUTOR_2_ANGLE_DECI_DEG),
+            aFactor * DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_ACCELERATION_FACTOR,
+            speedFactor * DISTRIBUTOR_2_FRONT_TO_DISTRIBUTOR_2_SPEED_FACTOR);
+
+    distributor2_to_garbageFront_Path = addNavigationPathWithColor(teamColor,
+            navigation,
+            distributor2Location,
+            garbageFrontLocation,
+            DEFAULT_NAVIGATION_COST,
+            DISTRIBUTOR_2_TO_GARBAGE_FRONT_CP1,
+            DISTRIBUTOR_2_TO_GARBAGE_FRONT_CP2,
+            deciDegreeToRad(DISTRIBUTOR_2_ANGLE_DECI_DEG),
+            deciDegreeToRad(GARGAGE_FRONT_POINT_ANGLE_DECI_DEG),
+            aFactor * DISTRIBUTOR_2_TO_GARBAGE_FRONT_ACCELERATION_FACTOR,
+            speedFactor * DISTRIBUTOR_2_TO_GARBAGE_FRONT_SPEED_FACTOR);
+
+    garbageFront_to_garbageRelease_Path = addNavigationPathWithColor(teamColor,
+            navigation,
+            garbageFrontLocation,
+            garbageReleaseLocation,
+            DEFAULT_NAVIGATION_COST,
+            GARBAGE_FRONT_TO_GARBAGE_RELEASE_CP1,
+            GARBAGE_FRONT_TO_GARBAGE_RELEASE_CP2,
+            deciDegreeToRad(GARGAGE_RELEASE_POINT_ANGLE_DECI_DEG),
+            deciDegreeToRad(GARGAGE_RELEASE_POINT_ANGLE_DECI_DEG),
+            GARBAGE_FRONT_TO_GARBAGE_RELEASE_ACCELERATION_FACTOR,
+            GARBAGE_FRONT_TO_GARBAGE_RELEASE_SPEED_FACTOR);
 }
 
 void initTargets2018(GameStrategyContext* gameStrategyContext) {
-	clearGameTargets();
+    clearGameTargets();
 
     addGameTarget(&switchTarget, "SWITCH_TARGET", SCORE_POINT_2018_PANEL_ON_POINT, switchLocation);
     addGameTarget(&distributor1Target, "DIST_1", SCORE_POINT_2018_DISTRIBUTOR_UNICOLOR_COMPLETE_POINT, distributor1Location);
@@ -363,16 +361,16 @@ void initTargetActions2018(GameStrategyContext* gameStrategyContext) {
 void initTargetActionsItems2018(GameStrategyContext* gameStrategyContext) {
     addTargetActionItem(&switchTargetActionItemList, &switchTargetActionItem, &switch2018On, "SWITCH ON");
     addTargetActionItem(&distributor1TargetActionItemList, &distributor1TargetActionItem, &distributor1_2018, "DIST_1");
-//    addTargetActionItem(&beeTargetActionItemList, &beeTargetActionItem, &bee2018, "BEE");
+    //    addTargetActionItem(&beeTargetActionItemList, &beeTargetActionItem, &bee2018, "BEE");
     addTargetActionItem(&distributor2TargetActionItemList, &distributor2TargetActionItem, &distributor2_2018, "DIST_2");
 }
 
 /**
-* @private.
-*/
+ * @private.
+ */
 void initStrategies2018(GameStrategyContext* gameStrategyContext) {
-	clearGameStrategies();
-	addGameStrategy(&strategy1, "SWITCH");
+    clearGameStrategies();
+    addGameStrategy(&strategy1, "SWITCH");
     addGameStrategy(&strategy2, "SW_DIST");
     addGameStrategy(&strategy3, "SW_DIST_BEE");
     addGameStrategy(&strategy4, "SW_DIST_BEE_DIST");
@@ -413,7 +411,7 @@ GameStrategy* initStrategiesItems2018(GameStrategyContext* gameStrategyContext) 
         addGameStrategyItem(&strategy5, &beeStrategyItem, &beeTarget);
         return &strategy5;
     }
-    */
+     */
     return NULL;
 }
 
@@ -423,31 +421,31 @@ void initStrategy2018(GameStrategyContext* gameStrategyContext) {
     setTofListOrientationAngle(gameStrategyContext->tofSensorList, tofDistanceFactor);
     showGameStrategyContextTeamColorAndStrategy(gameStrategyContext);
 
-	initLocations2018(gameStrategyContext);
-	initPaths2018(gameStrategyContext, gameStrategyContext->strategyIndex);
+    initLocations2018(gameStrategyContext);
+    initPaths2018(gameStrategyContext, gameStrategyContext->strategyIndex);
 
-	initTargets2018(gameStrategyContext);
-	initTargetActions2018(gameStrategyContext);
-	initTargetActionsItems2018(gameStrategyContext);
+    initTargets2018(gameStrategyContext);
+    initTargetActions2018(gameStrategyContext);
+    initTargetActionsItems2018(gameStrategyContext);
 
-	initStrategies2018(gameStrategyContext);
-	
+    initStrategies2018(gameStrategyContext);
 
-	GameStrategy* strategy = initStrategiesItems2018(gameStrategyContext);
+
+    GameStrategy* strategy = initStrategiesItems2018(gameStrategyContext);
     gameStrategyContext->gameStrategy = strategy;
     gameStrategyContext->maxTargetToHandle = getGameTargetList()->size;
 
-	// opponent
-	Point* p = gameStrategyContext->opponentRobotPosition;
-	p->x = 0;
-	p->y = 0;
+    // opponent
+    Point* p = gameStrategyContext->opponentRobotPosition;
+    p->x = 0;
+    p->y = 0;
 
-	// obstacle
-	p = gameStrategyContext->lastObstaclePosition;
-	p->x = 0;
-	p->y = 0;
+    // obstacle
+    p = gameStrategyContext->lastObstaclePosition;
+    p->x = 0;
+    p->y = 0;
 
     gameStrategyContext->hasMoreNextSteps = true;
 
-	// reinitialize the game board to change elements / targets ...
+    // reinitialize the game board to change elements / targets ...
 }

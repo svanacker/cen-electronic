@@ -29,16 +29,16 @@ typedef struct GameBoardElement GameBoardElement;
 #define GAMEBOARD_MIDDLE_HEIGHT       (GAMEBOARD_HEIGHT / 2.0f)
 
 /**
-* Type of function which must be called to draw an element of the gameboard.
-*/
+ * Type of function which must be called to draw an element of the gameboard.
+ */
 typedef void GameboardPrintFunction(GameBoard* gameBoard, int* element);
 
 /**
-* Type of function which must be called to know if the point is in the exclusion area.
-* This is important to avoid to detect something wrong
-* @param z is important because it could be possible that we detect something at the level of tof (between 35 / 39 cm), and not 
-* at the floor
-*/
+ * Type of function which must be called to know if the point is in the exclusion area.
+ * This is important to avoid to detect something wrong
+ * @param z is important because it could be possible that we detect something at the level of tof (between 35 / 39 cm), and not 
+ * at the floor
+ */
 typedef bool GameboardIsReachableByOpponentRobot(GameBoard* gameBoard, int* element, float x, float y, float z);
 
 /**
@@ -55,10 +55,9 @@ enum GameBoardElementType {
     GAME_BOARD_ELEMENT_PRINT_AND_REACHABLE = 3
 };
 
-
 /**
-* Structure to store the gameboard element;
-*/
+ * Structure to store the gameboard element;
+ */
 struct GameBoardElement {
     /** The function which will be used to be print. */
     GameboardPrintFunction* printFunction;
@@ -69,8 +68,8 @@ struct GameBoardElement {
 };
 
 /**
-* Structure to store the list of Game Board elements which are not "targets"
-*/
+ * Structure to store the list of Game Board elements which are not "targets"
+ */
 struct GameBoardElementList {
     /* An array of pointer on element pointer. */
     GameBoardElement(*elements)[];
@@ -109,7 +108,7 @@ typedef struct GameBoard {
     bool showRobot;
     // Show Robot Cone with Angle
     bool showRobotTofsCones;
-// Color are only manage on Windows !
+    // Color are only manage on Windows !
 #ifdef _MSC_VER
     // colors (foreground and background) of the gameboard
     char colors[GAMEBOARD_COLUMN_COUNT + 1][GAMEBOARD_LINE_COUNT + 1];
@@ -125,11 +124,11 @@ typedef struct GameBoard {
  * Init the gameboard with all informations
  */
 void initGameBoard(GameBoard* gameBoard,
-                   BSplineCurve* gameBoardCurve,
-                   GameBoardElementList* gameBoardElementList, 
-                   GameBoardElement(*gameBoardElementListArray)[],
-                   unsigned char gameBoardElementListSize,
-                   GameStrategyContext* gameStrategyContext);
+        BSplineCurve* gameBoardCurve,
+        GameBoardElementList* gameBoardElementList,
+        GameBoardElement(*gameBoardElementListArray)[],
+        unsigned char gameBoardElementListSize,
+        GameStrategyContext* gameStrategyContext);
 
 /**
  * Define the color palet index to use, but it could have only effect on Windows, because RX/TX does not support Colors :)

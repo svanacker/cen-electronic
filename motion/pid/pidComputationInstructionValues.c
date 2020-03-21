@@ -6,7 +6,7 @@ void clearPidComputationInstructionValues(PidComputationInstructionValues* pidCo
 
     // PID
     pidComputationInstructionValues->pidType = PID_TYPE_NONE;
-        
+
     // POSITION / SPEED
     pidComputationInstructionValues->normalPosition = 0;
     pidComputationInstructionValues->currentPosition = 0;
@@ -36,7 +36,7 @@ void clearPidComputationInstructionValues(PidComputationInstructionValues* pidCo
 
 void storePidComputationInstructionValueHistory(PidComputationInstructionValues* pidComputationInstructionValues, float pidTimeInSecond) {
     unsigned int i = pidComputationInstructionValues->historyWriteIndex;
-    
+
     // PID TIME
     pidComputationInstructionValues->pidTimeHistory[i] = pidTimeInSecond;
 
@@ -70,8 +70,7 @@ void storePidComputationInstructionValueHistory(PidComputationInstructionValues*
     if (pidComputationInstructionValues->historyWriteIndex >= PID_HISTORY_ITEM_COUNT) {
         // Restart to 0
         pidComputationInstructionValues->historyWriteIndex = 0;
-    }
-    else {
+    } else {
         if (pidComputationInstructionValues->historyCount < PID_HISTORY_ITEM_COUNT) {
             pidComputationInstructionValues->historyCount++;
         }

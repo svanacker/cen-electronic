@@ -7,8 +7,8 @@
 #include "../../robot/config/robotConfig.h"
 
 /**
-* Returns the deviceDescriptor of the end Match Detector.
-*/
+ * Returns the deviceDescriptor of the end Match Detector.
+ */
 DeviceDescriptor* getEndMatchDetectorDeviceDescriptor(EndMatch* endMatchParam);
 
 #endif

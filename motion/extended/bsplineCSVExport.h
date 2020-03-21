@@ -8,9 +8,9 @@
 #include "bspline.h"
 
 /**
-* Write into the serial port the list of point for the bezier spline.
-* It's very useful to debug.
-*/
+ * Write into the serial port the list of point for the bezier spline.
+ * It's very useful to debug.
+ */
 void writeBSpline(OutputStream* outputStream, BSplineCurve* bSplineCurve);
 
 #endif

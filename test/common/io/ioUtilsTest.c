@@ -29,15 +29,14 @@ void ioUtilsTestSuite(void) {
 
 void initBufferForIoUtilsTest(void) {
     // source
-    initBuffer(&sourceBufferTest, (char(*)[]) &sourceBufferArrayTest, TEST_BUFFER_SIZE, "ioUtilsTest", "ioUtilsTestType");
+    initBuffer(&sourceBufferTest, (char(*)[]) & sourceBufferArrayTest, TEST_BUFFER_SIZE, "ioUtilsTest", "ioUtilsTestType");
     sourceOutputStream = getOutputStream(&sourceBufferTest);
     sourceInputStream = getInputStream(&sourceBufferTest);
 
     // target
-    initBuffer(&targetBufferTest, (char(*)[]) &targetBufferArrayTest, TEST_BUFFER_SIZE, "ioUtilsTest", "ioUtilsTestType");
+    initBuffer(&targetBufferTest, (char(*)[]) & targetBufferArrayTest, TEST_BUFFER_SIZE, "ioUtilsTest", "ioUtilsTestType");
     targetOutputStream = getOutputStream(&targetBufferTest);
 }
-
 
 void test_copyInputToOutputStream(void) {
     initBufferForIoUtilsTest();

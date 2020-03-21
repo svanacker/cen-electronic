@@ -21,8 +21,7 @@ int devicePidGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
             setResultFloatHex4(2, "s (mm / sec^2)");
         }
         return commandLengthValueForMode(mode, 2, 9);
-    }
-    else if (commandHeader == COMMAND_SET_MOTION_PARAMETERS) {
+    } else if (commandHeader == COMMAND_SET_MOTION_PARAMETERS) {
         if (fillDeviceArgumentList) {
             setFunction("set Motion Parameter", 5, 0);
             setArgumentUnsignedHex2(0, "motionType");
@@ -32,8 +31,7 @@ int devicePidGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
             setArgumentFloatHex4(4, "s (mm / sec^2)");
         }
         return commandLengthValueForMode(mode, 12, 0);
-    }
-    // PID PARAMETER
+    }// PID PARAMETER
     else if (commandHeader == COMMAND_GET_PID_PARAMETERS) {
         if (fillDeviceArgumentList) {
             setFunction("get PID", 1, 9);
@@ -49,8 +47,7 @@ int devicePidGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
             setResultFloatHex4(8, "mI (milli)");
         }
         return commandLengthValueForMode(mode, 2, 22);
-    }
-    else if (commandHeader == COMMAND_SET_PID_PARAMETERS) {
+    } else if (commandHeader == COMMAND_SET_PID_PARAMETERS) {
         if (fillDeviceArgumentList) {
             setFunction("setPID", 9, 0);
             setArgumentUnsignedHex2(0, "pid Index");
@@ -65,21 +62,18 @@ int devicePidGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
         }
         return commandLengthValueForMode(mode, 22, 0);
         // PERSISTENCE
-    }
-    else if (commandHeader == COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES) {
+    } else if (commandHeader == COMMAND_LOAD_PID_PARAMETERS_DEFAULT_VALUES) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("load Pid Default Values");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_SAVE_PID_PARAMETERS) {
+    } else if (commandHeader == COMMAND_SAVE_PID_PARAMETERS) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("save PID Parameters To Eeprom");
         }
         return commandLengthValueForMode(mode, 0, 0);
         // DEBUG / TRAJECTORY
-    }
-    else if (commandHeader == COMMAND_GET_COMPUTATION_VALUES_DATA_PID) {
+    } else if (commandHeader == COMMAND_GET_COMPUTATION_VALUES_DATA_PID) {
         if (fillDeviceArgumentList) {
             // Argument : Type / Index : 7 octets
             setFunction("Get Computation Values Data Pid", 3, 25);
@@ -122,7 +116,7 @@ int devicePidGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
             setResultSeparator(25);
             setResultFloatHex4(26, "DExE (mm / s)");
             setResultSeparator(27);
-            */
+             */
             // U / Normal U => 9 octets
             setResultFloatHex4(22, "normal U");
             setResultSeparator(23);
@@ -134,15 +128,13 @@ int devicePidGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
             // setResultBool(27, "abs U Too High Than Expected");
         }
         return commandLengthValueForMode(mode, 7, 66);
-    }
-    else if (commandHeader == COMMAND_CLEAR_COMPUTATION_VALUES_DATA_PID) {
+    } else if (commandHeader == COMMAND_CLEAR_COMPUTATION_VALUES_DATA_PID) {
         if (fillDeviceArgumentList) {
             setFunction("Clear Computation Values Data PID", 1, 0);
             setArgumentUnsignedHex2(0, "instructionType");
         }
         return commandLengthValueForMode(mode, 2, 0);
-    }
-    else if (commandHeader == COMMAND_SET_COMPUTATION_VALUES_DATA_PID) {
+    } else if (commandHeader == COMMAND_SET_COMPUTATION_VALUES_DATA_PID) {
         if (fillDeviceArgumentList) {
             setFunction("Set Computation Values Data PID", 25, 0);
 
@@ -187,7 +179,7 @@ int devicePidGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
         }
         return commandLengthValueForMode(mode, 66, 0);
     } else if (commandHeader == COMMAND_GET_MOTION_DEFINITION_TRAJECTORY) {
-        if (fillDeviceArgumentList) {    
+        if (fillDeviceArgumentList) {
             setFunction("get Motion Parameter", 1, 25);
             setArgumentUnsignedHex2(0, "idx");
             // Result
@@ -217,10 +209,9 @@ int devicePidGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
             setResultSeparator(23);
             setResultUnsignedChar1(24, "pidType");
         }
-        return commandLengthValueForMode(mode, 2, 53);    
-    }
-    // END DETECTION
-    // -> DETAIL PHASE
+        return commandLengthValueForMode(mode, 2, 53);
+    }// END DETECTION
+        // -> DETAIL PHASE
     else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER_DETAIL) {
         if (fillDeviceArgumentList) {
             setFunction("set End Detection Detail Parameter", 9, 0);
@@ -235,8 +226,7 @@ int devicePidGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
             setArgumentFloatHex4(8, "uMinThresholdValue");
         }
         return commandLengthValueForMode(mode, 24, 0);
-    }
-    else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER_DETAIL) {
+    } else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER_DETAIL) {
         if (fillDeviceArgumentList) {
             setFunction("get End Detection Detail Parameter", 0, 9);
             setResultFloatHex4(0, "accelerationTooHighTresholdFactor");
@@ -250,9 +240,7 @@ int devicePidGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
             setResultFloatHex4(8, "uMinThresholdValue");
         }
         return commandLengthValueForMode(mode, 0, 24);
-    }
-    
-    // -> AGGREGATION_PHASE
+    }// -> AGGREGATION_PHASE
     else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER_AGGREGATION) {
         if (fillDeviceArgumentList) {
             setFunction("set End Detection Aggregation Parameter", 9, 0);
@@ -267,8 +255,7 @@ int devicePidGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
             setArgumentFloatHex4(8, "noAnalysisAtStartupTime");
         }
         return commandLengthValueForMode(mode, 24, 0);
-    }
-    else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER_AGGREGATION) {
+    } else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER_AGGREGATION) {
         if (fillDeviceArgumentList) {
             setFunction("get End Detection Aggregation Parameter", 0, 9);
             setResultFloatHex4(0, "absDeltaPositionIntegralFactorThreshold");
@@ -283,7 +270,7 @@ int devicePidGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
         }
         return commandLengthValueForMode(mode, 0, 24);
     }
-	return DEVICE_HEADER_NOT_HANDLED;
+    return DEVICE_HEADER_NOT_HANDLED;
 }
 
 static DeviceInterface deviceInterface = {

@@ -6,11 +6,11 @@
 #include "../../../common/clock/clock.h"
 
 /**
-* @see clock.h
-* @private
-* Mock a clock on the PC 
-* @param clockParam the clock
-*/
+ * @see clock.h
+ * @private
+ * Mock a clock on the PC 
+ * @param clockParam the clock
+ */
 ClockData* _readPcClock(Clock* clockParam) {
     time_t rawtime;
     struct tm timeinfo;

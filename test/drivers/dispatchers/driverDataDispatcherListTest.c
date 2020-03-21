@@ -20,7 +20,7 @@ void driverDataDispatcherListTestSuite(void) {
 }
 
 void init_driverDataDispatcherList(void) {
-    initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, DRIVER_DATA_DISPATCHER_LIST_TEST_ARRAY_LENGTH);
+    initDriverDataDispatcherList((DriverDataDispatcher(*)[]) & driverDataDispatcherListArray, DRIVER_DATA_DISPATCHER_LIST_TEST_ARRAY_LENGTH);
 }
 
 void test_initDriverDataDispatcherList_should_fail_if_null_provided(void) {
@@ -28,7 +28,7 @@ void test_initDriverDataDispatcherList_should_fail_if_null_provided(void) {
     TEST_ASSERT_EQUAL(DISPATCHERS_LIST_NOT_INITIALIZED, getLastError());
 
     clearLastError();
-    
+
     addLocalDriverDataDispatcher();
     TEST_ASSERT_EQUAL(DISPATCHERS_LIST_NOT_INITIALIZED, getLastError());
 }
@@ -43,7 +43,7 @@ void test_initDriverDataDispatcherList_add_too_much_dispatchers(void) {
     TEST_ASSERT_FALSE(isThereAnyError());
     TEST_ASSERT_EQUAL(1, getDriverDataDispatcherCount());
     // TEST_ASSERT_EQUAL(dispacher, getDriverDataDispatcherByIndex(0));
-    
+
     // Add a second dispatcher
     dispacher = addLocalDriverDataDispatcher();
     TEST_ASSERT_FALSE(isThereAnyError());

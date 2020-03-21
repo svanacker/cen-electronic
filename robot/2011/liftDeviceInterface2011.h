@@ -12,8 +12,8 @@
 #define COMMAND_LIFT_2011_DOWN    'V'
 
 /**
-* Get the device interface for lift 2011.
-*/
+ * Get the device interface for lift 2011.
+ */
 DeviceInterface* getLift2011DeviceInterface();
 
 #endif

@@ -2,8 +2,8 @@
 #define MEMORY_EEPROM_TEST_H
 
 /**
-* All tests for MemoryEeprom.h
-*/
+ * All tests for MemoryEeprom.h
+ */
 void memoryEepromTestSuite(void);
 
 #endif

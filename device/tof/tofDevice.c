@@ -50,49 +50,43 @@ void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStrea
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
         unsigned int distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
-        
+
         appendHex4(outputStream, distanceMM);
-    }
-    else if (commandHeader == COMMAND_TOF_LIST_CONFIG) {
+    } else if (commandHeader == COMMAND_TOF_LIST_CONFIG) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_LIST_CONFIG);
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         // We only print the config (not network neither call to detection is done)
         tofSensorList->tofSensorListConfigTableDebug(debugOutputStream, tofSensorList);
-    }
-    else if (commandHeader == COMMAND_TOF_LIST_NETWORK) {
+    } else if (commandHeader == COMMAND_TOF_LIST_NETWORK) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_LIST_NETWORK);
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         // We only print the network (not config neither call to detection is done)
         tofSensorList->tofSensorListNetworkTableDebug(debugOutputStream, tofSensorList);
-    }
-    else if (commandHeader == COMMAND_TOF_LIST_DETECTED) {
+    } else if (commandHeader == COMMAND_TOF_LIST_DETECTED) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_LIST_DETECTED);
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         // We only print the network (not config neither call to detection is done)
         tofSensorList->tofSensorListDetectionTableDebug(debugOutputStream, tofSensorList, NULL, 0.0f);
-    }
-    else if (commandHeader == COMMAND_TOF_BEEP_ON) {
+    } else if (commandHeader == COMMAND_TOF_BEEP_ON) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_BEEP_ON);
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
         tofSensorList->beepLocked = true;
         tofSensorListBeepOverrideLock(tofSensorList, true);
-    }
-    else if (commandHeader == COMMAND_TOF_BEEP_OFF) {
+    } else if (commandHeader == COMMAND_TOF_BEEP_OFF) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_BEEP_OFF);
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
         tofSensorList->beepLocked = true;
         tofSensorListBeepOverrideLock(tofSensorList, false);
-    }
-    else if (commandHeader == COMMAND_TOF_SEARCH_IF_COLLIDING) {
+    } else if (commandHeader == COMMAND_TOF_SEARCH_IF_COLLIDING) {
         // TO : Place it in tof !
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_SEARCH_IF_COLLIDING);
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
 
         tofSensorList->beepLocked = true;
-        
+
         unsigned int tofIndex = readHex2(inputStream);
         checkIsSeparator(inputStream);
         unsigned int durationSeconds = readHex2(inputStream);
@@ -126,30 +120,31 @@ void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStrea
         tofSensorListBeepOverrideLock(tofSensorList, false);
 
         tofSensorList->beepLocked = false;
-    }
-    else if (commandHeader == COMMAND_TOF_RESTART) {
+    } else if (commandHeader == COMMAND_TOF_RESTART) {
         ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_RESTART);
         unsigned char tofIndex = readHex2(inputStream);
         TofSensorList* tofSensorList = getTofDeviceTofSensorList();
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, tofIndex);
-        
+
         bool restartSuccess = tofRestart(tofSensor);
         appendBool(outputStream, restartSuccess);
     }
 }
 
-static DeviceDescriptor descriptor = {
-    .deviceInit = &deviceTofInit,
-    .deviceShutDown = &deviceTofShutDown,
-    .deviceIsOk = &isTofDeviceOk,
-    .deviceHandleRawData = &deviceTofHandleRawData,
-};
+static DeviceDescriptor descriptor;
 
 TofSensorList* getTofDeviceTofSensorList(void) {
     return (TofSensorList*) descriptor.object;
 }
 
 DeviceDescriptor* getTofDeviceDescriptor(TofSensorList* tofSensorListParam) {
-    descriptor.object = (int*)tofSensorListParam;
+    initDeviceDescriptor(&descriptor,
+            &deviceTofInit,
+            &deviceTofShutDown,
+            &isTofDeviceOk,
+            &deviceTofHandleRawData,
+            (int*) tofSensorListParam);
+
     return &descriptor;
 }
+

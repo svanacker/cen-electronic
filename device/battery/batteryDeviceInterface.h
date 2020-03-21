@@ -7,15 +7,15 @@
 // List of BATTERY COMMAND HEADER
 
 /**
-* Defines the header to read the battery.
-*/
+ * Defines the header to read the battery.
+ */
 #define COMMAND_READ_BATTERY         'r'
 
 // Function to get the specific Device Interface
 
 /**
-* Interface for Device.
-*/
+ * Interface for Device.
+ */
 DeviceInterface* getBatteryDeviceInterface();
 
 #endif

@@ -50,7 +50,7 @@ unsigned int _robotConfigPcReadInt(RobotConfig* robotConfig) {
         fclose(filePointer);
         return false;
     }
-    
+
     unsigned int result = 0;
     // HIGH BITS
     result += robotConfigPcReadNextBitPart(filePointer, 13);
@@ -83,10 +83,10 @@ unsigned int _robotConfigPcReadInt(RobotConfig* robotConfig) {
 }
 
 /**
-* Implementation of the write Function of configuration switch.
-* @see robotConfig.h
-* @private
-*/
+ * Implementation of the write Function of configuration switch.
+ * @see robotConfig.h
+ * @private
+ */
 void _robotConfigPcWriteInt(RobotConfig* robotConfig, unsigned int value) {
     // TODO
 }

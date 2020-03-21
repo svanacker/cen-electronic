@@ -19,13 +19,13 @@
 #define CORN_WHITE_TAKEN 1
 
 /**
-* Function used to manage strategy.
-*/
+ * Function used to manage strategy.
+ */
 void strategy2010(unsigned char strategy);
 
 /**
-* Take corn if not black
-*/
+ * Take corn if not black
+ */
 unsigned char takeCornIfNotBlack(int plierIndex);
 
 #endif

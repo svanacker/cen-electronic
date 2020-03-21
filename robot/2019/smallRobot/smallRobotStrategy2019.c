@@ -242,7 +242,7 @@ void initSmallRobotLocations2019(GameStrategyContext* gameStrategyContext) {
     acceleratorFrontLocation = addLocationWithColors2019(teamColor, navigation, ACCELERATOR_FRONT, ACCELERATOR_FRONT_LABEL, ACCELERATOR_FRONT_X, ACCELERATOR_FRONT_Y);
     acceleratorCenteredLocation = addLocationWithColors2019(teamColor, navigation, ACCELERATOR_CENTER, ACCELERATOR_CENTER_LABEL, ACCELERATOR_CENTER_X, ACCELERATOR_CENTER_Y);
     smallRobotKeyPointLocation = addLocationWithColors2019(teamColor, navigation, SMALL_ROBOT_KEYPOINT, SMALL_ROBOT_KEYPOINT_LABEL, SMALL_ROBOT_KEYPOINT_X, SMALL_ROBOT_KEYPOINT_Y);
-    
+
     goldeniumFrontLocation = addLocationWithColors2019(teamColor, navigation, GOLDENIUM_FRONT, GOLDENIUM_FRONT_LABEL, GOLDENIUM_FRONT_X, GOLDENIUM_FRONT_Y);
     weighingMachineFrontLocation = addLocationWithColors2019(teamColor, navigation, WEIGHING_MACHINE_FRONT, WEIGHING_MACHINE_FRONT_LABEL, WEIGHING_MACHINE_FRONT_X, WEIGHING_MACHINE_FRONT_Y);
     weighingMachineDropLocation = addLocationWithColors2019(teamColor, navigation, WEIGHING_MACHINE_DROP, WEIGHING_MACHINE_DROP_LABEL, WEIGHING_MACHINE_DROP_X, WEIGHING_MACHINE_DROP_Y);
@@ -266,235 +266,235 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
 
     // -> Small Robot
     smallRobotStartArea_to_accelerator_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        smallRobotStartAreaLocation,
-        acceleratorFrontLocation,
-        SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_COST,
-        SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP1,
-        SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP2,
-        deciDegreeToRad(SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG),
-        deciDegreeToRad(ACCELERATOR_FRONT_DECI_DEG),
-        aFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_ACCELERATION_FACTOR,
-        speedFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_SPEED_FACTOR);
+            navigation,
+            smallRobotStartAreaLocation,
+            acceleratorFrontLocation,
+            SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_COST,
+            SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP1,
+            SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CP2,
+            deciDegreeToRad(SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG),
+            deciDegreeToRad(ACCELERATOR_FRONT_DECI_DEG),
+            aFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_ACCELERATION_FACTOR,
+            speedFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_SPEED_FACTOR);
 
     smallRobotStartArea_to_acceleratorCentered_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        smallRobotStartAreaLocation,
-        acceleratorCenteredLocation,
-        SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_COST,
-        SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_CP1,
-        SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_CP2,
-        deciDegreeToRad(SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG),
-        deciDegreeToRad(ACCELERATOR_CENTER_START_DECI_DEG),
-        aFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_ACCELERATION_FACTOR,
-        speedFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_SPEED_FACTOR);
+            navigation,
+            smallRobotStartAreaLocation,
+            acceleratorCenteredLocation,
+            SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_COST,
+            SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_CP1,
+            SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_CP2,
+            deciDegreeToRad(SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG),
+            deciDegreeToRad(ACCELERATOR_CENTER_START_DECI_DEG),
+            aFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_ACCELERATION_FACTOR,
+            speedFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_SPEED_FACTOR);
 
     acceleratorCentered_to_accelerator_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        acceleratorCenteredLocation,
-        acceleratorFrontLocation,
-        ACCELERATOR_CENTERED_TO_ACCELERATOR_COST,
-        ACCELERATOR_CENTERED_TO_ACCELERATOR_CP1,
-        ACCELERATOR_CENTERED_TO_ACCELERATOR_CP2,
-        deciDegreeToRad(ACCELERATOR_CENTER_START_DECI_DEG),
-        deciDegreeToRad(ACCELERATOR_CENTER_END_DECI_DEG),
-        aFactor * ACCELERATOR_CENTERED_TO_ACCELERATOR_ACCELERATION_FACTOR,
-        speedFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_SPEED_FACTOR);
+            navigation,
+            acceleratorCenteredLocation,
+            acceleratorFrontLocation,
+            ACCELERATOR_CENTERED_TO_ACCELERATOR_COST,
+            ACCELERATOR_CENTERED_TO_ACCELERATOR_CP1,
+            ACCELERATOR_CENTERED_TO_ACCELERATOR_CP2,
+            deciDegreeToRad(ACCELERATOR_CENTER_START_DECI_DEG),
+            deciDegreeToRad(ACCELERATOR_CENTER_END_DECI_DEG),
+            aFactor * ACCELERATOR_CENTERED_TO_ACCELERATOR_ACCELERATION_FACTOR,
+            speedFactor * SMALL_ROBOT_STARTAREA_TO_ACCELERATOR_CENTERED_SPEED_FACTOR);
 
     keypoint1_to_acceleratorCentered_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        smallRobotKeyPointLocation,
-        acceleratorCenteredLocation,
-        500.0f,
-        100.0f,
-        100.0f,
-        deciDegreeToRad(90.0f),
-        deciDegreeToRad(90.0f),
-        aFactor * 0.5f,
-        speedFactor * 0.5f);
-    
+            navigation,
+            smallRobotKeyPointLocation,
+            acceleratorCenteredLocation,
+            500.0f,
+            100.0f,
+            100.0f,
+            deciDegreeToRad(90.0f),
+            deciDegreeToRad(90.0f),
+            aFactor * 0.5f,
+            speedFactor * 0.5f);
+
     acceleratorFront_to_goldeniumFront_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        acceleratorFrontLocation,
-        goldeniumFrontLocation,
-        ACCELERATOR_TO_GOLDENIUM_COST,
-        ACCELERATOR_TO_GOLDENIUM_CP1,
-        ACCELERATOR_TO_GOLDENIUM_CP2,
-        deciDegreeToRad(ACCELERATOR_FRONT_DECI_DEG),
-        deciDegreeToRad(GOLDENIUM_FRONT_ANGLE_DECI_DEG),
-        aFactor * ACCELERATOR_TO_GOLDENIUM_ACCELERATION_FACTOR,
-        speedFactor * ACCELERATOR_TO_GOLDENIUM_SPEED_FACTOR);
+            navigation,
+            acceleratorFrontLocation,
+            goldeniumFrontLocation,
+            ACCELERATOR_TO_GOLDENIUM_COST,
+            ACCELERATOR_TO_GOLDENIUM_CP1,
+            ACCELERATOR_TO_GOLDENIUM_CP2,
+            deciDegreeToRad(ACCELERATOR_FRONT_DECI_DEG),
+            deciDegreeToRad(GOLDENIUM_FRONT_ANGLE_DECI_DEG),
+            aFactor * ACCELERATOR_TO_GOLDENIUM_ACCELERATION_FACTOR,
+            speedFactor * ACCELERATOR_TO_GOLDENIUM_SPEED_FACTOR);
 
     goldeniumFront_to_weighingMachineFront_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        goldeniumFrontLocation,
-        weighingMachineFrontLocation,
-        GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_COST,
-        GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_CP1,
-        GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_CP2,
-        deciDegreeToRad(GOLDENIUM_FRONT_ANGLE_DECI_DEG),
-        deciDegreeToRad(WEIGHING_MACHINE_FRONT_FROM_GOLDENIUM_ANGLE_DECI_DEG),
-        aFactor * GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_ACCELERATION_FACTOR,
-        speedFactor * GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_SPEED_FACTOR);
+            navigation,
+            goldeniumFrontLocation,
+            weighingMachineFrontLocation,
+            GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_COST,
+            GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_CP1,
+            GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_CP2,
+            deciDegreeToRad(GOLDENIUM_FRONT_ANGLE_DECI_DEG),
+            deciDegreeToRad(WEIGHING_MACHINE_FRONT_FROM_GOLDENIUM_ANGLE_DECI_DEG),
+            aFactor * GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_ACCELERATION_FACTOR,
+            speedFactor * GOLDENIUM_TO_WEIGHING_MACHINE_FRONT_SPEED_FACTOR);
 
     weighingMachineFront_to_weighingMachineDrop_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        weighingMachineFrontLocation,
-        weighingMachineDropLocation,
-        WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_COST,
-        WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_CP1,
-        WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_CP2,
-        deciDegreeToRad(WEIGHING_MACHINE_FRONT_TO_DROP_ANGLE_DECI_DEG),
-        deciDegreeToRad(WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG),
-        aFactor * WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_ACCELERATION_FACTOR,
-        speedFactor * WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_SPEED_FACTOR);
+            navigation,
+            weighingMachineFrontLocation,
+            weighingMachineDropLocation,
+            WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_COST,
+            WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_CP1,
+            WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_CP2,
+            deciDegreeToRad(WEIGHING_MACHINE_FRONT_TO_DROP_ANGLE_DECI_DEG),
+            deciDegreeToRad(WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG),
+            aFactor * WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_ACCELERATION_FACTOR,
+            speedFactor * WEIGHING_MACHINE_FRONT_TO_WEIGHING_MACHINE_DROP_SPEED_FACTOR);
 
     // Weighing Machine -> Small Distributor 1
 
     weighingMachineDrop_to_bluiumRight_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        weighingMachineDropLocation,
-        blueiumRightLocation,
-        WEIGHING_MACHINE_TO_BLUEIUM_RIGHT_COST,
-        WEIGHING_MACHINE_TO_BLUEIUM_RIGHT_CP1,
-        WEIGHING_MACHINE_TO_BLUEIUM_RIGHT_CP2,
-        deciDegreeToRad(WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG),
-        deciDegreeToRad(BLUEIUM_RIGHT_ANGLE_FROM_DECI_DEG),
-        aFactor * WEIGHING_MACHINE_TO_BLUEIUM_RIGHT_ACCELERATION_FACTOR,
-        speedFactor * WEIGHING_MACHINE_TO_BLUEIUM_RIGHT_SPEED_FACTOR);
+            navigation,
+            weighingMachineDropLocation,
+            blueiumRightLocation,
+            WEIGHING_MACHINE_TO_BLUEIUM_RIGHT_COST,
+            WEIGHING_MACHINE_TO_BLUEIUM_RIGHT_CP1,
+            WEIGHING_MACHINE_TO_BLUEIUM_RIGHT_CP2,
+            deciDegreeToRad(WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG),
+            deciDegreeToRad(BLUEIUM_RIGHT_ANGLE_FROM_DECI_DEG),
+            aFactor * WEIGHING_MACHINE_TO_BLUEIUM_RIGHT_ACCELERATION_FACTOR,
+            speedFactor * WEIGHING_MACHINE_TO_BLUEIUM_RIGHT_SPEED_FACTOR);
 
 
     bluiumRight_to_smallDistributor_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        blueiumRightLocation,
-        smallDistributorLine1Location,
-        BLUEIUM_RIGHT_TO_SMALL_DISTRIBUTOR_LINE_1_COST,
-        BLUEIUM_RIGHT_TO_SMALL_DISTRIBUTOR_LINE_1_CP1,
-        BLUEIUM_RIGHT_TO_SMALL_DISTRIBUTOR_LINE_1_CP2,
-        deciDegreeToRad(BLUEIUM_RIGHT_ANGLE_TO_DECI_DEG),
-        deciDegreeToRad(SMALL_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG),
-        aFactor * BLUEIUM_RIGHT_TO_SMALL_DISTRIBUTOR_LINE_1_ACCELERATION_FACTOR,
-        speedFactor * BLUEIUM_RIGHT_TO_SMALL_DISTRIBUTOR_LINE_1_SPEED_FACTOR);
+            navigation,
+            blueiumRightLocation,
+            smallDistributorLine1Location,
+            BLUEIUM_RIGHT_TO_SMALL_DISTRIBUTOR_LINE_1_COST,
+            BLUEIUM_RIGHT_TO_SMALL_DISTRIBUTOR_LINE_1_CP1,
+            BLUEIUM_RIGHT_TO_SMALL_DISTRIBUTOR_LINE_1_CP2,
+            deciDegreeToRad(BLUEIUM_RIGHT_ANGLE_TO_DECI_DEG),
+            deciDegreeToRad(SMALL_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG),
+            aFactor * BLUEIUM_RIGHT_TO_SMALL_DISTRIBUTOR_LINE_1_ACCELERATION_FACTOR,
+            speedFactor * BLUEIUM_RIGHT_TO_SMALL_DISTRIBUTOR_LINE_1_SPEED_FACTOR);
 
     // Small Distributor 1 -> Weighing Machine
     smallDistributor_to_bluiumRight_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        smallDistributorLine1Location,
-        blueiumRightLocation,
-        SMALL_DISTRIBUTOR_LINE_1_TO_BLUEIUM_RIGHT_COST,
-        SMALL_DISTRIBUTOR_LINE_1_TO_BLUEIUM_RIGHT_CP1,
-        SMALL_DISTRIBUTOR_LINE_1_TO_BLUEIUM_RIGHT_CP2,
-        deciDegreeToRad(BLUEIUM_RIGHT_ANGLE_TO_DECI_DEG),
-        deciDegreeToRad(SMALL_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG),
-        aFactor * SMALL_DISTRIBUTOR_LINE_1_TO_BLUEIUM_RIGHT_ACCELERATION_FACTOR,
-        speedFactor * SMALL_DISTRIBUTOR_LINE_1_TO_BLUEIUM_RIGHT_SPEED_FACTOR);
+            navigation,
+            smallDistributorLine1Location,
+            blueiumRightLocation,
+            SMALL_DISTRIBUTOR_LINE_1_TO_BLUEIUM_RIGHT_COST,
+            SMALL_DISTRIBUTOR_LINE_1_TO_BLUEIUM_RIGHT_CP1,
+            SMALL_DISTRIBUTOR_LINE_1_TO_BLUEIUM_RIGHT_CP2,
+            deciDegreeToRad(BLUEIUM_RIGHT_ANGLE_TO_DECI_DEG),
+            deciDegreeToRad(SMALL_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG),
+            aFactor * SMALL_DISTRIBUTOR_LINE_1_TO_BLUEIUM_RIGHT_ACCELERATION_FACTOR,
+            speedFactor * SMALL_DISTRIBUTOR_LINE_1_TO_BLUEIUM_RIGHT_SPEED_FACTOR);
 
     bluiumRight_to_weighingMachineDrop_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        blueiumRightLocation,
-        weighingMachineDropLocation,
-        BLUEIUM_RIGHT_TO_WEIGHING_MACHINE_COST,
-        BLUEIUM_RIGHT_TO_WEIGHING_MACHINE_CP1,
-        BLUEIUM_RIGHT_TO_WEIGHING_MACHINE_CP2,
-        deciDegreeToRad(BLUEIUM_RIGHT_ANGLE_FROM_DECI_DEG),
-        deciDegreeToRad(WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG),
-        aFactor * BLUEIUM_RIGHT_TO_WEIGHING_MACHINE_ACCELERATION_FACTOR,
-        speedFactor * BLUEIUM_RIGHT_TO_WEIGHING_MACHINE_SPEED_FACTOR);
+            navigation,
+            blueiumRightLocation,
+            weighingMachineDropLocation,
+            BLUEIUM_RIGHT_TO_WEIGHING_MACHINE_COST,
+            BLUEIUM_RIGHT_TO_WEIGHING_MACHINE_CP1,
+            BLUEIUM_RIGHT_TO_WEIGHING_MACHINE_CP2,
+            deciDegreeToRad(BLUEIUM_RIGHT_ANGLE_FROM_DECI_DEG),
+            deciDegreeToRad(WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG),
+            aFactor * BLUEIUM_RIGHT_TO_WEIGHING_MACHINE_ACCELERATION_FACTOR,
+            speedFactor * BLUEIUM_RIGHT_TO_WEIGHING_MACHINE_SPEED_FACTOR);
 
     weighingMachineDrop_to_chaosZoneSmallRobot_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        weighingMachineDropLocation,
-        chaosZoneSmallRobotLocation,
-        WEIGHING_MACHINE_DROP_TO_CHAOS_ZONE_SMALL_ROBOT_COST,
-        WEIGHING_MACHINE_DROP_TO_CHAOS_ZONE_SMALL_ROBOT_CP1,
-        WEIGHING_MACHINE_DROP_TO_CHAOS_ZONE_SMALL_ROBOT_CP2,
-        deciDegreeToRad(WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG),
-        deciDegreeToRad(CHAOS_ZONE_SMALL_ROBOT_ANGLE_DECI_DEG),
-        aFactor * WEIGHING_MACHINE_DROP_TO_CHAOS_ZONE_SMALL_ROBOT_ACCELERATION_FACTOR,
-        speedFactor * WEIGHING_MACHINE_DROP_TO_CHAOS_ZONE_SMALL_ROBOT_SPEED_FACTOR
-        );
+            navigation,
+            weighingMachineDropLocation,
+            chaosZoneSmallRobotLocation,
+            WEIGHING_MACHINE_DROP_TO_CHAOS_ZONE_SMALL_ROBOT_COST,
+            WEIGHING_MACHINE_DROP_TO_CHAOS_ZONE_SMALL_ROBOT_CP1,
+            WEIGHING_MACHINE_DROP_TO_CHAOS_ZONE_SMALL_ROBOT_CP2,
+            deciDegreeToRad(WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG),
+            deciDegreeToRad(CHAOS_ZONE_SMALL_ROBOT_ANGLE_DECI_DEG),
+            aFactor * WEIGHING_MACHINE_DROP_TO_CHAOS_ZONE_SMALL_ROBOT_ACCELERATION_FACTOR,
+            speedFactor * WEIGHING_MACHINE_DROP_TO_CHAOS_ZONE_SMALL_ROBOT_SPEED_FACTOR
+            );
 
     chaosZoneSmallRobot_to_weighingMachineDrop_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        chaosZoneSmallRobotLocation,
-        weighingMachineDropLocation,
-        CHAOS_ZONE_SMALL_ROBOT_TO_WEIGHING_MACHINE_DROP_COST,
-        CHAOS_ZONE_SMALL_ROBOT_TO_WEIGHING_MACHINE_DROP_CP1,
-        CHAOS_ZONE_SMALL_ROBOT_TO_WEIGHING_MACHINE_DROP_CP2,
-        deciDegreeToRad(CHAOS_ZONE_SMALL_ROBOT_ANGLE_DECI_DEG),
-        deciDegreeToRad(WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG),
-        aFactor * CHAOS_ZONE_SMALL_ROBOT_TO_WEIGHING_MACHINE_ACCELERATION_FACTOR,
-        speedFactor * CHAOS_ZONE_SMALL_ROBOT_TO_WEIGHING_MACHINE_SPEED_FACTOR
-    );
+            navigation,
+            chaosZoneSmallRobotLocation,
+            weighingMachineDropLocation,
+            CHAOS_ZONE_SMALL_ROBOT_TO_WEIGHING_MACHINE_DROP_COST,
+            CHAOS_ZONE_SMALL_ROBOT_TO_WEIGHING_MACHINE_DROP_CP1,
+            CHAOS_ZONE_SMALL_ROBOT_TO_WEIGHING_MACHINE_DROP_CP2,
+            deciDegreeToRad(CHAOS_ZONE_SMALL_ROBOT_ANGLE_DECI_DEG),
+            deciDegreeToRad(WEIGHING_MACHINE_DROP_ANGLE_DECI_DEG),
+            aFactor * CHAOS_ZONE_SMALL_ROBOT_TO_WEIGHING_MACHINE_ACCELERATION_FACTOR,
+            speedFactor * CHAOS_ZONE_SMALL_ROBOT_TO_WEIGHING_MACHINE_SPEED_FACTOR
+            );
 
     chaosZoneSmallRobot_to_bigDistributorLine3_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        chaosZoneSmallRobotLocation,
-        bigDistributorLine3Location,
-        CHAOS_ZONE_SMALL_ROBOT_TO_BIG_DISTRIBUTOR_LINE3_COST,
-        CHAOS_ZONE_SMALL_ROBOT_TO_BIG_DISTRIBUTOR_LINE3_CP1,
-        CHAOS_ZONE_SMALL_ROBOT_TO_BIG_DISTRIBUTOR_LINE3_CP2,
-        deciDegreeToRad(CHAOS_ZONE_SMALL_ROBOT_ANGLE_DECI_DEG),
-        deciDegreeToRad(BIG_DISTRIBUTOR_LINE_3_ANGLE_DECI_DEG),
-        aFactor * CHAOS_ZONE_SMALL_ROBOT_TO_BIG_DISTRIBUTOR_LINE3_ACCELERATION_FACTOR,
-        speedFactor * CHAOS_ZONE_SMALL_ROBOT_TO_BIG_DISTRIBUTOR_LINE3_SPEED_FACTOR
-    );
+            navigation,
+            chaosZoneSmallRobotLocation,
+            bigDistributorLine3Location,
+            CHAOS_ZONE_SMALL_ROBOT_TO_BIG_DISTRIBUTOR_LINE3_COST,
+            CHAOS_ZONE_SMALL_ROBOT_TO_BIG_DISTRIBUTOR_LINE3_CP1,
+            CHAOS_ZONE_SMALL_ROBOT_TO_BIG_DISTRIBUTOR_LINE3_CP2,
+            deciDegreeToRad(CHAOS_ZONE_SMALL_ROBOT_ANGLE_DECI_DEG),
+            deciDegreeToRad(BIG_DISTRIBUTOR_LINE_3_ANGLE_DECI_DEG),
+            aFactor * CHAOS_ZONE_SMALL_ROBOT_TO_BIG_DISTRIBUTOR_LINE3_ACCELERATION_FACTOR,
+            speedFactor * CHAOS_ZONE_SMALL_ROBOT_TO_BIG_DISTRIBUTOR_LINE3_SPEED_FACTOR
+            );
 
     bigDistributorLine3_to_rediumGreeniumFrontDrop_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        bigDistributorLine3Location,
-        rediumGreeniumFrontDropLocation,
-        BIG_DISTRIBUTOR_LINE_3_TO_REDIUM_GREENIUM_FRONT_DROP_COST,
-        BIG_DISTRIBUTOR_LINE_3_TO_REDIUM_GREENIUM_FRONT_DROP_CP1,
-        BIG_DISTRIBUTOR_LINE_3_TO_REDIUM_GREENIUM_FRONT_DROP_CP2,
-        deciDegreeToRad(BIG_DISTRIBUTOR_LINE_3_ANGLE_DECI_DEG),
-        deciDegreeToRad(REDIUM_GREENIUM_FRONT_DROP_TO_ANGLE_DECI),
-        aFactor * BIG_DISTRIBUTOR_LINE_3_TO_REDIUM_GREENIUM_FRONT_ACCELERATOR_FACTOR,
-        speedFactor * BIG_DISTRIBUTOR_LINE_3_TO_REDIUM_GREENIUM_FRONT_SPEED_FACTOR
-    );
+            navigation,
+            bigDistributorLine3Location,
+            rediumGreeniumFrontDropLocation,
+            BIG_DISTRIBUTOR_LINE_3_TO_REDIUM_GREENIUM_FRONT_DROP_COST,
+            BIG_DISTRIBUTOR_LINE_3_TO_REDIUM_GREENIUM_FRONT_DROP_CP1,
+            BIG_DISTRIBUTOR_LINE_3_TO_REDIUM_GREENIUM_FRONT_DROP_CP2,
+            deciDegreeToRad(BIG_DISTRIBUTOR_LINE_3_ANGLE_DECI_DEG),
+            deciDegreeToRad(REDIUM_GREENIUM_FRONT_DROP_TO_ANGLE_DECI),
+            aFactor * BIG_DISTRIBUTOR_LINE_3_TO_REDIUM_GREENIUM_FRONT_ACCELERATOR_FACTOR,
+            speedFactor * BIG_DISTRIBUTOR_LINE_3_TO_REDIUM_GREENIUM_FRONT_SPEED_FACTOR
+            );
 
-    
+
     rediumGreeniumFrontDrop_to_rediumGreeniumDropZone_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        rediumGreeniumFrontDropLocation,
-        rediumGreeniumDropLocation,
-        REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_COST,
-        REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_CP1,
-        REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_CP2,
-        deciDegreeToRad(REDIUM_GREENIUM_FRONT_DROP_TO_ANGLE_DECI),
-        deciDegreeToRad(REDIUM_GREENIUM_FRONT_DROP_TO_ANGLE_DECI),
-        aFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_ACCELERATOR_FACTOR,
-        speedFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_SPEED_FACTOR
-    );
+            navigation,
+            rediumGreeniumFrontDropLocation,
+            rediumGreeniumDropLocation,
+            REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_COST,
+            REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_CP1,
+            REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_CP2,
+            deciDegreeToRad(REDIUM_GREENIUM_FRONT_DROP_TO_ANGLE_DECI),
+            deciDegreeToRad(REDIUM_GREENIUM_FRONT_DROP_TO_ANGLE_DECI),
+            aFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_ACCELERATOR_FACTOR,
+            speedFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_SPEED_FACTOR
+            );
 
     goldeniumFront_to_keypoint_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        goldeniumFrontLocation,
-        smallRobotKeyPointLocation,
-        1200.0f,
-        -350.0f,
-        -400.0f,
-        deciDegreeToRad(180.0f),
-        deciDegreeToRad(180.0f),
-        aFactor * 0.5f,
-        speedFactor * 0.5f
-    );
-    
+            navigation,
+            goldeniumFrontLocation,
+            smallRobotKeyPointLocation,
+            1200.0f,
+            -350.0f,
+            -400.0f,
+            deciDegreeToRad(180.0f),
+            deciDegreeToRad(180.0f),
+            aFactor * 0.5f,
+            speedFactor * 0.5f
+            );
+
     keypoint1_to_weighingMachineFront_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        smallRobotKeyPointLocation,
-        weighingMachineFrontLocation,
-        1000.0f,
-        200.0f,
-        300.0f,
-        deciDegreeToRad(0.0f),
-        deciDegreeToRad(0.0f),
-        aFactor * 0.5f,
-        speedFactor * 0.5f
-    );
+            navigation,
+            smallRobotKeyPointLocation,
+            weighingMachineFrontLocation,
+            1000.0f,
+            200.0f,
+            300.0f,
+            deciDegreeToRad(0.0f),
+            deciDegreeToRad(0.0f),
+            aFactor * 0.5f,
+            speedFactor * 0.5f
+            );
 
     goldeniumFront_to_goldGateway_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
+            navigation,
             goldeniumFrontLocation,
             goldGatewayLocation,
             600.0f,
@@ -502,12 +502,12 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
             -100.0f,
             deciDegreeToRad(180.0f),
             deciDegreeToRad(180.0f),
-        aFactor * 0.5f,
-        speedFactor * 0.5f
+            aFactor * 0.5f,
+            speedFactor * 0.5f
             );
-    
+
     goldGateway_to_keypoint1_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
+            navigation,
             goldGatewayLocation,
             smallRobotKeyPointLocation,
             1200.0f,
@@ -515,12 +515,12 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
             200.0f,
             deciDegreeToRad(-90.0f),
             deciDegreeToRad(-90.0f),
-        aFactor * 0.5f,
-        speedFactor * 0.5f
-     );
-    
+            aFactor * 0.5f,
+            speedFactor * 0.5f
+            );
+
     goldGateway_to_start_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
+            navigation,
             goldGatewayLocation,
             smallRobotStartAreaLocation,
             2000.0f,
@@ -528,50 +528,50 @@ void initSmallRobotPaths2019(GameStrategyContext* gameStrategyContext) {
             200.0f,
             deciDegreeToRad(-90.0f),
             deciDegreeToRad(-90.0f),
-        aFactor * 0.5f,
-        speedFactor * 0.5f
-     );
-    
-        
+            aFactor * 0.5f,
+            speedFactor * 0.5f
+            );
+
+
     // Go back to Line 2
     rediumGreeniumDropZone_to_chaosZoneSmallRobot_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        rediumGreeniumDropLocation,
-        chaosZoneSmallRobotLocation,
-        700.0f,
-        -300.0f,
-        -300.0f,
-        deciDegreeToRad(REDIUM_GREENIUM_FRONT_DROP_TO_ANGLE_DECI),
-        deciDegreeToRad(REDIUM_GREENIUM_FRONT_DROP_TO_ANGLE_DECI),
-        aFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_ACCELERATOR_FACTOR,
-        speedFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_SPEED_FACTOR
-    );
-    
+            navigation,
+            rediumGreeniumDropLocation,
+            chaosZoneSmallRobotLocation,
+            700.0f,
+            -300.0f,
+            -300.0f,
+            deciDegreeToRad(REDIUM_GREENIUM_FRONT_DROP_TO_ANGLE_DECI),
+            deciDegreeToRad(REDIUM_GREENIUM_FRONT_DROP_TO_ANGLE_DECI),
+            aFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_ACCELERATOR_FACTOR,
+            speedFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_SPEED_FACTOR
+            );
+
     chaosZoneSmallRobot_to_bigDistributorLine2_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        chaosZoneSmallRobotLocation,
-        bigDistributorLine2Location,
-        500.0f,
-        100.0f,
-        250.0f,
-        deciDegreeToRad(0.0f),
-        deciDegreeToRad(0.0f),
-        aFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_ACCELERATOR_FACTOR,
-        speedFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_SPEED_FACTOR
-    );
-    
+            navigation,
+            chaosZoneSmallRobotLocation,
+            bigDistributorLine2Location,
+            500.0f,
+            100.0f,
+            250.0f,
+            deciDegreeToRad(0.0f),
+            deciDegreeToRad(0.0f),
+            aFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_ACCELERATOR_FACTOR,
+            speedFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_SPEED_FACTOR
+            );
+
     bigDistributorLine2_to_blueiumGreeniumDrop_Path = addNavigationPathWithColor2019(teamColor,
-        navigation,
-        bigDistributorLine2Location,
-        blueiumGreeniumDropLocation,
-        500.0f,
-        -200.0f,
-        -200.0f,
-        deciDegreeToRad(0.0f),
-        deciDegreeToRad(90.0f),
-        aFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_ACCELERATOR_FACTOR,
-        speedFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_SPEED_FACTOR
-    );
+            navigation,
+            bigDistributorLine2Location,
+            blueiumGreeniumDropLocation,
+            500.0f,
+            -200.0f,
+            -200.0f,
+            deciDegreeToRad(0.0f),
+            deciDegreeToRad(90.0f),
+            aFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_ACCELERATOR_FACTOR,
+            speedFactor * REDIUM_GREENIUM_FRONT_DROP_TO_REDIUM_GREENIUM_DROP_ZONE_SPEED_FACTOR
+            );
 }
 
 void initSmallRobotTargets2019(GameStrategyContext* gameStrategyContext) {
@@ -609,12 +609,12 @@ void initSmallRobotTargetActions2019(GameStrategyContext* gameStrategyContext) {
     addTargetPrepareAction(&(bigDistributorLine3RediumGreeniumTarget.actionList), &bigDistributorLine3PrepareTargetAction, chaosZoneSmallRobotLocation, BIG_DISTRIBUTOR_LINE_3_GREENIUM_PREPARE_TIME_TO_ACHIEVE, &bigDistributorLine3RediumGreeniumPrepareTargetActionItemList);
     addTargetTakeAction(&(bigDistributorLine3RediumGreeniumTarget.actionList), &bigDistributorLine3TakeTargetAction, bigDistributorLine3Location, BIG_DISTRIBUTOR_LINE_3_GREENIUM_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine3RediumGreeniumTakeTargetActionItemList);
     addTargetDropAction(&(bigDistributorLine3RediumGreeniumTarget.actionList), &bigDistributorLine3DropTargetAction, rediumGreeniumDropLocation, BIG_DISTRIBUTOR_LINE_3_GREENIUM_DROP_TIME_TO_ACHIEVE, &bigDistributorLine3RediumGreeniumDropTargetActionItemList);
-    
+
     // BIG DISTRIBUTOR LINE 2 / BLUEIUM GREENIUM TARGET
     addTargetPrepareAction(&(bigDistributorLine2BlueiumGreeniumTarget.actionList), &bigDistributorLine2PrepareTargetAction, chaosZoneSmallRobotLocation, BIG_DISTRIBUTOR_LINE_3_GREENIUM_PREPARE_TIME_TO_ACHIEVE, &bigDistributorLine2BlueiumGreeniumPrepareTargetActionItemList);
     addTargetTakeAction(&(bigDistributorLine2BlueiumGreeniumTarget.actionList), &bigDistributorLine2TakeTargetAction, bigDistributorLine2Location, BIG_DISTRIBUTOR_LINE_3_GREENIUM_TAKE_TIME_TO_ACHIEVE, &bigDistributorLine2BlueiumGreeniumTakeTargetActionItemList);
     addTargetDropAction(&(bigDistributorLine2BlueiumGreeniumTarget.actionList), &bigDistributorLine2DropTargetAction, blueiumGreeniumDropLocation, BIG_DISTRIBUTOR_LINE_3_GREENIUM_DROP_TIME_TO_ACHIEVE, &bigDistributorLine2BlueiumGreeniumDropTargetActionItemList);
-    
+
 }
 
 void initSmallRobotTargetActionsItems2019(GameStrategyContext* gameStrategyContext) {
@@ -661,26 +661,22 @@ GameStrategy* initSmallRobotStrategiesItems2019(GameStrategyContext* gameStrateg
     if (strategyId == SMALL_ROBOT_STRATEGY_1_ACCELERATOR) {
         addGameStrategyItem(&smallRobotStrategy1Accelerator, &acceleratorStrategyItem, &acceleratorTarget);
         return &smallRobotStrategy1Accelerator;
-    }
-    else if (strategyId == SMALL_ROBOT_STRATEGY_2_ACCELERATOR_TAKE_GOLDENIUM) {
+    } else if (strategyId == SMALL_ROBOT_STRATEGY_2_ACCELERATOR_TAKE_GOLDENIUM) {
         addGameStrategyItem(&smallRobotStrategy2AcceleratorTakeGoldenium, &acceleratorStrategyItem, &acceleratorTarget);
         addGameStrategyItem(&smallRobotStrategy2AcceleratorTakeGoldenium, &takeGoldeniumStrategyItem, &goldeniumTakeTarget);
         return &smallRobotStrategy2AcceleratorTakeGoldenium;
-    }
-    else if (strategyId == SMALL_ROBOT_STRATEGY_3_ACCELERATOR_TAKE_DROP_GOLDENIUM) {
+    } else if (strategyId == SMALL_ROBOT_STRATEGY_3_ACCELERATOR_TAKE_DROP_GOLDENIUM) {
         addGameStrategyItem(&smallRobotStrategy3AcceleratorTakeDropGoldenium, &acceleratorStrategyItem, &acceleratorTarget);
         addGameStrategyItem(&smallRobotStrategy3AcceleratorTakeDropGoldenium, &takeGoldeniumStrategyItem, &goldeniumTakeTarget);
         addGameStrategyItem(&smallRobotStrategy3AcceleratorTakeDropGoldenium, &dropGoldeniumStrategyItem, &goldeniumDropTarget);
         return &smallRobotStrategy3AcceleratorTakeDropGoldenium;
-    }
-    else if (strategyId == SMALL_ROBOT_STRATEGY_4_ACCELERATOR_TAKE_DROP_GOLDENIUM_SMALL_DIST) {
+    } else if (strategyId == SMALL_ROBOT_STRATEGY_4_ACCELERATOR_TAKE_DROP_GOLDENIUM_SMALL_DIST) {
         addGameStrategyItem(&smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist, &acceleratorStrategyItem, &acceleratorTarget);
         addGameStrategyItem(&smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist, &takeGoldeniumStrategyItem, &goldeniumTakeTarget);
         addGameStrategyItem(&smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist, &dropGoldeniumStrategyItem, &goldeniumDropTarget);
         addGameStrategyItem(&smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist, &smallDistributorLine1StrategyItem, &smallDistributorLine1Target);
         return &smallRobotStrategy4AcceleratorTakeDropGoldeniumSmallDist;
-    }
-    else if (strategyId == SMALL_ROBOT_STRATEGY_5_ACCELERATOR_CENTER_GOLDENIUM_SMALL_DIST) {
+    } else if (strategyId == SMALL_ROBOT_STRATEGY_5_ACCELERATOR_CENTER_GOLDENIUM_SMALL_DIST) {
         Navigation* navigation = gameStrategyContext->navigation;
         PathData* path = getPathOfLocations(navigation->paths, smallRobotStartAreaLocation, acceleratorFrontLocation);
         path->cost = 3000.0f;
@@ -690,8 +686,7 @@ GameStrategy* initSmallRobotStrategiesItems2019(GameStrategyContext* gameStrateg
         addGameStrategyItem(&smallRobotStrategy5AcceleratorCenteredTakeDropGoldeniumSmallDist, &dropGoldeniumStrategyItem, &goldeniumDropTarget);
         addGameStrategyItem(&smallRobotStrategy5AcceleratorCenteredTakeDropGoldeniumSmallDist, &smallDistributorLine1StrategyItem, &smallDistributorLine1Target);
         return &smallRobotStrategy5AcceleratorCenteredTakeDropGoldeniumSmallDist;
-    }
-    else if (strategyId == SMALL_ROBOT_STRATEGY_6_ACCELERATOR_CENTER_GOLDENIUM_REDIUM_GREENIUM) {
+    } else if (strategyId == SMALL_ROBOT_STRATEGY_6_ACCELERATOR_CENTER_GOLDENIUM_REDIUM_GREENIUM) {
         addGameStrategyItem(&smallRobotStrategy6AcceleratorTakeDropGoldeniumBigDist, &acceleratorStrategyItem, &acceleratorTarget);
         addGameStrategyItem(&smallRobotStrategy6AcceleratorTakeDropGoldeniumBigDist, &takeGoldeniumStrategyItem, &goldeniumTakeTarget);
         addGameStrategyItem(&smallRobotStrategy6AcceleratorTakeDropGoldeniumBigDist, &dropGoldeniumStrategyItem, &goldeniumDropTarget);

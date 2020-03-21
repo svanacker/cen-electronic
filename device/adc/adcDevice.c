@@ -25,15 +25,15 @@
 
 // DEVICE INTERFACE
 
-void initADC( void ) {
+void initADC(void) {
 
 }
 
-void stopADC( void ) {
+void stopADC(void) {
 
 }
 
-bool isADCDeviceOk ( void ) {
+bool isADCDeviceOk(void) {
     return true;
 }
 
@@ -61,8 +61,7 @@ void deviceADCHandleRawData(unsigned char commandHeader, InputStream* inputStrea
         unsigned int value = readAdc(adcIndex);
 
         appendHex4(outputStream, value);
-    }
-    else if (commandHeader == COMMANG_GET_ADC_VALUE_DEBUG_PERIOD) {
+    } else if (commandHeader == COMMANG_GET_ADC_VALUE_DEBUG_PERIOD) {
         ackCommand(outputStream, ADC_DEVICE_HEADER, COMMAND_GET_ADC_VALUE);
 
         unsigned char adcIndex = readHex2(inputStream);
@@ -71,7 +70,7 @@ void deviceADCHandleRawData(unsigned char commandHeader, InputStream* inputStrea
         checkIsSeparator(inputStream);
         unsigned char delayPeriodBetweenSample = readHex2(inputStream);
 
-        int i; 
+        int i;
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         for (i = 1; i <= sampleCount; i++) {
             if (i > 0) {
@@ -81,31 +80,31 @@ void deviceADCHandleRawData(unsigned char commandHeader, InputStream* inputStrea
             appendStringAndDec(debugOutputStream, "value=", value);
             appendStringLN(debugOutputStream, " mV");
         }
-    }
-    else if (commandHeader == COMMAND_GET_ADC_ALL_VALUES) {
+    } else if (commandHeader == COMMAND_GET_ADC_ALL_VALUES) {
         ackCommand(outputStream, ADC_DEVICE_HEADER, COMMAND_GET_ADC_ALL_VALUES);
-        int i;        
+        int i;
         for (i = 1; i <= getANXCount(); i++) {
             if (i != 1) {
                 appendSeparator(outputStream);
             }
             appendHex4(outputStream, readAdc(i));
         }
-    }
-    else if (commandHeader == COMMAND_GET_ADC_LIST) {
+    } else if (commandHeader == COMMAND_GET_ADC_LIST) {
         ackCommand(outputStream, ADC_DEVICE_HEADER, COMMAND_GET_ADC_LIST);
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         printAdcList(debugOutputStream);
     }
 }
 
-static DeviceDescriptor descriptor = {
-    .deviceInit = &initADC,
-    .deviceShutDown = &stopADC,
-    .deviceIsOk = &isADCDeviceOk,
-    .deviceHandleRawData = &deviceADCHandleRawData,
-};
+static DeviceDescriptor descriptor;
 
-DeviceDescriptor* getADCDeviceDescriptor() {
+DeviceDescriptor* getADCDeviceDescriptor(void) {
+    initDeviceDescriptor(&descriptor,
+            &initADC,
+            &stopADC,
+            &isADCDeviceOk,
+            &deviceADCHandleRawData,
+            NULL);
+
     return &descriptor;
 }

@@ -27,7 +27,7 @@ bool isTemperatureSensorDeviceOk(void) {
     return true;
 }
 
-void deviceTemperatureSensorHandleRawData(unsigned char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream){
+void deviceTemperatureSensorHandleRawData(unsigned char header, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (header == COMMAND_READ_TEMPERATURE_SENSOR) {
         ackCommand(outputStream, TEMPERATURE_SENSOR_DEVICE_HEADER, COMMAND_READ_TEMPERATURE_SENSOR);
         unsigned char value = (unsigned char) temperature->readSensorValue(temperature);
@@ -39,14 +39,14 @@ void deviceTemperatureSensorHandleRawData(unsigned char header, InputStream* inp
     }
 }
 
-static DeviceDescriptor descriptor = {
-    .deviceInit = &deviceTemperatureSensorInit,
-    .deviceShutDown = &deviceTemperatureSensorShutDown,
-    .deviceIsOk = &isTemperatureSensorDeviceOk,
-    .deviceHandleRawData = &deviceTemperatureSensorHandleRawData,
-};
+static DeviceDescriptor descriptor;
 
 DeviceDescriptor* getTemperatureSensorDeviceDescriptor(Temperature* temperatureParam) {
-    temperature = temperatureParam;
+    initDeviceDescriptor(&descriptor,
+            &deviceTemperatureSensorInit,
+            &deviceTemperatureSensorShutDown,
+            &isTemperatureSensorDeviceOk,
+            &deviceTemperatureSensorHandleRawData,
+            (int*) temperatureParam);
     return &descriptor;
 }

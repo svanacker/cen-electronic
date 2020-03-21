@@ -7,7 +7,6 @@
 #include "../../drivers/driverList.h"
 #include "../../drivers/driverTransmitter.h"
 
-
 bool armDriver2012Up(int index) {
     OutputStream* outputStream = getDriverRequestOutputStream();
     append(outputStream, COMMAND_ARM_2012_UP);

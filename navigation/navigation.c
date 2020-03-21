@@ -22,7 +22,7 @@ void initNavigation(Navigation* navigation, LocationList* locationList, PathList
     navigation->locationList = locationList;
     navigation->paths = pathList;
     navigation->tmpOutgoingPaths = tmpOutgoingPaths;
-    
+
     // Init
     clearLocationList(navigation->locationList);
     clearPathList(navigation->paths);
@@ -44,15 +44,15 @@ Location* addNavigationLocation(Navigation* navigation, char* name, char* label,
 }
 
 PathData* addNavigationPath(Navigation* navigation,
-            Location* location1,
-            Location* location2,
-            float cost,
-            float controlPointDistance1,
-            float controlPointDistance2,
-            float angle1,
-            float angle2,
-            float accelerationFactor,
-            float speedFactor) {
+        Location* location1,
+        Location* location2,
+        float cost,
+        float controlPointDistance1,
+        float controlPointDistance2,
+        float angle1,
+        float angle2,
+        float accelerationFactor,
+        float speedFactor) {
     PathData* pathData = addPath(navigation->paths);
     initPathData(pathData, PATH_DATA_USAGE_TYPE_PERMANENT, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, accelerationFactor, speedFactor);
     return pathData;
@@ -92,8 +92,7 @@ void addTemporaryPathListFromLocation(Navigation* navigation, Location* fromLoca
             pathData = addNavigationPath(navigation, fromLocation, location, distance, 100.0f, 100.0f, startAngle, startAngle, 0.5f, 0.5f);
             // In every case, mark it as temporary
             pathData->usageType = PATH_DATA_USAGE_TYPE_TEMPORARY;
-        }
-        else {
+        } else {
             initPathData(pathData, PATH_DATA_USAGE_TYPE_TEMPORARY, fromLocation, location, distance, 100.0f, 100.0f, startAngle, startAngle, 0.5f, 0.5f);
         }
     }

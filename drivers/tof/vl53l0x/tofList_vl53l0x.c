@@ -54,8 +54,7 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
         if (!tofSensor->enabled) {
             appendStringAndDecLN(getWarningOutputStreamLogger(), "TOF SENSOR DISABLED : ", tofIndex);
             tofSensor->startResult = TOF_SENSOR_START_RESULT_DISABLED;
-        }
-        else {
+        } else {
             appendStringAndDecLN(getDebugOutputStreamLogger(), "  TOF SENSOR->START:", tofIndex);
 
             // Get the specific structure in the provide array
@@ -63,7 +62,7 @@ void initTofSensorListVL53L0X(TofSensorList* tofSensorList,
 
             // Shift to the right pointer address
             tofSensorVL53L0X += tofIndex;
-            
+
             // Initialization of the specific Hardware Structure attached to the tofSensor
             initTofSensorVL53L0X(tofSensor, tofSensorVL53L0X);
 

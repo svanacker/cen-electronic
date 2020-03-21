@@ -43,7 +43,7 @@ void beaconTimerCallback(Timer* timer) {
         return;
     }
     // Count the number of laser which track something
-    int trackCounter = 0; 
+    int trackCounter = 0;
 
     int laserIndex;
     for (laserIndex = 0; laserIndex < LASER_COUNT; laserIndex++) {
@@ -56,8 +56,7 @@ void beaconTimerCallback(Timer* timer) {
     // all laser detects something !
     if (trackCounter == LASER_COUNT) {
         beaconSystem.lastDetectionTime = 0.0f;
-    }
-    else {
+    } else {
         // The code is execute at 2000 Hz, so if we want milliSeconds, we increment by 0.5f
         beaconSystem.lastDetectionTime += 0.5f;
     }
@@ -109,7 +108,7 @@ bool notifyRobotPositionIfNecessary() {
     // delay is exceed => must notify
     if (beaconTimer->time > beaconSystem.lastNotifyTime + beaconSystem.notifyTimeDelay) {
         // for the next time, mark it
-        beaconSystem.lastNotifyTime = beaconTimer->time; 
+        beaconSystem.lastNotifyTime = beaconTimer->time;
         Point* point = getOpponentRobotPosition();
         notifyRobotPosition(point);
         return true;
@@ -128,7 +127,6 @@ void stopLaserBeacon() {
     Timer* beaconTimer = getTimerByCode(BEACON_TIMER_CODE);
     stopTimer(beaconTimer);
 }
-
 
 void setBeaconSystemEnabled(bool enabled) {
     beaconSystem.enabled = enabled;
@@ -195,8 +193,7 @@ Point* getOpponentRobotPosition() {
             OutputStream* outputStream = getInfoOutputStreamLogger();
             appendStringAndDec(outputStream, "LOST OBJECT SINCE=", getLastDetectionTimeInMillis());
             println(outputStream);
-        }
-        else {
+        } else {
             float angleInRadian1 = getAngleInRadian(laser1);
             float angleInRadian2 = getAngleInRadian(laser2);
             float a1 = tan(angleInRadian1);
@@ -229,41 +226,41 @@ void doBeaconCalibration() {
 
 void printBeaconSystemConfiguration(OutputStream* outputStream) {
     Point* opponentPoint = getOpponentRobotPosition();
-    
+
     Laser* laser1 = getLaser(LASER_INDEX_1);
     Laser* laser2 = getLaser(LASER_INDEX_2);
-    
+
     printLaserStruct(outputStream, laser1);
     println(outputStream);
     printLaserStruct(outputStream, laser2);
-    
+
     appendCRLF(outputStream);
-    
+
     // Last Detection Time
     appendStringAndDecf(outputStream, "lastDetectionTime=", getLastDetectionTimeInMillis());
     println(outputStream);
-    
+
     // Obsolete Detection Time Threshold
     appendStringAndDecf(outputStream, "obsoleteDetectionTimeThreshold=", getObsoleteDetectionTimeThreshold());
     println(outputStream);
-    
+
     // Notify Time Delay
     appendStringAndDecf(outputStream, "notifyTimeDelay=", getNotifyTimeDelay());
     println(outputStream);
-    
+
     // Opponent Position
     appendString(outputStream, "opponentPosition:");
     printPoint(outputStream, opponentPoint, " mm");
-    
+
     // Distance between beacon
     appendStringAndDecf(outputStream, "distanceBetweenBeacon=", getDistanceBetweenBeacon());
     appendString(outputStream, " mm");
     println(outputStream);
-    
+
     // Calibration Point
     appendString(outputStream, "calibrationPoint:");
     printPoint(outputStream, &(beaconSystem.calibrationPoint), " mm");
-    
+
     // Opponent Position
     appendString(outputStream, "opponentPosition:");
     printPoint(outputStream, opponentPoint, " mm");

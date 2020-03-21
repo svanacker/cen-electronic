@@ -33,8 +33,7 @@ void interruptServoTimerCallbackFunc(Timer* timer) {
             // Avoid to have negative value
             if (servo->currentPosition > servo->targetSpeed) {
                 servo->currentPosition -= servo->targetSpeed;
-            }
-            else {
+            } else {
                 servo->currentPosition = 0;
             }
             // Limit
@@ -46,21 +45,21 @@ void interruptServoTimerCallbackFunc(Timer* timer) {
     }
 }
 
-void initServoList(ServoList* servoList, 
-                   Servo(*servos)[], 
-                   unsigned int servoListSize 
-                   ) {
+void initServoList(ServoList* servoList,
+        Servo(*servos)[],
+        unsigned int servoListSize
+        ) {
     servoList->servos = servos;
     servoList->maxSize = servoListSize;
-    
+
     // Init the timer for servo
     // and add the timer to the list, so that the interrupt function will
     // update at a certain frequency the position of the servo
     addTimer(SERVO_TIMER_CODE,
-                            TIME_DIVIDER_50_HERTZ,
-                            &interruptServoTimerCallbackFunc,
-                            "SERVO", 
-							(int*) servoList);
+            TIME_DIVIDER_50_HERTZ,
+            &interruptServoTimerCallbackFunc,
+            "SERVO",
+            (int*) servoList);
     servoList->initialized = true;
     servoList->useTimer = true;
 }
@@ -77,15 +76,15 @@ bool servoListContainsServoType(ServoList* servoList, enum ServoType servoType) 
 }
 
 Servo* addServo(ServoList* servoList,
-    enum ServoType servoType,
-    unsigned int internalServoIndex,
-    char* name,
-    ServoTypeInitFunction* typeInitFunction,
-    ServoInitFunction* initFunction,
-    ServoUpdateConfigFunction* updateConfigFunction,
-    ServoInternalPwmFunction* internalPwmFunction,
-    int* object
-    ) {
+        enum ServoType servoType,
+        unsigned int internalServoIndex,
+        char* name,
+        ServoTypeInitFunction* typeInitFunction,
+        ServoInitFunction* initFunction,
+        ServoUpdateConfigFunction* updateConfigFunction,
+        ServoInternalPwmFunction* internalPwmFunction,
+        int* object
+        ) {
     if (servoList == NULL) {
         writeError(SERVO_LIST_NULL);
         return NULL;
@@ -107,19 +106,18 @@ Servo* addServo(ServoList* servoList,
             typeInitFunction(servoType, object);
         }
         initServo(result,
-                  servoType,
-                  internalServoIndex,
-                  name,
-                  typeInitFunction,
-                  initFunction,
-                  updateConfigFunction,
-                  internalPwmFunction,
-                  object);
-        result->servoList = (int*)servoList;
+                servoType,
+                internalServoIndex,
+                name,
+                typeInitFunction,
+                initFunction,
+                updateConfigFunction,
+                internalPwmFunction,
+                object);
+        result->servoList = (int*) servoList;
         servoList->size++;
         return result;
-    }
-    else {
+    } else {
         writeError(SERVO_LIST_TOO_MUCH_SERVOS);
         return NULL;
     }
@@ -141,12 +139,12 @@ Servo* getServo(ServoList* servoList, unsigned int servoIndex) {
         writeError(SERVO_LIST_OUT_OF_BOUNDS);
         return NULL;
     }
-    Servo* result = (Servo*)servoList->servos;
+    Servo* result = (Servo*) servoList->servos;
     // we don't need use sizeof because our pointer is a LogHandler* pointer, so the shift
     // is already of the structure, we just have to shift of index.
     result += servoIndex;
 
-    return result;    
+    return result;
 }
 
 // UTILS FUNCTION

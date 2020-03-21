@@ -3,9 +3,11 @@
 
 #include "../../device/deviceDescriptor.h"
 
+#include "../../common/io/pin.h"
+
 /**
  * The descriptor for the IO Device.
  */
-DeviceDescriptor* getIODeviceDescriptor();
+DeviceDescriptor* getIODeviceDescriptor(PinList* pinList);
 
 #endif

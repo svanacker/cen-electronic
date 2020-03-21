@@ -85,10 +85,10 @@
 void loadRobotKinematicsParameters(RobotKinematics* robotKinematics, Eeprom* eeprom_, bool loadDefaultValues);
 
 /**
-* Save the Kinematics parameters to the eeprom_ from the structure given in parameter.
-* @param robotKinematics Structure with all parameters
-* @param eeprom_ the eeprom object to store long term values
-*/
+ * Save the Kinematics parameters to the eeprom_ from the structure given in parameter.
+ * @param robotKinematics Structure with all parameters
+ * @param eeprom_ the eeprom object to store long term values
+ */
 void saveRobotKinematicsParameters(RobotKinematics* robotKinematics, Eeprom* eeprom_);
 
 #endif

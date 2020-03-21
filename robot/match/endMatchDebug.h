@@ -6,9 +6,9 @@
 #include "../../common/io/outputStream.h"
 
 /**
-* Print a table to debug the end of Match structure.
-* @param outputStream where we print the table
-*/
+ * Print a table to debug the end of Match structure.
+ * @param outputStream where we print the table
+ */
 void printEndOfMatchTable(OutputStream* outputStream, EndMatch* endMatch);
 
 #endif

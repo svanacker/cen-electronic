@@ -28,26 +28,26 @@
 
 /**
  * No Unit, as it is a factor
-* Defines the u integral factor integral for which we consider that there is a blocking.
-* For example, if the value is equal to 4, it indicates that if the average integral of U is more than
-* the normal value of u (with no load), we must consider it as a blocking
-*/
+ * Defines the u integral factor integral for which we consider that there is a blocking.
+ * For example, if the value is equal to 4, it indicates that if the average integral of U is more than
+ * the normal value of u (with no load), we must consider it as a blocking
+ */
 #define MAX_U_INTEGRAL_FACTOR_THRESHOLD_DEFAULT_VALUE              3.0f
 
 /**
-* When the robot is very low, the answer of the motor is not linear, and we can thing that the robot is blocked, because,
-* the consign is very high compared to the normal value
-*/
+ * When the robot is very low, the answer of the motor is not linear, and we can thing that the robot is blocked, because,
+ * the consign is very high compared to the normal value
+ */
 #define MAX_U_INTEGRAL_CONSTANT_THRESHOLD_DEFAULT_VALUE          10.0f
 
 /**
-* The delay in seconds for which we consider that we are blocked or if we have reached if we don't go anymore
-*/
+ * The delay in seconds for which we consider that we are blocked or if we have reached if we don't go anymore
+ */
 #define BLOCKING_OR_REACH_DETECTION_DELAY_DEFAULT_VALUE           0.2f
 
 /**
-* The delay for which we do not try to know if the robot is rolling or blocked
-*/
+ * The delay for which we do not try to know if the robot is rolling or blocked
+ */
 #define BLOCKING_OR_REACH_SKIP_DETECTION_DELAY_DEFAULT_VALUE      0.6f
 
 void loadMotionEndDetectionParameters(MotionEndDetectionParameter* motionEndDetectionParameter, Eeprom* motionEndDetectionParametersEeprom, bool loadDefaultValues);

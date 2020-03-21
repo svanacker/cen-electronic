@@ -46,33 +46,33 @@ int getGameTargetActionCount(GameTargetActionList* list);
  * @param targetAction the target to add to the list
  */
 void addTargetMoveAction(GameTargetActionList* targetActionList,
-    GameTargetAction* targetAction,
-    Location* startLocation,
-    Location* endLocation,
-    float timeToAchieve);
+        GameTargetAction* targetAction,
+        Location* startLocation,
+        Location* endLocation,
+        float timeToAchieve);
 
 void addTargetPrepareAction(GameTargetActionList* targetActionList,
-    GameTargetAction* targetAction,
-    Location* location,
-    float timeToAchieve,
-    GameTargetActionItemList* actionItemList);
+        GameTargetAction* targetAction,
+        Location* location,
+        float timeToAchieve,
+        GameTargetActionItemList* actionItemList);
 
 void addTargetTakeAction(GameTargetActionList* targetActionList,
-    GameTargetAction* targetAction,
-    Location* location,
-    float timeToAchieve,
-    GameTargetActionItemList* actionItemList);
+        GameTargetAction* targetAction,
+        Location* location,
+        float timeToAchieve,
+        GameTargetActionItemList* actionItemList);
 
 void addTargetDropAction(GameTargetActionList* targetActionList,
-    GameTargetAction* targetAction,
-    Location* location,
-    float timeToAchieve,
-    GameTargetActionItemList* actionItemList);
+        GameTargetAction* targetAction,
+        Location* location,
+        float timeToAchieve,
+        GameTargetActionItemList* actionItemList);
 
 // FINDER METHODS -----------------------
 
 /**
-*/
+ */
 GameTargetAction* getNextGameTargetActionTodoByLocation(GameTargetActionList* targetActionList, Location* location);
 
 /**

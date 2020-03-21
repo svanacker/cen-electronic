@@ -20,15 +20,12 @@
 
 void printDistributorSquareContent(OutputStream* outputStream, enum DistributorSquareContent squareContent) {
     if (squareContent == SQUARE_CONTENT_EMPTY) {
-        append(outputStream, 'O');        
-    }
-    else if (squareContent == SQUARE_CONTENT_COLOR_UNKNOWN) {
+        append(outputStream, 'O');
+    } else if (squareContent == SQUARE_CONTENT_COLOR_UNKNOWN) {
         append(outputStream, '?');
-    }
-    else if (squareContent == SQUARE_CONTENT_DIRTY) {
+    } else if (squareContent == SQUARE_CONTENT_DIRTY) {
         append(outputStream, 'H');
-    }
-    else if (squareContent == SQUARE_CONTENT_OK) {
+    } else if (squareContent == SQUARE_CONTENT_OK) {
         append(outputStream, 'X');
     }
 }
@@ -69,7 +66,7 @@ void printDistributor2018(OutputStream* outputStream, Distributor* distributor) 
     appendString(outputStream, "  ");
     printDistributorSquareContent(outputStream, distributor->squares[4]);
     println(outputStream);
-    
+
     // Launcher square content
     appendString(outputStream, "Launcher:");
     printDistributorSquareContent(outputStream, distributor->launcherContent);

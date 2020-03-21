@@ -10,7 +10,7 @@
 void loadPointFromEeprom(Point* point, Eeprom* eeprom, unsigned long startIndex) {
     float x = eepromReadUnsignedFloat(eeprom, startIndex, POSITION_DIGIT_MM_PRECISION);
     float y = eepromReadUnsignedFloat(eeprom, startIndex + 4, POSITION_DIGIT_MM_PRECISION);
-    
+
     point->x = x;
     point->y = y;
 }

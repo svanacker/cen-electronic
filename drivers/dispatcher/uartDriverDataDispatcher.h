@@ -12,16 +12,16 @@
 #define UART_DRIVER_DATA_DISPATCHER_BUFFER_LENGTH        4000
 
 /**
-* Add the uart driver data dispatcher to the list
-* @param streamLink a stream Link which wraps the serial Link 
-* @param dispatcherName name of the dispatcher
-* @param targetUartIndex the uart Index that we use to communicate with the slave board.
-* @return the structure to store information about dispatcher
-*/
+ * Add the uart driver data dispatcher to the list
+ * @param streamLink a stream Link which wraps the serial Link 
+ * @param dispatcherName name of the dispatcher
+ * @param targetUartIndex the uart Index that we use to communicate with the slave board.
+ * @return the structure to store information about dispatcher
+ */
 DriverDataDispatcher* addUartDriverDataDispatcher(
-                            StreamLink* streamLink,
-                            const char* dispatcherName,
-                            unsigned int targetUartIndex);
+        StreamLink* streamLink,
+        const char* dispatcherName,
+        unsigned int targetUartIndex);
 
 #endif
 

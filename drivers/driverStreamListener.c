@@ -28,12 +28,12 @@
 #include "../drivers/dispatcher/driverDataDispatcherList.h"
 
 /**
-* @private
-* Try to clear the buffer if it contains some 'z' char. Very useful when we have made a mistake taping an instruction.
-* @return true if it was cleared (=> buffer will be cleared), false else
-*/
+ * @private
+ * Try to clear the buffer if it contains some 'z' char. Very useful when we have made a mistake taping an instruction.
+ * @return true if it was cleared (=> buffer will be cleared), false else
+ */
 bool clearBufferIfNeeded(Buffer* inputBuffer) {
-    
+
     int i;
     int inputBufferCount = getBufferElementsCount(inputBuffer);
     for (i = 0; i < inputBufferCount; i++) {
@@ -53,11 +53,11 @@ bool clearBufferIfNeeded(Buffer* inputBuffer) {
 }
 
 /**
-* @private
-* Try to verify if the char is a filtered char or not
-* @return true if it was filtered (=> buffer first char will be removed), false else
-*/
-bool filterFirstNextChar(Buffer* inputBuffer,  filterCharFunction* inputFilterChar) {
+ * @private
+ * Try to verify if the char is a filtered char or not
+ * @return true if it was filtered (=> buffer first char will be removed), false else
+ */
+bool filterFirstNextChar(Buffer* inputBuffer, filterCharFunction* inputFilterChar) {
     // read the first char (but do not pop from the FIFO)
     unsigned char deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
 
@@ -72,16 +72,16 @@ bool filterFirstNextChar(Buffer* inputBuffer,  filterCharFunction* inputFilterCh
 }
 
 bool handleStreamInstruction(Buffer* inputBuffer,
-                            Buffer* outputBuffer,
-                            OutputStream* outputStream,
-                            OutputStream* notificationOutputStream,
-                            filterCharFunction* inputFilterChar,
-                            filterCharFunction* outputFilterChar) {
+        Buffer* outputBuffer,
+        OutputStream* outputStream,
+        OutputStream* notificationOutputStream,
+        filterCharFunction* inputFilterChar,
+        filterCharFunction* outputFilterChar) {
 
-	// We flush the ouputStream to handle notification from Device
-	if (notificationOutputStream != NULL) {
-		notificationOutputStream->flush(notificationOutputStream);
-	}
+    // We flush the ouputStream to handle notification from Device
+    if (notificationOutputStream != NULL) {
+        notificationOutputStream->flush(notificationOutputStream);
+    }
 
     if (inputBuffer == NULL) {
         writeError(DRIVER_STREAM_LISTENER_INPUT_BUFFER_NULL);
@@ -115,7 +115,7 @@ bool handleStreamInstruction(Buffer* inputBuffer,
 
         // Get the header
         unsigned char deviceHeader = bufferGetCharAtIndex(inputBuffer, DEVICE_HEADER_INDEX);
-        
+
         // Remove 0xFF (Appears in MOTOR_NOTIFY_STREAM in 2018)
         if (deviceHeader == 0xFF) {
             bufferReadChar(inputBuffer);
@@ -182,7 +182,7 @@ bool handleStreamInstruction(Buffer* inputBuffer,
             // Call to the device
             deviceDescriptor->deviceHandleRawData(commandHeader, bufferedInputStream, bufferedOutputStream, notificationOutputStream);
 
-        } // we forward the request through Remote Operation with Dispatcher
+        }// we forward the request through Remote Operation with Dispatcher
         else if (specifyDispatcherLength > 0 || transmitMode == TRANSMIT_I2C || transmitMode == TRANSMIT_UART || transmitMode == TRANSMIT_ZIGBEE) {
 
             // Find dispatcher
@@ -199,13 +199,12 @@ bool handleStreamInstruction(Buffer* inputBuffer,
                     appendStringAndDec(errorOutputStream, ", dispatcherIndex=", dispatcherIndex);
                     return false;
                 }
-            }
-            else {
+            } else {
                 TransmitMode transmitMode = device->transmitMode;
                 int address = device->address;
 
                 dispatcher = getDriverDataDispatcherByTransmitMode(transmitMode, address);
-                
+
                 if (dispatcher == NULL) {
                     writeError(NO_DISPATCHER_FOUND);
                     OutputStream* errorOutputStream = getErrorOutputStreamLogger();
@@ -226,7 +225,7 @@ bool handleStreamInstruction(Buffer* inputBuffer,
                     dataToReceiveCount
                     );
         }
-        
+
         // In All Cases (Local / I2C / UART / Zigbee ...)
 
         // Copy the data from bufferOutputStream to the outputStream

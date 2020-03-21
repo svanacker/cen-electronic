@@ -24,19 +24,19 @@
 /**
  * Define the time in second for which, if there is no collision, we can reset All path to available. 
  * This time must be > to the notification Collision time, to avoid that it reset it.
-*/
+ */
 #define RESET_OBSTACLE_COLLISION_TIME_SECOND        5.0f
 
 // Init
 
 /**
  * Init the Game Strategy Context.
-*/
+ */
 void initStrategyHandler(GameStrategyContext* gmeStrategyContext);
 
 /**
-* Returns the next target to reach by computing the next target to reach.
-*/
+ * Returns the next target to reach by computing the next target to reach.
+ */
 GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext);
 
 /**

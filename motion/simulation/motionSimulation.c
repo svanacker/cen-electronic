@@ -48,7 +48,7 @@ void interruptMotionSimulationCallbackFunc(Timer* timer) {
         writeError(TIMER_NULL);
         return;
     }
-    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)timer->object;
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*) timer->object;
     if (gameStrategyContext == NULL) {
         writeError(TIMER_OBJECT_NULL);
         return;
@@ -64,8 +64,7 @@ void interruptMotionSimulationCallbackFunc(Timer* timer) {
     if (bSplineTime > 1.0f) {
         updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_NONE);
         simulateFlag = false;
-    }
-    else {
+    } else {
         bSplineTime += bSplineIncrement;
         // Move the robot by passing the robotPosition point ...
         Point computedPoint;
@@ -82,10 +81,10 @@ void interruptMotionSimulationCallbackFunc(Timer* timer) {
 
 void initMotionSimulation(GameStrategyContext* gameStrategyContext) {
     Timer* timer = addTimer(TIMER_MOTION_SIMULATION_PC,
-        TIME_DIVIDER_5_HERTZ,
-        &interruptMotionSimulationCallbackFunc,
-        "MOTION_SIMUL_PC",
-        (int*)gameStrategyContext);
+            TIME_DIVIDER_5_HERTZ,
+            &interruptMotionSimulationCallbackFunc,
+            "MOTION_SIMUL_PC",
+            (int*) gameStrategyContext);
     timer->enabled = true;
 }
 
@@ -96,11 +95,11 @@ void simulateBSplineAbsolute(GameStrategyContext* gameStrategyContext, float des
     lastRobotPosition.y = gameStrategyContext->robotPosition->y;
 
     updateSimpleSplineWithDistance(&bSplineCurveSimulation,
-        destX - lastRobotPosition.x, destY - lastRobotPosition.y,
-        angleRadian,
-        dist0, dist1,
-        accelerationFactor, speedFactor,
-        false);
+            destX - lastRobotPosition.x, destY - lastRobotPosition.y,
+            angleRadian,
+            dist0, dist1,
+            accelerationFactor, speedFactor,
+            false);
 
     float distance = computeBSplineArcLength(&bSplineCurveSimulation, 0.05f);
     bSplineTime = 0.0f;
@@ -109,8 +108,7 @@ void simulateBSplineAbsolute(GameStrategyContext* gameStrategyContext, float des
     bSplineIncrement = 250.0f / distance / 5.0f;
     if (dist0 > 0.0f) {
         updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_FORWARD);
-    }
-    else {
+    } else {
         updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_BACKWARD);
     }
     simulateFlag = true;

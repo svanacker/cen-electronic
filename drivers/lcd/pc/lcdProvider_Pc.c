@@ -23,7 +23,7 @@ void showUnderlineCursor(void) {
 }
 
 void setBacklight(bool enabled) {
-	// TODO
+    // TODO
 }
 
 void setBlinkCursor(void) {
@@ -37,7 +37,6 @@ void clearScreen(void) {
     putchar('S');
     putchar('\n');
 }
-
 
 void carriageReturnCursor(void) {
     setCursorAtHome();

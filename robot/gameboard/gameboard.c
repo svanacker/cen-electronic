@@ -43,11 +43,11 @@
 // Initialization
 
 void initGameBoard(GameBoard* gameBoard,
-                   BSplineCurve* gameBoardSplineCurve,
-                    GameBoardElementList* gameBoardElementList,
-                    GameBoardElement(*gameBoardElementListArray)[],
-                    unsigned char gameBoardElementListSize,
-                    GameStrategyContext* gameStrategyContext) {
+        BSplineCurve* gameBoardSplineCurve,
+        GameBoardElementList* gameBoardElementList,
+        GameBoardElement(*gameBoardElementListArray)[],
+        unsigned char gameBoardElementListSize,
+        GameStrategyContext* gameStrategyContext) {
     gameBoard->showLocation = true;
     gameBoard->showPath = true;
     gameBoard->showUnavailablePath = true;
@@ -73,6 +73,7 @@ void drawLastObstacle(GameBoard* gameBoard, Point* obstacle) {
 }
 
 // COLOR MANAGEMENT
+
 void setGameBoardCurrentColor(GameBoard* gameBoard, unsigned char currentColorPaletIndex) {
     // ONLY ON WINDOW
 #ifdef _MSC_VER
@@ -91,8 +92,7 @@ void drawRobot(GameBoard* gameBoard, Point* robotPosition, float angle) {
     // Draw the central point
     if (robotType == ROBOT_TYPE_BIG) {
         drawPoint(gameBoard, robotPosition, 'B');
-    }
-    else if (robotType == ROBOT_TYPE_SMALL) {
+    } else if (robotType == ROBOT_TYPE_SMALL) {
         drawPoint(gameBoard, robotPosition, 'S');
     }
     float radius = 150.0f;
@@ -153,7 +153,7 @@ void drawRobotTofsCones(GameBoard* gameBoard, Point* robotPosition, float robotA
         // Compute the tof Point of View
         Point tofPointOfView;
         tofComputeTofPointOfView(tofSensor, robotPosition, robotAngle, &tofPointOfView);
-        
+
         // We now do a variation of angle and a variation of distance to "paint" the tof cone angle
         float angle;
         float minAngle = -tofSensor->beamAngleRadian / 2.0f;
@@ -166,7 +166,7 @@ void drawRobotTofsCones(GameBoard* gameBoard, Point* robotPosition, float robotA
             for (distance = tofSensor->thresholdMinDistanceMM; distance < tofSensor->thresholdMaxDistanceMM; distance += stepDistance) {
                 Point p1;
                 tofComputePoint(tofSensor, &tofPointOfView, robotAngle, (float) distance, angle, &p1);
-                unsigned char c = (unsigned char)((index% 26) + 48);
+                unsigned char c = (unsigned char) ((index % 26) + 48);
                 drawPointCoordinates(gameBoard, p1.x, p1.y, c);
             }
         }
@@ -194,15 +194,14 @@ void gameTargetPrint(GameBoard* gameBoard, int* element) {
     unsigned char c;
     if (target->status == TARGET_AVAILABLE) {
         c = 'X';
-    }
-    else {
+    } else {
         c = 'O';
     }
     drawPointCoordinates(gameBoard, endLocation->x, endLocation->y, c);
 }
 
 void gamePathPrint(GameBoard* gameBoard, int* element, unsigned char c) {
-    PathData* pathData = (PathData*)element;
+    PathData* pathData = (PathData*) element;
     if (pathData == NULL) {
         writeError(PATH_NULL);
         return;
@@ -212,10 +211,10 @@ void gamePathPrint(GameBoard* gameBoard, int* element, unsigned char c) {
     BSplineCurve* bSplineCurve = gameBoard->gameBoardCurve;
 
     parameterBSplineWithDistanceAndAngle(bSplineCurve, location1->x, location1->y, pathData->angleRadian1,
-                                                          location2->x, location2->y, pathData->angleRadian2,
-                                                          pathData->controlPointDistance1, pathData->controlPointDistance2, 
-                                                          MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
-                                                          false);
+            location2->x, location2->y, pathData->angleRadian2,
+            pathData->controlPointDistance1, pathData->controlPointDistance2,
+            MOTION_ACCELERATION_FACTOR_NORMAL, MOTION_SPEED_FACTOR_NORMAL,
+            false);
 
     bSplinePrint(gameBoard, bSplineCurve, c);
 }
@@ -263,8 +262,8 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
                 continue;
             }
             // We try to use the alphabet to avoid that path could not be easily read
-            unsigned char c = (char)((i % 26) + 97);
-            gamePathPrint(gameBoard, (int*)pathData, c);
+            unsigned char c = (char) ((i % 26) + 97);
+            gamePathPrint(gameBoard, (int*) pathData, c);
         }
     }
 
@@ -281,8 +280,8 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
             OutgoingPathData* outgoingPathData = getOutgoingPath(outgoingPathList, i);
             PathData* pathData = outgoingPathData->pathData;
             // We try to use the alphabet to avoid that path could not be easily read
-            unsigned char c = (unsigned char)((i % 26) + 97);
-            gamePathPrint(gameBoard, (int*)pathData, c);
+            unsigned char c = (unsigned char) ((i % 26) + 97);
+            gamePathPrint(gameBoard, (int*) pathData, c);
         }
     }
 
@@ -295,15 +294,15 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
 
         GameboardPrintFunction* printFunction = gameBoardElement->printFunction;
         if (gameBoardElement->type == GAME_BOARD_ELEMENT_PRINT_ONLY
-            || gameBoardElement->type == GAME_BOARD_ELEMENT_PRINT_AND_REACHABLE) {
-            printFunction(gameBoard, (int*)gameBoardElement);
+                || gameBoardElement->type == GAME_BOARD_ELEMENT_PRINT_AND_REACHABLE) {
+            printFunction(gameBoard, (int*) gameBoardElement);
         }
 
         if (!gameBoard->showUnreachableArea) {
             continue;
         }
         if (gameBoardElement->type == GAME_BOARD_ELEMENT_REACHABLE_ONLY
-            || gameBoardElement->type == GAME_BOARD_ELEMENT_PRINT_AND_REACHABLE) {
+                || gameBoardElement->type == GAME_BOARD_ELEMENT_PRINT_AND_REACHABLE) {
             // Excluding  area
             unsigned int line;
             unsigned int column;
@@ -326,16 +325,16 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
     for (i = 0; i < targetSize; i++) {
         GameTarget* gameTarget = gameTargetList->targets[i];
 
-        gameTargetPrint(gameBoard, (int*)gameTarget);
+        gameTargetPrint(gameBoard, (int*) gameTarget);
     }
 
     // Robot Tof Conte
     if (gameBoard->showRobotTofsCones) {
         // TODO
-        drawRobotTofsCones(gameBoard, 
-                           gameStrategyContext->robotPosition,
-                           gameStrategyContext->robotAngleRadian, 
-                           gameStrategyContext->tofSensorList);
+        drawRobotTofsCones(gameBoard,
+                gameStrategyContext->robotPosition,
+                gameStrategyContext->robotAngleRadian,
+                gameStrategyContext->tofSensorList);
     }
 
     // Robot
@@ -350,7 +349,7 @@ void fillGameBoardCharElements(GameBoard* gameBoard, int* element) {
     drawOpponent(gameBoard, gameStrategyContext->opponentRobotPosition);
 }
 
-void printGameboard(GameBoard* gameBoard,  OutputStream* outputStream) {
+void printGameboard(GameBoard* gameBoard, OutputStream* outputStream) {
     println(outputStream);
     clearGameBoardPixels(gameBoard);
     // Fill All Chars
@@ -366,7 +365,7 @@ void printGameboard(GameBoard* gameBoard,  OutputStream* outputStream) {
             if (colorPalet == CONSOLE_COLOR_BLACK) {
                 colorPalet = CONSOLE_COLOR_WHITE;
             }
-            HANDLE standardOutputHandle = GetStdHandle(STD_OUTPUT_HANDLE);      // Get Handle 
+            HANDLE standardOutputHandle = GetStdHandle(STD_OUTPUT_HANDLE); // Get Handle 
             SetConsoleTextAttribute(standardOutputHandle, colorPalet);
 #endif
             append(outputStream, pixelChar);
@@ -391,7 +390,7 @@ bool isPointInTheCollisionArea(GameBoard* gameBoard, Point* collisionPoint) {
         GameBoardElement* gameBoardElement = getGameBoardElement(gameBoardElementList, i);
 
         if (gameBoardElement->type == GAME_BOARD_ELEMENT_REACHABLE_ONLY
-            || gameBoardElement->type == GAME_BOARD_ELEMENT_PRINT_AND_REACHABLE) {
+                || gameBoardElement->type == GAME_BOARD_ELEMENT_PRINT_AND_REACHABLE) {
             bool reachabled = gameBoardElement->reachableByOpponentRobotFunction(gameBoard, (int*) gameBoardElement, collisionPoint->x, collisionPoint->y, 0.0f);
             // If the point is unreachable by the robot, we must not consider it as a collision
             if (!reachabled) {

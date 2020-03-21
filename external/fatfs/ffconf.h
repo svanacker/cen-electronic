@@ -195,7 +195,7 @@
 /  bit0=1: Do not trust free cluster count in the FSINFO.
 /  bit1=0: Use last allocated cluster number in the FSINFO if available.
 /  bit1=1: Do not trust last allocated cluster number in the FSINFO.
-*/
+ */
 
 
 
@@ -270,5 +270,5 @@
 /   PIC18       0/1         SH-2        0           M16C        0/1
 /   PIC24       0           H8S         0           MSP430      0
 /   PIC32       0           H8/300H     0           8051        0/1
-*/
+ */
 

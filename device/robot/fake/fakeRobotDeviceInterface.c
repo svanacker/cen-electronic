@@ -24,8 +24,7 @@ int deviceFakeRobotGetInterface(unsigned char commandHeader, DeviceInterfaceMode
             setResultUnsignedHex4(6, "radius (mm)");
         }
         return commandLengthValueForMode(mode, 0, 19);
-    }
-    else if (commandHeader == COMMAND_FAKE_ROBOT_SET_POSITION) {
+    } else if (commandHeader == COMMAND_FAKE_ROBOT_SET_POSITION) {
         if (fillDeviceArgumentList) {
             setFunction("Set Position", 7, 0);
             setArgumentUnsignedHex4(0, "x (mm)");

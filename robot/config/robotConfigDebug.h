@@ -6,9 +6,9 @@
 #include "../../common/io/outputStream.h"
 
 /**
-* Print a table to debug the config.
-* @param outputStream where we print the table
-*/
+ * Print a table to debug the config.
+ * @param outputStream where we print the table
+ */
 void printRobotTableConfig(OutputStream* outputStream, RobotConfig* robotConfig);
 
 #endif

@@ -24,17 +24,17 @@ float getPathEndAngleRadian(PathData* pathData) {
     return pathData->angleRadian2;
 }
 
-void initPathData(PathData* pathData, 
-                  enum PathDataUsageType usageType,
-                    Location* location1,
-                     Location* location2, 
-                     float cost,
-                     float controlPointDistance1,
-                     float controlPointDistance2,
-                     float angleRadian1,
-                     float angleRadian2,
-                     float accelerationFactor,
-                     float speedFactor) {
+void initPathData(PathData* pathData,
+        enum PathDataUsageType usageType,
+        Location* location1,
+        Location* location2,
+        float cost,
+        float controlPointDistance1,
+        float controlPointDistance2,
+        float angleRadian1,
+        float angleRadian2,
+        float accelerationFactor,
+        float speedFactor) {
     if (pathData == NULL) {
         writeError(PATH_NULL);
         return;
@@ -58,20 +58,19 @@ void initPathData(PathData* pathData,
 }
 
 void initAsymmetricPathData(
-                      PathData* pathData,
-                     Location* location1,
-                     Location* location2, 
-                     float cost,
-                     float controlPointDistance1,
-                     float controlPointDistance2,
-                     float angle1,
-                     float angle2,
-                     unsigned char accelerationFactor,
-                     unsigned char speedFactor) {
+        PathData* pathData,
+        Location* location1,
+        Location* location2,
+        float cost,
+        float controlPointDistance1,
+        float controlPointDistance2,
+        float angle1,
+        float angle2,
+        unsigned char accelerationFactor,
+        unsigned char speedFactor) {
     initPathData(pathData, PATH_DATA_USAGE_TYPE_PERMANENT, location1, location2, cost, controlPointDistance1, controlPointDistance2, angle1, angle2, accelerationFactor, speedFactor);
     pathData->mustGoBackward = controlPointDistance1 < 0.0f;
 }
-
 
 bool pathContainsLocation(PathData* pathData, Location* location) {
     return pathData->location1 == location || pathData->location2 == location;
@@ -102,8 +101,8 @@ void decreaseObstacleCost(PathData* pathData) {
 }
 
 /***
-* NOT USED !!
-*/
+ * NOT USED !!
+ */
 bool restartFromPositionToGoToPath(PathData* pathData, Point* robotPosition) {
     Point locationPoint;
     locationPoint.x = pathData->location1->x;
@@ -112,14 +111,13 @@ bool restartFromPositionToGoToPath(PathData* pathData, Point* robotPosition) {
     float distanceSinceDeparture = distanceBetweenPoints(&locationPoint, robotPosition);
 
     float dist1 = pathData->controlPointDistance1;
-    if (dist1 < 0.0f) {        
+    if (dist1 < 0.0f) {
         dist1 = pathData->controlPointDistance1 + distanceSinceDeparture;
         if (dist1 >= -10.0f) {
             // Minimum to do a good trajectory : TO BE CHECKED
             dist1 = -10.0f;
         }
-    }
-    else if (dist1 > 0.0f) {        
+    } else if (dist1 > 0.0f) {
         dist1 = pathData->controlPointDistance1 - distanceSinceDeparture;
         if (dist1 <= 10.0f) {
             // Minimum to do a good trajectory : TO BE CHECKED
@@ -127,7 +125,7 @@ bool restartFromPositionToGoToPath(PathData* pathData, Point* robotPosition) {
         }
     }
     float dist2 = pathData->controlPointDistance2;
-    
+
     float destX = pathData->location2->x;
     float destY = pathData->location2->y;
     float destAngleRadian = pathData->angleRadian2;

@@ -21,9 +21,8 @@
 
 #include "../../main/meca2/mechanicalBoard2.h"
 
-
 void deviceLift2011Init() {
-    
+
 }
 
 void deviceLift2011ShutDown() {
@@ -40,8 +39,8 @@ bool deviceLift2011IsOk() {
 #define LIFT_PWM_BOTTOM     1200
 
 void deviceLift2011HandleRawData(char commandHeader,
-                             InputStream* inputStream,
-                             OutputStream* outputStream) {
+        InputStream* inputStream,
+        OutputStream* outputStream) {
     if (commandHeader == COMMAND_LIFT_2011_BOTTOM) {
         appendAck(outputStream);
         append(outputStream, COMMAND_LIFT_2011_BOTTOM);
@@ -58,24 +57,22 @@ void deviceLift2011HandleRawData(char commandHeader,
         pwmServoAll(20000, LIFT_PWM_MIDDLE);
         delaymSec(50);
         pwmServoAll(20000, LIFT_PWM_MIDDLE);
-    }
-    else if (commandHeader == COMMAND_LIFT_2011_UP) {
+    } else if (commandHeader == COMMAND_LIFT_2011_UP) {
         appendAck(outputStream);
         append(outputStream, COMMAND_LIFT_2011_UP);
-        
+
         pwmServoAll(20000, LIFT_PWM_MIDDLE);
         delaymSec(80);
 
         int counter;
-        for (counter = 0; counter < 2; counter++) { 
-            pwmServoAll(20000, LIFT_PWM_UP);        
+        for (counter = 0; counter < 2; counter++) {
+            pwmServoAll(20000, LIFT_PWM_UP);
             delaymSec(100);
         }
         pwmServoAll(20000, LIFT_PWM_MIDDLE);
         delaymSec(100);
         pwmServoAll(20000, LIFT_PWM_MIDDLE);
-    }
-    else if (commandHeader == COMMAND_LIFT_2011_DOWN) {
+    } else if (commandHeader == COMMAND_LIFT_2011_DOWN) {
         appendAck(outputStream);
         append(outputStream, COMMAND_LIFT_2011_DOWN);
 

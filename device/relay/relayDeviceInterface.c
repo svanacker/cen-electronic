@@ -18,16 +18,14 @@ int deviceRelayGetInterface(unsigned char commandHeader, DeviceInterfaceMode mod
             setArgumentUnsignedChar1(2, "Value");
         }
         return commandLengthValueForMode(mode, 4, 0);
-    }
-    else if (commandHeader == COMMAND_READ_RELAY) {
+    } else if (commandHeader == COMMAND_READ_RELAY) {
         if (fillDeviceArgumentList) {
             setFunction("read Relay", 1, 1);
             setArgumentUnsignedHex2(0, "Relay Index");
             setResultUnsignedChar1(0, "Value");
         }
         return commandLengthValueForMode(mode, 2, 1);
-    }
-    else if (commandHeader == COMMAND_RELAY_DEBUG) {
+    } else if (commandHeader == COMMAND_RELAY_DEBUG) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Debug Relay");
         }

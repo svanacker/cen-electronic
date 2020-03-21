@@ -34,7 +34,7 @@ void devicePcInit(void) {
 }
 
 void devicePcShutDown(void) {
-} 
+}
 
 bool devicePcIsOk(void) {
     return true;
@@ -45,8 +45,7 @@ void devicePcHandleRawData(unsigned char header, InputStream* inputStream, Outpu
         // data
         ackCommand(outputStream, PC_DEVICE_HEADER, COMMAND_PIPE_LIST);
         // TODO : PipeList
-    }
-    else if (header == COMMAND_LOAD_COMMAND_FILE) {
+    } else if (header == COMMAND_LOAD_COMMAND_FILE) {
         // data
         ackCommand(outputStream, PC_DEVICE_HEADER, COMMAND_LOAD_COMMAND_FILE);
         int c;
@@ -57,8 +56,7 @@ void devicePcHandleRawData(unsigned char header, InputStream* inputStream, Outpu
                 append(commandOutputStream, c);
             }
             fclose(file);
-        }
-        else {
+        } else {
             writeError(PC_FILE_NOT_FOUND);
         }
     }

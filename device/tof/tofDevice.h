@@ -6,8 +6,8 @@
 #include "../../device/deviceDescriptor.h"
 
 /**
-* Returns the deviceDescriptor on a list of Time of Flight (TOF) Sensors.
-*/
+ * Returns the deviceDescriptor on a list of Time of Flight (TOF) Sensors.
+ */
 DeviceDescriptor* getTofDeviceDescriptor(TofSensorList* tofSensorList);
 
 #endif

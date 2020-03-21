@@ -21,27 +21,26 @@
 #include "../../robot/kinematics/robotKinematics.h"
 
 /**
-* Go to a position
-*/
+ * Go to a position
+ */
 void gotoSimplePosition(PidMotion* pidMotion, float leftMM, float rightMM, float a, float speed, OutputStream* notificationOutputStream) {
-	// determine the type of motion
-	enum MotionParameterType motionParameterType = getMotionParameterType(leftMM, rightMM);
+    // determine the type of motion
+    enum MotionParameterType motionParameterType = getMotionParameterType(leftMM, rightMM);
 
-	// Alpha / Theta
-	float thetaNextPosition = computeTheta(leftMM, rightMM);
-	float alphaNextPosition = computeAlpha(leftMM, rightMM);
+    // Alpha / Theta
+    float thetaNextPosition = computeTheta(leftMM, rightMM);
+    float alphaNextPosition = computeAlpha(leftMM, rightMM);
 
-	PidMotionDefinition* motionDefinition = pidMotionGetNextToWritePidMotionDefinition(pidMotion);
-	motionDefinition->motionType = MOTION_TYPE_NORMAL;
-	motionDefinition->notificationOutputStream = notificationOutputStream;
+    PidMotionDefinition* motionDefinition = pidMotionGetNextToWritePidMotionDefinition(pidMotion);
+    motionDefinition->motionType = MOTION_TYPE_NORMAL;
+    motionDefinition->notificationOutputStream = notificationOutputStream;
 
-	setNextPosition(motionDefinition, THETA, motionParameterType, thetaNextPosition, a, speed);
-	setNextPosition(motionDefinition, ALPHA, motionParameterType, alphaNextPosition, a, speed);
+    setNextPosition(motionDefinition, THETA, motionParameterType, thetaNextPosition, a, speed);
+    setNextPosition(motionDefinition, ALPHA, motionParameterType, alphaNextPosition, a, speed);
 
     // All main information are defined
     motionDefinition->state = PID_MOTION_DEFINITION_STATE_SET;
 }
-
 
 /**
  * Stop the robot.
@@ -52,7 +51,7 @@ void stopPosition(PidMotion* pidMotion, bool maintainPositionValue, OutputStream
     if (maintainPositionValue) {
         maintainPosition(pidMotion, notificationOutputStream);
     }
-    
+
     // Avoid that the robot considered he will remain the initial speed for next move (it is stopped).
     clearInitialSpeeds(pidMotion);
 

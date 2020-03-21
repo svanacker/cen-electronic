@@ -26,9 +26,9 @@
 #define COMMAND_ACCELEROMETER_GET_THRESHOLD                     't'
 
 /**
-* Interface for the Device.
-* @return the Interface for the Accelerometer device.
-*/
+ * Interface for the Device.
+ * @return the Interface for the Accelerometer device.
+ */
 DeviceInterface* getAccelerometerDeviceInterface(void);
 
 #endif

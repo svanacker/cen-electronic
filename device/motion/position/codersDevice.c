@@ -45,20 +45,18 @@ void deviceCodersHandleRawData(unsigned char commandHeader, InputStream* inputSt
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         updateTrajectory();
 
-		printCurrentCoderTable(debugOutputStream);
+        printCurrentCoderTable(debugOutputStream);
     } else if (commandHeader == COMMAND_DEBUG_ACQUIRE_SAMPLE_WHEEL_POSITION) {
-		ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_DEBUG_ACQUIRE_SAMPLE_WHEEL_POSITION);
-		unsigned int durationInMilliSec = readHex4(inputStream);
-		checkIsSeparator(inputStream);
+        ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_DEBUG_ACQUIRE_SAMPLE_WHEEL_POSITION);
+        unsigned int durationInMilliSec = readHex4(inputStream);
+        checkIsSeparator(inputStream);
         unsigned int iterationCount = readHex4(inputStream);
         enableCoderSampleRecording(iterationCount, durationInMilliSec);
-	}
-     else if (commandHeader == COMMAND_DEBUG_PRINT_SAMPLE_WHEEL_POSITION) {
-         ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_DEBUG_PRINT_SAMPLE_WHEEL_POSITION);
-         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
-         printSampleCoderHistory(debugOutputStream);
-     }
-	else if (commandHeader == COMMAND_CLEAR_CODERS) {
+    } else if (commandHeader == COMMAND_DEBUG_PRINT_SAMPLE_WHEEL_POSITION) {
+        ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_DEBUG_PRINT_SAMPLE_WHEEL_POSITION);
+        OutputStream* debugOutputStream = getInfoOutputStreamLogger();
+        printSampleCoderHistory(debugOutputStream);
+    } else if (commandHeader == COMMAND_CLEAR_CODERS) {
         ackCommand(outputStream, CODERS_DEVICE_HEADER, COMMAND_CLEAR_CODERS);
 
         updateTrajectoryAndClearCoders();

@@ -5,13 +5,13 @@
 #include "../../device/deviceConstants.h"
 
 /**
-* Defines the header to move the motor.
-*/
+ * Defines the header to move the motor.
+ */
 #define COMMAND_MD22_MOVE         'w'
 
 /**
-* Defines the header to move the motor.
-*/
+ * Defines the header to move the motor.
+ */
 #define COMMAND_MD22_READ_VALUE   'r'
 
 /**
@@ -20,13 +20,13 @@
 #define COMMAND_MD22_SOFTWARE_REVISION   'v'
 
 /**
-* Defines the header to stop the motors.
-*/
+ * Defines the header to stop the motors.
+ */
 #define COMMAND_MD22_STOP         'c'
 
 /**
-* Interface for Device.
-*/
+ * Interface for Device.
+ */
 DeviceInterface* getMD22DeviceInterface(void);
 
 #endif

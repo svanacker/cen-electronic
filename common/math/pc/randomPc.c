@@ -6,5 +6,5 @@
 void initRandomGenerator() {
     LARGE_INTEGER _time;
     QueryPerformanceCounter(&_time);
-    srand((int)_time.LowPart);
+    srand((int) _time.LowPart);
 }

@@ -65,8 +65,7 @@ int changeAngleForColor(int angle) {
 void armLeftUp() {
     if (isGreen()) {
         armDriver2012Up(ARM_LEFT);
-    }
-    else {
+    } else {
         armDriver2012Up(ARM_RIGHT);
     }
 }
@@ -74,8 +73,7 @@ void armLeftUp() {
 void armLeftDown() {
     if (isGreen()) {
         armDriver2012Down(ARM_LEFT);
-    }
-    else {
+    } else {
         armDriver2012Down(ARM_RIGHT);
     }
 }
@@ -83,8 +81,7 @@ void armLeftDown() {
 void armRightUp() {
     if (isGreen()) {
         armDriver2012Up(ARM_RIGHT);
-    }
-    else {
+    } else {
         armDriver2012Up(ARM_LEFT);
     }
 }
@@ -92,8 +89,7 @@ void armRightUp() {
 void armRightDown() {
     if (isGreen()) {
         armDriver2012Down(ARM_RIGHT);
-    }
-    else {
+    } else {
         armDriver2012Down(ARM_LEFT);
     }
 }

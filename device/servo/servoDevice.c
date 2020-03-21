@@ -53,8 +53,7 @@ void deviceServoHandleRawData(unsigned char commandHeader, InputStream* inputStr
             pwmServo(servo, servoSpeed, servoValue, false);
         }
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE);
-    }
-    else if (commandHeader == SERVO_COMMAND_WRITE_MAX_SPEED_UNDER_LOAD) {
+    } else if (commandHeader == SERVO_COMMAND_WRITE_MAX_SPEED_UNDER_LOAD) {
         ServoList* servoList = getServoDeviceServoList();
         unsigned int servoIndex = readHex2(inputStream);
         checkIsSeparator(inputStream);
@@ -62,8 +61,7 @@ void deviceServoHandleRawData(unsigned char commandHeader, InputStream* inputStr
         Servo* servo = getServo(servoList, servoIndex);
         servo->maxSpeedUnderLoad = servoMaxSpeedUnderLoad;
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_WRITE_MAX_SPEED_UNDER_LOAD);
-    }
-    else if (commandHeader == SERVO_COMMAND_WRITE_COMPACT) {
+    } else if (commandHeader == SERVO_COMMAND_WRITE_COMPACT) {
         unsigned int servoValue = readHex4(inputStream);
         ServoList* servoList = getServoDeviceServoList();
         pwmServoAll(servoList, PWM_SERVO_SPEED_MAX, servoValue);
@@ -78,27 +76,23 @@ void deviceServoHandleRawData(unsigned char commandHeader, InputStream* inputStr
         bool enabled = readBool(inputStream);
         if (servoIndex == SERVO_ALL_INDEX) {
             servoEnableAll(servoList, enabled);
-        }
-        else {
+        } else {
             Servo* servo = getServo(servoList, servoIndex);
             pwmServoSetEnabled(servo, enabled);
         }
-    }
-    else if (commandHeader == SERVO_COMMAND_ENABLE_DISABLE_ALL) {
+    } else if (commandHeader == SERVO_COMMAND_ENABLE_DISABLE_ALL) {
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_ENABLE_DISABLE_ALL);
         ServoList* servoList = getServoDeviceServoList();
         bool enabled = readBool(inputStream);
         servoEnableAll(servoList, enabled);
-    }
-    // READ COMMANDS
+    }// READ COMMANDS
     else if (commandHeader == SERVO_COMMAND_GET_COUNT) {
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_GET_COUNT);
         ServoList* servoList = getServoDeviceServoList();
         unsigned int servoCount = getServoCount(servoList);
         appendHex2(outputStream, servoCount);
 
-    }
-    else if (commandHeader == SERVO_COMMAND_READ) {
+    } else if (commandHeader == SERVO_COMMAND_READ) {
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ);
         unsigned int servoIndex = readHex2(inputStream);
         ServoList* servoList = getServoDeviceServoList();
@@ -114,8 +108,7 @@ void deviceServoHandleRawData(unsigned char commandHeader, InputStream* inputStr
         appendHex4(outputStream, currentPosition);
         appendSeparator(outputStream);
         appendHex4(outputStream, targetPosition);
-    }
-    else if (commandHeader == SERVO_COMMAND_READ_SPEED) {
+    } else if (commandHeader == SERVO_COMMAND_READ_SPEED) {
         unsigned int servoIndex = readHex2(inputStream);
         ServoList* servoList = getServoDeviceServoList();
         Servo* servo = getServo(servoList, servoIndex);
@@ -123,8 +116,7 @@ void deviceServoHandleRawData(unsigned char commandHeader, InputStream* inputStr
 
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ_SPEED);
         appendHex2(outputStream, speed);
-    }
-    else if (commandHeader == SERVO_COMMAND_READ_MAX_SPEED_UNDER_LOAD) {
+    } else if (commandHeader == SERVO_COMMAND_READ_MAX_SPEED_UNDER_LOAD) {
         unsigned int servoIndex = readHex2(inputStream);
         ServoList* servoList = getServoDeviceServoList();
         Servo* servo = getServo(servoList, servoIndex);
@@ -132,8 +124,7 @@ void deviceServoHandleRawData(unsigned char commandHeader, InputStream* inputStr
 
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ_MAX_SPEED_UNDER_LOAD);
         appendHex2(outputStream, maxSpeedUnderLoad);
-    }
-    else if (commandHeader == SERVO_COMMAND_READ_CURRENT_POSITION) {
+    } else if (commandHeader == SERVO_COMMAND_READ_CURRENT_POSITION) {
         unsigned int servoIndex = readHex2(inputStream);
         ServoList* servoList = getServoDeviceServoList();
         Servo* servo = getServo(servoList, servoIndex);
@@ -141,8 +132,7 @@ void deviceServoHandleRawData(unsigned char commandHeader, InputStream* inputStr
 
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ_CURRENT_POSITION);
         appendHex4(outputStream, currentPosition);
-    }
-    else if (commandHeader == SERVO_COMMAND_READ_TARGET_POSITION) {
+    } else if (commandHeader == SERVO_COMMAND_READ_TARGET_POSITION) {
         unsigned int servoIndex = readHex2(inputStream);
         ServoList* servoList = getServoDeviceServoList();
         Servo* servo = getServo(servoList, servoIndex);
@@ -150,14 +140,12 @@ void deviceServoHandleRawData(unsigned char commandHeader, InputStream* inputStr
 
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_READ_TARGET_POSITION);
         appendHex4(outputStream, targetPosition);
-    }
-    // DEBUG COMMANDS
+    }// DEBUG COMMANDS
     else if (commandHeader == SERVO_COMMAND_TEST) {
         ServoList* servoList = getServoDeviceServoList();
         testAllPwmServos(servoList);
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_TEST);
-    }
-    else if (commandHeader == SERVO_COMMAND_GET_TIME_TO_REACH_UNDER_LOAD) {
+    } else if (commandHeader == SERVO_COMMAND_GET_TIME_TO_REACH_UNDER_LOAD) {
         unsigned int servoIndex = readHex2(inputStream);
         checkIsSeparator(inputStream);
         unsigned int servoTargetPosition = readHex4(inputStream);
@@ -168,20 +156,14 @@ void deviceServoHandleRawData(unsigned char commandHeader, InputStream* inputStr
         unsigned int timeToReachUnderLoad = pwmServoComputeTimeMilliSecondsToReachTargetPosition(servo, servoTargetPosition);
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_GET_TIME_TO_REACH_UNDER_LOAD);
         appendHex4(outputStream, timeToReachUnderLoad);
-    }
-    else if (commandHeader == SERVO_COMMAND_DEBUG) {
+    } else if (commandHeader == SERVO_COMMAND_DEBUG) {
         ServoList* servoList = getServoDeviceServoList();
         printServoList(getInfoOutputStreamLogger(), servoList);
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_DEBUG);
     }
 }
 
-static DeviceDescriptor descriptor = {
-    .deviceInit = &deviceServoInit,
-    .deviceShutDown = &deviceServoShutDown,
-    .deviceIsOk = &deviceServoIsOk,
-    .deviceHandleRawData = &deviceServoHandleRawData,
-};
+static DeviceDescriptor descriptor;
 
 /**
  * @private
@@ -191,6 +173,12 @@ ServoList* getServoDeviceServoList(void) {
 }
 
 DeviceDescriptor* getServoDeviceDescriptor(ServoList* servoList) {
-    descriptor.object = (int*) servoList;
+    initDeviceDescriptor(&descriptor,
+            &deviceServoInit,
+            &deviceServoShutDown,
+            &deviceServoIsOk,
+            &deviceServoHandleRawData,
+            (int*) servoList);
+
     return &descriptor;
 }

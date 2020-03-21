@@ -8,14 +8,14 @@
 // COORDINATES TRANSFORMATION
 
 /**
-* Convert print coordinates into X
-* @param x (mm)
-*/
+ * Convert print coordinates into X
+ * @param x (mm)
+ */
 float convertColumnToX(unsigned int column);
 
 /**
-* Convert Line print coordinates into Y
-*/
+ * Convert Line print coordinates into Y
+ */
 float convertLineToY(unsigned int line);
 
 // BASE FUNCTIONS
@@ -51,8 +51,8 @@ void drawCircle(GameBoard* gameBoard, float x, float y, float radius, unsigned c
 // RECTANGLE
 
 /**
-* Empty Rectangle draw function.
-*/
+ * Empty Rectangle draw function.
+ */
 void drawRectangle(GameBoard* gameBoard, float x, float y, float width, float height, unsigned char verticalChar, unsigned char horizontalChar);
 
 #endif

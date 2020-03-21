@@ -48,14 +48,12 @@ void deviceGoldenium2019HandleRawData(unsigned char commandHeader, InputStream* 
     if (commandHeader == COMMAND_2019_FORK_PREPARE_TAKE_GOLDENIUM) {
         ackCommand(outputStream, GOLDENIUM_2019_DEVICE_HEADER, COMMAND_2019_FORK_PREPARE_TAKE_GOLDENIUM);
         fork2019PrepareTakeGoldenium(servoList, FORK_2019_LEFT_AND_RIGHT_INDEX);
-    }
-    else if (commandHeader == COMMAND_2019_FORK_TAKE_GOLDENIUM) {
+    } else if (commandHeader == COMMAND_2019_FORK_TAKE_GOLDENIUM) {
         ackCommand(outputStream, GOLDENIUM_2019_DEVICE_HEADER, COMMAND_2019_FORK_TAKE_GOLDENIUM);
         unsigned int side = readHex(inputStream);
         bool scanOk = fork2019TakeGoldenium(servoList, tofSensorList, side);
         appendBool(outputStream, scanOk);
-    }
-    else if (commandHeader == COMMAND_2019_FORK_DROP_GOLDENIUM) {
+    } else if (commandHeader == COMMAND_2019_FORK_DROP_GOLDENIUM) {
         ackCommand(outputStream, GOLDENIUM_2019_DEVICE_HEADER, COMMAND_2019_FORK_DROP_GOLDENIUM);
         unsigned int side = readHex(inputStream);
         fork2019DropGoldenium(servoList, side);
@@ -68,7 +66,6 @@ static DeviceDescriptor descriptor = {
     .deviceIsOk = &deviceGoldenium2019IsOk,
     .deviceHandleRawData = &deviceGoldenium2019HandleRawData,
 };
-
 
 DeviceDescriptor* getGoldenium2019DeviceDescriptor(ServoList* servoListParam, TofSensorList* tofSensorListParam) {
     servoList = servoListParam;

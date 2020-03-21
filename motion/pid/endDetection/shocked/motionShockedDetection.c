@@ -42,8 +42,7 @@ bool detectShockByAcceleration(MotionInstruction* motionInstruction, PidComputat
         // Avoid that a single value could be more than the global threshold
         if (absAccelerationHistory > SHOCKED_DETECTION_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD) {
             absAccelerationHistoryIntegral += SHOCKED_DETECTION_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD;
-        }
-        else {
+        } else {
             absAccelerationHistoryIntegral += absAccelerationHistory;
         }
     }

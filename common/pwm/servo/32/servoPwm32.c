@@ -62,43 +62,34 @@ void _internalUpdateConfigServo32(Servo* servo) {
     if (internalServoIndex == 1) {
         if (enabled) {
             OpenOC1(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
-        }
-        else {
+        } else {
             CloseOC1();
         }
-    }
-    else if (internalServoIndex == 2) {
+    } else if (internalServoIndex == 2) {
         if (enabled) {
             OpenOC2(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
-        }
-        else {
+        } else {
             CloseOC2();
         }
-    }
-    else if (internalServoIndex == 3) {
+    } else if (internalServoIndex == 3) {
         if (enabled) {
             OpenOC3(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
-        }
-        else {
+        } else {
             CloseOC3();
         }
-    }
-    else if (internalServoIndex == 4) {
+    } else if (internalServoIndex == 4) {
         if (enabled) {
             OpenOC4(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
-        }
-        else {
+        } else {
             CloseOC4();
         }
-    }
-    else if (internalServoIndex == 5) {
+    } else if (internalServoIndex == 5) {
         if (enabled) {
             OpenOC5(OC_ON | OC_TIMER_MODE16 | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE, 0, 0);
-        }
-        else {
+        } else {
             CloseOC5();
         }
-    } 
+    }
 }
 
 /**
@@ -107,7 +98,7 @@ void _internalUpdateConfigServo32(Servo* servo) {
  * @param servo
  * @param dutyms
  */
-void _servoInternalPwm32 (Servo* servo, unsigned int dutyms) {
+void _servoInternalPwm32(Servo* servo, unsigned int dutyms) {
     switch (servo->internalServoIndex) {
         case 1:
         {

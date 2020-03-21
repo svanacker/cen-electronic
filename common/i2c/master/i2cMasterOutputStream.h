@@ -18,14 +18,14 @@ typedef struct {
 } I2cMasterOutputStream;
 
 /**
-* Init an outputStream around i2c with an address.
-* @param i2cMasterOutputStream a global structure used to store every information about the outputStream
-* @param outputStream a structure to initialize
-* @param i2cBuffer an internal i2cBuffer to avoid unefficient multiples calls with chars
-*/
+ * Init an outputStream around i2c with an address.
+ * @param i2cMasterOutputStream a global structure used to store every information about the outputStream
+ * @param outputStream a structure to initialize
+ * @param i2cBuffer an internal i2cBuffer to avoid unefficient multiples calls with chars
+ */
 void initMasterI2cOutputStream(I2cMasterOutputStream* i2cMasterOutputStream,
-                               I2cBusConnection* i2cBusConnection,
-                               OutputStream* outputStream,
-                               Buffer* i2cBuffer);
+        I2cBusConnection* i2cBusConnection,
+        OutputStream* outputStream,
+        Buffer* i2cBuffer);
 
 #endif

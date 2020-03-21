@@ -15,7 +15,7 @@ void closeNullOutputStream(OutputStream* outputStream) {
 }
 
 void writeCharNullOutputStream(OutputStream* outputStream, unsigned char c) {
-    
+
 }
 
 void flushNullOutputStream(OutputStream* outputStream) {

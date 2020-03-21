@@ -16,8 +16,7 @@ int deviceAccelerometerGetInterface(unsigned char commandHeader, DeviceInterface
             setResultUnsignedHex4(0, "Sample count");
         }
         return commandLengthValueForMode(mode, 0, 4);
-    }
-    else if (commandHeader == COMMAND_ACCELEROMETER_GET_SAMPLE_RAW_DATA) {
+    } else if (commandHeader == COMMAND_ACCELEROMETER_GET_SAMPLE_RAW_DATA) {
         if (fillDeviceArgumentList) {
             setFunction("Sample Raw Data", 0, 5);
             setResultUnsignedHex4(0, "X Raw Data");
@@ -27,8 +26,7 @@ int deviceAccelerometerGetInterface(unsigned char commandHeader, DeviceInterface
             setResultUnsignedHex4(4, "Z Raw Data");
         }
         return commandLengthValueForMode(mode, 0, 14);
-    }
-    else if (commandHeader == COMMAND_ACCELEROMETER_GET_SAMPLE_DATA_MILLIG_G) {
+    } else if (commandHeader == COMMAND_ACCELEROMETER_GET_SAMPLE_DATA_MILLIG_G) {
         if (fillDeviceArgumentList) {
             setFunction("Sample Data MilliG", 0, 5);
             setResultUnsignedHex4(0, "X (mG)");
@@ -38,30 +36,26 @@ int deviceAccelerometerGetInterface(unsigned char commandHeader, DeviceInterface
             setResultUnsignedHex4(4, "Z (mG)");
         }
         return commandLengthValueForMode(mode, 0, 14);
-    }
-    // TRESHOLD
+    }// TRESHOLD
     else if (commandHeader == COMMAND_ACCELEROMETER_GET_THRESHOLD) {
         if (fillDeviceArgumentList) {
             setFunction("Get Threshold", 0, 1);
             setResultUnsignedHex4(0, "Threshold (milli G)");
         }
         return commandLengthValueForMode(mode, 0, 4);
-    }
-    else if (commandHeader == COMMAND_ACCELEROMETER_SET_THRESHOLD) {
+    } else if (commandHeader == COMMAND_ACCELEROMETER_SET_THRESHOLD) {
         if (fillDeviceArgumentList) {
             setFunction("Set Threshold", 1, 0);
             setArgumentUnsignedHex4(0, "Threshold (milliG)");
         }
         return commandLengthValueForMode(mode, 4, 0);
-    }
-    // DEBUG
+    }// DEBUG
     else if (commandHeader == COMMAND_ACCELEROMETER_DEBUG_CONFIG) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Debug Config");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_ACCELEROMETER_DEBUG_VALUES) {
+    } else if (commandHeader == COMMAND_ACCELEROMETER_DEBUG_VALUES) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("Debug Values");
         }

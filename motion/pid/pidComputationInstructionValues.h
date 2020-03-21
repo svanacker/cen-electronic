@@ -13,7 +13,7 @@
 typedef struct PidComputationInstructionValues {
     /** Current index in which we must write next values (for historic values) */
     /** We use the array as a circular buffer, so we lost some values if the motion instruction is too long .*/
-	unsigned int historyWriteIndex;
+    unsigned int historyWriteIndex;
     /** How many history Values are stored . */
     unsigned int historyCount;
     /** The history of pid Time */
@@ -23,7 +23,7 @@ typedef struct PidComputationInstructionValues {
     enum PidType pidType;
     /** The history of pid Type */
     enum PidType pidTypeHistory[PID_HISTORY_ITEM_COUNT];
-    
+
     // POSITION / SPEED / ACCELERATION
     /** Normal position. */
     float normalPosition;
@@ -33,7 +33,7 @@ typedef struct PidComputationInstructionValues {
     float positionHistory[PID_HISTORY_ITEM_COUNT];
     /** Old Position values. */
     float oldPosition;
-    
+
     /** Normal Speed. */
     float normalSpeed;
     /** Speed. */
@@ -47,21 +47,21 @@ typedef struct PidComputationInstructionValues {
     float currentAcceleration;
     /** History of Acceleration. */
     float accelerationHistory[PID_HISTORY_ITEM_COUNT];
-    
+
     // ERRORS
     /** Stores the previous error */
     float previousError;
-    
+
     /** The error between normal speed and real speed */
     float error;
     /** The history of the error */
     float errorHistory[PID_HISTORY_ITEM_COUNT];
-    
+
     /** The derivative error between normal speed and real speed */
     float derivativeError;
     /** The history of the derivative error */
     float derivativeErrorHistory[PID_HISTORY_ITEM_COUNT];
-    
+
     /** The integral error between normal speed and real speed */
     float integralError;
     /** The history of the integral error */
@@ -89,8 +89,8 @@ typedef struct PidComputationInstructionValues {
 void clearPidComputationInstructionValues(PidComputationInstructionValues* pidComputationInstructionValues);
 
 /**
-* Store a snapshot on all current values (position, normalPosition, speed, error, derivativeError ...)
-*/
+ * Store a snapshot on all current values (position, normalPosition, speed, error, derivativeError ...)
+ */
 void storePidComputationInstructionValueHistory(PidComputationInstructionValues* pidComputationInstructionValues, float pidTimeInSecond);
 
 #endif

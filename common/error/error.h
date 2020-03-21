@@ -45,6 +45,9 @@ void clearLastError();
 #define PRINT_WRITER_NOT_HEX_VALUE                                        0x0109
 
 #define IO_PIN_INDEX_ERROR                                                0x0110
+#define IO_PIN_LIST_NULL                                                  0x0111
+#define IO_PIN_LIST_GET_FUNCTION_NULL                                     0x0112
+#define IO_PIN_LIST_SET_FUNCTION_NULL                                     0x0113
 
 #define IO_READER_READ_FILTERED_CHAR                                      0x0120
 #define IO_READER_CHECK_CHAR_PROBLEM                                      0x0130
@@ -122,6 +125,7 @@ void clearLastError();
 
 // LED
 #define LED_ARRAY_NULL                                                    0x04A8
+#define LED_ARRAY_INIT_FUNCTION_NULL                                      0x04A9
 
 // ACCELEROMETER
 #define ACCELEROMETER_SENSOR_SETUP_PROBLEM                                0x04B0

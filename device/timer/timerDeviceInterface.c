@@ -16,15 +16,13 @@ int deviceTimerGetInterface(unsigned char commandHeader, DeviceInterfaceMode mod
             setFunctionNoArgumentAndNoResult("show Timer List");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_TIMER_COUNT) {
+    } else if (commandHeader == COMMAND_TIMER_COUNT) {
         if (fillDeviceArgumentList) {
             setFunction("timer Count", 0, 1);
             setResultUnsignedHex2(0, "count");
         }
         return commandLengthValueForMode(mode, 0, 2);
-    }
-    else if (commandHeader == COMMAND_TIMER_READ) {
+    } else if (commandHeader == COMMAND_TIMER_READ) {
         if (fillDeviceArgumentList) {
             setFunction("timer Read", 1, 13);
             setArgumentUnsignedHex2(0, "timerIndex");
@@ -43,8 +41,7 @@ int deviceTimerGetInterface(unsigned char commandHeader, DeviceInterfaceMode mod
             setResultUnsignedChar1(12, "enabled");
         }
         return commandLengthValueForMode(mode, 2, 31);
-    }
-    else if (commandHeader == COMMAND_TIMER_ENABLE_DISABLE) {
+    } else if (commandHeader == COMMAND_TIMER_ENABLE_DISABLE) {
         if (fillDeviceArgumentList) {
             setFunction("timer Enable", 3, 0);
             setArgumentUnsignedHex2(0, "timerIndex");
@@ -52,8 +49,7 @@ int deviceTimerGetInterface(unsigned char commandHeader, DeviceInterfaceMode mod
             setArgumentUnsignedChar1(2, "enable/disable");
         }
         return commandLengthValueForMode(mode, 4, 0);
-    }
-    // Mark
+    }// Mark
     else if (commandHeader == COMMAND_TIMER_TIME_SINCE_LAST_MARK) {
         if (fillDeviceArgumentList) {
             setFunction("time Since Last Mark", 1, 1);
@@ -61,16 +57,14 @@ int deviceTimerGetInterface(unsigned char commandHeader, DeviceInterfaceMode mod
             setResultUnsignedHex6(0, "mark");
         }
         return commandLengthValueForMode(mode, 2, 6);
-    }
-    else if (commandHeader == COMMAND_TIMER_MARK) {
+    } else if (commandHeader == COMMAND_TIMER_MARK) {
         if (fillDeviceArgumentList) {
             setFunction("mark Timer !", 1, 1);
             setArgumentUnsignedHex2(0, "timerIndex");
             setResultUnsignedHex6(0, "markTime");
         }
         return commandLengthValueForMode(mode, 2, 6);
-    }
-    else if (commandHeader == COMMAND_TIMER_TIMEOUT) {
+    } else if (commandHeader == COMMAND_TIMER_TIMEOUT) {
         if (fillDeviceArgumentList) {
             setFunction("timeout check", 3, 3);
             setArgumentUnsignedHex2(0, "timerIndex");
@@ -81,21 +75,18 @@ int deviceTimerGetInterface(unsigned char commandHeader, DeviceInterfaceMode mod
             setResultUnsignedChar1(2, "timeout or not");
         }
         return commandLengthValueForMode(mode, 9, 4);
-    }
-    
-    // Demo
+    }// Demo
     else if (commandHeader == COMMAND_TIMER_DEMO) {
         if (fillDeviceArgumentList) {
             setFunction("Enable/Disable Timer Demo", 1, 0);
             setArgumentUnsignedChar1(0, "enable/disable");
         }
         return commandLengthValueForMode(mode, 1, 0);
-    }
-    // wait
+    }// wait
     else if (commandHeader == COMMAND_TIMER_DELAY_WAIT) {
         if (fillDeviceArgumentList) {
             setFunction("Timer Delay Wait", 1, 0);
-            setArgumentUnsignedHex4(0, "milli Seconds");                
+            setArgumentUnsignedHex4(0, "milli Seconds");
         }
         return commandLengthValueForMode(mode, 4, 0);
     }

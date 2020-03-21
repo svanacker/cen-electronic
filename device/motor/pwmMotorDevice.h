@@ -6,8 +6,8 @@
 #include "../../device/deviceDescriptor.h"
 
 /**
-* Returns a descriptor on the device for motors.
-*/
+ * Returns a descriptor on the device for motors.
+ */
 DeviceDescriptor* getMotorDeviceDescriptor(DualHBridgeMotor* dualHBrideMotorParam);
 
 #endif

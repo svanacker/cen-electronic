@@ -54,16 +54,16 @@ void portableMasterWaitSendI2C(I2cBusConnection* i2cBusConnection);
 // USEFUL FUNCTION
 
 /**
-* Sends the buffer to the I2C.
-* @param address the address of I2C that we send
-* @param buffer the buffer of data
-*/
+ * Sends the buffer to the I2C.
+ * @param address the address of I2C that we send
+ * @param buffer the buffer of data
+ */
 void i2cMasterWriteBuffer(I2cBusConnection* i2cBusConnection, Buffer* buffer);
 
 /**
-* Sends a char to the I2C.
-* @param c the char to send to I2C bus
-*/
+ * Sends a char to the I2C.
+ * @param c the char to send to I2C bus
+ */
 void i2cMasterWriteChar(I2cBusConnection* i2cBusConnection, unsigned char address, unsigned char c);
 
 /**

@@ -13,11 +13,11 @@ const char* getPidDebugDeviceName(void) {
 int devicePidDebugGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, bool fillDeviceArgumentList) {
     // MOTION PARAMETERS DEBUG
     if (commandHeader == COMMAND_MOTION_PARAMETERS_DEBUG) {
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("Motion Parameters Table");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	}
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Motion Parameters Table");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
     // PID DEBUG
     if (commandHeader == COMMAND_END_MOTION_DEBUG) {
         if (fillDeviceArgumentList) {
@@ -29,26 +29,24 @@ int devicePidDebugGetInterface(unsigned char commandHeader, DeviceInterfaceMode 
             setFunction("PID Computation Values Table", 0, 0);
         }
         return commandLengthValueForMode(mode, 0, 0);
-	} else if (commandHeader == COMMAND_PID_MOTION_INSTRUCTION_TABLE) {
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("Motion Instruction Table");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	}
-	else if (commandHeader == COMMAND_DEBUG_PID_PARAMETERS) {
-		if (fillDeviceArgumentList) {
-			setFunctionNoArgumentAndNoResult("PID Parameters Table (by Pid Type)");
-		}
-		return commandLengthValueForMode(mode, 0, 0);
-	}
-	else if (commandHeader == COMMAND_PID_TRAJECTORY_TABLE) {
-		if (fillDeviceArgumentList) {
-			setFunction("PID Trajectory Table", 1, 0);
+    } else if (commandHeader == COMMAND_PID_MOTION_INSTRUCTION_TABLE) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Motion Instruction Table");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    } else if (commandHeader == COMMAND_DEBUG_PID_PARAMETERS) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("PID Parameters Table (by Pid Type)");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    } else if (commandHeader == COMMAND_PID_TRAJECTORY_TABLE) {
+        if (fillDeviceArgumentList) {
+            setFunction("PID Trajectory Table", 1, 0);
             setArgumentFloatHex4(0, "pidTime Interval (milliSeconds). > 5");
-		}
-		return commandLengthValueForMode(mode, 4, 0);
-	}
-	return DEVICE_HEADER_NOT_HANDLED;
+        }
+        return commandLengthValueForMode(mode, 4, 0);
+    }
+    return DEVICE_HEADER_NOT_HANDLED;
 }
 
 static DeviceInterface deviceInterface = {

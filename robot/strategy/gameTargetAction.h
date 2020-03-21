@@ -11,8 +11,8 @@
 #include "../../navigation/location.h"
 
 /**
-* Type of Action (Inheritance management to have 2 types of Actions
-*/
+ * Type of Action (Inheritance management to have 2 types of Actions
+ */
 enum ActionType {
     // The action status is UNDEFINED,
     ACTION_TYPE_UNDEFINED = 0,
@@ -43,8 +43,8 @@ enum ActionStatus {
 };
 
 /**
-* Define the priority of the actions !
-*/
+ * Define the priority of the actions !
+ */
 #define ACTION_PRIORITY_HIGHEST             100
 #define ACTION_PRIORITY_NORMAL              50
 #define ACTION_PRIORITY_LOWEST               0
@@ -76,17 +76,17 @@ typedef struct GameTargetAction {
 /**
  * Initializes the structure.
  */
-void initGameTargetAction(GameTargetAction* targetAction, 
-                          Location* startLocation,
-                          Location* endLocation,
-                          enum ActionType actionType,
-                          float timeToAchieve,
-                          unsigned int priority,
-                          GameTargetActionItemList* actionItemList);
+void initGameTargetAction(GameTargetAction* targetAction,
+        Location* startLocation,
+        Location* endLocation,
+        enum ActionType actionType,
+        float timeToAchieve,
+        unsigned int priority,
+        GameTargetActionItemList* actionItemList);
 
 /**
-* Clear the targetAction and the items if any.
-*/
+ * Clear the targetAction and the items if any.
+ */
 void clearTargetAction(GameTargetAction* targetAction);
 
 /**

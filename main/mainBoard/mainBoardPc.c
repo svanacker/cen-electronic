@@ -20,9 +20,11 @@
 #include "../../common/i2c/master/pc/i2cMasterSetupPc.h"
 
 #include "../../common/io/filter.h"
+#include "../../common/io/pin.h"
 #include "../../common/io/pc/consoleOutputStream.h"
 #include "../../common/io/pc/consoleInputStream.h"
 #include "../../common/io/pc/consoleOutputStream.h"
+#include "../../common/io/pc/pinPc.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
 #include "../../common/io/streamLink.h"
@@ -86,6 +88,10 @@
 #include "../../device/ioExpander/ioExpanderDevice.h"
 #include "../../device/ioExpander/ioExpanderDeviceInterface.h"
 
+// LED
+#include "../../device/led/ledDevice.h"
+#include "../../device/led/ledDeviceInterface.h"
+
 // Multiplexer
 #include "../../device/i2c/multiplexer/multiplexerDevice.h"
 #include "../../device/i2c/multiplexer/multiplexerDeviceInterface.h"
@@ -125,9 +131,17 @@
 #include "../../device/gameboard/gameboardDevice.h"
 #include "../../device/gameboard/gameboardDeviceInterface.h"
 
+// IO
+#include "../../device/io/ioDevice.h"
+#include "../../device/io/ioDeviceInterface.h"
+
 // LCD
 #include "../../device/lcd/lcdDevice.h"
 #include "../../device/lcd/lcdDeviceInterface.h"
+
+// LED
+#include "../../device/led/ledDevice.h"
+#include "../../device/led/ledDeviceInterface.h"
 
 // LOGS
 #include "../../device/log/logDevice.h"
@@ -196,7 +210,12 @@
 #include "../../drivers/dispatcher/driverDataDispatcherList.h"
 #include "../../drivers/dispatcher/localDriverDataDispatcher.h"
 #include "../../drivers/dispatcher/i2cDriverDataDispatcher.h"
+
 #include "../../drivers/file/eeprom/eepromFile.h"
+
+#include "../../drivers/led/led.h"
+#include "../../drivers/led/pc/ledPc.h"
+
 #include "../../drivers/test/testDriver.h"
 
 #include "../../drivers/sensor/current/pc/currentPc.h"
@@ -290,6 +309,12 @@ static Eeprom eeprom;
 
 // Clock
 static Clock clock;
+
+// IO / PinList
+static PinList pinList;
+
+// LED
+static LedArray ledArray;
 
 // Temperature
 static Temperature temperature;
@@ -388,22 +413,22 @@ bool mainBoardPcWaitForInstruction(StartMatch* startMatchParam) {
 
     // From Text Console
     handleStreamInstruction(
-        &consoleInputBuffer,
-        &consoleOutputBuffer,
-        &consoleOutputStream,
-        &consoleOutputStream,
-        &filterRemoveCRLF,
-        NULL);
+            &consoleInputBuffer,
+            &consoleOutputBuffer,
+            &consoleOutputStream,
+            &consoleOutputStream,
+            &filterRemoveCRLF,
+            NULL);
 
     if (connectToRobotManager) {
         // From RobotManager
         handleStreamInstruction(
-            &robotManagerInputBuffer,
-            &robotManagerOutputBuffer,
-            &robotManagerOutputStream,
-            &robotManagerOutputStream,
-            &filterRemoveCRLF,
-            NULL);
+                &robotManagerInputBuffer,
+                &robotManagerOutputBuffer,
+                &robotManagerOutputStream,
+                &robotManagerOutputStream,
+                &filterRemoveCRLF,
+                NULL);
     }
 
     // Handle Tof
@@ -436,8 +461,10 @@ void initMainBoardLocalDevices(void) {
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     // addLocalDevice(getFileDeviceInterface(), getFileDeviceDescriptor());
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
+    addLocalDevice(getIODeviceInterface(), getIODeviceDescriptor(&pinList));
     addLocalDevice(getLogDeviceInterface(), getLogDeviceDescriptor());
     addLocalDevice(getLCDDeviceInterface(), getLCDDeviceDescriptor());
+    addLocalDevice(getLedDeviceInterface(), getLedDeviceDescriptor(&ledArray));
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(mainBoardCommonTofGetTofSensorList()));
 
 
@@ -483,79 +510,79 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     printf("|_|  |_/_/   \\_|___|_| \\_|  |____/ \\___/_/   \\_|_| \\_|____/   |_|    \\____|\r\n");
 
 
-    initLogs(LOG_LEVEL_DEBUG, (LogHandler(*)[]) &logHandlerListArray, MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
+    initLogs(LOG_LEVEL_DEBUG, (LogHandler(*)[]) & logHandlerListArray, MAIN_BOARD_PC_LOG_HANDLER_LIST_LENGTH, LOG_HANDLER_CATEGORY_ALL_MASK);
     initConsoleInputStream(&consoleInputStream);
     initConsoleOutputStream(&consoleOutputStream);
     addConsoleLogHandler(LOG_LEVEL_DEBUG, LOG_HANDLER_CATEGORY_ALL_MASK);
 
-    initSerialLinkList((SerialLink(*)[]) &serialLinkListArray, MAIN_BOARD_PC_SERIAL_LINK_LIST_LENGTH);
+    initSerialLinkList((SerialLink(*)[]) & serialLinkListArray, MAIN_BOARD_PC_SERIAL_LINK_LIST_LENGTH);
 
-    initTimerList((Timer(*)[]) &timerListArray, MAIN_BOARD_PC_TIMER_LIST_LENGTH);
+    initTimerList((Timer(*)[]) & timerListArray, MAIN_BOARD_PC_TIMER_LIST_LENGTH);
     initSystemDelayTimer();
-    initServoListPc(&servoList, (Servo(*)[]) &servoListArray, MAIN_BOARD_PC_SERVO_LIST_LENGTH);
+    initServoListPc(&servoList, (Servo(*)[]) & servoListArray, MAIN_BOARD_PC_SERVO_LIST_LENGTH);
 
-    initBuffer(&consoleInputBuffer, (char(*)[]) &consoleInputBufferArray, MAIN_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH, "inputConsoleBuffer", "IN");
-    initBuffer(&consoleOutputBuffer, (char(*)[]) &consoleOutputBufferArray, MAIN_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH, "outputConsoleBuffer", "IN");
+    initBuffer(&consoleInputBuffer, (char(*)[]) & consoleInputBufferArray, MAIN_BOARD_PC_CONSOLE_INPUT_BUFFER_LENGTH, "inputConsoleBuffer", "IN");
+    initBuffer(&consoleOutputBuffer, (char(*)[]) & consoleOutputBufferArray, MAIN_BOARD_PC_CONSOLE_OUTPUT_BUFFER_LENGTH, "outputConsoleBuffer", "IN");
 
     // Dispatchers
-    initDriverDataDispatcherList((DriverDataDispatcher(*)[]) &driverDataDispatcherListArray, MAIN_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH);
+    initDriverDataDispatcherList((DriverDataDispatcher(*)[]) & driverDataDispatcherListArray, MAIN_BOARD_PC_DATA_DISPATCHER_LIST_LENGTH);
     addLocalDriverDataDispatcher();
 
     // I2c
     if (!singleMode) {
-        initI2cBusList((I2cBus(*)[]) &i2cBusListArray, MAIN_BOARD_I2C_BUS_LIST_LENGTH);
+        initI2cBusList((I2cBus(*)[]) & i2cBusListArray, MAIN_BOARD_I2C_BUS_LIST_LENGTH);
         mainI2cBus = addI2cBus(I2C_BUS_TYPE_MASTER, I2C_BUS_PORT_1);
 
-        initI2cBusConnectionList((I2cBusConnection(*)[]) &i2cBusConnectionListArray, MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH);
+        initI2cBusConnectionList((I2cBusConnection(*)[]) & i2cBusConnectionListArray, MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH);
 
         motorBoardI2cBusConnection = addI2cBusConnection(mainI2cBus, MOTOR_BOARD_PC_I2C_ADDRESS, false);
         initI2cBusConnectionPc(motorBoardI2cBusConnection,
-            mainI2cBus,
-            &motorBoardI2cBusConnectionPc,
-            MOTOR_BOARD_PC_I2C_ADDRESS,
-            MAIN_BOARD_TO_MOTOR_BOARD_PC_PIPE_I2C_MASTER_NAME,
-            MOTOR_BOARD_PC_PIPE_I2C_SLAVE_NAME);
+                mainI2cBus,
+                &motorBoardI2cBusConnectionPc,
+                MOTOR_BOARD_PC_I2C_ADDRESS,
+                MAIN_BOARD_TO_MOTOR_BOARD_PC_PIPE_I2C_MASTER_NAME,
+                MOTOR_BOARD_PC_PIPE_I2C_SLAVE_NAME);
 
         meca1BoardI2cBusConnection = addI2cBusConnection(mainI2cBus, MECHANICAL_BOARD_1_I2C_ADDRESS, false);
         initI2cBusConnectionPc(meca1BoardI2cBusConnection,
-            mainI2cBus,
-            &meca1BoardI2cBusConnectionPc,
-            MECHANICAL_BOARD_1_I2C_ADDRESS,
-            MAIN_BOARD_TO_MECA1_BOARD_PC_PIPE_I2C_MASTER_NAME,
-            MECHANICAL_BOARD_1_PC_PIPE_I2C_SLAVE_NAME);
+                mainI2cBus,
+                &meca1BoardI2cBusConnectionPc,
+                MECHANICAL_BOARD_1_I2C_ADDRESS,
+                MAIN_BOARD_TO_MECA1_BOARD_PC_PIPE_I2C_MASTER_NAME,
+                MECHANICAL_BOARD_1_PC_PIPE_I2C_SLAVE_NAME);
 
         addI2CDriverDataDispatcher("MOTOR_BOARD_DISPATCHER",
-            &motorBoardInputBuffer,
-            (char(*)[]) &motorBoardInputBufferArray,
-            MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH,
-            &motorBoardOutputStream,
-            &motorBoardInputStream,
-            motorBoardI2cBusConnection
-        );
+                &motorBoardInputBuffer,
+                (char(*)[]) & motorBoardInputBufferArray,
+                MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH,
+                &motorBoardOutputStream,
+                &motorBoardInputStream,
+                motorBoardI2cBusConnection
+                );
 
         addI2CDriverDataDispatcher("MECA1_BOARD_DISPATCHER",
-            &meca1BoardInputBuffer,
-            (char(*)[]) &meca1BoardInputBufferArray,
-            MAIN_BOARD_PC_DATA_MECA1_BOARD_DISPATCHER_BUFFER_LENGTH,
-            &meca1BoardOutputStream,
-            &meca1BoardInputStream,
-            meca1BoardI2cBusConnection
-        );
+                &meca1BoardInputBuffer,
+                (char(*)[]) & meca1BoardInputBufferArray,
+                MAIN_BOARD_PC_DATA_MECA1_BOARD_DISPATCHER_BUFFER_LENGTH,
+                &meca1BoardOutputStream,
+                &meca1BoardInputStream,
+                meca1BoardI2cBusConnection
+                );
     }
 
     if (connectToRobotManager) {
         // Open the serial Link between RobotManager (C# Project) and the MainBoardPc
         openSerialLink(&robotManagerSerialStreamLink,
-            "SERIAL_PC",
-            &robotManagerInputBuffer,
-            (char(*)[]) &robotManagerInputBufferArray,
-            ROBOT_MANAGER_INPUT_BUFFER_LENGTH,
-            &robotManagerOutputBuffer,
-            (char(*)[]) &robotManagerOutputBufferArray,
-            ROBOT_MANAGER_OUTPUT_BUFFER_LENGTH,
-            &robotManagerOutputStream,
-            SERIAL_PORT_ROBOT_MANAGER,
-            0);
+                "SERIAL_PC",
+                &robotManagerInputBuffer,
+                (char(*)[]) & robotManagerInputBufferArray,
+                ROBOT_MANAGER_INPUT_BUFFER_LENGTH,
+                &robotManagerOutputBuffer,
+                (char(*)[]) & robotManagerOutputBufferArray,
+                ROBOT_MANAGER_OUTPUT_BUFFER_LENGTH,
+                &robotManagerOutputStream,
+                SERIAL_PORT_ROBOT_MANAGER,
+                0);
     }
 
     // CONFIG
@@ -569,6 +596,12 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     // Clock
     initPcClock(&clock);
 
+    // IO
+    initPinListPc(&pinList);
+
+    // LED
+    initLedArrayPc(&ledArray);
+
     // Sensor
     initCurrentPc(&current);
 
@@ -577,17 +610,17 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     // I2C Debug
     initI2CDebugBuffers(&i2cMasterDebugInputBuffer,
-        (char(*)[]) &i2cMasterDebugInputBufferArray,
-        MAIN_BOARD_PC_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
-        &i2cMasterDebugOutputBuffer,
-        (char(*)[]) &i2cMasterDebugOutputBufferArray,
-        MAIN_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
+            (char(*)[]) & i2cMasterDebugInputBufferArray,
+            MAIN_BOARD_PC_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH,
+            &i2cMasterDebugOutputBuffer,
+            (char(*)[]) & i2cMasterDebugOutputBufferArray,
+            MAIN_BOARD_PC_I2C_DEBUG_MASTER_OUT_BUFFER_LENGTH);
 
     // IO Expander List
-    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) &ioExpanderArray, MAIN_BOARD_PC_IO_EXPANDER_LIST_LENGTH);
+    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) & ioExpanderArray, MAIN_BOARD_PC_IO_EXPANDER_LIST_LENGTH);
 
     // Multiplxer List
-    initMultiplexerList(&multiplexerList, (Multiplexer(*)[]) &multiplexerArray, MAIN_BOARD_PC_MULTIPLEXER_LIST_LENGTH);
+    initMultiplexerList(&multiplexerList, (Multiplexer(*)[]) & multiplexerArray, MAIN_BOARD_PC_MULTIPLEXER_LIST_LENGTH);
 
     // Fake Robot
     // initFakeRobot(300.0f, 1200.0f, 0.0f, 140.0f);
@@ -605,14 +638,14 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     initMotionSimulation(gameStrategyContext);
 
     // Init the drivers
-    initDrivers(&driverRequestBuffer, (char(*)[]) &driverRequestBufferArray, MAIN_BOARD_PC_REQUEST_DRIVER_BUFFER_LENGTH,
-        &driverResponseBuffer, (char(*)[]) &driverResponseBufferArray, MAIN_BOARD_PC_RESPONSE_DRIVER_BUFFER_LENGTH);
+    initDrivers(&driverRequestBuffer, (char(*)[]) & driverRequestBufferArray, MAIN_BOARD_PC_REQUEST_DRIVER_BUFFER_LENGTH,
+            &driverResponseBuffer, (char(*)[]) & driverResponseBufferArray, MAIN_BOARD_PC_RESPONSE_DRIVER_BUFFER_LENGTH);
 
     // Get test driver for debug purpose
     addDriver(testDriverGetDescriptor(), TRANSMIT_LOCAL);
 
     // Devices
-    initDeviceList((Device(*)[]) &deviceListArray, MAIN_BOARD_PC_DEVICE_LIST_LENGTH);
+    initDeviceList((Device(*)[]) & deviceListArray, MAIN_BOARD_PC_DEVICE_LIST_LENGTH);
     // addLocalDevice(getTestDeviceInterface(), getTestDeviceDescriptor());
 
     testDevice = addI2cRemoteDevice(getTestDeviceInterface(), MOTOR_BOARD_PC_I2C_ADDRESS);

@@ -13,7 +13,7 @@
 /**
  * Initialize the port for 74C922.
  **/
-void init74c922 (void);
+void init74c922(void);
 
 
 /**
@@ -21,7 +21,7 @@ void init74c922 (void);
  * @return char     charactere code
  *         0xff for no caractere
  **/
-char readKey (void);
+char readKey(void);
 
 
 #endif    /* 74C922_H */

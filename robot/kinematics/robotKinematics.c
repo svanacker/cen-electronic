@@ -119,7 +119,6 @@ float getCoderLeftWheelDiameter(RobotKinematics* robotKinematics) {
     return robotKinematics->coderWheelAverageDiameterMM + robotKinematics->coderWheelAverageDeltaDiameterMM;
 }
 
-
 float getCoderRightWheelDiameter(RobotKinematics* robotKinematics) {
     return robotKinematics->coderWheelAverageDiameterMM - robotKinematics->coderWheelAverageDeltaDiameterMM;
 }
@@ -212,7 +211,7 @@ float rotationInRadiansToRealDistanceForLeftWheel(RobotKinematics* robotKinemati
     float wheelsDistanceFromCenter = getCoderWheelsDistanceFromCenter(robotKinematics);
     float factor = getCoderLeftWheelFactor(robotKinematics);
     float result = -(wheelsDistanceFromCenter * angleRadius) * factor;
-    
+
     return result;
 }
 
@@ -251,7 +250,7 @@ float getRobotAccelerationMaxMillimeterBySecondSquare(RobotKinematics* robotKine
     float result = (robotKinematics->motorMaxTorqueMilliNewton * 0.001f); // Torque in Newton Meter
     result *= robotKinematics->motorReductorRatio;
     result /= (robotKinematics->motorWheelAverageDiameterMM * 0.001f); // Diameter in Meter
-    result /= (robotKinematics->robotWeightGrams * 0.001f);            // Weight in kg
-    result *= 1000.0f;                                                 // In Millimeter
+    result /= (robotKinematics->robotWeightGrams * 0.001f); // Weight in kg
+    result *= 1000.0f; // In Millimeter
     return result;
 }

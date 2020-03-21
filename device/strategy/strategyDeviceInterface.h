@@ -6,7 +6,7 @@
 /** Returns the global score */
 #define COMMAND_STRATEGY_GET_GLOBAL_SCORE                  'M'
 
-/** ask the robot to go to the next step. */    
+/** ask the robot to go to the next step. */
 #define COMMAND_STRATEGY_NEXT_STEP                         'n'
 
 // Opponent Position
@@ -49,8 +49,8 @@
 #define COMMAND_TARGET_SET_STATUS                          'U'
 
 /**
-* Interface for Device
-*/
+ * Interface for Device
+ */
 DeviceInterface* getStrategyDeviceInterface(void);
 
 #endif

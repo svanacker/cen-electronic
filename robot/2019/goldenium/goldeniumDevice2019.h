@@ -11,7 +11,7 @@
  * The descriptor for the Goldenium 2019 device.
  */
 DeviceDescriptor* getGoldenium2019DeviceDescriptor(ServoList* servoList,
-                                              TofSensorList* tofSensorListParam);
+        TofSensorList* tofSensorListParam);
 
 
 #endif

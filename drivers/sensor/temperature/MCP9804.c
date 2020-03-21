@@ -23,14 +23,14 @@ int Temperature;
  *          LSB : Poid faible transfere dans le registre*
  * @return : none                     *
  ********************************************************/
-void setRegMCP9804 (UINT8 reg, UINT8 MSB , UINT8 LSB){
-    
- /*   OpenI2C();
-    WriteCharI2C(0x30);
-    WriteCharI2C(reg);
-    WriteCharI2C(MSB);
-    WriteCharI2C(LSB);
-    CloseI2C();*/
+void setRegMCP9804(UINT8 reg, UINT8 MSB, UINT8 LSB) {
+
+    /*   OpenI2C();
+       WriteCharI2C(0x30);
+       WriteCharI2C(reg);
+       WriteCharI2C(MSB);
+       WriteCharI2C(LSB);
+       CloseI2C();*/
 }
 
 /********************************************************
@@ -41,8 +41,8 @@ void setRegMCP9804 (UINT8 reg, UINT8 MSB , UINT8 LSB){
  *          LSB : Poid faible transfere dans le registre*
  * @return : none                     *
  ********************************************************/
-void setConfRegMCP9804 ( UINT8 MSB , UINT8 LSB) {
-    setRegMCP9804 (CONF_REG_MCP9804, MSB , LSB);
+void setConfRegMCP9804(UINT8 MSB, UINT8 LSB) {
+    setRegMCP9804(CONF_REG_MCP9804, MSB, LSB);
 }
 
 /********************************************************
@@ -53,8 +53,8 @@ void setConfRegMCP9804 ( UINT8 MSB , UINT8 LSB) {
  *          LSB : Poid faible transfere dans le registre*
  * @return : none                     *
  ********************************************************/
-void setTempUpperRegMCP9804 ( UINT8 MSB , UINT8 LSB){
-    setRegMCP9804 (TEMP_UPPER_REG_MCP9804, MSB , LSB);
+void setTempUpperRegMCP9804(UINT8 MSB, UINT8 LSB) {
+    setRegMCP9804(TEMP_UPPER_REG_MCP9804, MSB, LSB);
 }
 
 /********************************************************
@@ -65,8 +65,8 @@ void setTempUpperRegMCP9804 ( UINT8 MSB , UINT8 LSB){
  *          LSB : Poid faible transfere dans le registre*
  * @return : none                     *
  ********************************************************/
-void setTempLowerRegMCP9804 ( UINT8 MSB , UINT8 LSB){
-    setRegMCP9804 (TEMP_LOWER_REG_MCP9804, MSB , LSB);
+void setTempLowerRegMCP9804(UINT8 MSB, UINT8 LSB) {
+    setRegMCP9804(TEMP_LOWER_REG_MCP9804, MSB, LSB);
 }
 
 /********************************************************
@@ -77,8 +77,8 @@ void setTempLowerRegMCP9804 ( UINT8 MSB , UINT8 LSB){
  *          LSB : Poid faible transfere dans le registre*
  * @return : none                     *
  ********************************************************/
-void setTempCriticRegMCP9804 ( UINT8 MSB , UINT8 LSB){
-    setRegMCP9804 (TEMP_CRITIC_REG_MCP9804, MSB , LSB);
+void setTempCriticRegMCP9804(UINT8 MSB, UINT8 LSB) {
+    setRegMCP9804(TEMP_CRITIC_REG_MCP9804, MSB, LSB);
 }
 
 /****************************************************************
@@ -91,12 +91,12 @@ void setTempCriticRegMCP9804 ( UINT8 MSB , UINT8 LSB){
  *          TCRITMSB , TCRITLSB :registre temperature critique  *
  * @return : none                                               *
  ***************************************************************/
-void initRegMCP9804 (UINT8 CONFMSB , UINT8 CONFLSB , UINT8 TUPMSB , UINT8 TUPLSB,UINT8 TLOWMSB , UINT8 TLOWLSB,
-                     UINT8 TCRITMSB , UINT8 TCRITLSB){
-    setConfRegMCP9804(CONFMSB,CONFLSB);
-    setTempUpperRegMCP9804 ( TUPMSB , TUPLSB );
-    setTempLowerRegMCP9804 ( TLOWMSB , TLOWLSB );
-    setTempCriticRegMCP9804 ( TCRITMSB , TCRITLSB );
+void initRegMCP9804(UINT8 CONFMSB, UINT8 CONFLSB, UINT8 TUPMSB, UINT8 TUPLSB, UINT8 TLOWMSB, UINT8 TLOWLSB,
+        UINT8 TCRITMSB, UINT8 TCRITLSB) {
+    setConfRegMCP9804(CONFMSB, CONFLSB);
+    setTempUpperRegMCP9804(TUPMSB, TUPLSB);
+    setTempLowerRegMCP9804(TLOWMSB, TLOWLSB);
+    setTempCriticRegMCP9804(TCRITMSB, TCRITLSB);
 }
 
 /**
@@ -105,41 +105,45 @@ void initRegMCP9804 (UINT8 CONFMSB , UINT8 CONFLSB , UINT8 TUPMSB , UINT8 TUPLSB
  * @param :  none
  * @return : int temperature                                  
  **/
-int ReadTempAmbMCP9804 (void){
+int ReadTempAmbMCP9804(void) {
     int TempAmbMSB;
     int TempAmbLSB;
     int Temperature;
 
     portableStartI2C(i2cBus);
     WaitI2C(i2cBus);
-    i2cMasterWriteChar(MCP9804,5);
+    i2cMasterWriteChar(MCP9804, 5);
     portableStartI2C(i2cBus);
     WaitI2C(i2cBus);
-    MasterWriteI2C1(MCP9804 | 0x01 );//lecture
-    TempAmbMSB = MasterReadI2C1();AckI2C1();IdleI2C1();
-    TempAmbLSB = MasterReadI2C1();NotAckI2C1();IdleI2C1();
+    MasterWriteI2C1(MCP9804 | 0x01); //lecture
+    TempAmbMSB = MasterReadI2C1();
+    AckI2C1();
+    IdleI2C1();
+    TempAmbLSB = MasterReadI2C1();
+    NotAckI2C1();
+    IdleI2C1();
     portableStopI2C(i2cBus);
     WaitI2C(i2cBus);
 
     //Convert the temperature data
     //First Check flag bits
-    if ((TempAmbMSB & 0x80) == 0x80){
-    //TA ？ TCRIT
+    if ((TempAmbMSB & 0x80) == 0x80) {
+        //TA ？ TCRIT
     }
-    if ((TempAmbMSB & 0x40) == 0x40){
-    //TA > TUPPER
+    if ((TempAmbMSB & 0x40) == 0x40) {
+        //TA > TUPPER
     }
-    if ((TempAmbMSB & 0x20) == 0x20){
-    //TA < TLOWER
+    if ((TempAmbMSB & 0x20) == 0x20) {
+        //TA < TLOWER
     }
     TempAmbMSB = TempAmbMSB & 0x1F; //Clear flag bits
-    if ((TempAmbMSB & 0x10) == 0x10){ //TA < 0°C
-    TempAmbMSB = TempAmbMSB & 0x0F;
-    //Clear SIGN
-    Temperature = 256 - (TempAmbMSB * 16 + TempAmbLSB / 16);
-    }else
-    //TA  ？ 0°C
-    Temperature = (TempAmbMSB * 16 + TempAmbLSB / 16);
+    if ((TempAmbMSB & 0x10) == 0x10) { //TA < 0°C
+        TempAmbMSB = TempAmbMSB & 0x0F;
+        //Clear SIGN
+        Temperature = 256 - (TempAmbMSB * 16 + TempAmbLSB / 16);
+    } else
+        //TA  ？ 0°C
+        Temperature = (TempAmbMSB * 16 + TempAmbLSB / 16);
     //Temperature = Ambient Temperature (°C)
-    return(Temperature);
+    return (Temperature);
 }

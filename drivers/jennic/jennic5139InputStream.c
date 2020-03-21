@@ -57,7 +57,7 @@ char _jennic5139ReadChar(InputStream* inputStream) {
 }
 
 void initZigbeeInputStream(InputStream* inputStream,
-                                char* jennicAddress) {
+        char* jennicAddress) {
     int address = stringChecksum(jennicAddress);
     inputStream->address = address;
     inputStream->openInputStream = _jennic5139OpenInputStream;

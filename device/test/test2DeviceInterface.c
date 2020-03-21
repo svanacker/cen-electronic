@@ -18,8 +18,7 @@ int deviceTest2GetInterface(unsigned char commandHeader, int mode, bool fillDevi
             setResultUnsignedHex2(0, "result");
         }
         return commandLengthValueForMode(mode, 4, 2);
-    }
-    else if (commandHeader == COMMAND_INTENSIVE_TEST_DRIVER) {
+    } else if (commandHeader == COMMAND_INTENSIVE_TEST_DRIVER) {
         if (fillDeviceArgumentList) {
             setFunction("testDriverIntensive", 1, 0);
             setArgumentUnsignedHex4(0, "count");

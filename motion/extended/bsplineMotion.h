@@ -12,11 +12,11 @@
  * TODO
  */
 void updateSimpleSplineWithDistance(BSplineCurve* curve,
-    float destX, float destY,
-    float destAngle,
-    float distance1, float distance2,
-    float accelerationFactor, float speedFactor,
-    bool relative);
+        float destX, float destY,
+        float destAngle,
+        float distance1, float distance2,
+        float accelerationFactor, float speedFactor,
+        bool relative);
 
 /**
  * Go from the relative destination to the initial Position of the robot
@@ -30,15 +30,15 @@ void updateSimpleSplineWithDistance(BSplineCurve* curve,
  * system determines the best distance to avoid too huge curve
  */
 void gotoSpline(PidMotion* pidMotion,
-					  float relativeDestX,
-                      float relativeDestY,
-                      float relativeDestAngle,
-                      float controlPointDistance1,
-                      float controlPointDistance2,
-                      float accelerationFactor,
-                      float speedFactor,
-                      bool relative,
-                      OutputStream* notificationOutputStream
-                    );
+        float relativeDestX,
+        float relativeDestY,
+        float relativeDestAngle,
+        float controlPointDistance1,
+        float controlPointDistance2,
+        float accelerationFactor,
+        float speedFactor,
+        bool relative,
+        OutputStream* notificationOutputStream
+        );
 
 #endif

@@ -19,7 +19,7 @@ void closeConsoleInputStream(InputStream* inputStream) {
 
 unsigned char readCharConsole(InputStream* inputStream) {
     unsigned char result = (unsigned char) _getch();
-    
+
     return result;
 }
 

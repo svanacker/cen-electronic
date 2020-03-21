@@ -36,5 +36,5 @@ unsigned int appendMotionDefinitionStateString(OutputStream* outputStream, enum 
  * Append a column value with the string representation of the enum PidMotionDefinitionState.
  */
 unsigned int addPidMotionDefinitionStateTableData(OutputStream* outputStream, enum PidMotionDefinitionState state, int columnSize);
-        
+
 #endif

@@ -48,7 +48,7 @@ bool clientClockWriteHourRemoteClockData(ClockData* clockData, int dispatcherInd
     // To select the Dispatcher
     append(outputStream, DISPATCHER_COMMAND_HEADER);
     appendHex2(outputStream, dispatcherIndex);
-    
+
     // The device / command Header + Data
     append(outputStream, CLOCK_DEVICE_HEADER);
     append(outputStream, COMMAND_WRITE_TIME);
@@ -56,7 +56,7 @@ bool clientClockWriteHourRemoteClockData(ClockData* clockData, int dispatcherInd
     appendHex2(outputStream, clockData->minute);
     appendHex2(outputStream, clockData->second);
     bool result = transmitFromDriverRequestBuffer();
-    
+
     return result;
 }
 
@@ -67,7 +67,7 @@ bool clientClockWriteDateRemoteClockData(ClockData* clockData, int dispatcherInd
     // To select the Dispatcher
     append(outputStream, DISPATCHER_COMMAND_HEADER);
     appendHex2(outputStream, dispatcherIndex);
-    
+
     // The device / command Header + Data
     append(outputStream, CLOCK_DEVICE_HEADER);
     append(outputStream, COMMAND_WRITE_DATE);
@@ -75,7 +75,6 @@ bool clientClockWriteDateRemoteClockData(ClockData* clockData, int dispatcherInd
     appendHex2(outputStream, clockData->month);
     appendHex2(outputStream, clockData->year);
     bool result = transmitFromDriverRequestBuffer();
-    
+
     return result;
 }
-    

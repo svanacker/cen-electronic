@@ -26,8 +26,8 @@ struct MultiplexerList {
  * @param multiplexerListSize the size of the array of Multiplexer
  */
 void initMultiplexerList(MultiplexerList* multiplexerList,
-                       Multiplexer(*multiplexerArray)[],
-                       unsigned int multiplexerListSize);
+        Multiplexer(*multiplexerArray)[],
+        unsigned int multiplexerListSize);
 
 /**
  * Get an Multiplexer by his index.

@@ -13,8 +13,8 @@
 /** Command to wait the I2C bus. */
 #define COMMAND_I2C_COMMON_DEBUG_WAIT                        'w'
 /**
-* Get the I2C debug device interface.
-*/
+ * Get the I2C debug device interface.
+ */
 DeviceInterface* getI2cCommonDebugDeviceInterface();
 
 #endif

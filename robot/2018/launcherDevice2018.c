@@ -35,18 +35,18 @@ void lightOn2018(int launcherIndex) {
     unsigned int servoOnPosition = LAUNCHER_LIGHT_LEFT_SERVO_ON_POSITION;
     unsigned int speed = PWM_SERVO_SPEED_MAX;
     unsigned int delay = LAUNCHER_LIGHT_LEFT_SERVO_DELAY;
-    
+
     if (launcherIndex == LAUNCHER_RIGHT_INDEX) {
         servoIndex = LAUNCHER_LIGHT_RIGHT_SERVO_INDEX;
         servoOffPosition = LAUNCHER_LIGHT_RIGHT_SERVO_OFF_POSITION;
         servoOnPosition = LAUNCHER_LIGHT_RIGHT_SERVO_ON_POSITION;
         delay = LAUNCHER_LIGHT_RIGHT_SERVO_DELAY;
     }
-    
+
     // TODO : Check this !
     // ServoList* servoList = _getServoList();
     /// servoList->useTimer = false;
-    
+
     // pwmServo(servoIndex, speed, servoOnPosition);
     // TODO : Check it because it's really longer than 50 ms
     // delaymSec(delay);
@@ -58,11 +58,11 @@ void lightOn2018(int launcherIndex) {
 void launch2018(int launcherIndex, bool prepare) {
     Relay* relay = launcher2018->relay;
     IOExpander* ioExpander = launcher2018->ioExpander;
-    
+
     unsigned int relayIndex = LAUNCHER_LEFT_RELAY_INDEX;
     unsigned int ioExpanderIndex = LAUNCHER_LEFT_IO_EXPANDER_INDEX;
     int maxIteration = 100;
-    
+
     if (launcherIndex == LAUNCHER_RIGHT_INDEX) {
         relayIndex = LAUNCHER_RIGHT_RELAY_INDEX;
         ioExpanderIndex = LAUNCHER_RIGHT_IO_EXPANDER_INDEX;
@@ -80,9 +80,8 @@ void launch2018(int launcherIndex, bool prepare) {
             delaymSec(5);
         }
         // Change the motor state
-        relay->relayWriteValue(relay, relayIndex, false);        
-    }
-    else {
+        relay->relayWriteValue(relay, relayIndex, false);
+    } else {
         // Activate or not the relay
         relay->relayWriteValue(relay, relayIndex, true);
         // We wait that the contact is left -> ioExpander goes to +5V
@@ -94,7 +93,7 @@ void launch2018(int launcherIndex, bool prepare) {
             delaymSec(5);
         }
         // Change the motor state
-        relay->relayWriteValue(relay, relayIndex, false);    
+        relay->relayWriteValue(relay, relayIndex, false);
     }
 }
 
@@ -109,7 +108,7 @@ unsigned int distributor2018CleanNext(int launcherIndex) {
     unsigned int lowThreshold = DISTRIBUTOR_TOF_DISTANCE_LOW_THRESHOLD;
     unsigned int veryLowThreshold = DISTRIBUTOR_TOF_DISTANCE_LOW_THRESHOLD;
 
-     signed int currentSpeed;
+    signed int currentSpeed;
 
     if (launcherIndex == LAUNCHER_RIGHT_INDEX) {
         motorSpeed *= -1;
@@ -119,10 +118,10 @@ unsigned int distributor2018CleanNext(int launcherIndex) {
 
     TofSensorList* tofSensorList = launcher2018->tofSensorList;
     TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, 0);
-    
+
     currentSpeed = motorSpeed;
     setMotorSpeeds(launcher2018->dualHBridgeMotor, currentSpeed, 0);
-    
+
     // Avoid to stay blocked if we are already on a target
     unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
     while (true) {
@@ -139,13 +138,11 @@ unsigned int distributor2018CleanNext(int launcherIndex) {
             // Reached !
             if (distance <= threshold) {
                 break;
-            }
-            // Low mode
+            }// Low mode
             else if (currentSpeed != motorLowSpeed && distance <= lowThreshold) {
                 currentSpeed = motorLowSpeed;
                 setMotorSpeeds(launcher2018->dualHBridgeMotor, currentSpeed, 0);
-            }
-            // Very Low mode
+            }// Very Low mode
             else if (currentSpeed != motorLowSpeed && currentSpeed != motorVeryLowSpeed && distance <= veryLowThreshold) {
                 currentSpeed = motorVeryLowSpeed;
                 setMotorSpeeds(launcher2018->dualHBridgeMotor, currentSpeed, 0);
@@ -153,7 +150,7 @@ unsigned int distributor2018CleanNext(int launcherIndex) {
         }
     }
     setMotorSpeeds(launcher2018->dualHBridgeMotor, 0, 0);
-    
+
     return distance;
 }
 
@@ -167,7 +164,7 @@ void distributor2018EjectDirty(void) {
     // TODO : Check it because it's really longer than 50 ms
     delaymSec(LAUNCHER_DIRTY_EJECTOR_SERVO_DELAY);
     pwmServo(LAUNCHER_DIRTY_EJECTOR_SERVO_INDEX, 0xFF, LAUNCHER_DIRTY_EJECTOR_SERVO_OFF_POSITION);
-    */
+     */
 }
 
 void deviceLauncher2018Init(void) {
@@ -188,30 +185,25 @@ void deviceLauncher2018HandleRawData(char commandHeader, InputStream* inputStrea
         int launcherIndex = readHex2(inputStream);
         launch2018(launcherIndex, true);
         ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_PREPARE_BALL_COMMAND);
-    }
-    else if (commandHeader == LAUNCHER_SEND_BALL_COMMAND) {
+    } else if (commandHeader == LAUNCHER_SEND_BALL_COMMAND) {
         int launcherIndex = readHex2(inputStream);
         launch2018(launcherIndex, false);
         ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_SEND_BALL_COMMAND);
-    }
-    // Light / Bee
+    }// Light / Bee
     else if (commandHeader == LAUNCHER_LIGHT_ON_SERVO_MOVE_COMMAND) {
         int launcherIndex = readHex2(inputStream);
         lightOn2018(launcherIndex);
         ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_LIGHT_ON_SERVO_MOVE_COMMAND);
-    }
-    // Distributor
+    }// Distributor
     else if (commandHeader == DISTRIBUTOR_LOAD_NEXT_BALL_COMMAND) {
         int launcherIndex = readHex2(inputStream);
         unsigned int distance = distributor2018CleanNext(launcherIndex);
         ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, DISTRIBUTOR_LOAD_NEXT_BALL_COMMAND);
         appendHex2(outputStream, distance);
-    }
-    else if (commandHeader == DISTRIBUTOR_EJECT_DIRTY_BALL_COMMAND) {
+    } else if (commandHeader == DISTRIBUTOR_EJECT_DIRTY_BALL_COMMAND) {
         distributor2018EjectDirty();
         ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, DISTRIBUTOR_EJECT_DIRTY_BALL_COMMAND);
-    }
-    // Just one right color ball
+    }// Just one right color ball
     else if (commandHeader == LAUNCHER_LOAD_AND_SEND_BALL_COMMAND) {
         int launcherIndex = readHex2(inputStream);
         launch2018(launcherIndex, true);
@@ -219,8 +211,7 @@ void deviceLauncher2018HandleRawData(char commandHeader, InputStream* inputStrea
         launch2018(launcherIndex, false);
         ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_LOAD_AND_SEND_BALL_COMMAND);
         appendHex2(outputStream, distance);
-    }
-    else if (commandHeader == LAUNCHER_LOAD_AND_SEND_UNICOLOR_BALL_LIST) {
+    } else if (commandHeader == LAUNCHER_LOAD_AND_SEND_UNICOLOR_BALL_LIST) {
         int launcherIndex = readHex2(inputStream);
         unsigned int i;
         for (i = 0; i < 8; i++) {
@@ -229,18 +220,16 @@ void deviceLauncher2018HandleRawData(char commandHeader, InputStream* inputStrea
             launch2018(launcherIndex, false);
         }
         ackCommand(outputStream, LAUNCHER_2018_DEVICE_HEADER, LAUNCHER_LOAD_AND_SEND_UNICOLOR_BALL_LIST);
-    }
-    else if (commandHeader == LAUNCHER_LOAD_AND_SEND_MIXED_BALL_LIST) {
+    } else if (commandHeader == LAUNCHER_LOAD_AND_SEND_MIXED_BALL_LIST) {
         int launcherIndex = readHex2(inputStream);
         unsigned int i;
         // Invert the sens because we load in the other sense
         if (launcherIndex == 0) {
             launcherIndex = 1;
-        }
-        else {
+        } else {
             launcherIndex = 0;
-        } 
-            
+        }
+
         for (i = 0; i < 8; i++) {
             distributor2018CleanNext(launcherIndex);
         }
@@ -256,17 +245,16 @@ static DeviceDescriptor descriptor = {
     .deviceHandleRawData = &deviceLauncher2018HandleRawData,
 };
 
-
 DeviceDescriptor* getLauncher2018DeviceDescriptor(Launcher2018* launcher2018Param) {
     launcher2018 = launcher2018Param;
     return &descriptor;
 }
 
 void initLauncher2018(Launcher2018* launcher2018,
-                      IOExpander* ioExpander,
-                      Relay* relay,
-                      DualHBridgeMotor* dualHBridgeMotor,
-                      TofSensorList* tofSensorList) {
+        IOExpander* ioExpander,
+        Relay* relay,
+        DualHBridgeMotor* dualHBridgeMotor,
+        TofSensorList* tofSensorList) {
     launcher2018->ioExpander = ioExpander;
     launcher2018->relay = relay;
     launcher2018->dualHBridgeMotor = dualHBridgeMotor;

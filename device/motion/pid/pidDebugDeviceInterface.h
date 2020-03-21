@@ -11,8 +11,8 @@
 #define COMMAND_MOTION_PARAMETERS_DEBUG            'M'
 
 /**
-* Write into a table all PID Parameters
-*/
+ * Write into a table all PID Parameters
+ */
 #define COMMAND_DEBUG_PID_PARAMETERS               'P'
 
 /**
@@ -27,8 +27,8 @@
 #define COMMAND_PID_MOTION_INSTRUCTION_TABLE       'L'
 
 /**
-* Debug all values for the PID as Table
-*/
+ * Debug all values for the PID as Table
+ */
 #define COMMAND_DEBUG_DATA_PID_CONSOLE             'G'
 
 /**
@@ -36,10 +36,10 @@
  * @return 
  */
 #define COMMAND_PID_TRAJECTORY_TABLE               'T'
- 
+
 /**
-* Get the PID device interface.
-*/
+ * Get the PID device interface.
+ */
 DeviceInterface* getPidDebugDeviceInterface();
 
 #endif

@@ -32,8 +32,8 @@
 #define COMMAND_TOF_RESTART           'R'
 
 /**
-* Interface for Device "Time of Flight".
-*/
+ * Interface for Device "Time of Flight".
+ */
 DeviceInterface* getTofDeviceInterface();
 
 #endif

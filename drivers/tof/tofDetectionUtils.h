@@ -23,11 +23,11 @@ bool isTofDistanceInRange(TofSensor* tofSensor);
 void tofComputeTofPointOfView(TofSensor* tofSensor, Point* robotCentralPoint, float robotOrientation, Point* resultPoint);
 
 void tofComputePoint(TofSensor* tofSensor,
-    Point* tofPointOfView,
-    float pointOfViewAngleRadian,
-    float distance,
-    float coneAngle,
-    Point* resultPoint);
+        Point* tofPointOfView,
+        float pointOfViewAngleRadian,
+        float distance,
+        float coneAngle,
+        Point* resultPoint);
 
 /**
  * Compute if a something is detected from the pointOfView (Robot->position and robot->angle) and if something is detected,

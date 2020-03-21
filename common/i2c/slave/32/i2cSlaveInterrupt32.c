@@ -24,8 +24,7 @@
  * Function Name: SI2C1Interrupt
  * Description : This is the ISR for I2C1 Slave interrupt.
  */
-void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
-{
+void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void) {
     // TODO : Find the right i2cBusConnection
     I2cBusConnection* i2cBusConnection = NULL;
 
@@ -57,11 +56,10 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
         // reset any state variables needed by a message sequence
         // perform a dummy read of the address
         portableSlaveReadI2C(i2cBusConnection);
-        
+
         // release the clock to restart I2C
         portableSlaveClockRelease(i2cBusConnection);
-    }
-    // Master WRITE (InputStream)
+    }// Master WRITE (InputStream)
     else if (isStart && !read && isData && readBufferFull) {
         // R/W bit = 0 --> indicates data transfer is input to slave
         // D/A bit = 1 --> indicates last byte was data
@@ -72,16 +70,15 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
         append(outputStream, data);
         // for debug support
         appendI2cDebugInputChar(data);
-  
+
         // release the clock to restart I2C
         portableSlaveClockRelease(i2cBusConnection);
-    }
-    // Master send the address and want to read
+    }// Master send the address and want to read
     else if (isStart && read && !isData) {
         // R/W bit = 1 --> indicates data transfer is output from slave
         // D/A bit = 0 --> indicates last byte was address
         portableSlaveReadI2C(i2cBusConnection);
-        
+
         Buffer* i2cSlaveOutputBuffer = i2cStreamLink->outputBuffer;
         // Get an inputStream to read the buffer to send to the master
         InputStream* i2cInputStream = getInputStream(i2cSlaveOutputBuffer);
@@ -94,9 +91,8 @@ void __ISR(_I2C_1_VECTOR, ipl3) _SlaveI2CHandler(void)
             portableSlaveWriteI2C(i2cBusConnection, c);
         } else {
             portableSlaveWriteI2C(i2cBusConnection, I2C_SLAVE_NO_DATA_IN_READ_BUFFER);
-        } 
-    }
-    // Master want to read
+        }
+    }// Master want to read
     else if (isStart && read && isData && !isSclRelease) {
 
         // R/W bit = 1 --> indicates data transfer is output from slave

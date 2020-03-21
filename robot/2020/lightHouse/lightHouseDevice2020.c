@@ -44,28 +44,23 @@ void deviceLightHouse2020HandleRawData(unsigned char commandHeader, InputStream*
     if (commandHeader == COMMAND_LIGHT_HOUSE_2020_DEBUG) {
         ackCommand(outputStream, LIGHT_HOUSE_2020_DEVICE_HEADER, COMMAND_LIGHT_HOUSE_2020_DEBUG);
         lightHouse2020Debug(lightHouse, getDebugOutputStreamLogger());
-    }
-    // UP
+    }// UP
     else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_UP) {
         ackCommand(outputStream, LIGHT_HOUSE_2020_DEVICE_HEADER, COMMAND_LIGHT_HOUSE_2020_UP);
         lightHouse2020Up(lightHouse);
-    }
-    // BOTTOM
+    }// BOTTOM
     else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_BOTTOM) {
         ackCommand(outputStream, LIGHT_HOUSE_2020_DEVICE_HEADER, COMMAND_LIGHT_HOUSE_2020_BOTTOM);
         lightHouse2020Bottom(lightHouse);
-    }
-    // INIT
+    }// INIT
     else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_INIT) {
         ackCommand(outputStream, LIGHT_HOUSE_2020_DEVICE_HEADER, COMMAND_LIGHT_HOUSE_2020_INIT);
         lightHouse2020Reset(lightHouse);
-    }
-    // SIMULATE ROBOT PLACED
+    }// SIMULATE ROBOT PLACED
     else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_SIMULATE_ROBOT_PLACED) {
         ackCommand(outputStream, LIGHT_HOUSE_2020_DEVICE_HEADER, COMMAND_LIGHT_HOUSE_2020_SIMULATE_ROBOT_PLACED);
         lightHouse2020SimulateRobotPlaced(lightHouse);
-    }
-    // SIMULATE ROBOT NEAR
+    }// SIMULATE ROBOT NEAR
     else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_SIMULATE_ROBOT_NEAR) {
         ackCommand(outputStream, LIGHT_HOUSE_2020_DEVICE_HEADER, COMMAND_LIGHT_HOUSE_2020_SIMULATE_ROBOT_NEAR);
         // lightHouse2020SimulateRobotPlacedAndNear(lightHouse);
@@ -78,7 +73,6 @@ static DeviceDescriptor descriptor = {
     .deviceIsOk = &deviceLightHouse2020IsOk,
     .deviceHandleRawData = &deviceLightHouse2020HandleRawData,
 };
-
 
 DeviceDescriptor* getLightHouse2020DeviceDescriptor(LightHouse2020* lightHouseParam) {
     lightHouse = lightHouseParam;

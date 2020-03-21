@@ -141,7 +141,7 @@ unsigned int tofSensorGetDistanceVL53L0XMM(TofSensor* tofSensor) {
     getContinousRangingMeasurement(tofSensorVL53L0X, false);
 
     VL53L0X_RangingMeasurementData_t* data = &(tofSensorVL53L0X->rangingMeasurementData);
-    
+
     // Store the last Value
     tofSensor->lastDistanceMM = data->RangeMilliMeter;
 

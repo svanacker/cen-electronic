@@ -37,18 +37,18 @@ void clearPathList(PathList* pathList);
 PathData* addPath(PathList* pathList);
 
 /**
-* Add a Path, with structure filled with all data.
-*/
+ * Add a Path, with structure filled with all data.
+ */
 PathData* addFilledPath(PathList* pathList,
-	LocationList* locationList,
-	char* locationName1, char* locationName2,
-	float cost,
-	float controlPointDistance1, 
-    float controlPointDistance2,
-	float angleRadian1, 
-    float angleRadian2,
-	unsigned char accelerationFactor, unsigned char speedFactor,
-	bool mustGoBackward);
+        LocationList* locationList,
+        char* locationName1, char* locationName2,
+        float cost,
+        float controlPointDistance1,
+        float controlPointDistance2,
+        float angleRadian1,
+        float angleRadian2,
+        unsigned char accelerationFactor, unsigned char speedFactor,
+        bool mustGoBackward);
 
 /**
  * Get the path at index.
@@ -70,9 +70,9 @@ unsigned int getPathCount(PathList* pathList);
 void pathListDecreaseObstacleCost(PathList* pathList);
 
 /**
-* When Temporary Paths have been used and the robot is now back to permanent Location, we must mark the pathData which were generated
-* as reusable.
-*/
+ * When Temporary Paths have been used and the robot is now back to permanent Location, we must mark the pathData which were generated
+ * as reusable.
+ */
 void pathListClearTemporaryPaths(PathList* pathList);
 
 PathData* findPathDataToRecycleIfAny(PathList* pathList);

@@ -50,18 +50,15 @@ void deviceColorSensorHandleRawData(unsigned char commandHeader, InputStream* in
         appendHex4(outputStream, color->G);
         appendSeparator(outputStream);
         appendHex4(outputStream, color->B);
-    }
-    else if (commandHeader == COMMAND_COLOR_SENSOR_READ_TYPE) {
+    } else if (commandHeader == COMMAND_COLOR_SENSOR_READ_TYPE) {
         ackCommand(outputStream, COLOR_SENSOR_DEVICE_HEADER, COMMAND_COLOR_SENSOR_READ_TYPE);
         enum ColorType colorType = colorSensor->colorSensorFindColorType(colorSensor);
         appendHex2(outputStream, colorType);
-    }
-    else if (commandHeader == COMMAND_COLOR_SENSOR_DEBUG) {
+    } else if (commandHeader == COMMAND_COLOR_SENSOR_DEBUG) {
         ackCommand(outputStream, COLOR_SENSOR_DEVICE_HEADER, COMMAND_COLOR_SENSOR_DEBUG);
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         printColorSensorTable(debugOutputStream, colorSensor);
-    }
-    /** Only for PC */
+    }/** Only for PC */
     else if (commandHeader == COMMAND_COLOR_SENSOR_WRITE) {
         ackCommand(outputStream, COLOR_SENSOR_DEVICE_HEADER, COMMAND_COLOR_SENSOR_WRITE);
         colorSensor->color->R = readHex4(inputStream);
@@ -72,14 +69,16 @@ void deviceColorSensorHandleRawData(unsigned char commandHeader, InputStream* in
     }
 }
 
-static DeviceDescriptor descriptor = {
-    .deviceInit = &deviceColorSensorInit,
-    .deviceShutDown = &deviceColorSensorShutDown,
-    .deviceIsOk = &deviceColorSensorIsOk,
-    .deviceHandleRawData = &deviceColorSensorHandleRawData,
-};
+static DeviceDescriptor descriptor;
 
 DeviceDescriptor* getColorSensorDeviceDescriptor(ColorSensor* colorSensorParam) {
-    colorSensor = colorSensorParam;
+    initDeviceDescriptor(&descriptor,
+            &deviceColorSensorInit,
+            &deviceColorSensorShutDown,
+            &deviceColorSensorIsOk,
+            &deviceColorSensorHandleRawData,
+            (int*) colorSensorParam);
+
     return &descriptor;
 }
+

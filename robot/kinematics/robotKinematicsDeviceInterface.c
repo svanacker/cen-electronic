@@ -13,21 +13,18 @@ int deviceRobotKinematicsGetInterface(unsigned char commandHeader, DeviceInterfa
             setFunctionNoArgumentAndNoResult("load Default Values");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    else if (commandHeader == COMMAND_KINEMATICS_SAVE) {
+    } else if (commandHeader == COMMAND_KINEMATICS_SAVE) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("save To Eeprom");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // DEBUG
+    }// DEBUG
     else if (commandHeader == COMMAND_KINEMATICS_LIST_DEBUG) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("debug as Table List");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }
-    // GET ALL values
+    }// GET ALL values
     else if (commandHeader == COMMAND_KINEMATICS_READ_ALL) {
         if (fillDeviceArgumentList) {
             setFunction("real All", 0, 13);
@@ -48,59 +45,51 @@ int deviceRobotKinematicsGetInterface(unsigned char commandHeader, DeviceInterfa
             setResultUnsignedHex6(12, "motor Wheel Rotation By Second At FullSpeed (rot/sec)");
         }
         return commandLengthValueForMode(mode, 0, 48);
-    }
-    // CODER VALUE
+    }// CODER VALUE
     else if (commandHeader == COMMAND_SET_CODER_WHEEL_AVERAGE_DIAMETER_MM) {
         if (fillDeviceArgumentList) {
             setFunction("set Coder Wheel Average Diameter", 1, 0);
             setArgumentUnsignedHex6(0, "value (nanoM)");
         }
         return commandLengthValueForMode(mode, 6, 0);
-    }
-    else if (commandHeader == COMMAND_SET_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM) {
+    } else if (commandHeader == COMMAND_SET_CODER_WHEEL_AVERAGE_DELTA_DIAMETER_MM) {
         if (fillDeviceArgumentList) {
             setFunction("set Coder Wheel Average Delta Diameter", 1, 0);
             setArgumentUnsignedHex6(0, "value (nanoM)");
         }
         return commandLengthValueForMode(mode, 6, 0);
-    }
-    else if (commandHeader == COMMAND_SET_CODER_DISTANCE_BETWEEN_WHEELS_MM) {
+    } else if (commandHeader == COMMAND_SET_CODER_DISTANCE_BETWEEN_WHEELS_MM) {
         if (fillDeviceArgumentList) {
             setFunction("set Coder Distance Between Wheels", 1, 0);
             setArgumentUnsignedHex6(0, "value (microM)");
         }
         return commandLengthValueForMode(mode, 6, 0);
-    }
-    else if (commandHeader == COMMAND_SET_CODER_WHEEL_PULSE_BY_ROTATION) {
+    } else if (commandHeader == COMMAND_SET_CODER_WHEEL_PULSE_BY_ROTATION) {
         if (fillDeviceArgumentList) {
             setFunction("set Coder Wheel Pulse By Rotation", 1, 0);
             setArgumentUnsignedHex6(0, "value (pulse / rotation)");
         }
         return commandLengthValueForMode(mode, 6, 0);
-    }
-    // MOTOR VALUE
+    }// MOTOR VALUE
     else if (commandHeader == COMMAND_SET_MOTOR_WHEEL_AVERAGE_DIAMETER_MM) {
         if (fillDeviceArgumentList) {
             setFunction("set Motor Wheel Average Diameter", 1, 0);
             setArgumentUnsignedHex6(0, "value (microM)");
         }
         return commandLengthValueForMode(mode, 6, 0);
-    }
-    else if (commandHeader == COMMAND_SET_MOTOR_DISTANCE_BETWEEN_WHEELS_MM) {
+    } else if (commandHeader == COMMAND_SET_MOTOR_DISTANCE_BETWEEN_WHEELS_MM) {
         if (fillDeviceArgumentList) {
             setFunction("set Motor Distance Between Wheels", 1, 0);
             setArgumentUnsignedHex6(0, "value (microM)");
         }
         return commandLengthValueForMode(mode, 6, 0);
-    }
-    else if (commandHeader == COMMAND_SET_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED) {
+    } else if (commandHeader == COMMAND_SET_MOTOR_WHEEL_ROTATION_BY_SECONDS_AT_FULL_SPEED) {
         if (fillDeviceArgumentList) {
             setFunction("set Motor Wheel Rotation By Seconds At Full Speed", 1, 0);
             setArgumentUnsignedHex6(0, "rotation / second");
         }
         return commandLengthValueForMode(mode, 6, 0);
-    }
-    else if (commandHeader == COMMAND_SET_ROBOT_TYPE) {
+    } else if (commandHeader == COMMAND_SET_ROBOT_TYPE) {
         if (fillDeviceArgumentList) {
             setFunction("set RobotType", 1, 0);
             setArgumentUnsignedHex2(0, "BIG (1), SMALL(2)");

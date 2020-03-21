@@ -11,8 +11,8 @@
 #define RELAY_LAST_COLUMN		              60
 
 /**
-* Private.
-*/
+ * Private.
+ */
 void printRelayDebugTableHeader(OutputStream* outputStream) {
     println(outputStream);
     appendTableHeaderSeparatorLine(outputStream);
@@ -22,14 +22,13 @@ void printRelayDebugTableHeader(OutputStream* outputStream) {
     appendTableHeaderSeparatorLine(outputStream);
 }
 
-
 void printRelayStatesTable(OutputStream* outputStream, Relay* relay) {
     printRelayDebugTableHeader(outputStream);
     unsigned int relayIndex;
     for (relayIndex = 0; relayIndex < relay->count; relayIndex++) {
         bool value = relay->relayReadValue(relay, relayIndex);
 
-            // Strategy Index
+        // Strategy Index
         appendDecTableData(outputStream, relayIndex, RELAY_INDEX_COLUMN_LENGTH);
         appendBoolTableData(outputStream, value, RELAY_VALUE_COLUMN_LENGTH);
         appendEndOfTableColumn(outputStream, RELAY_LAST_COLUMN);

@@ -23,8 +23,8 @@ float angleOfVector(Point* p0, Point* p1) {
     float diffY = (p1->y - p0->y);
 
     float result = atan2f(diffY, diffX);
-    
-    return result;    
+
+    return result;
 }
 
 float angleOfVector2(float p0x, float p0y, float p1x, float p1y) {
@@ -88,27 +88,27 @@ bool computeRotationCenteredPoint(Point* a, Point* b, Point* c, Point* centeredP
     float xDelta_a = b->x - a->x;
     float yDelta_b = c->y - b->y;
     float xDelta_b = c->x - b->x;
-    
+
     // If points are too closed
-    if (fabs(xDelta_a) <= 0.000000001 && fabs(yDelta_b) <= 0.000000001){
-		centeredPointIfAny->x = 0.5f * (b->x + c->x);
-		centeredPointIfAny->y = 0.5f *(a->y + b->y);
-       
-		return true;
-	}
-	
-	// IsPerpendicular() assure that xDelta(s) are not zero
-	float aSlope = yDelta_a / xDelta_a; // 
+    if (fabs(xDelta_a) <= 0.000000001 && fabs(yDelta_b) <= 0.000000001) {
+        centeredPointIfAny->x = 0.5f * (b->x + c->x);
+        centeredPointIfAny->y = 0.5f * (a->y + b->y);
+
+        return true;
+    }
+
+    // IsPerpendicular() assure that xDelta(s) are not zero
+    float aSlope = yDelta_a / xDelta_a; // 
     float bSlope = yDelta_b / xDelta_b;
-    
+
     // checking whether the given points are colinear. 	
-	if (fabs(aSlope - bSlope) <= 0.000000001){	
-		return false;
-	}
+    if (fabs(aSlope - bSlope) <= 0.000000001) {
+        return false;
+    }
 
     centeredPointIfAny->x = (aSlope * bSlope * (a->y - c->y) + bSlope * (a->x + b->x)
-        - aSlope*(b->x+ c->x)) / (2.0f * (bSlope - aSlope) );
-    centeredPointIfAny->y = -1.0f *(centeredPointIfAny->x - (a->x + b->x) / 2.0f) / aSlope +  (a->y + b->y) / 2.0f;
+            - aSlope * (b->x + c->x)) / (2.0f * (bSlope - aSlope));
+    centeredPointIfAny->y = -1.0f * (centeredPointIfAny->x - (a->x + b->x) / 2.0f) / aSlope + (a->y + b->y) / 2.0f;
 
     return true;
 }

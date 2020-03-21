@@ -10,8 +10,7 @@ bool fork2019PrepareTakeGoldenium(ServoList* servoList, unsigned int leftRight) 
 
     if (leftRight == FORK_2019_LEFT_INDEX) {
         moveElevatorLeft(servoList, wait);
-    }
-    else if (leftRight == FORK_2019_RIGHT_INDEX) {
+    } else if (leftRight == FORK_2019_RIGHT_INDEX) {
         moveElevatorRight(servoList, wait);
     }
 

@@ -38,8 +38,8 @@ void printCurrentCoderTable(OutputStream* outputStream);
 void enableCoderSampleRecording(unsigned int sampleCountParam, unsigned int samplingRateMilliSeconds);
 
 /**
-* Print the coder history.
-*/
+ * Print the coder history.
+ */
 void printSampleCoderHistory(OutputStream* outputStream);
 
 #endif

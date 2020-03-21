@@ -11,8 +11,8 @@ unsigned int printLightHouseState(OutputStream* outputStream, enum LightHouse202
 unsigned int addLightHouseStateTypeTableData(OutputStream* outputStream, enum LightHouse2020State state, int columnSize);
 
 /**
-* Debug the launcher
-*/
+ * Debug the launcher
+ */
 void lightHouse2020Debug(LightHouse2020* launcher, OutputStream* outputStream);
 
 

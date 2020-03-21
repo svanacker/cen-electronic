@@ -26,10 +26,10 @@
 long absLong(signed long value);
 
 /**
-* Returns the absolute value of a value.
-* @param value the signed value
-* @return the absolute value of the value
-*/
+ * Returns the absolute value of a value.
+ * @param value the signed value
+ * @return the absolute value of the value
+ */
 float absFloat(float value);
 
 /**
@@ -44,14 +44,14 @@ float absFloat(float value);
 signed long limitLong(signed long value, long maxValue);
 
 /**
-* Limit the value by the maxValue either in positive or negative.
-* Ex: limit(100.0f, 75.5f) => 75.5f
-* Ex: limit(40.6f, 60.3f) => 40.3f
-* Ex: limit(-63.2f, 50.1f) => -50.1f
-* @param value the value that we want to limit
-* @param maxValue the max Value which is the limit either positive or negative
-* @return the value limited by the maxValue either in positive or negative
-*/
+ * Limit the value by the maxValue either in positive or negative.
+ * Ex: limit(100.0f, 75.5f) => 75.5f
+ * Ex: limit(40.6f, 60.3f) => 40.3f
+ * Ex: limit(-63.2f, 50.1f) => -50.1f
+ * @param value the value that we want to limit
+ * @param maxValue the max Value which is the limit either positive or negative
+ * @return the value limited by the maxValue either in positive or negative
+ */
 float limitFloat(float value, float maxValue);
 
 /**
@@ -73,19 +73,19 @@ signed int compareFloat(float a, float b);
 signed int getSign(float a);
 
 /**
-* Returns the min value between 2 values.
-* @param value1 the first value
-* @param value2 the second value
-* @return the min value between value1 and value2
-*/
+ * Returns the min value between 2 values.
+ * @param value1 the first value
+ * @param value2 the second value
+ * @return the min value between value1 and value2
+ */
 int minInt(int value1, int value2);
 
 /**
-* Returns the max value between 2 values.
-* @param value1 the first value
-* @param value2 the second value
-* @return the max value between value1 and value2
-*/
+ * Returns the max value between 2 values.
+ * @param value1 the first value
+ * @param value2 the second value
+ * @return the max value between value1 and value2
+ */
 int maxInt(int value1, int value2);
 
 /**
@@ -118,10 +118,10 @@ bool isFloatNegative(float value);
 float mod2PI(float value);
 
 /**
-* Do the modulo of a value between 0 and PI.
-* @param value the value to convert
-* @return the modulo of a value between 0 and PI
-*/
+ * Do the modulo of a value between 0 and PI.
+ * @param value the value to convert
+ * @return the modulo of a value between 0 and PI
+ */
 float modPI(float value);
 
 /**
@@ -145,8 +145,8 @@ float radToDeg(float radians);
 float degToRad(float degrees);
 
 /**
-* Convert an angle in Deci Degree into his value in radian.
-*/
+ * Convert an angle in Deci Degree into his value in radian.
+ */
 float deciDegreeToRad(float deciDegrees);
 
 #endif

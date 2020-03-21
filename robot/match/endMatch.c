@@ -19,7 +19,7 @@
 // SPECIFIC PART
 
 void endMatchDetectorCallbackFunc(Timer* timer) {
-    EndMatch* endMatch = (EndMatch*)timer->object;
+    EndMatch* endMatch = (EndMatch*) timer->object;
     if (endMatch->endMatchDetectorDeviceTimer->enabled) {
         endMatch->currentTimeInSecond++;
     }
@@ -31,10 +31,10 @@ void initEndMatch(EndMatch* endMatch, RobotConfig* robotConfig, unsigned int mat
     endMatch->matchDurationInSecond = matchDurationInSecond;
     endMatch->doNotEnd = isConfigSet(robotConfig, CONFIG_DO_NOT_END);
     endMatch->endMatchDetectorDeviceTimer = addTimer(END_MATCH_DETECTOR_TIMER_CODE,
-        TIME_DIVIDER_1_HERTZ,
-        endMatchDetectorCallbackFunc,
-        "END MATCH TIMER",
-        (int*) endMatch);
+            TIME_DIVIDER_1_HERTZ,
+            endMatchDetectorCallbackFunc,
+            "END MATCH TIMER",
+            (int*) endMatch);
 }
 
 void markStartMatch(EndMatch* endMatch) {
@@ -61,8 +61,7 @@ unsigned int matchEndGetRemainingTime(EndMatch* endMatch) {
     }
     if (isMatchFinished(endMatch)) {
         return 0;
-    }
-    else {
+    } else {
         return endMatch->matchDurationInSecond - endMatch->currentTimeInSecond;
     }
 }

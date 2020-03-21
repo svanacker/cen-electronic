@@ -16,20 +16,20 @@
 // DEBUG CONFIG / REGISTERS
 
 /**
-* Private.
-*/
+ * Private.
+ */
 void ina219_printRegisterListHeader(OutputStream* outputStream) {
-	println(outputStream);
-	appendTableHeaderSeparatorLine(outputStream);
-	appendStringHeader(outputStream, "#Reg", INA219_DEBUG_REG_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "#Reg Hex", INA219_DEBUG_REG_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Reg Name", INA219_DEBUG_REG_NAME_COLUMN_LENGTH); 
-	appendStringHeader(outputStream, "R/W", INA219_DEBUG_REG_RW_COLUMN_LENGTH);       
+    println(outputStream);
+    appendTableHeaderSeparatorLine(outputStream);
+    appendStringHeader(outputStream, "#Reg", INA219_DEBUG_REG_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "#Reg Hex", INA219_DEBUG_REG_HEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Reg Name", INA219_DEBUG_REG_NAME_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "R/W", INA219_DEBUG_REG_RW_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Dec Value", INA219_DEBUG_REG_VALUE_DEC_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Hex Value", INA219_DEBUG_REG_VALUE_HEX_COLUMN_LENGTH);
-	appendStringHeader(outputStream, "Bin Value", INA219_DEBUG_REG_VALUE_BIN_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, 0);
-	appendTableHeaderSeparatorLine(outputStream);
+    appendStringHeader(outputStream, "Bin Value", INA219_DEBUG_REG_VALUE_BIN_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, 0);
+    appendTableHeaderSeparatorLine(outputStream);
 }
 
 /**
@@ -39,15 +39,15 @@ void ina219_printRegisterListHeader(OutputStream* outputStream) {
 void ina219_debugMainRegister(OutputStream* outputStream, I2cBusConnection* i2cBusConnection, unsigned char reg, const char* regName, const char* rw) {
     /*
     int value = ina219_read16(i2cBusConnection, reg);
-	appendDecTableData(outputStream, reg, INA219_DEBUG_REG_COLUMN_LENGTH);
-	appendHex2TableData(outputStream, reg, INA219_DEBUG_REG_HEX_COLUMN_LENGTH);
-	appendStringTableData(outputStream, regName, INA219_DEBUG_REG_NAME_COLUMN_LENGTH);
-	appendStringTableData(outputStream, rw, INA219_DEBUG_REG_RW_COLUMN_LENGTH);
+    appendDecTableData(outputStream, reg, INA219_DEBUG_REG_COLUMN_LENGTH);
+    appendHex2TableData(outputStream, reg, INA219_DEBUG_REG_HEX_COLUMN_LENGTH);
+    appendStringTableData(outputStream, regName, INA219_DEBUG_REG_NAME_COLUMN_LENGTH);
+    appendStringTableData(outputStream, rw, INA219_DEBUG_REG_RW_COLUMN_LENGTH);
     appendDecTableData(outputStream, value, INA219_DEBUG_REG_VALUE_DEC_COLUMN_LENGTH);
     appendHex2TableData(outputStream, value, INA219_DEBUG_REG_VALUE_HEX_COLUMN_LENGTH);
-	appendBinary8TableData(outputStream, value, 4, INA219_DEBUG_REG_VALUE_BIN_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, 0);
-    */
+    appendBinary8TableData(outputStream, value, 4, INA219_DEBUG_REG_VALUE_BIN_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, 0);
+     */
 }
 
 void ina219_debugMainRegisterList(OutputStream* outputStream, Accelerometer* accelerometer) {
@@ -70,13 +70,13 @@ void ina219_debugMainRegisterList(OutputStream* outputStream, Accelerometer* acc
  * @param i2cBusConnection
  */
 void ina219_debugMainRegisterAcceleratorData(OutputStream* outputStream, unsigned char low, unsigned char high, int value, float mgValue, const char* regName) {
-	appendStringTableData(outputStream, regName, INA219_DEBUG_REG_COLUMN_LENGTH);
+    appendStringTableData(outputStream, regName, INA219_DEBUG_REG_COLUMN_LENGTH);
     appendHex2TableData(outputStream, high, INA219_DEBUG_REG_HEX_COLUMN_LENGTH);
     appendHex2TableData(outputStream, low, INA219_DEBUG_REG_HEX_COLUMN_LENGTH);
-	appendHex4TableData(outputStream, value, INA219_DEBUG_REG_HEX_COLUMN_LENGTH);
-	appendDecTableData(outputStream, value, INA219_DEBUG_REG_VALUE_DEC_COLUMN_LENGTH);
+    appendHex4TableData(outputStream, value, INA219_DEBUG_REG_HEX_COLUMN_LENGTH);
+    appendDecTableData(outputStream, value, INA219_DEBUG_REG_VALUE_DEC_COLUMN_LENGTH);
     appendDecfTableData(outputStream, mgValue, INA219_DEBUG_REG_VALUE_MG_COLUMN_LENGTH);
-	appendEndOfTableColumn(outputStream, 0);
+    appendEndOfTableColumn(outputStream, 0);
 }
 
 void ina219_debugValueRegisterList(OutputStream* outputStream, Accelerometer* accelerometer) {
@@ -88,7 +88,7 @@ void ina219_debugValueRegisterList(OutputStream* outputStream, Accelerometer* ac
     adxl345_debugMainRegisterAcceleratorData(outputStream, accelerometerData->zRawLowValue, accelerometerData->zRawHighValue, accelerometerData->zRawValue, accelerometerData->milligZValue, "Z");
 
     appendTableHeaderSeparatorLine(outputStream);
-    */
+     */
 }
 
 /*
@@ -108,4 +108,4 @@ void adxl345_debugValueRegisterListIfShock(OutputStream* outputStream, I2cBusCon
         appendTableHeaderSeparatorLine(outputStream);
     }
 }
-*/
+ */

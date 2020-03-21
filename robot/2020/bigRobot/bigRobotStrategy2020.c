@@ -130,9 +130,8 @@ void initBigRobotPaths2020(GameStrategyContext* gameStrategyContext) {
         deciDegreeToRad(BIG_DISTRIBUTOR_LINE_1_ANGLE_DECI_DEG),
         aFactor * BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_ACCELERATION_FACTOR,
         speedFactor * BIG_ROBOT_STARTAREA_TO_BIGDISTRIBUTOR_LINE_1_FRONT_SPEED_FACTOR);
-    */
+     */
 }
-
 
 void initBigRobotTargets2020(GameStrategyContext* gameStrategyContext) {
     clearGameTargets();
@@ -141,8 +140,8 @@ void initBigRobotTargets2020(GameStrategyContext* gameStrategyContext) {
 
 void initBigRobotTargetActions2020(GameStrategyContext* gameStrategyContext) {
     // CHAOS
-//    addTargetPrepareAction(&(chaosTarget.actionList), &chaosTakeTargetAction, chaosFrontLocation, CHAOS_TAKE_TIME_TO_ACHIEVE, &chaosTakeTargetActionItemList);
-//    addTargetTakeAction(&(chaosTarget.actionList), &chaosDropTargetAction, rediumDropZoneLocation, CHAOS_DROP_TIME_TO_ACHIEVE, &chaosDropTargetActionItemList);
+    //    addTargetPrepareAction(&(chaosTarget.actionList), &chaosTakeTargetAction, chaosFrontLocation, CHAOS_TAKE_TIME_TO_ACHIEVE, &chaosTakeTargetActionItemList);
+    //    addTargetTakeAction(&(chaosTarget.actionList), &chaosDropTargetAction, rediumDropZoneLocation, CHAOS_DROP_TIME_TO_ACHIEVE, &chaosDropTargetActionItemList);
 }
 
 void initBigRobotTargetActionsItems2020(GameStrategyContext* gameStrategyContext) {

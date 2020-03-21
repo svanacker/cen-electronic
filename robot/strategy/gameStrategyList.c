@@ -29,11 +29,10 @@ void addGameStrategy(GameStrategy* strategy, unsigned int strategyId, char* stra
     unsigned char size = strategies.size;
     if (size < MAX_STRATEGY) {
         strategy->strategyId = strategyId,
-        strategy->name = strategyName;
+                strategy->name = strategyName;
         strategies.strategies[size] = strategy;
         strategies.size++;
-    }
-    else {
+    } else {
         writeError(TOO_MUCH_STRATEGIES);
     }
 }

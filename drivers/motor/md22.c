@@ -29,7 +29,7 @@ unsigned char readMD22(I2cBusConnection* i2cBusConnection, unsigned char reg) {
     // send the register
     portableMasterWriteI2C(i2cBusConnection, reg);
     WaitI2C(i2cBus);
-    
+
     // TODO : Find if we must stop or not (seems that it's not used in other device, and it's often a problem)
     portableMasterStopI2C(i2cBusConnection);
     WaitI2C(i2cBus);

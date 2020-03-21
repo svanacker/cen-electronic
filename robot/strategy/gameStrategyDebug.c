@@ -37,12 +37,12 @@
 #define GAME_STRATEGY_ITEM_LIST_LAST_COLUMN_LENGTH                               0
 
 /**
-* Private.
-*/
+ * Private.
+ */
 void printGameStrategyItemListHeader(OutputStream* outputStream) {
-	println(outputStream);
-	// Table Header
-	appendTableHeaderSeparatorLine(outputStream);
+    println(outputStream);
+    // Table Header
+    appendTableHeaderSeparatorLine(outputStream);
     // Line 1
     appendStringHeader(outputStream, "name", GAME_STRATEGY_ITEM_LIST_TARGET_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "gain", GAME_STRATEGY_ITEM_LIST_TARGET_GAIN_COLUMN_LENGTH);
@@ -92,12 +92,12 @@ void printGameStrategyItemListHeader(OutputStream* outputStream) {
 }
 
 /**
-* @private
-*/
+ * @private
+ */
 void printGameStrategyItemTable(OutputStream* outputStream, GameStrategyItem* strategyItem) {
-	GameTarget* target = strategyItem->target;
+    GameTarget* target = strategyItem->target;
     // TARGET
-	appendStringTableData(outputStream, target->name, GAME_STRATEGY_ITEM_LIST_TARGET_NAME_COLUMN_LENGTH);
+    appendStringTableData(outputStream, target->name, GAME_STRATEGY_ITEM_LIST_TARGET_NAME_COLUMN_LENGTH);
     appendDecfTableData(outputStream, target->gain, GAME_STRATEGY_ITEM_LIST_TARGET_GAIN_COLUMN_LENGTH);
     appendDecfTableData(outputStream, target->potentialGain, GAME_STRATEGY_ITEM_LIST_TARGET_POTENTIAL_GAIN_COLUMN_LENGTH);
     appendDecfTableData(outputStream, target->currentComputedOpportunityFactor, GAME_STRATEGY_ITEM_LIST_TARGET_OPPORTUNITY_FACTOR_COLUMN_LENGTH);
@@ -117,8 +117,8 @@ void printGameStrategyItemTable(OutputStream* outputStream, GameStrategyItem* st
 }
 
 /**
-* @private
-*/
+ * @private
+ */
 void printGameTargetActionTable(OutputStream* outputStream, GameTargetAction* gameTargetAction) {
     // TARGET
     appendStringTableData(outputStream, "-", GAME_STRATEGY_ITEM_LIST_TARGET_NAME_COLUMN_LENGTH);
@@ -143,8 +143,8 @@ void printGameTargetActionTable(OutputStream* outputStream, GameTargetAction* ga
 }
 
 /**
-* @private
-*/
+ * @private
+ */
 void printGameTargetActionItemTable(OutputStream* outputStream, GameTargetActionItem* gameTargetActionItem) {
     // TARGET
     appendStringTableData(outputStream, "-", GAME_STRATEGY_ITEM_LIST_TARGET_NAME_COLUMN_LENGTH);
@@ -168,17 +168,16 @@ void printGameTargetActionItemTable(OutputStream* outputStream, GameTargetAction
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_ITEM_LIST_LAST_COLUMN_LENGTH);
 }
 
-
 void printGameStrategyTable(OutputStream* outputStream, GameStrategy* gameStrategy) {
-	unsigned int itemSize = gameStrategy->size;
+    unsigned int itemSize = gameStrategy->size;
     unsigned int i;
     unsigned int j;
     unsigned int k;
     printGameStrategyItemListHeader(outputStream);
     // Each Item
-	for (i = 0; i < itemSize; i++) {
-		GameStrategyItem* strategyItem = gameStrategy->items[i];
-		printGameStrategyItemTable(outputStream, strategyItem);
+    for (i = 0; i < itemSize; i++) {
+        GameStrategyItem* strategyItem = gameStrategy->items[i];
+        printGameStrategyItemTable(outputStream, strategyItem);
         GameTarget* gameTarget = strategyItem->target;
         GameTargetActionList* actionList = &(gameTarget->actionList);
         unsigned int actionSize = actionList->size;
@@ -197,6 +196,6 @@ void printGameStrategyTable(OutputStream* outputStream, GameStrategy* gameStrate
                 printGameTargetActionItemTable(outputStream, actionItem);
             }
         }
-	}
+    }
     appendTableHeaderSeparatorLine(outputStream);
 }
