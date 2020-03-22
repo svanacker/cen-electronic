@@ -46,16 +46,19 @@ void portableSlaveWriteI2C(I2cBusConnection* i2cBusConnection, unsigned char c) 
         if (portIndex == I2C_BUS_PORT_1) {
             I2C1TRN = c; // data transferred to I2C1TRN reg
             I2C1CONbits.SCLREL = 1; // Release the clock
-        }#if defined _I2C2
+        }
+#if defined _I2C2
         else if (portIndex == I2C_BUS_PORT_2) {
             I2C2TRN = c; // data transferred to I2C1TRN reg
             I2C2CONbits.SCLREL = 1; // Release the clock
-        }#endif
+        }
+#endif
 #if defined _I2C3
         else if (portIndex == I2C_BUS_PORT_3) {
             I2C3TRN = c; // data transferred to I2C1TRN reg
             I2C3CONbits.SCLREL = 1; // Release the clock
-        }#endif
+        }
+#endif
 #if defined _I2C4
         else if (portIndex == I2C_BUS_PORT_4) {
             I2C4TRN = c; // data transferred to I2C1TRN reg

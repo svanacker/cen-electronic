@@ -70,7 +70,7 @@
 #define MAIN_BOARD_I2C_DEBUG_MASTER_IN_BUFFER_LENGTH                  200
 
 // LED
-#define MAIN_BOARD_LED_COLOR_TEAM_INDEX                                 0
+#define MAIN_BOARD_LED_COLOR_TEAM_INDEX                                 2
 
 // DRIVER
 

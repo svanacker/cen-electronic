@@ -17,7 +17,7 @@ FILE* readOrWriteDataFromFile(char* fileName, bool load, char defaultValue, char
     FILE* result = fopen(fileName, "rb+");
     // if file does not exist, create it
     if (result == NULL) {
-        int i;
+        unsigned int i;
         char* initValues = values;
         for (i = 0; i < valuesLength; i++) {
             *initValues = defaultValue;

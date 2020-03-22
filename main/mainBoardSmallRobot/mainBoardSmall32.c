@@ -165,7 +165,7 @@ void mainBoardMainPhase2(void) {
 
     // Initialise the Strategy first so that we could show the color & stragegy
     // index at a very early stage
-    I2cBusConnection* ioExpanderI2cBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_1, true);
+    I2cBusConnection* ioExpanderI2cBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_2, true);
     initIOExpanderPCF8574(&ioExpanderStrategy, ioExpanderI2cBusConnection);
     mainBoardCommonStrategyMainInitDrivers(&robotConfig, &ioExpanderStrategy);
 

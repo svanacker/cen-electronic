@@ -27,7 +27,7 @@
 void initGameStrategyIndex(GameStrategyContext* gameStrategyContext) {
     IOExpander* ioExpander = gameStrategyContext->ioExpander;
 
-    gameStrategyContext->strategyId = ioExpander->ioExpanderReadValue(ioExpander);
+    gameStrategyContext->strategyId = ioExpander->ioExpanderReadValue(ioExpander) & 0x0F;
     /* OLD IMPLEMENTATION BASED ON ROBOT CONFIG
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
     unsigned int configValue = robotConfig->robotConfigReadInt(robotConfig);

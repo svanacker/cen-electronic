@@ -34,6 +34,8 @@ typedef Color LedArrayReadValueFunction(LedArray* ledArray, unsigned int ledInde
  * Defines the contract for led Array.
  */
 struct LedArray {
+    /** A flag to know if the structure was already initialized */
+    bool initialized;
     /** The function which must be used to init the led Array */
     LedArrayInitFunction* ledArrayInit;
     /** The function which must be used to read the value of the led array */
