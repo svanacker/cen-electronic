@@ -168,14 +168,14 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const u
     }
 }
 
-GameStrategyContext* mainBoardCommonStrategyMainInitDrivers(RobotConfig* robotConfig) {
+GameStrategyContext* mainBoardCommonStrategyMainInitDrivers(RobotConfig* robotConfig, IOExpander* ioExpanderStrategy) {
     // 2020
     navigation = initNavigation2020();
     EndMatch* endMatch = mainBoardCommonMatchGetEndMatch();
     TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
     ServoList* servoList = mainBoardCommonGetServoList();
 
-    gameStrategyContext = initGameStrategyContext2020(robotConfig, endMatch, tofSensorList, servoList);
+    gameStrategyContext = initGameStrategyContext2020(robotConfig, ioExpanderStrategy, endMatch, tofSensorList, servoList);
     gameBoard = initGameBoard2020(gameStrategyContext);
 
     return gameStrategyContext;

@@ -105,18 +105,19 @@
 // ------------------------------------------------------- INITIALIZATION ------------------------------------------------------------
 
 void initSmallRobotLocations2020(GameStrategyContext* gameStrategyContext) {
-    Navigation* navigation = gameStrategyContext->navigation;
-    enum TeamColor teamColor = gameStrategyContext->color;
+    // Navigation* navigation = gameStrategyContext->navigation;
+    // enum TeamColor teamColor = gameStrategyContext->color;
 
     // smallRobotStartAreaLocation = addLocationWithColors(teamColor, navigation, SMALL_ROBOT_START_AREA, SMALL_ROBOT_START_AREA_LABEL, SMALL_ROBOT_START_AREA_X, SMALL_ROBOT_START_AREA_Y);
 }
 
 void initSmallRobotPaths2020(GameStrategyContext* gameStrategyContext) {
+    /*
     Navigation* navigation = gameStrategyContext->navigation;
     enum TeamColor teamColor = gameStrategyContext->color;
     float aFactor = gameStrategyContext->defaultAccelerationFactor;
     float speedFactor = gameStrategyContext->defaultSpeedFactor;
-
+*/
     // -> Small Robot
     /*
     smallRobotStartArea_to_accelerator_Path = addNavigationPathWithColor(teamColor,

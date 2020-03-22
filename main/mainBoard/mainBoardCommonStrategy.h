@@ -3,6 +3,8 @@
 
 #include "mainBoardCommon.h"
 
+#include "../../drivers/ioExpander/ioExpander.h"
+
 #include "../../robot/config/robotConfig.h"
 
 #include "../../robot/strategy/gameStrategyContext.h"
@@ -16,12 +18,12 @@ void mainBoardCommonStrategyAddDevices(unsigned char portIndex);
 /**
  * Handle Stream instruction linked to the strategy
  */
-void mainBoardCommonStrategyHandleStreamInstruction();
+void mainBoardCommonStrategyHandleStreamInstruction(void);
 
 /**
  * Main Board Strategy Driver Init Part.
  */
-GameStrategyContext* mainBoardCommonStrategyMainInitDrivers(RobotConfig* robotConfig);
+GameStrategyContext* mainBoardCommonStrategyMainInitDrivers(RobotConfig* robotConfig, IOExpander* ioExpanderStrategy);
 
 /**
  * Main Board Strategy Init Part (After the Drivers Init).

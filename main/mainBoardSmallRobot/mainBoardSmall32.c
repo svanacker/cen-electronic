@@ -26,6 +26,8 @@
 #include "../mainBoard/mainBoardCommonTof.h"
 #include "../mainBoard/mainBoardCommonTof32.h"
 
+#include "../../drivers/ioExpander/ioExpander.h"
+
 #include "../../drivers/pwm/servo/servoPwmPca9685.h"
 #include "../../drivers/pwm/servo/pca9685.h"
 #include "../../drivers/accelerometer/adxl345.h"
@@ -34,6 +36,7 @@
 #include "../../common/i2c/i2cConstants.h"
 #include "../../common/i2c/i2cBusConnectionList.h"
 
+#include "../../robot/strategy/teamColor.h"
 #include "../../robot/2020/mainBoard2020.h"
 
 // SMALL ROBOT PART
@@ -54,9 +57,11 @@
 
 
 #include "../../robot/2020/strategy/strategyConfig2020.h"
+#include "../ioExpander/ioExpanderPcf8574.h"
 
 // Robot Configuration
 static RobotConfig robotConfig;
+static IOExpander ioExpanderStrategy;
 
 // LED
 static LedArray ledArray;
@@ -145,18 +150,24 @@ void mainBoardMainPhase2(void) {
     ServoList* servoList = mainBoardCommonGetServoList();
     // I2cBus* i2cBus = mainBoardCommonGetMainI2cBus();
     I2cBus* i2cBus = getI2cBusByIndex(MAIN_BOARD_SERVO_I2C_BUS_INDEX);
-    // I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
-    // addServoAllPca9685(servoList, servoI2cBusConnection);
+    I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
+    addServoAllPca9685(servoList, servoI2cBusConnection);
 
     // -> LED
     appendString(getDebugOutputStreamLogger(), "LED ...");
     ledArrayBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_3, true);
     initLedArrayPca9685(&ledArray, ledArrayBusConnection);
     appendStringLN(getDebugOutputStreamLogger(), "OK");
+    // -> SHOW COLOR OF THE TEAM
+    enum TeamColor teamColor = getTeamColorFromRobotConfig(&robotConfig);
+    Color color = getColorForTeam(teamColor);
+    setLedColor(&ledArray, MAIN_BOARD_LED_COLOR_TEAM_INDEX, color);
 
     // Initialise the Strategy first so that we could show the color & stragegy
     // index at a very early stage
-    mainBoardCommonStrategyMainInitDrivers(&robotConfig);
+    I2cBusConnection* ioExpanderI2cBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_1, true);
+    initIOExpanderPCF8574(&ioExpanderStrategy, ioExpanderI2cBusConnection);
+    mainBoardCommonStrategyMainInitDrivers(&robotConfig, &ioExpanderStrategy);
 
     mainBoardCommonTofInitDrivers32(&robotConfig);
     mainBoardCommonMatchMainInitDrivers(&robotConfig, &startupCheckList2020, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);

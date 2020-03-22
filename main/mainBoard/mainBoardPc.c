@@ -32,6 +32,7 @@
 #include "../../drivers/ioExpander/ioExpander.h"
 #include "../../drivers/ioExpander/ioExpanderList.h"
 #include "../../drivers/ioExpander/pc/ioExpanderPc.h"
+#include "../../drivers/ioExpander/pc/ioExpanderFilePc.h"
 
 #include "../../drivers/i2c/multiplexer/multiplexer.h"
 #include "../../drivers/i2c/multiplexer/multiplexerList.h"
@@ -104,6 +105,7 @@
 #include "../../motion/simulation/motionSimulation.h"
 
 // CONFIG
+#include "../../robot/config/robotConfig.h"
 #include "../../robot/config/pc/robotConfigPc.h"
 #include "../../robot/config/robotConfigDevice.h"
 #include "../../robot/config/robotConfigDeviceInterface.h"
@@ -321,6 +323,7 @@ static Temperature temperature;
 
 // RobotConfig
 static RobotConfig robotConfig;
+static IOExpander strategyIOExpander;
 
 // SERIAL
 static SerialLink serialLinkListArray[MAIN_BOARD_PC_SERIAL_LINK_LIST_LENGTH];
@@ -588,6 +591,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     // CONFIG
     // initRobotConfigPc(&robotConfig, ROBOT_TYPE_BIG);
     initRobotConfigPc(&robotConfig, ROBOT_TYPE_SMALL);
+    initIOExpanderFilePc(&strategyIOExpander, "strategyConfigPc.txt");
 
     // EEPROM
     initEepromPc(&eeprom, "MAIN_BOARD_EEPROM");
@@ -601,6 +605,11 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
 
     // LED
     initLedArrayPc(&ledArray);
+
+    // -> SHOW COLOR OF THE TEAM
+    enum TeamColor teamColor = getTeamColorFromRobotConfig(&robotConfig);
+    Color color = getColorForTeam(teamColor);
+    setLedColor(&ledArray, MAIN_BOARD_LED_COLOR_TEAM_INDEX, color);
 
     // Sensor
     initCurrentPc(&current);
@@ -627,7 +636,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     initFakeRobot(900.0f, 1800.0f, 0.0f, 140.0f);
 
     navigation = initNavigation2020();
-    gameStrategyContext = initGameStrategyContext2020(&robotConfig, &endMatch, mainBoardCommonTofGetTofSensorList(), &servoList);
+    gameStrategyContext = initGameStrategyContext2020(&robotConfig, &strategyIOExpander, &endMatch, mainBoardCommonTofGetTofSensorList(), &servoList);
 
     // Init the Tof as soon with have the gameStrategyContext
     mainBoardCommonTofInitDriversPc(&robotConfig, &multiplexerList, &ioExpanderList, gameStrategyContext);

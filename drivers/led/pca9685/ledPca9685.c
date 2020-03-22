@@ -28,11 +28,22 @@ bool ledArrayInitPca9685(LedArray* ledArray) {
 }
 
 /**
+ * Pca9685 Implementation Read the color (RGB) value of the specified led.
+ * @param ledIndex the index of the led
+ * @return the current color
+ */
+Color ledArrayReadValuePca9685(LedArray* ledArray, unsigned int ledIndex) {
+    // TODO
+    I2cBusConnection* i2cBusConnection = getLedArrayI2cBusConnection(ledArray);
+    // TODO : Implementation
+}
+
+
+/**
  * Pca9685 Implementation Write the color (RGB) value of the specified led.
  * @param ledIndex the index of the led
  */
 void ledArrayWriteValuePca9685(LedArray* ledArray, unsigned int ledIndex, unsigned char R, unsigned char G, unsigned char B) {
-    // TODO
     I2cBusConnection* i2cBusConnection = getLedArrayI2cBusConnection(ledArray);
     pca9685_setPWM(i2cBusConnection, ledIndex * 3, 4095 - B * 16, B * 16);
     pca9685_setPWM(i2cBusConnection, ledIndex * 3 + 1, 4095 - G * 16, G * 16);
@@ -40,5 +51,5 @@ void ledArrayWriteValuePca9685(LedArray* ledArray, unsigned int ledIndex, unsign
 }
 
 void initLedArrayPca9685(LedArray* ledArray, I2cBusConnection* i2cBusConnection) {
-    initLedArray(ledArray, &ledArrayInitPca9685, &ledArrayWriteValuePca9685, (int*) i2cBusConnection);
+    initLedArray(ledArray, &ledArrayInitPca9685, &ledArrayReadValuePca9685, &ledArrayWriteValuePca9685, (int*) i2cBusConnection);
 }

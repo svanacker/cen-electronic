@@ -1,6 +1,7 @@
 #ifndef TEAM_COLOR_H
 #define TEAM_COLOR_H
 
+#include "../../common/color/color.h"
 #include "../../common/io/outputStream.h"
 
 /** Define the color for the team. */
@@ -12,6 +13,13 @@ enum TeamColor {
     /** 2020 Yellow Color. */
     TEAM_COLOR_YELLOW = 2
 };
+
+/**
+ * Returns the color related to the team Color
+ * @param teamColor
+ * @return 
+ */
+Color getColorForTeam(enum TeamColor teamColor);
 
 /** 
  * Append the color of the team color to an outputStream.

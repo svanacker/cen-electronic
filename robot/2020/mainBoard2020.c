@@ -71,8 +71,8 @@ Navigation* initNavigation2020(void) {
     return &navigation;
 }
 
-GameStrategyContext* initGameStrategyContext2020(RobotConfig* robotConfig, EndMatch* endMatch, TofSensorList* tofSensorList, ServoList* servoList) {
-    initGameStrategyContext(&gameStrategyContext, robotConfig, &navigation, endMatch, tofSensorList, &robotPosition, &opponentRobotPosition, &lastObstaclePosition, servoList);
+GameStrategyContext* initGameStrategyContext2020(RobotConfig* robotConfig, IOExpander* ioExpander, EndMatch* endMatch, TofSensorList* tofSensorList, ServoList* servoList) {
+    initGameStrategyContext(&gameStrategyContext, robotConfig, ioExpander, &navigation, endMatch, tofSensorList, &robotPosition, &opponentRobotPosition, &lastObstaclePosition, servoList);
     initStrategy2020(&gameStrategyContext);
 
     return &gameStrategyContext;

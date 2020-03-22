@@ -2307,6 +2307,9 @@
     <ClCompile Include="common\io\pin.c">
       <Filter>Source Files\common\io</Filter>
     </ClCompile>
+    <ClCompile Include="drivers\ioExpander\pc\ioExpanderFilePc.c">
+      <Filter>Source Files\drivers\ioExpander\pc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3601,6 +3604,9 @@
     </ClInclude>
     <ClInclude Include="device\io\ioDeviceInterface.h">
       <Filter>Header Files\device\io</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\ioExpander\pc\ioExpanderFilePc.h">
+      <Filter>Header Files\drivers\ioExpander\pc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

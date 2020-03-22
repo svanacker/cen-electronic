@@ -351,6 +351,7 @@
     <ClCompile Include="drivers\ioExpander\ioExpander.c" />
     <ClCompile Include="drivers\ioExpander\ioExpanderDebug.c" />
     <ClCompile Include="drivers\ioExpander\ioExpanderList.c" />
+    <ClCompile Include="drivers\ioExpander\pc\ioExpanderFilePc.c" />
     <ClCompile Include="drivers\ioExpander\pc\ioExpanderPc.c" />
     <ClCompile Include="drivers\lcd\lcd.c" />
     <ClCompile Include="drivers\lcd\pc\lcdProvider_Pc.c" />
@@ -756,6 +757,7 @@
     <ClInclude Include="drivers\i2c\multiplexer\tca9548A.h" />
     <ClInclude Include="drivers\ioExpander\ioExpander.h" />
     <ClInclude Include="drivers\ioExpander\ioExpanderList.h" />
+    <ClInclude Include="drivers\ioExpander\pc\ioExpanderFilePc.h" />
     <ClInclude Include="drivers\io\ioExpanderDebug.h" />
     <ClInclude Include="drivers\io\pc\ioExpanderPc.h" />
     <ClInclude Include="drivers\lcd\lcd.h" />

@@ -9,9 +9,12 @@
 #include "gameTarget.h"
 #include "gameTargetAction.h"
 
+#include "../../common/color/color.h"
 #include "../../common/timer/cenTimer.h"
 
 #include "teamColor.h"
+
+#include "../../drivers/ioExpander/ioExpander.h"
 
 #include "../../drivers/tof/tofList.h"
 
@@ -56,6 +59,8 @@ typedef struct GameStrategyContext GameStrategyContext;
 struct GameStrategyContext {
     /** Configuration of the robot. */
     RobotConfig* robotConfig;
+    /** The IO Expander. */
+    IOExpander* ioExpander;
     /** Navigation object with the list of location, paths ...*/
     Navigation* navigation;
     /** Time in seconds since last collision. */
@@ -109,6 +114,7 @@ struct GameStrategyContext {
  */
 void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
         RobotConfig* robotConfig,
+        IOExpander* ioExpanderStrategy,
         Navigation* navigation,
         EndMatch* endMatch,
         TofSensorList* tofSensorList,

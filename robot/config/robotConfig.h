@@ -111,4 +111,9 @@ bool isConfigSet(RobotConfig* robotConfig, unsigned int configMask);
 
 bool isSonarActivated(RobotConfig* robotConfig);
 
+/**
+* Returns the TeamColor related to the config.
+*/
+enum TeamColor getTeamColorFromRobotConfig(RobotConfig* robotConfig);
+
 #endif

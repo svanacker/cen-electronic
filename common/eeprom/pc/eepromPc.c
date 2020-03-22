@@ -14,6 +14,8 @@
 #include "../../../common/io/printWriter.h"
 #include "../../../common/io/reader.h"
 
+#include "../../../common/pc/file/fileUtils.h"
+
 #include "../../../common/system/system.h"
 
 // #define EEPROM_PC_MAX_INDEX        0x03FFFF
@@ -29,27 +31,13 @@ static char eepromPc[EEPROM_PC_MAX_INDEX];
  */
 FILE* eepromPCGetOrCreateFile(Eeprom* eeprom_, bool load) {
     char fileName[255];
-    // TODO ! Change the Path !
-    char* directory = "c:/PERSO/";
+    // We use the current directory !
     char* boardName = getBoardName();
     char* extension = ".hex";
-    strcpy(fileName, directory);
-    strcat(fileName, boardName);
+    strcpy(fileName, boardName);
     strcat(fileName, extension);
 
-    FILE* file = fopen(fileName, "rb+");
-    // if file does not exist, create it
-    if (file == NULL) {
-        file = fopen(fileName, "wb");
-        // Fill data
-        fwrite(&eepromPc, 1, EEPROM_PC_MAX_INDEX, file);
-    }// we read it !
-    else {
-        if (load) {
-            fread(&eepromPc, 1, EEPROM_PC_MAX_INDEX, file);
-        }
-    }
-    return file;
+    return readOrWriteDataFromFile(fileName, load, '\0', (char*) &eepromPc, EEPROM_PC_MAX_INDEX);
 }
 
 void eepromPcWriteCharIntoFile(Eeprom* eeprom_, unsigned long index, unsigned char value) {

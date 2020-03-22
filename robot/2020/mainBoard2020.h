@@ -8,6 +8,7 @@
 #include "../../navigation/navigation.h"
 
 #include "../../drivers/colorSensor/colorSensor.h"
+#include "../../drivers/ioExpander/ioExpander.h"
 #include "../../drivers/tof/tofList.h"
 
 #include "../../robot/strategy/gameStrategyContext.h"
@@ -36,6 +37,7 @@
 bool startupCheckList2020(StartMatch* startMatch);
 
 GameStrategyContext* initGameStrategyContext2020(RobotConfig* robotConfig,
+        IOExpander* ioExpanderStrategy,
         EndMatch* endMatch,
         TofSensorList* tofSensorList,
         ServoList* servoList);

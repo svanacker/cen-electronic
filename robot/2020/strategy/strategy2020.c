@@ -59,14 +59,9 @@
 
 void initColorAndStartPosition2020(GameStrategyContext* gameStrategyContext) {
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
-    unsigned int configValue = robotConfig->robotConfigReadInt(robotConfig);
+    
+    gameStrategyContext->color = getTeamColorFromRobotConfig(robotConfig);
 
-    // Configure the color so that we could use isViolet after, could NOT be used before !
-    if (configValue & CONFIG_COLOR_YELLOW_MASK) {
-        gameStrategyContext->color = TEAM_COLOR_2020_YELLOW;
-    } else {
-        gameStrategyContext->color = TEAM_COLOR_2020_BLUE;
-    }
     float angleDeciDegree = 0;
     enum RobotType robotType = getRobotType();
     if (robotType == ROBOT_TYPE_BIG) {

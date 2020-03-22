@@ -76,7 +76,7 @@ PathData* bigRobotStartArea_to_bigDistributorLine1Front;
 
 // Targets List
 
-static GameTarget harborTarget;
+// static GameTarget harborTarget;
 
 // ------------------------------------------------------- TARGETS ACTIONS ---------------------------------------------------------------
 
@@ -111,12 +111,13 @@ void initBigRobotLocations2020(GameStrategyContext* gameStrategyContext) {
 }
 
 void initBigRobotPaths2020(GameStrategyContext* gameStrategyContext) {
+    /*
     Navigation* navigation = gameStrategyContext->navigation;
     enum TeamColor teamColor = gameStrategyContext->color;
 
     float aFactor = gameStrategyContext->defaultAccelerationFactor;
     float speedFactor = gameStrategyContext->defaultSpeedFactor;
-
+*/
     // Big Robot
     /*
     bigRobotStartArea_to_bigDistributorLine1Front = addNavigationPathWithColor(teamColor,

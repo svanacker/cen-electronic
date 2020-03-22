@@ -2,6 +2,7 @@
 
 #include "../led.h"
 
+#include "../../../common/color/color.h"
 #include "../../../common/io/outputStream.h"
 #include "../../../common/io/printWriter.h"
 #include "../../../common/log/logger.h"
@@ -18,6 +19,20 @@ bool ledArrayInitPc(LedArray* ledArray) {
 }
 
 /**
+ * PC Implementation Read the color (RGB) value of the specified led.
+ * @param ledIndex the index of the led
+ * @return the current Color
+ */
+Color ledArrayReadValuePc(LedArray* ledArray, unsigned int ledIndex) {
+    // TODO : Implementation
+    Color result;
+    result.R = 0;
+    result.G = 0;
+    result.G = 0;
+    return result;
+}
+
+/**
  * PC Implementation Write the color (RGB) value of the specified led.
  * @param ledIndex the index of the led
  */
@@ -28,5 +43,5 @@ void ledArrayWriteValuePc(LedArray* ledArray, unsigned int ledIndex, unsigned in
 }
 
 void initLedArrayPc(LedArray* ledArray) {
-    initLedArray(ledArray, &ledArrayInitPc, &ledArrayWriteValuePc, NULL);
+    initLedArray(ledArray, &ledArrayInitPc, &ledArrayReadValuePc , &ledArrayWriteValuePc, NULL);
 }

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "gameStrategyContext.h"
 #include "gameStrategyMotionHandler.h"
@@ -13,6 +14,8 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
 
+#include "../../drivers/ioExpander/ioExpander.h"
+
 #include "../../drivers/tof/tofList.h"
 
 #include "../../motion/motionConstants.h"
@@ -22,6 +25,10 @@
  * @private
  */
 void initGameStrategyIndex(GameStrategyContext* gameStrategyContext) {
+    IOExpander* ioExpander = gameStrategyContext->ioExpander;
+
+    gameStrategyContext->strategyId = ioExpander->ioExpanderReadValue(ioExpander);
+    /* OLD IMPLEMENTATION BASED ON ROBOT CONFIG
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
     unsigned int configValue = robotConfig->robotConfigReadInt(robotConfig);
     // If config == 0 ==> No Strategy (free to use by UART Command)
@@ -32,6 +39,7 @@ void initGameStrategyIndex(GameStrategyContext* gameStrategyContext) {
     } else {
         gameStrategyContext->strategyId = strategyMask;
     }
+    */
 }
 
 void obstacleTimerCallbackFunc(Timer* timer) {
@@ -44,6 +52,7 @@ void obstacleTimerCallbackFunc(Timer* timer) {
 
 void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
         RobotConfig* robotConfig,
+        IOExpander* ioExpanderStrategy,
         Navigation* navigation,
         EndMatch* endMatch,
         TofSensorList* tofSensorList,
@@ -53,6 +62,7 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
         ServoList* servoList) {
     gameStrategyContext->navigation = navigation;
     gameStrategyContext->robotConfig = robotConfig;
+    gameStrategyContext->ioExpander = ioExpanderStrategy;
     gameStrategyContext->endMatch = endMatch;
     gameStrategyContext->tofSensorList = tofSensorList;
     gameStrategyContext->servoList = servoList;
@@ -69,8 +79,8 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
     gameStrategyContext->obstacleTimer = obstacleTimer;
     if (obstacleTimer != NULL) {
         obstacleTimer->callback = obstacleTimerCallbackFunc;
+        obstacleTimer->enabled = true;
     }
-    obstacleTimer->enabled = true;
 
     // Position Management
     initGameStrategyMotionHandler(gameStrategyContext);
