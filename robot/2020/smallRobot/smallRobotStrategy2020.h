@@ -3,6 +3,11 @@
 
 #include "../../../robot/strategy/gameStrategyContext.h"
 
+// SMALL ROBOT STRATEGY
+#define SMALL_ROBOT_STRATEGY_2020_1_FLAG_1                      1
+#define SMALL_ROBOT_STRATEGY_2020_2_FLAG_2                      2
+#define SMALL_ROBOT_STRATEGY_2020_3_FLAG_2_REEF                 3
+
 void initSmallRobotLocations2020(GameStrategyContext* gameStrategyContext);
 
 void initSmallRobotPaths2020(GameStrategyContext* gameStrategyContext);

@@ -161,10 +161,12 @@ GameStrategy* initBigRobotStrategiesItems2020(GameStrategyContext* gameStrategyC
     if (strategyId == NO_STRATEGY_INDEX) {
         return NULL;
     }
-    if (strategyId == BIG_ROBOT_STRATEGY_1_CHAOS) {
+    /*
+    if (strategyId == BIG_ROBOT_STRATEGY_1_) {
         // addGameStrategyItem(&bigRobotStrategy1Chaos, &chaosStrategyItem, &chaosTarget);
         // return &bigRobotStrategy1Chaos;
     }
+    */
     writeError(STRATEGY_NOT_DEFINED);
     return NULL;
 }

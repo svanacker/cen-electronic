@@ -117,7 +117,12 @@ int deviceArm2020GetInterface(unsigned char commandHeader, DeviceInterfaceMode m
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
-
+    else if (commandHeader == COMMAND_2020_HOOK_ALL_SEQUENCE) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("All Sequence");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

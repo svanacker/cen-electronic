@@ -27,6 +27,7 @@
 #include "../../main/mainBoard/mainBoardCommon.h"
 
 // 2020
+#include "../../robot/2020/arm/arm2020.h"
 #include "../../robot/2020/strategy/strategy2020.h"
 #include "../../robot/2020/strategy/strategyConfig2020.h"
 #include "../../robot/2020/gameboard/gameBoardElement2020.h"
@@ -55,8 +56,13 @@ static BSplineCurve gameBoardCurve;
 static GameBoardElementList gameBoardElementList;
 static GameBoardElement gameBoardElementListArray[MAIN_BOARD_2020_GAME_BOARD_PRINT_ELEMENT_ARRAY_LENGTH];
 
-bool startupCheckList2020(StartMatch* startMatch) {
+bool endMatchBeforeEnd2020(EndMatch* endMatch) {
+    ServoList* servoList = gameStrategyContext.servoList;
+    arm2020FlagUp(servoList);
+    return true;
+}
 
+bool startupCheckList2020(StartMatch* startMatch) {
     return true;
 }
 

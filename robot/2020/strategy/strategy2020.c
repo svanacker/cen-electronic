@@ -74,7 +74,7 @@ void initColorAndStartPosition2020(GameStrategyContext* gameStrategyContext) {
         angleDeciDegree = SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG;
     }
     // Symetry
-    if (isBlue2020(gameStrategyContext)) {
+    if (isYellow2020(gameStrategyContext)) {
         angleDeciDegree = -angleDeciDegree;
         gameStrategyContext->robotPosition->y = GAMEBOARD_HEIGHT - gameStrategyContext->robotPosition->y;
     }
@@ -84,7 +84,7 @@ void initColorAndStartPosition2020(GameStrategyContext* gameStrategyContext) {
 
 Location* addLocationWithColors(enum TeamColor teamColor, Navigation* navigation, char* name, char* label, float x, float y) {
     LocationList* locationList = navigation->locationList;
-    if (teamColor == TEAM_COLOR_2020_BLUE) {
+    if (teamColor == TEAM_COLOR_2020_YELLOW) {
         y = GAMEBOARD_HEIGHT - y;
     }
     Location* result = addNamedLocation(locationList, LOCATION_USAGE_TYPE_PERMANENT, name, label, x, y);
@@ -107,7 +107,7 @@ PathData* addNavigationPathWithColor(
         float speedFactor) {
     PathData* pathData = addPath(navigation->paths);
 
-    if (teamColor == TEAM_COLOR_2020_BLUE) {
+    if (teamColor == TEAM_COLOR_2020_YELLOW) {
         angle1 = mod2PI(-angle1);
         angle2 = mod2PI(-angle2);
     }

@@ -25,11 +25,12 @@ void endMatchDetectorCallbackFunc(Timer* timer) {
     }
 }
 
-void initEndMatch(EndMatch* endMatch, RobotConfig* robotConfig, unsigned int matchDurationInSecond) {
+void initEndMatch(EndMatch* endMatch, RobotConfig* robotConfig, unsigned int matchDurationInSecond, EndMatchBeforeEndFunction* endMatchBeforeEndFunction) {
     endMatch->robotConfig = robotConfig;
     endMatch->currentTimeInSecond = 0;
     endMatch->matchDurationInSecond = matchDurationInSecond;
     endMatch->doNotEnd = isConfigSet(robotConfig, CONFIG_DO_NOT_END);
+    endMatch->endMatchBeforeEndFunction = endMatchBeforeEndFunction;
     endMatch->endMatchDetectorDeviceTimer = addTimer(END_MATCH_DETECTOR_TIMER_CODE,
             TIME_DIVIDER_1_HERTZ,
             endMatchDetectorCallbackFunc,
@@ -87,6 +88,25 @@ void showEndAndScore(EndMatch* endMatch, OutputStream* outputStream) {
     }
 }
 
+bool doActionBeforeEndOfMatch(EndMatch* endMatch, OutputStream* outputStream) {
+    // Only show if the match is near to the end
+    if (!isMatchJustBeforeTheEnd(endMatch)) {
+        return false;
+    }
+    // Do not do the action x times the end of the match
+    if (endMatch->actionBeforeEndOfMatchDone) {
+        return false;
+    }
+
+    if (endMatch->endMatchBeforeEndFunction != NULL) {
+        clearScreen();
+        appendString(outputStream, "Before End !");
+        endMatch->endMatchBeforeEndFunction(endMatch);
+        endMatch->actionBeforeEndOfMatchDone = true;
+    }
+    return true;
+}
+
 bool showEndAndScoreIfNeeded(EndMatch* endMatch, OutputStream* outputStream) {
     // Only show if the match is finished
     if (!isMatchFinished(endMatch)) {
@@ -115,6 +135,19 @@ bool isMatchFinished(EndMatch* endMatch) {
         return false;
     }
     bool result = endMatch->currentTimeInSecond >= endMatch->matchDurationInSecond;
+
+    return result;
+}
+
+bool isMatchJustBeforeTheEnd(EndMatch* endMatch) {
+    if (endMatch->doNotEnd) {
+        return false;
+    }
+    if (!endMatch->endMatchDetectorDeviceTimer->enabled) {
+        return false;
+    }
+    bool result = endMatch->currentTimeInSecond > MATCH_LAST_ACTION_TIME 
+                  && endMatch->currentTimeInSecond < endMatch->matchDurationInSecond;
 
     return result;
 }

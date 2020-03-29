@@ -36,6 +36,8 @@ void mainBoardCommonMatchMainInitDrivers(RobotConfig* robotConfig,
         StartupCheckListFunction* startupCheckListFunction,
         IsMatchStartedFunction* isMatchStartedFunctionParam,
         LoopUntilStartHandleFunction* loopUntilStartHandleFunction,
-        MatchHandleInstructionFunction* matchHandleInstructionFunction);
+        MatchHandleInstructionFunction* matchHandleInstructionFunction,
+        EndMatchBeforeEndFunction* endMatchBeforeEndFunction
+);
 
 #endif

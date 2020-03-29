@@ -12,8 +12,20 @@ typedef struct EndMatch EndMatch;
 
 #include "../../robot/config/robotConfig.h"
 
-/** We take 5 seconds to be sure that it will be ok . */
-#define MATCH_DURATION                    95
+/** We take 1 seconds to be sure that it will be ok. */
+#define MATCH_DURATION                    98
+
+/** When the last Action Time must be done */
+#define MATCH_LAST_ACTION_TIME            MATCH_DURATION - 3
+
+// Forward declaration
+struct EndMatch;
+typedef struct EndMatch EndMatch;
+
+/**
+ * Type of function to do just before the end of the match
+ */
+typedef bool EndMatchBeforeEndFunction(EndMatch* endMatch);
 
 /**
  * All elements to manage the end of the match
@@ -35,12 +47,19 @@ struct EndMatch {
     unsigned int scoreToShow;
     /** If we show the score at the end. */
     bool showScoreAtTheEndOfMatch;
+    /** What we must do some seconds before the end of the match */
+    EndMatchBeforeEndFunction* endMatchBeforeEndFunction;
+    /** If we have done the action before the end of the match */
+    bool actionBeforeEndOfMatchDone;
 };
 
 /**
  * Initializes the end Match structure.
  */
-void initEndMatch(EndMatch* endMatch, RobotConfig* robotConfig, unsigned int matchDurationInSecond);
+void initEndMatch(EndMatch* endMatch, 
+                  RobotConfig* robotConfig,
+                  unsigned int matchDurationInSecond,
+                  EndMatchBeforeEndFunction* endMatchBeforeEndFunction);
 
 /**
  * Start the match.
@@ -72,7 +91,7 @@ void showEndAndScore(EndMatch* endMatch, OutputStream* outputStream);
 bool showEndAndScoreIfNeeded(EndMatch* endMatch, OutputStream* outputStream);
 
 /**
- * Returns how much time was passed
+ * Returns how much time was passed.
  */
 int getCurrentTimeInSecond(EndMatch* endMatch);
 
@@ -85,5 +104,16 @@ unsigned int matchEndGetRemainingTime(EndMatch* endMatch);
  * Return true if this is the end of the match.
  */
 bool isMatchFinished(EndMatch* endMatch);
+
+/**
+* Returns true if this is just before the end of the match.
+*/
+bool isMatchJustBeforeTheEnd(EndMatch* endMatch);
+
+/**
+* Do the action before the end of the match if we expect it.
+* @param endMatch 
+*/
+bool doActionBeforeEndOfMatch(EndMatch* endMatch, OutputStream* outputStream);
 
 #endif

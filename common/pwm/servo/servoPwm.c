@@ -64,13 +64,13 @@ void initServo(Servo* servo,
 
 // PUBLIC WRITE FUNCTIONS
 
-void pwmServo(Servo* servo, unsigned int targetSpeed, int targetPosition, bool wait) {
+unsigned int pwmServo(Servo* servo, unsigned int targetSpeed, int targetPosition, bool wait) {
     if (servo == NULL) {
         writeError(SERVO_LIST_SERVO_NULL);
-        return;
+        return 0;
     }
     if (!servo->enabled) {
-        return;
+        return 0;
     }
     servo->targetSpeed = targetSpeed;
     servo->targetPosition = targetPosition;
@@ -78,15 +78,16 @@ void pwmServo(Servo* servo, unsigned int targetSpeed, int targetPosition, bool w
     ServoList* servoList = getServoList(servo);
     if (servoList == NULL) {
         writeError(SERVO_LIST_NULL);
-        return;
+        return 0;
     }
     if (!servoList->useTimer) {
         servo->internalPwmFunction(servo, targetPosition);
     }
+    unsigned int delayMilliSeconds = pwmServoComputeTimeMilliSecondsToReachTargetPosition(servo, targetPosition);
     if (wait) {
-        unsigned delayMilliSeconds = pwmServoComputeTimeMilliSecondsToReachTargetPosition(servo, targetPosition);
         timerDelayMilliSeconds(delayMilliSeconds);
     }
+    return delayMilliSeconds;
 }
 
 void pwmServoSetEnabled(Servo* servo, bool enabled) {
@@ -146,9 +147,13 @@ unsigned int pwmServoComputeTimeMilliSecondsToReachTargetPosition(Servo* servo, 
         writeError(SERVO_MAX_SPEED_UNDER_LOAD_UNDEFINED);
         return 0;
     }
+    unsigned int realSpeed = servo->maxSpeedUnderLoad;
+    if (servo->targetSpeed > 0 && servo->targetSpeed < realSpeed) {
+        realSpeed = servo->targetSpeed;
+    }
     unsigned int currentPosition = servo->currentPosition;
     unsigned int diffPositionAbs = abs(targetPosition - currentPosition);
 
     // 20 ms of cycle for a 50 Hz signal
-    return (20 * (diffPositionAbs / servo->maxSpeedUnderLoad));
+    return (20 * (diffPositionAbs / realSpeed));
 }

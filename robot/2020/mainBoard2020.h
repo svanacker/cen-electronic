@@ -36,6 +36,11 @@
  */
 bool startupCheckList2020(StartMatch* startMatch);
 
+/**
+* The action to do before the end of the match, for the 2020 eurobot edition (flag on).
+*/
+bool endMatchBeforeEnd2020(EndMatch* endMatch);
+
 GameStrategyContext* initGameStrategyContext2020(RobotConfig* robotConfig,
         IOExpander* ioExpanderStrategy,
         EndMatch* endMatch,

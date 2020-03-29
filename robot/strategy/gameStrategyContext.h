@@ -36,23 +36,6 @@ typedef struct GameStrategyContext GameStrategyContext;
 // Index if no Strategy
 #define NO_STRATEGY_INDEX                                                      0
 
-// SMALL ROBOT STRATEGY
-#define SMALL_ROBOT_STRATEGY_1_ACCELERATOR                                     1
-#define SMALL_ROBOT_STRATEGY_2_ACCELERATOR_TAKE_GOLDENIUM                      2
-#define SMALL_ROBOT_STRATEGY_3_ACCELERATOR_TAKE_DROP_GOLDENIUM                 3
-#define SMALL_ROBOT_STRATEGY_4_ACCELERATOR_TAKE_DROP_GOLDENIUM_SMALL_DIST      4
-#define SMALL_ROBOT_STRATEGY_5_ACCELERATOR_CENTER_GOLDENIUM_SMALL_DIST         5
-#define SMALL_ROBOT_STRATEGY_6_ACCELERATOR_CENTER_GOLDENIUM_REDIUM_GREENIUM    6
-
-
-// BIG ROBOT STRATEGY
-#define BIG_ROBOT_STRATEGY_1_CHAOS                                             1
-#define BIG_ROBOT_STRATEGY_2_BIG_DISTRIBUTOR_LINE_1                            2
-#define BIG_ROBOT_STRATEGY_3_BIG_DISTRIBUTOR_LINE_1_2_3                        3
-#define BIG_ROBOT_STRATEGY_4_CHAOS_BIG_DISTRIBUTOR_LINE                        4
-#define BIG_ROBOT_STRATEGY_5_CHAOS_BIG_DISTRIBUTOR_LINE                        5
-#define BIG_ROBOT_STRATEGY_6_CHAOS_BIG_DISTRIBUTOR_LINE                        6
-
 /**
  * Encapsulates the context of the strategy.
  */

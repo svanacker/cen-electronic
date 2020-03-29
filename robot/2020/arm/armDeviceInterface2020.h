@@ -55,6 +55,9 @@
 #define COMMAND_2020_HOOK_DOWN_AND_RELEASE       'w'
 #define COMMAND_2020_HOOK_ALL_DOWN_AND_RELEASE   'W'
 
+// PREPARE, FORWARD, TAKE, BACK, RELEASE, BACK
+#define COMMAND_2020_HOOK_ALL_SEQUENCE           'S'
+
 /**
  * Get the device interface for Arm 2020.
  */

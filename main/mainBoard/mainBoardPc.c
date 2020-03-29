@@ -661,7 +661,7 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     testDevice->deviceHandleNotification = mainBoardDeviceHandleNotification;
 
     // Start Match
-    initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
+    initEndMatch(&endMatch, &robotConfig, MATCH_DURATION, &endMatchBeforeEnd2020);
     initStartMatch(&startMatch, &robotConfig, &endMatch, startupCheckList2020, isMatchStartedPc, mainBoardPcWaitForInstruction, mainBoardPcWaitForInstruction);
 
     initMainBoardLocalDevices();
@@ -702,6 +702,9 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
         mainBoardPcWaitForInstruction(&startMatch);
 
         updateIfNeededRobotPositionFromMotorBoardToMainBoard(gameStrategyContext);
+
+        // do the action before the end of the match
+        doActionBeforeEndOfMatch(&endMatch, getAlwaysOutputStreamLogger());
 
         // Show the end of the match
         showEndAndScoreIfNeeded(&endMatch, getAlwaysOutputStreamLogger());

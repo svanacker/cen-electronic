@@ -154,6 +154,7 @@ void mainBoardMainPhase2(void) {
     addServoAllPca9685(servoList, servoI2cBusConnection);
 
     // -> LED
+    /*
     appendString(getDebugOutputStreamLogger(), "LED ...");
     ledArrayBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_3, true);
     initLedArrayPca9685(&ledArray, ledArrayBusConnection);
@@ -162,7 +163,8 @@ void mainBoardMainPhase2(void) {
     enum TeamColor teamColor = getTeamColorFromRobotConfig(&robotConfig);
     Color color = getColorForTeam(teamColor);
     setLedColor(&ledArray, MAIN_BOARD_LED_COLOR_TEAM_INDEX, color);
-
+*/
+    
     // Initialise the Strategy first so that we could show the color & stragegy
     // index at a very early stage
     I2cBusConnection* ioExpanderI2cBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_2, true);
@@ -170,7 +172,13 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonStrategyMainInitDrivers(&robotConfig, &ioExpanderStrategy);
 
     mainBoardCommonTofInitDrivers32(&robotConfig);
-    mainBoardCommonMatchMainInitDrivers(&robotConfig, &startupCheckList2020, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
+    mainBoardCommonMatchMainInitDrivers(&robotConfig,
+                                        &startupCheckList2020,
+                                        isMatchStarted32,
+                                        mainBoardWaitForInstruction,
+                                        loopUnWaitForInstruction,
+                                        endMatchBeforeEnd2020
+            );
 }
 
 void mainBoardMainPhase3(void) {

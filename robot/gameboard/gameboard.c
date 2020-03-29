@@ -97,35 +97,47 @@ void drawRobot(GameBoard* gameBoard, Point* robotPosition, float angle) {
     }
     float radius = 150.0f;
 
+    float alignAngle = angle;
+    int quadrant;
+    // Try to align to a real quadrant
+    for (quadrant = -8; quadrant < 8; quadrant++) {
+        float minQuadrantAngle = (quadrant - 0.1f) * (PI / 8.0f);
+        float maxQuadrantAngle = (quadrant + 0.1f) * (PI / 8.0f);
+        if (angle > minQuadrantAngle  && angle < maxQuadrantAngle) {
+            alignAngle = minQuadrantAngle;
+            break;
+        }
+    }
+
     // Right Front Point
-    float rightFrontX = x + radius * cosf(angle - (3.0f * PI / 8.0f));
-    float rightFrontY = y + radius * sinf(angle - (3.0f * PI / 8.0f));
+    float rightFrontX = x + radius * cosf(alignAngle - (3.0f * PI / 8.0f));
+    float rightFrontY = y + radius * sinf(alignAngle - (3.0f * PI / 8.0f));
 
     // Right Middle Point
-    float rightMiddleX = x + radius * cosf(angle - (5.0f * PI / 8.0f));
-    float rightMiddleY = y + radius * sinf(angle - (5.0f * PI / 8.0f));
+    float rightMiddleX = x + radius * cosf(alignAngle - (5.0f * PI / 8.0f));
+    float rightMiddleY = y + radius * sinf(alignAngle - (5.0f * PI / 8.0f));
 
     // Right Bottom Point
-    float rightBottomX = x + radius * cosf(angle - (7.0f * PI / 8.0f));
-    float rightBottomY = y + radius * sinf(angle - (7.0f * PI / 8.0f));
+    float rightBottomX = x + radius * cosf(alignAngle - (7.0f * PI / 8.0f));
+    float rightBottomY = y + radius * sinf(alignAngle - (7.0f * PI / 8.0f));
 
     // Left Bottom Point
-    float leftBottomX = x + radius * cosf(angle + (7.0f * PI / 8.0f));
-    float leftBottomY = y + radius * sinf(angle + (7.0f * PI / 8.0f));
+    float leftBottomX = x + radius * cosf(alignAngle + (7.0f * PI / 8.0f));
+    float leftBottomY = y + radius * sinf(alignAngle + (7.0f * PI / 8.0f));
 
     // Left Middle Point
-    float leftMiddleX = x + radius * cosf(angle + (5.0f * PI / 8.0f));
-    float leftMiddleY = y + radius * sinf(angle + (5.0f * PI / 8.0f));
+    float leftMiddleX = x + radius * cosf(alignAngle + (5.0f * PI / 8.0f));
+    float leftMiddleY = y + radius * sinf(alignAngle + (5.0f * PI / 8.0f));
 
     // Left Front Point
-    float leftFrontX = x + radius * cosf(angle + (3.0f * PI / 8.0f));
-    float leftFrontY = y + radius * sinf(angle + (3.0f * PI / 8.0f));
+    float leftFrontX = x + radius * cosf(alignAngle + (3.0f * PI / 8.0f));
+    float leftFrontY = y + radius * sinf(alignAngle + (3.0f * PI / 8.0f));
 
     // set of chars if angle = PI / 2
-    unsigned char verticalChar = transformVerticalChar(angle);
-    unsigned char slashChar = transformSlashChar(angle);
-    unsigned char horizontalChar = transformHorizontalChar(angle);
-    unsigned char antiSlashChar = transformAntiSlashChar(angle);
+    unsigned char verticalChar = transformVerticalChar(alignAngle);
+    unsigned char slashChar = transformSlashChar(alignAngle);
+    unsigned char horizontalChar = transformHorizontalChar(alignAngle);
+    unsigned char antiSlashChar = transformAntiSlashChar(alignAngle);
 
     // Right horizontal Line
     drawLine(gameBoard, rightFrontX, rightFrontY, rightMiddleX, rightMiddleY, horizontalChar);
@@ -182,12 +194,16 @@ void gameboardBorderPrint(GameBoard* gameBoard, int* element) {
 // TARGET
 
 void gameTargetPrint(GameBoard* gameBoard, int* element) {
-    GameTarget* target = (GameTarget*) element;
+    GameTarget* target = (GameTarget*)element;
 
     // Start Location
     Location* startLocation = target->startLocation;
-    drawPointCoordinates(gameBoard, startLocation->x, startLocation->y, 'x');
-
+    if (startLocation != NULL) {
+        drawPointCoordinates(gameBoard, startLocation->x, startLocation->y, 'x');
+    }
+    else {
+        writeError(LOCATION_START_NULL);
+    }
     // End Location
     Location* endLocation = target->endLocation;
 
@@ -197,7 +213,12 @@ void gameTargetPrint(GameBoard* gameBoard, int* element) {
     } else {
         c = 'O';
     }
-    drawPointCoordinates(gameBoard, endLocation->x, endLocation->y, c);
+    if (endLocation != NULL) {
+        drawPointCoordinates(gameBoard, endLocation->x, endLocation->y, c);
+    }
+    else {
+        writeError(LOCATION_END_NULL);
+    }
 }
 
 void gamePathPrint(GameBoard* gameBoard, int* element, unsigned char c) {

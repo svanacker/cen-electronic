@@ -64,7 +64,7 @@ void initMainBoardDevicesDescriptor() {
     mainBoardCommonLcdAddDevices();
     mainLightHouse2020TofAddDevices();
 
-    addLocalDevice(getIODeviceInterface(), getIODeviceDescriptor());
+    // addLocalDevice(getIODeviceInterface(), getIODeviceDescriptor());
 
     // 2020 specific
     addLocalDevice(getLightHouse2020DeviceInterface(), getLightHouse2020DeviceDescriptor(&lightHouse));
@@ -120,7 +120,7 @@ void mainBoardMainPhase2(void) {
             mainBoardCommonGetServoList(),
             tofSensorList);
 
-    initEndMatch(&endMatch, &robotConfig, MATCH_DURATION);
+    initEndMatch(&endMatch, &robotConfig, MATCH_DURATION, NULL);
 }
 
 void mainBoardMainPhase3(void) {

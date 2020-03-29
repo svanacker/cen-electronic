@@ -226,6 +226,10 @@ void mainBoardCommonStrategyMainLoop(void) {
         if (gameStrategyContext->loopTargetAndActions) {
             nextTargetOrNextStep(gameStrategyContext);
         }
+        
+        // do the action before the end of the match
+        doActionBeforeEndOfMatch(endMatch, getAlwaysOutputStreamLogger());
+        
         // After each instruction => Export the score to endMatch Device
         if (showEndAndScoreIfNeeded(endMatch, getAlwaysOutputStreamLogger())) {
             break;

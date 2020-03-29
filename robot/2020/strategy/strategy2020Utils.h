@@ -9,6 +9,7 @@
 #include "../../strategy/gameStrategyContext.h"
 
 bool isBlue2020(GameStrategyContext* gameStrategyContext);
+bool isYellow2020(GameStrategyContext* gameStrategyContext);
 
 /**
  * Change the location for color.

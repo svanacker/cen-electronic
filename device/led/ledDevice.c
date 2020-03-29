@@ -27,12 +27,14 @@
 LedArray* getLedArrayFromDeviceDescriptor(void);
 
 void deviceLedInit(void) {
+    /*
     LedArray* ledArray = getLedArrayFromDeviceDescriptor();
     if (ledArray == NULL) {
         writeError(LED_ARRAY_NULL);
         return;
     }
     ledArray->ledArrayInit(ledArray);
+    */
 }
 
 void deviceLedShutDown(void) {

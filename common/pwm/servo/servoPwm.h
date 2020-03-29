@@ -154,8 +154,9 @@ void initServo(Servo* servo,
  * @param targetPosition duration of pwm to 1 typical value between
  * PWM_SERVO_LEFT_POSITION and PWM_SERVO_RIGHT_POSITION 
  * @param wait indicates if we compute the needed time and we wait before going further
+ * @return the time in milliseconds needed to reach the position
  */
-void pwmServo(Servo* servo, unsigned int newSpeed, int newTargetPosition, bool wait);
+unsigned int pwmServo(Servo* servo, unsigned int newSpeed, int newTargetPosition, bool wait);
 
 /**
  * Change the enabled property by a new value.

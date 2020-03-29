@@ -33,6 +33,10 @@ bool isBlue2020(GameStrategyContext* gameStrategyContext) {
     return gameStrategyContext->color == TEAM_COLOR_2020_BLUE;
 }
 
+bool isYellow2020(GameStrategyContext* gameStrategyContext) {
+    return gameStrategyContext->color == TEAM_COLOR_2020_YELLOW;
+}
+
 /**
  * Change the location for color.
  */
