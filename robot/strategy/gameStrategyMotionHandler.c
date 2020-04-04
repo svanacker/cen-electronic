@@ -61,7 +61,9 @@ bool motionRotateToFollowPath(GameStrategyContext* gameStrategyContext, PathData
         // Simulate as if the robot goes to the position with a small error to be sure
         // that we do not rely the navigation on just exact computation
         if (gameStrategyContext->simulateMove) {
-            gameStrategyContext->robotAngleRadian += diff + 0.001f;
+#ifdef PC_COMPILER        
+            simulateRotation(gameStrategyContext, diff);
+#endif
         } else {
             motionDriverLeft(radToDeg(diff));
         }
@@ -70,7 +72,9 @@ bool motionRotateToFollowPath(GameStrategyContext* gameStrategyContext, PathData
         appendStringAndDecf(getDebugOutputStreamLogger(), "motionDriverRight:", radToDeg(-diff));
         println(getDebugOutputStreamLogger());
         if (gameStrategyContext->simulateMove) {
-            gameStrategyContext->robotAngleRadian += diff + 0.001f;
+#ifdef PC_COMPILER        
+            simulateRotation(gameStrategyContext, diff);
+#endif
         } else {
             motionDriverRight(radToDeg(-diff));
         }

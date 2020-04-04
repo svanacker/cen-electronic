@@ -39,6 +39,7 @@ static Point lastRobotPosition;
 static bool simulateFlag;
 static float bSplineTime;
 static float bSplineIncrement;
+static float simulateRotationFlag;
 
 /**
  * @private / Callback
@@ -60,23 +61,28 @@ void interruptMotionSimulationCallbackFunc(Timer* timer) {
 
     Point* robotPosition = gameStrategyContext->robotPosition;
 
-    // BSpline Follow
-    bSplineTime += bSplineIncrement;
-    if (bSplineTime > 1.0f) {
-        bSplineTime = 1.0f + (rand() % 100) * 0.0002f - 0.01f;
+    if (simulateRotationFlag) {
+        // TODO : No simulation : value is changed instantaneously
+        simulateRotationFlag = false;
         simulateFlag = false;
         updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_NONE);
     }
-    // In Every case, Move the robot by passing the robotPosition point ...
-    Point computedPoint;
-    computeBSplinePoint(&bSplineCurveSimulation, bSplineTime, &computedPoint);
-    robotPosition->x = lastRobotPosition.x + computedPoint.x;
-    robotPosition->y = lastRobotPosition.y + computedPoint.y;
+    else {
+        // BSpline Follow
+        bSplineTime += bSplineIncrement;
+        if (bSplineTime > 1.0f) {
+            bSplineTime = 1.0f + (rand() % 100) * 0.0002f - 0.01f;
+            simulateFlag = false;
+            updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_NONE);
+        }
+        // In Every case, Move the robot by passing the robotPosition point ...
+        Point computedPoint;
+        computeBSplinePoint(&bSplineCurveSimulation, bSplineTime, &computedPoint);
+        robotPosition->x = lastRobotPosition.x + computedPoint.x;
+        robotPosition->y = lastRobotPosition.y + computedPoint.y;
 
-    gameStrategyContext->robotAngleRadian = computeBSplineOrientationWithDerivative(&bSplineCurveSimulation, bSplineTime);
-
-    // Rotation
-
+        gameStrategyContext->robotAngleRadian = computeBSplineOrientationWithDerivative(&bSplineCurveSimulation, bSplineTime);
+    }
 }
 
 void initMotionSimulation(GameStrategyContext* gameStrategyContext) {
@@ -90,9 +96,16 @@ void initMotionSimulation(GameStrategyContext* gameStrategyContext) {
 
 // --------------------------------
 
+void simulateRotation(GameStrategyContext* gameStrategyContext, float angle) {
+    gameStrategyContext->robotAngleRadian += angle + (rand() % 100) * 0.0001f;
+    simulateFlag = true;
+    simulateRotationFlag = true;
+}
+
 void simulateBSplineAbsolute(GameStrategyContext* gameStrategyContext, float destX, float destY, float angleRadian, float dist0, float dist1, float accelerationFactor, float speedFactor) {
     lastRobotPosition.x = gameStrategyContext->robotPosition->x;
     lastRobotPosition.y = gameStrategyContext->robotPosition->y;
+    simulateRotationFlag = false;
 
     updateSimpleSplineWithDistance(&bSplineCurveSimulation,
             destX - lastRobotPosition.x, destY - lastRobotPosition.y,
@@ -116,6 +129,7 @@ void simulateBSplineAbsolute(GameStrategyContext* gameStrategyContext, float des
 
 void simulateMotionCancel(GameStrategyContext* gameStrategyContext) {
     simulateFlag = false;
+    updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_NONE);
 }
 
 static MotionSimulationParameter motionSimulationParameter;

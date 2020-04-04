@@ -19,6 +19,12 @@ typedef struct MotionSimulationParameter {
  */
 MotionSimulationParameter* getMotionSimulationParameter();
 
+// Rotation
+
+void simulateRotation(GameStrategyContext* gameStrategyContext, float angleRadian);
+
+// BSpline
+
 void simulateBSplineAbsolute(GameStrategyContext* gameStrategyContext,
         float destX,
         float destY,
