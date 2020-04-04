@@ -52,7 +52,7 @@ bool lateralArmOff(int* context) {
 
 // 
 
-bool prepareHook(int* context) {
+bool smallRobotPrepareHook(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "-> Prepare Hook");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
@@ -63,7 +63,7 @@ bool prepareHook(int* context) {
     return true;
 }
 
-bool takeCups(int* context) {
+bool smallRobotTakeCups(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "-> Take Cups");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
@@ -74,7 +74,7 @@ bool takeCups(int* context) {
     return true;
 }
 
-bool dropCups(int* context) {
+bool smallRobotDropCups(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "-> Drop Cups");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;

@@ -73,8 +73,10 @@ Location* extractMinCostLocation(LocationList* locationList) {
             result = location;
         }
     }
-    // mark location as handled
-    result->computedHandled = true;
+    if (result != NULL) {
+        // mark location as handled
+        result->computedHandled = true;
+    }
     return result;
 }
 

@@ -74,6 +74,11 @@
 #define RIGHT_REEF_RECTANGLE_WIDTH                                     419
 #define RIGHT_REEF_RECTANGLE_HEIGHT                                     10
 
+// -> Left Reef
+#define LEFT_REEF_RECTANGLE_LEFT_X                                       0
+#define LEFT_REEF_RECTANGLE_LEFT_Y                                     640
+#define LEFT_REEF_RECTANGLE_WIDTH                                       30
+#define LEFT_REEF_RECTANGLE_HEIGHT                                     419
 
 // -> Start Area Rectangles
 #define START_AREA_RECTANGLE_WITH                                      600

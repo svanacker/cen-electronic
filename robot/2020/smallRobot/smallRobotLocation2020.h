@@ -35,12 +35,4 @@
 #define DROP_RIGHT_FRONT_Y                                                        250
 #define DROP_RIGHT_FRONT_DECI_DEG                                    ANGLE_DECI_DEG_0
 
-// DROP LEFT (SMALL ROBOT)
-#define DROP_LEFT_FRONT                                                        "DR_L"
-#define DROP_LEFT_FRONT_LABEL                                             "Drop Left"
-#define DROP_LEFT_FRONT_X                                                        400
-#define DROP_LEFT_FRONT_Y                                                        250
-#define DROP_LEFT_FRONT_DECI_DEG                                    ANGLE_DECI_DEG_0
-
-
 #endif

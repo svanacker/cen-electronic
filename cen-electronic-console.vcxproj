@@ -191,6 +191,7 @@
     <ClCompile Include="common\io\outputStream.c" />
     <ClCompile Include="common\io\pc\consoleInputStream.c" />
     <ClCompile Include="common\io\pc\consoleOutputStream.c" />
+    <ClCompile Include="common\io\pc\fileOutputStream.c" />
     <ClCompile Include="common\io\pc\pinPc.c" />
     <ClCompile Include="common\io\pin.c" />
     <ClCompile Include="common\io\printTableWriter.c" />
@@ -596,6 +597,7 @@
     <ClInclude Include="common\io\outputStream.h" />
     <ClInclude Include="common\io\pc\consoleInputStream.h" />
     <ClInclude Include="common\io\pc\consoleOutputStream.h" />
+    <ClInclude Include="common\io\pc\fileOutputStream.h" />
     <ClInclude Include="common\io\pc\pinPc.h" />
     <ClInclude Include="common\io\pin.h" />
     <ClInclude Include="common\io\printTableWriter.h" />

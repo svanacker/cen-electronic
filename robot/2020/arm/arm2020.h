@@ -22,10 +22,19 @@
 
 // HOOK - VERTICAL SERVO
 #define ARM_2020_HOOK_VERTICAL_SERVO_BASE_INDEX                       0x03
+
+// Cups are on Reef
 #define ARM_2020_HOOK_DOWN_SPEED_FACTOR                               0x10
 #define ARM_2020_HOOK_DOWN                                            0x06C0
 #define ARM_2020_HOOK_UP                                              0x0460
 #define ARM_2020_HOOK_UP_SPEED_FACTOR                                 0x10
+
+// When cups are on the floor
+#define ARM_2020_HOOK_FLOOR_DOWN_SPEED_FACTOR                         0xFF
+#define ARM_2020_HOOK_FLOOR_DOWN                                      ARM_2020_HOOK_DOWN
+
+#define ARM_2020_HOOK_FLOOR_UP_SPEED_FACTOR                           0xFF
+#define ARM_2020_HOOK_FLOOR_UP                                        0x540
 
 // HOOK - TAKE SERVO
 #define ARM_2020_HOOK_TAKE_SERVO_BASE_INDEX                           0x0D
@@ -55,11 +64,24 @@ unsigned int arm2020FlagUp(ServoList* servoList);
 
 // HOOK
 
+// -> Down / Up 
+
+// -> General
+
 unsigned int arm2020HookDown(ServoList* servoList, unsigned char hookIndex, bool wait);
 unsigned int arm2020HookDownAll(ServoList* servoList, bool wait);
 
 unsigned int arm2020HookUp(ServoList* servoList, unsigned char hookIndex, bool wait);
 unsigned int arm2020HookUpAll(ServoList* servoList, bool wait);
+
+// -> On the floor
+unsigned int arm2020HookPrepareFloor(ServoList* servoList, unsigned char hookIndex, bool wait);
+unsigned int arm2020HookPrepareFloorAll(ServoList* servoList, bool wait);
+
+unsigned int arm2020HookLockFloor(ServoList* servoList, unsigned char hookIndex, bool wait);
+unsigned int arm2020HookLockFloorAll(ServoList* servoList, bool wait);
+
+// -> On the Reef
 
 unsigned int arm2020HookTake(ServoList* servoList, unsigned char hookIndex, bool wait);
 unsigned int arm2020HookTakeAll(ServoList* servoList, bool wait);

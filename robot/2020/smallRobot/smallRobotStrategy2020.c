@@ -69,7 +69,6 @@ static Location* flag1Location;
 static Location* flag2Location;
 static Location* reefFrontLocation;
 static Location* cupDropRightLocation;
-static Location* cupDropLeftLocation;
 
 // ------------------------------------------------------- PATHS -------------------------------------------------------------------------
 
@@ -78,7 +77,6 @@ PathData* smallRobotStartArea_to_flag1_Path;
 PathData* smallRobotStartArea_to_flag2_Path;
 PathData* flag2_to_reefFront_Path;
 PathData* reefFront_to_rightCupDropRight_Path;
-PathData* rightCupLeftDrop_to_rightCupDropLeft_Path;
 
 // ------------------------------------------------------- TARGET -------------------------------------------------------------------------
 
@@ -99,7 +97,6 @@ static GameTargetAction flag2DropTargetAction;
 // Right Cup
 static GameTargetAction rightCupPrepareTargetAction;
 static GameTargetAction rightCupTakeTargetAction;
-static GameTargetAction rightCupLeftDropTargetAction;
 static GameTargetAction rightCupRightDropTargetAction;
 
 // ------------------------------------------------------- TARGETS ACTIONS ITEM LIST --------------------------------------------------------
@@ -113,7 +110,6 @@ static GameTargetActionItemList flag2DropTargetActionItemList;
 // Cup
 static GameTargetActionItemList rightCupPrepareTargetActionItemList;
 static GameTargetActionItemList rightCupTakeTargetActionItemList;
-static GameTargetActionItemList rightCupLeftDropTargetActionItemList;
 static GameTargetActionItemList rightCupRightDropTargetActionItemList;
 
 // ------------------------------------------------------- TARGET ACTION ITEMS  -------------------------------------------------------
@@ -127,7 +123,6 @@ static GameTargetActionItem flag2DropTargetActionItem1;
 // Cup
 static GameTargetActionItem rightCupPrepareTargetActionItem;
 static GameTargetActionItem rightCupTakeTargetActionItem;
-static GameTargetActionItem rightCupLeftDropTargetActionItem;
 static GameTargetActionItem rightCupRightDropTargetActionItem;
 
 // ------------------------------------------------------- STRATEGIES ----------------------------------------------------------------
@@ -162,7 +157,6 @@ void initSmallRobotLocations2020(GameStrategyContext* gameStrategyContext) {
     flag2Location = addLocationWithColors(teamColor, navigation, FLAG_2_FRONT, FLAG_2_FRONT_LABEL, FLAG_2_FRONT_X, FLAG_2_FRONT_Y);
     reefFrontLocation = addLocationWithColors(teamColor, navigation, REEF_RIGHT_FRONT, REEF_RIGHT_FRONT_LABEL, REEF_RIGHT_FRONT_X, REEF_RIGHT_FRONT_Y);
     cupDropRightLocation = addLocationWithColors(teamColor, navigation, DROP_RIGHT_FRONT, DROP_RIGHT_FRONT_LABEL, DROP_RIGHT_FRONT_X, DROP_RIGHT_FRONT_Y);
-    cupDropLeftLocation = addLocationWithColors(teamColor, navigation, DROP_LEFT_FRONT, DROP_LEFT_FRONT_LABEL, DROP_LEFT_FRONT_X, DROP_LEFT_FRONT_Y);
 }
 
 void initSmallRobotPaths2020(GameStrategyContext* gameStrategyContext) {
@@ -243,7 +237,6 @@ void initSmallRobotTargetActions2020(GameStrategyContext* gameStrategyContext) {
     addTargetPrepareAction(&(rightCupTarget.actionList), &rightCupPrepareTargetAction, flag2Location, RIGHT_CUP_PREPARE_ACTION_TIME_TO_ACHIEVE, &rightCupPrepareTargetActionItemList);
     addTargetTakeAction(&(rightCupTarget.actionList), &rightCupTakeTargetAction, reefFrontLocation, RIGHT_CUP_TAKE_ACTION_TIME_TO_ACHIEVE, &rightCupTakeTargetActionItemList);
     addTargetDropAction(&(rightCupTarget.actionList), &rightCupRightDropTargetAction, cupDropRightLocation, RIGHT_CUP_RIGHT_DROP_ACTION_TIME_TO_ACHIEVE, &rightCupRightDropTargetActionItemList);
-    // addTargetDropAction(&(rightCupTarget.actionList), &rightCupLeftDropTargetAction, cupDropLeftLocation, RIGHT_CUP_LEFT_DROP_ACTION_TIME_TO_ACHIEVE, &rightCupLeftDropTargetActionItemList);
 }
 
 void initSmallRobotTargetActionsItems2020(GameStrategyContext* gameStrategyContext) {
@@ -256,10 +249,9 @@ void initSmallRobotTargetActionsItems2020(GameStrategyContext* gameStrategyConte
     addTargetActionItem(&flag2DropTargetActionItemList, &flag2DropTargetActionItem1, &lateralArmOff, "LAT ARM OFF");
 
     // RightCup
-    addTargetActionItem(&rightCupPrepareTargetActionItemList, &rightCupPrepareTargetActionItem, &prepareHook, "PREP HOOK");
-    addTargetActionItem(&rightCupTakeTargetActionItemList, &rightCupTakeTargetActionItem, &takeCups, "TAKE CUPS");
-    addTargetActionItem(&rightCupRightDropTargetActionItemList, &rightCupRightDropTargetActionItem, &dropCups, "DROP CUPS RIGHT");
-    // addTargetActionItem(&rightCupLeftDropTargetActionItemList, &rightCupLeftDropTargetActionItem, &dropCups, "DROP CUPS LEFT");
+    addTargetActionItem(&rightCupPrepareTargetActionItemList, &rightCupPrepareTargetActionItem, &smallRobotPrepareHook, "PREP HOOK");
+    addTargetActionItem(&rightCupTakeTargetActionItemList, &rightCupTakeTargetActionItem, &smallRobotTakeCups, "TAKE CUPS");
+    addTargetActionItem(&rightCupRightDropTargetActionItemList, &rightCupRightDropTargetActionItem, &smallRobotDropCups, "DROP CUPS RIGHT");
 }
 
 GameStrategy* initSmallRobotStrategiesItems2020(GameStrategyContext* gameStrategyContext) {

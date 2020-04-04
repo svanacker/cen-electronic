@@ -2310,6 +2310,9 @@
     <ClCompile Include="drivers\ioExpander\pc\ioExpanderFilePc.c">
       <Filter>Source Files\drivers\ioExpander\pc</Filter>
     </ClCompile>
+    <ClCompile Include="common\io\pc\fileOutputStream.c">
+      <Filter>Source Files\common\io\pc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3607,6 +3610,9 @@
     </ClInclude>
     <ClInclude Include="drivers\ioExpander\pc\ioExpanderFilePc.h">
       <Filter>Header Files\drivers\ioExpander\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="common\io\pc\fileOutputStream.h">
+      <Filter>Header Files\common\io\pc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

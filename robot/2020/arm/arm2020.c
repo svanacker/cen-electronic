@@ -77,6 +77,49 @@ unsigned int arm2020HookUpAll(ServoList* servoList, bool wait) {
     return result;
 }
 
+unsigned int arm2020HookPrepareFloor(ServoList* servoList, unsigned char hookIndex, bool wait) {
+    Servo* servo = getServo(servoList, ARM_2020_HOOK_VERTICAL_SERVO_BASE_INDEX + hookIndex);
+    return pwmServo(servo, ARM_2020_HOOK_FLOOR_UP_SPEED_FACTOR, ARM_2020_HOOK_FLOOR_UP, wait);
+}
+
+unsigned int arm2020HookPrepareFloorAll(ServoList* servoList, bool wait) {
+    unsigned int hookIndex = 0;
+    unsigned int result = 0;
+    for (hookIndex = 0; hookIndex < ARM_2020_HOOK_COUNT; hookIndex++) {
+        Servo* servo = getServo(servoList, ARM_2020_HOOK_VERTICAL_SERVO_BASE_INDEX + hookIndex);
+        unsigned timeToReach = pwmServo(servo, ARM_2020_HOOK_FLOOR_UP_SPEED_FACTOR, ARM_2020_HOOK_FLOOR_UP, false);
+        if (timeToReach > result) {
+            result = timeToReach;
+        }
+    }
+    if (wait) {
+        timerDelayMilliSeconds(result);
+    }
+    return result;
+}
+
+unsigned int arm2020HookLockFloor(ServoList* servoList, unsigned char hookIndex, bool wait) {
+    Servo* servo = getServo(servoList, ARM_2020_HOOK_VERTICAL_SERVO_BASE_INDEX + hookIndex);
+    return pwmServo(servo, ARM_2020_HOOK_FLOOR_DOWN_SPEED_FACTOR, ARM_2020_HOOK_FLOOR_DOWN, wait);
+}
+
+unsigned int arm2020HookLockFloorAll(ServoList* servoList, bool wait) {
+    unsigned int hookIndex = 0;
+    unsigned int result = 0;
+    for (hookIndex = 0; hookIndex < ARM_2020_HOOK_COUNT; hookIndex++) {
+        Servo* servo = getServo(servoList, ARM_2020_HOOK_VERTICAL_SERVO_BASE_INDEX + hookIndex);
+        unsigned timeToReach = pwmServo(servo, ARM_2020_HOOK_FLOOR_DOWN_SPEED_FACTOR, ARM_2020_HOOK_FLOOR_DOWN, false);
+        if (timeToReach > result) {
+            result = timeToReach;
+        }
+    }
+    if (wait) {
+        timerDelayMilliSeconds(result);
+    }
+    return result;
+}
+
+
 unsigned int arm2020HookTake(ServoList* servoList, unsigned char hookIndex, bool wait) {
     Servo* servo = getServo(servoList, ARM_2020_HOOK_TAKE_SERVO_BASE_INDEX + hookIndex);
     return pwmServo(servo, ARM_2020_HOOK_TAKE_SPEED_FACTOR, ARM_2020_HOOK_TAKE, wait);

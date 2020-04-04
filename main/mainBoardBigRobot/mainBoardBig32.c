@@ -37,12 +37,19 @@
 // SMALL ROBOT PART
 #include "../../drivers/pwm/servo/servoPwmPca9685.h"
 
-#include "../../robot/2020/mainBoard2020.h"
+// -> ARM
 
+#include "../../robot/2020/arm/armDeviceInterface2020.h"
+#include "../../robot/2020/arm/armDevice2020.h"
+
+#include "../../robot/2020/mainBoard2020.h"
 #include "../../robot/2020/strategy/strategyConfig2020.h"
+
+#include "../../drivers/ioExpander/ioExpanderPcf8574.h"
 
 // Robot Configuration
 static RobotConfig robotConfig;
+static IOExpander ioExpanderStrategy;
 
 /**
  * @private
@@ -121,19 +128,26 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonInitTimerList();
     mainBoardCommonInitCommonDrivers();
 
-    mainBoardCommonStrategyMainInitDrivers(&robotConfig);
+    I2cBus* i2cBus = getI2cBusByIndex(MAIN_BOARD_SERVO_I2C_BUS_INDEX);
+
+    I2cBusConnection* ioExpanderI2cBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_2, true);
+    initIOExpanderPCF8574(&ioExpanderStrategy, ioExpanderI2cBusConnection);
+    mainBoardCommonStrategyMainInitDrivers(&robotConfig, &ioExpanderStrategy);
 
     // ROBOT2019 : PCA9685
     ServoList* servoList = mainBoardCommonGetServoList();
-    // I2cBus* i2cBus = mainBoardCommonGetMainI2cBus();
-    I2cBus* i2cBus = getI2cBusByIndex(MAIN_BOARD_SERVO_I2C_BUS_INDEX);
     I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
     addServoAllPca9685(servoList, servoI2cBusConnection);
 
     // Initialise the Strategy first so that we could show the color & stragegy
     // index at a very early stage
     mainBoardCommonTofInitDrivers32(&robotConfig);
-    mainBoardCommonMatchMainInitDrivers(&robotConfig, &startupCheckList2020, isMatchStarted32, mainBoardWaitForInstruction, loopUnWaitForInstruction);
+    mainBoardCommonMatchMainInitDrivers(&robotConfig,
+                                        &startupCheckList2020,
+                                        isMatchStarted32,
+                                        mainBoardWaitForInstruction,
+                                        loopUnWaitForInstruction,
+                                        endMatchBeforeEnd2020);
 }
 
 void mainBoardMainPhase3(void) {
@@ -150,8 +164,9 @@ int main(void) {
     mainBoardMainPhase3();
 
     // Initialise the 2020 specific Devices
-    TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
+    // TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
     ServoList* servoList = mainBoardCommonGetServoList();
+    addLocalDevice(getArm2020DeviceInterface(), getArm2020DeviceDescriptor(servoList));
 
     mainBoardCommonStrategyMainLoop();
 

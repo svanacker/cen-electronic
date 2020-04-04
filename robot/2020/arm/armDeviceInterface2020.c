@@ -82,6 +82,26 @@ int deviceArm2020GetInterface(unsigned char commandHeader, DeviceInterfaceMode m
             setFunctionNoArgumentAndNoResult("All Hook Release");
         }
         return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_2020_HOOK_LOCK_FLOOR) {
+        if (fillDeviceArgumentList) {
+            setFunction("Hook Lock Floor", 1, 0);
+            setArgumentUnsignedHex2(0, "hook index");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    else if (commandHeader == COMMAND_2020_HOOK_PREPARE_FLOOR) {
+        if (fillDeviceArgumentList) {
+            setFunction("Hook Prepare Floor", 1, 0);
+            setArgumentUnsignedHex2(0, "hook index");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    else if (commandHeader == COMMAND_2020_HOOK_ALL_RELEASE) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("All Hook Release");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
     }// HOOK - COMPLEX COMMAND
     else if (commandHeader == COMMAND_2020_HOOK_PREPARE) {
         if (fillDeviceArgumentList) {
@@ -103,6 +123,16 @@ int deviceArm2020GetInterface(unsigned char commandHeader, DeviceInterfaceMode m
     } else if (commandHeader == COMMAND_2020_HOOK_ALL_TAKE_AND_UP) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("All Take And Up");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    } else if (commandHeader == COMMAND_2020_HOOK_ALL_PREPARE_FLOOR) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("All Prepare Floor");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    } else if (commandHeader == COMMAND_2020_HOOK_ALL_LOCK_FLOOR) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("All Lock Floor");
         }
         return commandLengthValueForMode(mode, 0, 0);
     } else if (commandHeader == COMMAND_2020_HOOK_DOWN_AND_RELEASE) {

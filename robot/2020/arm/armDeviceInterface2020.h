@@ -47,6 +47,14 @@
 #define COMMAND_2020_HOOK_PREPARE                'p'
 #define COMMAND_2020_HOOK_ALL_PREPARE            'P'
 
+// HOOK PREPARE or release on the floor
+#define COMMAND_2020_HOOK_PREPARE_FLOOR           'f'
+#define COMMAND_2020_HOOK_ALL_PREPARE_FLOOR       'F'
+
+// HOOK TAKE on the floor
+#define COMMAND_2020_HOOK_LOCK_FLOOR             'l'
+#define COMMAND_2020_HOOK_ALL_LOCK_FLOOR         'L'
+
 // HOOK TAKE AND UP
 #define COMMAND_2020_HOOK_TAKE_AND_UP            'k'
 #define COMMAND_2020_HOOK_ALL_TAKE_AND_UP        'K'

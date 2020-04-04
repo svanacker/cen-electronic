@@ -20,9 +20,11 @@ bool locationEquals(Location* location1, Location* location2) {
 float distanceBetweenLocations(Location* location1, Location* location2) {
     if (location1 == NULL) {
         writeError(LOCATION_NULL);
+        return 0.0f;
     }
     if (location2 == NULL) {
         writeError(LOCATION_NULL);
+        return 0.0f;
     }
     return distanceBetweenPoints2(location1->x, location1->y, location2->x, location2->y);
 }

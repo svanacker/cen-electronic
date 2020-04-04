@@ -61,19 +61,19 @@ void interruptMotionSimulationCallbackFunc(Timer* timer) {
     Point* robotPosition = gameStrategyContext->robotPosition;
 
     // BSpline Follow
+    bSplineTime += bSplineIncrement;
     if (bSplineTime > 1.0f) {
-        updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_NONE);
+        bSplineTime = 1.0f + (rand() % 100) * 0.0002f - 0.01f;
         simulateFlag = false;
-    } else {
-        bSplineTime += bSplineIncrement;
-        // Move the robot by passing the robotPosition point ...
-        Point computedPoint;
-        computeBSplinePoint(&bSplineCurveSimulation, bSplineTime, &computedPoint);
-        robotPosition->x = lastRobotPosition.x + computedPoint.x;
-        robotPosition->y = lastRobotPosition.y + computedPoint.y;
-
-        gameStrategyContext->robotAngleRadian = computeBSplineOrientationWithDerivative(&bSplineCurveSimulation, bSplineTime);
+        updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_NONE);
     }
+    // In Every case, Move the robot by passing the robotPosition point ...
+    Point computedPoint;
+    computeBSplinePoint(&bSplineCurveSimulation, bSplineTime, &computedPoint);
+    robotPosition->x = lastRobotPosition.x + computedPoint.x;
+    robotPosition->y = lastRobotPosition.y + computedPoint.y;
+
+    gameStrategyContext->robotAngleRadian = computeBSplineOrientationWithDerivative(&bSplineCurveSimulation, bSplineTime);
 
     // Rotation
 
@@ -101,7 +101,7 @@ void simulateBSplineAbsolute(GameStrategyContext* gameStrategyContext, float des
             accelerationFactor, speedFactor,
             false);
 
-    float distance = computeBSplineArcLength(&bSplineCurveSimulation, 0.05f);
+    float distance = computeBSplineArcLength(&bSplineCurveSimulation, 0.01f);
     bSplineTime = 0.0f;
     // we consider that we could do a distance of 250 mm / s
     // At 5Hz, we must increment by 

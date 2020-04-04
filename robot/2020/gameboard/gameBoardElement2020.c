@@ -97,6 +97,12 @@ void rightReefPrint(GameBoard* gameBoard, int* element) {
     drawRectangle(gameBoard, RIGHT_REEF_RECTANGLE_LEFT_X, RIGHT_REEF_RECTANGLE_LEFT_Y + 3000, RIGHT_REEF_RECTANGLE_WIDTH, RIGHT_REEF_RECTANGLE_HEIGHT, '|', '-');
 }
 
+void leftReefPrint(GameBoard* gameBoard, int* element) {
+    setGameBoardCurrentColor(gameBoard, CONSOLE_COLOR_GRAY);
+    drawRectangle(gameBoard, LEFT_REEF_RECTANGLE_LEFT_X, LEFT_REEF_RECTANGLE_LEFT_Y, LEFT_REEF_RECTANGLE_WIDTH, LEFT_REEF_RECTANGLE_HEIGHT, '|', '-');
+    drawRectangle(gameBoard, LEFT_REEF_RECTANGLE_LEFT_X, LEFT_REEF_RECTANGLE_LEFT_Y + 1300, LEFT_REEF_RECTANGLE_WIDTH, LEFT_REEF_RECTANGLE_HEIGHT, '|', '-');
+}
+
 void cupPrints(GameBoard* gameBoard, int* element) {
     // Start Area Cups
     cupRedAndGreen(gameBoard, START_AREA_CUP_RED_LEFT_X, START_AREA_CUP_RED_LEFT_Y);
@@ -114,8 +120,9 @@ void cupPrints(GameBoard* gameBoard, int* element) {
 
     // Drop Area Cups
     cupGreenAndRed(gameBoard, DROP_AREA_CUP_GREEN_LEFT_X, DROP_AREA_CUP_GREEN_LEFT_Y);
-    cupRedAndGreen(gameBoard, DROP_AREA_CUP_RED_RIGHT_X, DROP_AREA_CUP_RED_RIGHT_Y);
     cupRedAndGreen(gameBoard, DROP_AREA_CUP_RED_LEFT_X, DROP_AREA_CUP_RED_LEFT_Y);
+    // The cup disappear if we don't minor or major by a small Y value
+    cupRedAndGreen(gameBoard, DROP_AREA_CUP_RED_RIGHT_X, DROP_AREA_CUP_RED_RIGHT_Y);
     cupGreenAndRed(gameBoard, DROP_AREA_CUP_GREEN_RIGHT_X, DROP_AREA_CUP_GREEN_RIGHT_Y);
 
     setGameBoardCurrentColor(gameBoard, CONSOLE_COLOR_WHITE);
@@ -128,18 +135,21 @@ void addGameBoardElements2020(GameBoardElementList* gameBoardElementList) {
     // Fake Robot
     addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &fakeRobotPrint2020);
 
-    // Cups
-    addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &cupPrints);
+    // Protection Areas : TODO : Change to unreachable
+    addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &protectionDropAreasPrint);
 
     // Start Areas : TODO : Change to unreachable
     addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &startAreaPrint);
 
-    // Protection Areas : TODO : Change to unreachable
-    addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &protectionDropAreasPrint);
-
     // Drop Areas
     addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &dropAreasPrint);
 
+    // Cups
+    addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &cupPrints);
+
     // Right Reef
     addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &rightReefPrint);
+
+    // Left Reef
+    addReachableByOpponentRobotGameBoardElement(gameBoardElementList, &leftReefPrint);
 }

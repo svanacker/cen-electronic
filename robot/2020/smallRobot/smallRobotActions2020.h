@@ -11,11 +11,11 @@ bool lateralArmOff(int* context);
 
 // HOOK
 
-bool prepareHook(int* context);
+bool smallRobotPrepareHook(int* context);
 
-bool takeCups(int* context);
+bool smallRobotTakeCups(int* context);
 
-bool dropCups(int* context);
+bool smallRobotDropCups(int* context);
 
 #endif
 
