@@ -32,6 +32,12 @@ void printSerialLinkBuffer(OutputStream* outputStream, const SerialLink* serialL
  * Clear the content of each buffer (input / output) of the serialLink
  * @param serialLink the serialLink for which we would like to clear the buffers
  */
-void clearSerialLinkBuffer(const SerialLink* serialLink);
+void clearSerialAllLinkBuffer(const SerialLink* serialLink);
+
+/**
+ * Clear the content after the write Index of each buffer (input / output) of the serialLink
+ * @param serialLink the serialLink for which we would like to clear the buffers after the write Index
+ */
+void clearSerialAfterWriteIndexLinkBuffer(const SerialLink* serialLink);
 
 #endif

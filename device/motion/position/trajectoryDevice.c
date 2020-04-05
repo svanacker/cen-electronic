@@ -24,6 +24,7 @@
 
 // Device Interface
 
+
 void initTrajectoryDevice(void) {
     initializeTrajectory();
 }
@@ -36,7 +37,7 @@ bool isTrajectoryDeviceOk(void) {
     return true;
 }
 
-void notifyAbsolutePositionAndSpeedWithoutHeader(OutputStream* notificationOutputStream, bool fakeData) {
+void notifyAbsolutePositionAndSpeed(OutputStream* notificationOutputStream, char status) {
     Position* p = getPosition();
     appendHexFloat4(notificationOutputStream, p->pos.x, POSITION_DIGIT_MM_PRECISION);
     appendSeparator(notificationOutputStream);
@@ -45,11 +46,9 @@ void notifyAbsolutePositionAndSpeedWithoutHeader(OutputStream* notificationOutpu
     appendHexFloat4(notificationOutputStream, radToDeg(p->orientation), ANGLE_DIGIT_DEGREE_PRECISION);
     appendSeparator(notificationOutputStream);
     appendHexFloat4(notificationOutputStream, getTrajectory()->lastSpeed, SPEED_DIGIT_MMSEC_PRECISION);
-    if (fakeData) {
-        // Fake data To Align Notification Size
-        appendSeparator(notificationOutputStream);
-        appendHex(notificationOutputStream, 0x0F);
-    }
+    appendSeparator(notificationOutputStream);
+    appendHex(notificationOutputStream, status);
+    println(notificationOutputStream);
 }
 
 void deviceTrajectoryHandleRawData(unsigned char header,
@@ -60,7 +59,7 @@ void deviceTrajectoryHandleRawData(unsigned char header,
         ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_GET_ABSOLUTE_POSITION);
 
         updateTrajectoryWithNoThreshold();
-        notifyAbsolutePositionAndSpeedWithoutHeader(outputStream, false);
+        notifyAbsolutePositionAndSpeed(outputStream, NOTIFICATION_STATUS_FAKE);
     } else if (header == COMMAND_TRAJECTORY_DEBUG_GET_ABSOLUTE_POSITION) {
         ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_DEBUG_GET_ABSOLUTE_POSITION);
 
@@ -154,12 +153,11 @@ bool trajectoryNotifyIfEnabledAndTreshold(OutputStream* notificationOutputStream
         // YYYY is the y coordinates in mm
         // AAAA is the angle of the robot
         // SSSS is the speed in mm / s
-        notifyAbsolutePositionAndSpeedWithoutHeader(notificationOutputStream, false);
+        // T is the trajectoryType / Status
         // We must add "Trajectory Type"
         enum TrajectoryType trajectoryType = computeTrajectoryType(distanceSinceLastNotification, absoluteAngleRadianSinceLastNotification);
+        notifyAbsolutePositionAndSpeed(notificationOutputStream, trajectoryType);
         // "-T" where T is the type of Trajectory
-        appendSeparator(notificationOutputStream);
-        appendHex(notificationOutputStream, trajectoryType);
         clearLastNotificationData();
         return true;
     }

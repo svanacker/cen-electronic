@@ -38,6 +38,7 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
     }
     unsigned int index;
     enum TrajectoryType trajectoryType = gameStrategyContext->trajectoryType;
+    // Do not beep when no move, or rotation (could not hurt something when rotating)
     if (trajectoryType == TRAJECTORY_TYPE_NONE || trajectoryType == TRAJECTORY_TYPE_ROTATION) {
         tofSensorListBeep(tofSensorList, false);
         return;

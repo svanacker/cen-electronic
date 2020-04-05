@@ -242,6 +242,14 @@ int appendDecf(OutputStream* outputStream, float value);
  */
 void appendStringAndDecf(OutputStream* outputStream, const char* s, float value);
 
+/**
+ * Append a string followed by a float value and line feed.
+ * @param outputStream the pointer on outputStream (POO simulation)
+ * @param s the string to write
+ * @param float the float value to write
+ */
+void appendStringAndDecfLN(OutputStream* outputStream, const char* s, float value);
+
 // -> INTEGER / LONG VALUES
 
 /**
@@ -267,6 +275,14 @@ void appendStringAndHex2LN(OutputStream* stream, const char* s, unsigned char va
  * @param value the value to write
  */
 void appendStringAndBool(OutputStream* outputStream, const char* s, bool value);
+
+/**
+ * Append a string followed by a bool value and a Line Feed.
+ * @param outputStream the pointer on outputStream (POO simulation)
+ * @param s the string to write
+ * @param value the value to write
+ */
+void appendStringAndBoolLN(OutputStream* outputStream, const char* s, bool value);
 
 /**
  * Append both string : key followed by a value.

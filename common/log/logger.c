@@ -40,9 +40,9 @@ void writeLogChar(OutputStream* outputStream, unsigned char c) {
         if ((logHandler->logCategoryMask & logger.logCategoryMask) == 0) {
             continue;
         }
-        OutputStream* outputStream = logHandler->outputStream;
+        OutputStream* logHandlerOutputStream = logHandler->outputStream;
         // write the char of the corresponding stream of the handler
-        outputStream->writeChar(outputStream, c);
+        logHandlerOutputStream->writeChar(logHandlerOutputStream, c);
     }
 }
 
@@ -73,6 +73,12 @@ LogHandler* addLogHandler(char* handlerName,
 OutputStream* getOutputStreamLogger(enum LogLevel writeLogLevel, unsigned long logCategoryMask) {
     logger.writeLogLevel = writeLogLevel;
     logger.logCategoryMask = logCategoryMask;
+    return logger.outputStream;
+}
+
+OutputStream* getTraceOutputStreamLogger() {
+    logger.writeLogLevel = LOG_LEVEL_TRACE;
+    logger.logCategoryMask = logger.defaultLogCategoryMask;
     return logger.outputStream;
 }
 
@@ -108,24 +114,28 @@ OutputStream* getAlwaysOutputStreamLogger() {
 
 // Convenient method to avoid to consume time for logging when not enabled
 
+bool isLoggerTraceEnabled(void) {
+    return logger.globalLogLevel <= LOG_LEVEL_TRACE;
+}
+
 bool isLoggerDebugEnabled(void) {
-    return logger.writeLogLevel >= LOG_LEVEL_DEBUG;
+    return logger.globalLogLevel <= LOG_LEVEL_DEBUG;
 }
 
 bool isLoggerInfoEnabled(void) {
-    return logger.writeLogLevel >= LOG_LEVEL_INFO;
+    return logger.globalLogLevel <= LOG_LEVEL_INFO;
 }
 
 bool isLoggerWarningEnabled(void) {
-    return logger.writeLogLevel >= LOG_LEVEL_WARNING;
+    return logger.globalLogLevel <= LOG_LEVEL_WARNING;
 }
 
 bool isLoggerErrorEnabled(void) {
-    return logger.writeLogLevel >= LOG_LEVEL_ERROR;
+    return logger.globalLogLevel <= LOG_LEVEL_ERROR;
 }
 
-bool isAlwaysWarningEnabled(void) {
-    return logger.writeLogLevel >= LOG_LEVEL_ALWAYS;
+bool isLoggerAlwaysEnabled(void) {
+    return logger.globalLogLevel <= LOG_LEVEL_ALWAYS;
 }
 
 Logger* getLoggerInstance() {

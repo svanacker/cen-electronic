@@ -233,7 +233,7 @@ void initBigRobotPaths2020(GameStrategyContext* gameStrategyContext) {
 void initBigRobotTargets2020(GameStrategyContext* gameStrategyContext) {
     clearGameTargets();
     // TODO : Change Value of gain
-    addGameTarget(&smallHarbor1Target, "SMALL_HARBOR_1", 30, bigRobotStartAreaLocation, smallHarborFrontMiddleLocation);
+    addGameTarget(&smallHarbor1Target, "SMALL_HARB_1", 30, bigRobotStartAreaLocation, smallHarborFrontMiddleLocation);
     addGameTarget(&leftReefTarget, "LEFT_REEF", 10, leftReefFrontLocation, dropLeftFrontLocation);
 }
 

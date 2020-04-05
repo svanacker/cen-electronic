@@ -350,6 +350,12 @@ void appendStringAndDecf(OutputStream* stream, const char* s, float value) {
     appendDecf(stream, value);
 }
 
+void appendStringAndDecfLN(OutputStream* stream, const char* s, float value) {
+    appendString(stream, s);
+    appendDecf(stream, value);
+    println(stream);
+}
+
 void appendStringAndDec(OutputStream* stream, const char* s, long value) {
     appendString(stream, s);
     appendDec(stream, value);
@@ -366,15 +372,21 @@ void appendStringAndDecLN(OutputStream* stream, const char* s, long value) {
     println(stream);
 }
 
-void appendStringAndHex2LN(OutputStream* stream, const char* s, unsigned char value) {
-    appendString(stream, s);
-    appendHex2(stream, value);
-    println(stream);
+void appendStringAndHex2LN(OutputStream* outputStream, const char* s, unsigned char value) {
+    appendString(outputStream, s);
+    appendHex2(outputStream, value);
+    println(outputStream);
 }
 
 void appendStringAndBool(OutputStream* outputStream, const char* s, bool value) {
     appendString(outputStream, s);
     appendBool(outputStream, value);
+}
+
+void appendStringAndBoolLN(OutputStream* outputStream, const char* s, bool value) {
+    appendString(outputStream, s);
+    appendBool(outputStream, value);
+    println(outputStream);
 }
 
 void appendKeyAndName(OutputStream* stream, const char* key, const char* name) {

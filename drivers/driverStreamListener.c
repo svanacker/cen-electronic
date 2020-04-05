@@ -200,7 +200,6 @@ bool handleStreamInstruction(Buffer* inputBuffer,
                     return false;
                 }
             } else {
-                TransmitMode transmitMode = device->transmitMode;
                 int address = device->address;
 
                 dispatcher = getDriverDataDispatcherByTransmitMode(transmitMode, address);

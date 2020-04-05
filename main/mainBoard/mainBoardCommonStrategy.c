@@ -122,6 +122,7 @@ void mainBoardDeviceHandleTrajectoryDeviceNotification(const Device* device, con
             // and not on a TRAJECTORY_DEVICE_HEADER
 
             // gameStrategyContext->trajectoryType = trajectoryType;
+            // TODO : Check this !!
             mainBoardCommonUpdateTofMaxDistanceMM(gameStrategyContext, 200.0f, 800.0f);
 
             if (isLoggerDebugEnabled()) {
@@ -152,10 +153,13 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const u
             checkIsSeparator(notificationInputStream);
             checkIsChar(notificationInputStream, 'F');
 
-            gameStrategyContext->trajectoryType = TRAJECTORY_TYPE_NONE;
-
+            if (commandHeader != NOTIFY_MOTION_STATUS_MOVING) {
+                updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_NONE);
+            }
             if (isLoggerDebugEnabled()) {
-                appendStringCRLF(getDebugOutputStreamLogger(), "Motion Dev. Notif. !");
+                appendString(getDebugOutputStreamLogger(), "Motion Dev. Notif:");
+                append(getDebugOutputStreamLogger(), commandHeader);
+                println(getDebugOutputStreamLogger());
             }
         } else {
             writeError(NOTIFICATION_BAD_DEVICE_COMMAND_HANDLER_NOT_HANDLE);

@@ -50,7 +50,7 @@ void interruptGameStrategyMotionCallbackFunc(Timer* timer) {
     // We don't will ask the position to the motor Board if the robot is not 
     // moving
     enum TrajectoryType trajectoryType = gameStrategyContext->trajectoryType;
-    if (trajectoryType == TRAJECTORY_TYPE_NONE) {
+    if (TRAJECTORY_TYPE_NONE == trajectoryType) {
         return;
     }
 
@@ -67,6 +67,9 @@ void initGameStrategyMotionHandler(GameStrategyContext* gameStrategyContext) {
 }
 
 bool updateRobotPositionFromMainBoardToMotorBoard(GameStrategyContext* gameStrategyContext) {
+    if (isLoggerTraceEnabled()) {
+        appendStringLN(getTraceOutputStreamLogger(), "updateRobotPositionFromMainBoardToMotorBoard");
+    }
     if (gameStrategyContext == NULL) {
         writeError(GAME_STRATEGY_CONTEXT_NULL);
         return false;

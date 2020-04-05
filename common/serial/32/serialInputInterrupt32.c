@@ -27,9 +27,9 @@ void handleUartInterrupt(UART_MODULE uart, Buffer* buffer) {
             if (c != 'ÿ' && c != 'þ') {
                 bufferWriteChar(buffer, c);
             }
-            // Clear the RX interrupt Flag
-            INTClearFlag(INT_SOURCE_UART_RX(uart));
         }
+        // Clear the RX interrupt Flag
+        INTClearFlag(INT_SOURCE_UART_RX(uart));
     }
     // We don't care about TX interrupt
     if (INTGetFlag(INT_SOURCE_UART_TX(uart))) {

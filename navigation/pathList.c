@@ -5,6 +5,8 @@
 #include "pathList.h"
 #include "path.h"
 
+#include "../common/log/logger.h"
+
 #include "../common/io/outputStream.h"
 #include "../common/io/printWriter.h"
 
@@ -88,6 +90,9 @@ PathData* getPath(PathList* pathList, unsigned int index) {
 }
 
 PathData* getPathOfLocations(PathList* pathList, Location* location1, Location* location2) {
+    if (isLoggerTraceEnabled()) {
+        appendStringLN(getTraceOutputStreamLogger(), "getPathOfLocations");
+    }
     unsigned int i;
     unsigned int size = pathList->size;
     for (i = 0; i < size; i++) {
@@ -96,8 +101,19 @@ PathData* getPathOfLocations(PathList* pathList, Location* location1, Location* 
         Location* pathLocation2 = pathData->location2;
         // The path must be on the same order than the 2 locations
         if (locationEquals(pathLocation1, location1) && locationEquals(pathLocation2, location2)) {
+            if (isLoggerTraceEnabled()) {
+                OutputStream* traceOutputStream = getTraceOutputStreamLogger();
+                appendString(traceOutputStream, "  ");
+                appendFixedCharArray(traceOutputStream, &(pathData->location1->name));
+                appendString(traceOutputStream, "->");
+                appendFixedCharArray(traceOutputStream, &(pathData->location2->name));
+                println(traceOutputStream);
+            }
             return pathData;
         }
+    }
+    if (isLoggerTraceEnabled()) {
+        appendStringLN(getTraceOutputStreamLogger(), "getPathOfLocations:return:null");
     }
     return NULL;
 }

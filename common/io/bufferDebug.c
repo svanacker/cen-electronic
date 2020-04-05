@@ -34,6 +34,7 @@ void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
     appendCRLF(outputStream);
     unsigned int i;
     char* sPointer = (char*) buffer->s;
+    unsigned int noLineCount = 0;
     for (i = 0; i < buffer->length; i++) {
         // Shift to the right cell index
         unsigned char c = *sPointer;
@@ -43,9 +44,15 @@ void printDebugBuffer(OutputStream* outputStream, Buffer* buffer) {
         } else {
             append(outputStream, c);
         }
+        if (c != LF) {
+            noLineCount++;
+        }
+        else {
+            noLineCount = 0;
+        }
         sPointer++;
-        // Multi line management
-        if (i % CONSOLE_MAX_WIDTH == CONSOLE_MAX_WIDTH - 1) {
+        // Multi line management : we create line if there is no line feed in the buffer
+        if (noLineCount % CONSOLE_MAX_WIDTH == CONSOLE_MAX_WIDTH - 1) {
             appendCRLF(outputStream);
         }
     }

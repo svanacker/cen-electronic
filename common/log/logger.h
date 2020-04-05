@@ -60,6 +60,12 @@ LogHandler* addLogHandler(char* handlerName,
 OutputStream* getOutputStreamLogger(enum LogLevel writeLogLevel, unsigned long logCategoryMask);
 
 /**
+ * Get an outputStream for log with TRACE level and default category level.
+ * @return an outputStream for log with TRACE level and default category level
+ */
+OutputStream* getTraceOutputStreamLogger();
+
+/**
  * Get an outputStream for log with DEBUG level and default category level.
  * @return an outputStream for log with DEBUG level and default category level
  */
@@ -90,7 +96,13 @@ OutputStream* getErrorOutputStreamLogger();
 OutputStream* getAlwaysOutputStreamLogger();
 
 /**
- * Returns if the logger handle at least the debug level
+ * Returns true if the logger handle at least the trace level
+ * @return
+ */
+bool isLoggerTraceEnabled(void);
+
+/**
+ * Returns true if the logger handle at least the debug level
  * @return 
  */
 bool isLoggerDebugEnabled(void);
@@ -101,7 +113,7 @@ bool isLoggerWarningEnabled(void);
 
 bool isLoggerErrorEnabled(void);
 
-bool isAlwaysWarningEnabled(void);
+bool isLoggerAlwaysEnabled(void);
 
 /**
  * Returns the singleton for logger.

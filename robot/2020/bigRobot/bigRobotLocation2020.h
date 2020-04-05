@@ -28,8 +28,8 @@
 #define CENTER_POINT_LABEL                                        "Center Point"
 #define CENTER_POINT_X                                                      1000
 #define CENTER_POINT_Y                                                      1000
-#define CENTER_POINT_START_ANGLE_DECI_DEG                       ANGLE_DECI_DEG_0
-#define CENTER_POINT_END_ANGLE_DECI_DEG                     ANGLE_DECI_DEG_180
+#define CENTER_POINT_START_ANGLE_DECI_DEG                      ANGLE_DECI_DEG_90
+#define CENTER_POINT_END_ANGLE_DECI_DEG                       ANGLE_DECI_DEG_180
 
 // Point in Front of the Left Reef
 #define LEFT_REEF_FRONT                                                   "LRFR"

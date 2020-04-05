@@ -14,6 +14,9 @@
 // 3 degree max
 #define TRAJECTORY_DEVICE_ADJUST_ANGLE_THRESHOLD       ((PI / 180.0f) * 3.0f)
 
+// Only to use the same format of data between TrajectoryDevice and MotionDevice
+#define NOTIFICATION_STATUS_FAKE                          0x0F
+
 // DEVICE INTERFACE
 
 /**
@@ -24,7 +27,7 @@ DeviceDescriptor* getTrajectoryDeviceDescriptor(void);
 /**
  * Notify the absolute position without the header.
  */
-void notifyAbsolutePositionAndSpeedWithoutHeader(OutputStream* outputStream, bool fakeData);
+void notifyAbsolutePositionAndSpeed(OutputStream* outputStream, char status);
 
 // NOTIFICATION
 

@@ -24,13 +24,19 @@ void openSerial(enum SerialPort serialPort, unsigned long baudRate) {
         PORTSetPinsDigitalIn(IOPORT_B, BIT_8);
     }
     UART_MODULE uart = getUartModule(serialPort);
+    // We only use RX/TX and not controls pin
     UARTConfigure(uart, UART_ENABLE_PINS_TX_RX_ONLY);
+    
+    // Interrupt mode on TX (default Value) and interrupt on RX when there is some data
     UARTSetFifoMode(uart, UART_INTERRUPT_ON_TX_NOT_FULL | UART_INTERRUPT_ON_RX_NOT_EMPTY);
+    // Configure 8 bits / no parity / 1 stop bit
     UARTSetLineControl(uart, UART_DATA_SIZE_8_BITS | UART_PARITY_NONE | UART_STOP_BITS_1);
     UARTSetDataRate(uart, GetPeripheralClock(), baudRate);
     UARTEnable(uart, UART_ENABLE_FLAGS(UART_PERIPHERAL | UART_RX | UART_TX));
 
+    // Configure the interruption
     INTEnable(INT_SOURCE_UART_RX(uart), INT_ENABLED);
+    // And the priority
     INTSetVectorPriority(INT_VECTOR_UART(uart), INT_PRIORITY_LEVEL_2);
     INTSetVectorSubPriority(INT_VECTOR_UART(uart), INT_SUB_PRIORITY_LEVEL_0);
 

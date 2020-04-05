@@ -90,12 +90,13 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
 }
 
 void updateStrategyContextTrajectoryType(GameStrategyContext* gameStrategyContext, enum TrajectoryType trajectoryType) {
-    if (trajectoryType != gameStrategyContext->trajectoryType) {
-        appendTrajectoryTypeAsString(getDebugOutputStreamLogger(), gameStrategyContext->trajectoryType);
-        appendString(getDebugOutputStreamLogger(), " -> ");
-        appendTrajectoryTypeAsString(getDebugOutputStreamLogger(), trajectoryType);
-        appendCRLF(getDebugOutputStreamLogger());
+    if (trajectoryType == gameStrategyContext->trajectoryType) {
+        return;
     }
+    appendTrajectoryTypeAsString(getDebugOutputStreamLogger(), gameStrategyContext->trajectoryType);
+    appendString(getDebugOutputStreamLogger(), " -> ");
+    appendTrajectoryTypeAsString(getDebugOutputStreamLogger(), trajectoryType);
+    appendCRLF(getDebugOutputStreamLogger());
     gameStrategyContext->trajectoryType = trajectoryType;
 }
 

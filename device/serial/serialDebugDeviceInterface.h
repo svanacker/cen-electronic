@@ -6,8 +6,11 @@
 /** Command to see the content of Serial Buffers. */
 #define COMMAND_SERIAL_DEBUG              'd'
 
+/** Command to clear the content input & output Buffer after the write Index */
+#define COMMAND_SERIAL_CLEAR_AFTER_WRITE_INDEX 'c'
+
 /** Command to clear the Serial Input & Output Buffers. */
-#define COMMAND_SERIAL_CLEAR              'c'
+#define COMMAND_SERIAL_CLEAR_ALL              'C'
 
 /** Command to list all registered Serial. */
 #define COMMAND_SERIAL_LIST              'L'

@@ -35,11 +35,27 @@ void initStrategyHandler(GameStrategyContext* gameStrategyContext) {
 }
 
 Location* updateGameStrategyContextNearestLocation(GameStrategyContext* gameStrategyContext) {
+    if (isLoggerTraceEnabled()) {
+        appendStringLN(getTraceOutputStreamLogger(), "updateGameStrategyContextNearestLocation");
+    }
     gameStrategyContext->nearestLocation = getNearestLocationFromGameStrategyContext(gameStrategyContext);
+    if (isLoggerTraceEnabled()) {
+        appendString(getTraceOutputStreamLogger(), "gameStrategyContext->nearestLocation=");
+        if (gameStrategyContext->nearestLocation != NULL) {
+            appendFixedCharArray(getTraceOutputStreamLogger(), &(gameStrategyContext->nearestLocation->name));
+            appendCRLF(getTraceOutputStreamLogger());
+        }
+        else {
+            appendStringLN(getTraceOutputStreamLogger(), "NULL");
+        }
+    }
     return gameStrategyContext->nearestLocation;
 }
 
 GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext) {
+    if (isLoggerTraceEnabled()) {
+        appendStringLN(getTraceOutputStreamLogger(), "findNextTarget");
+    }
     updateGameStrategyContextNearestLocation(gameStrategyContext);
 
     // Find best Target, store LocationList in the context in currentTrajectory
@@ -50,12 +66,16 @@ GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext) {
 }
 
 void updateTargetStatusAndScore(GameStrategyContext* gameStrategyContext) {
+    if (isLoggerTraceEnabled()) {
+        appendStringLN(getTraceOutputStreamLogger(), "updateTargetStatusAndScore");
+    }
     GameTarget* currentTarget = gameStrategyContext->currentTarget;
     if (currentTarget == NULL) {
         return;
     }
     updateTargetStatus(currentTarget);
     if (currentTarget->status == TARGET_HANDLED) {
+        // We consider that if the target was handled, we could compute the gain as the "potential gain"
         currentTarget->gain = currentTarget->potentialGain;
         EndMatch* endMatch = gameStrategyContext->endMatch;
         if (endMatch == NULL) {
@@ -67,6 +87,9 @@ void updateTargetStatusAndScore(GameStrategyContext* gameStrategyContext) {
 }
 
 void executeTargetAction(GameStrategyContext* gameStrategyContext, GameTargetAction* targetAction) {
+    if (isLoggerTraceEnabled()) {
+        appendStringLN(getTraceOutputStreamLogger(), "executeTargetAction");
+    }
     GameTargetActionItemList* actionItemList = targetAction->actionItemList;
     if (executeTargetActionItemList(actionItemList, (int*) gameStrategyContext)) {
         // All Items of the actions were done successfully
@@ -82,21 +105,38 @@ void executeTargetAction(GameStrategyContext* gameStrategyContext, GameTargetAct
  * @private
  */
 bool handleNextMoveActionOrAction(GameStrategyContext* gameStrategyContext) {
+    if (isLoggerTraceEnabled()) {
+        appendStringLN(getTraceOutputStreamLogger(), "handleNextMoveActionOrAction");
+    }
     GameTarget* currentTarget = gameStrategyContext->currentTarget;
     // If No Target => No Action
     // Only manage Target which are available
-    if (currentTarget == NULL || currentTarget->status != TARGET_AVAILABLE) {
+    if (currentTarget == NULL) {
+        if (isLoggerTraceEnabled()) {
+            appendStringLN(getTraceOutputStreamLogger(), "currentTarget=NULL");
+        }
         return false;
     }
-
-    Navigation* navigation = gameStrategyContext->navigation;
+    /*
+    if (currentTarget->status == TARGET_MISSED || currentTarget->status == TARGET_MISSED) {
+        if (isLoggerTraceEnabled()) {
+            appendStringLN(getTraceOutputStreamLogger(), "currentTarget->status != TARGET_AVAILABLE");
+        }
+        return false;
+    }
+    */
     Location* nearestLocation = gameStrategyContext->nearestLocation;
-    // Start Location could be null if the nearest Location was not found (because too far)
-    if (nearestLocation == NULL) {
+    Navigation* navigation = gameStrategyContext->navigation;
+
+    // If the robot was stopped during a target research, and that we are away from a point, we create new temporary point
+    // to escape
+    if (nearestLocation == NULL && TRAJECTORY_TYPE_NONE == gameStrategyContext->trajectoryType) {
+        // Start Location could be null if the nearest Location was not found (because too far)
         gameStrategyCreateOutsideTemporaryPaths(gameStrategyContext);
         // We have a new temporary location where the robot is !
         nearestLocation = updateGameStrategyContextNearestLocation(gameStrategyContext);
-    } else {
+    }
+    else {
         // Try to recycle the temporary Paths & Locations !
         gameStrategyClearOusideTemporaryPathsAndLocations(gameStrategyContext);
     }
@@ -123,6 +163,9 @@ bool handleNextMoveActionOrAction(GameStrategyContext* gameStrategyContext) {
 }
 
 bool nextStep(GameStrategyContext* gameStrategyContext) {
+    if (isLoggerTraceEnabled()) {
+        appendStringLN(getTraceOutputStreamLogger(), "nextStep");
+    }
     // The start point is the nearest point of the robot
     // TODO : Restrict the nearest Point to the list of the trajectory to reach the target and not all locations ?
     updateGameStrategyContextNearestLocation(gameStrategyContext);
@@ -142,7 +185,7 @@ bool nextStep(GameStrategyContext* gameStrategyContext) {
 bool nextTargetOrNextStep(GameStrategyContext* gameStrategyContext) {
     enum TrajectoryType trajectoryType = gameStrategyContext->trajectoryType;
     // During the move, we do nothing, we would evaluate next time if it has changed !
-    if (trajectoryType != TRAJECTORY_TYPE_NONE) {
+    if (TRAJECTORY_TYPE_NONE != trajectoryType) {
         return false;
     }
     // Always find a new target if no target is available

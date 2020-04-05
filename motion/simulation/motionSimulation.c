@@ -71,6 +71,8 @@ void interruptMotionSimulationCallbackFunc(Timer* timer) {
         // BSpline Follow
         bSplineTime += bSplineIncrement;
         if (bSplineTime > 1.0f) {
+            // We stop when the bspline time = 1.0f (end of trajectory), and we randomize a little to
+            // try to simulate real hardware conditions
             bSplineTime = 1.0f + (rand() % 100) * 0.0002f - 0.01f;
             simulateFlag = false;
             updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_NONE);
@@ -96,8 +98,8 @@ void initMotionSimulation(GameStrategyContext* gameStrategyContext) {
 
 // --------------------------------
 
-void simulateRotation(GameStrategyContext* gameStrategyContext, float angle) {
-    gameStrategyContext->robotAngleRadian += angle + (rand() % 100) * 0.0001f;
+void simulateRotation(GameStrategyContext* gameStrategyContext, float angleRadian) {
+    gameStrategyContext->robotAngleRadian += angleRadian + (rand() % 100) * 0.0001f;
     simulateFlag = true;
     simulateRotationFlag = true;
 }
@@ -129,6 +131,7 @@ void simulateBSplineAbsolute(GameStrategyContext* gameStrategyContext, float des
 
 void simulateMotionCancel(GameStrategyContext* gameStrategyContext) {
     simulateFlag = false;
+    simulateRotationFlag = false;
     updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_NONE);
 }
 

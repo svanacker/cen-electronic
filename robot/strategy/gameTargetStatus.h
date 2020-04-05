@@ -9,6 +9,8 @@
 enum GameTargetStatus {
     /** The target is Available. */
     TARGET_AVAILABLE = 0,
+    /** The target is Handling. */
+    TARGET_HANDLING = 1,
     /** The target is Handled. */
     TARGET_HANDLED = 2,
     /** The target is missed. */

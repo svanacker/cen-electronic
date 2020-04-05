@@ -23,7 +23,6 @@ void updateTargetStatus(GameTarget* target) {
     }
     unsigned int i;
     unsigned int size = list->size;
-    bool allDone = true;
     for (i = 0; i < size; i++) {
         GameTargetAction* targetAction = list->actions[i];
         if (targetAction->status == ACTION_STATUS_ERROR) {
@@ -32,10 +31,9 @@ void updateTargetStatus(GameTarget* target) {
         }
 
         if (targetAction->status != ACTION_STATUS_DONE) {
-            allDone = false;
+            target->status = TARGET_HANDLING;
+            return;
         }
     }
-    if (allDone) {
-        target->status = TARGET_HANDLED;
-    }
+    target->status = TARGET_HANDLED;
 }

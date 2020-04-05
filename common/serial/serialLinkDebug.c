@@ -101,7 +101,7 @@ void printSerialLinkBuffer(OutputStream* outputStream, const SerialLink* serialL
     }
 }
 
-void clearSerialLinkBuffer(const SerialLink* serialLink) {
+void clearSerialAllLinkBuffer(const SerialLink* serialLink) {
     if (serialLink != NULL) {
         StreamLink* streamLink = serialLink->streamLink;
 
@@ -112,5 +112,20 @@ void clearSerialLinkBuffer(const SerialLink* serialLink) {
         // Serial Output Buffer
         Buffer* serialOutputBuffer = streamLink->outputBuffer;
         deepClearBuffer(serialOutputBuffer);
+    }
+}
+
+
+void clearSerialAfterWriteIndexLinkBuffer(const SerialLink* serialLink) {
+    if (serialLink != NULL) {
+        StreamLink* streamLink = serialLink->streamLink;
+
+        // Serial Input Buffer
+        Buffer* serialInputBuffer = streamLink->inputBuffer;
+        clearAfterWriteIndexBuffer(serialInputBuffer);
+
+        // Serial Output Buffer
+        Buffer* serialOutputBuffer = streamLink->outputBuffer;
+        clearAfterWriteIndexBuffer(serialOutputBuffer);
     }
 }

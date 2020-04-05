@@ -6,12 +6,17 @@
 
 #include "../../common/error/error.h"
 
+#include "../../common/log/logger.h"
+
 #include "../../navigation/locationList.h"
 #include "../../navigation/pathList.h"
 
 #include "../../navigation/navigation.h"
 
 void gameStrategyCreateOutsideTemporaryPaths(GameStrategyContext* gameStrategyContext) {
+    if (isLoggerTraceEnabled()) {
+        appendStringLN(getTraceOutputStreamLogger(), "gameStrategyCreateOutsideTemporaryPaths");
+    }
     Navigation* navigation = gameStrategyContext->navigation;
     LocationList* locationList = navigation->locationList;
     float startAngleRadian = gameStrategyContext->robotAngleRadian;
@@ -29,6 +34,9 @@ void gameStrategyCreateOutsideTemporaryPaths(GameStrategyContext* gameStrategyCo
 }
 
 void gameStrategyClearOusideTemporaryPathsAndLocations(GameStrategyContext* gameStrategyContext) {
+    if (isLoggerTraceEnabled()) {
+        appendStringLN(getTraceOutputStreamLogger(), "gameStrategyClearOusideTemporaryPathsAndLocations");
+    }
     Navigation* navigation = gameStrategyContext->navigation;
     LocationList* locationList = navigation->locationList;
     PathList* pathList = navigation->paths;

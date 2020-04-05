@@ -26,6 +26,9 @@
 #include "../../navigation/location.h"
 
 GameTarget* computeBestNextTarget(GameStrategyContext* strategyContext) {
+    if (isLoggerTraceEnabled()) {
+        appendStringLN(getTraceOutputStreamLogger(), "computeBestNextTarget");
+    }
     if (strategyContext->nearestLocation == NULL) {
         return NULL;
     }
@@ -100,6 +103,15 @@ GameTarget* computeBestNextTarget(GameStrategyContext* strategyContext) {
         if (target->currentComputedOpportunityFactor > maxOpportunityFactor) {
             maxOpportunityFactor = target->currentComputedOpportunityFactor;
             result = target;
+        }
+    }
+    if (isLoggerTraceEnabled()) {
+        appendString(getTraceOutputStreamLogger(), "computeBestNextTarget:result=");
+        if (result == NULL) {
+            appendStringLN(getTraceOutputStreamLogger(), "NULL");
+        }
+        else {
+            appendStringLN(getTraceOutputStreamLogger(), result->name);
         }
     }
     return result;

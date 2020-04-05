@@ -49,13 +49,20 @@ void deviceSerialDebugHandleRawData(unsigned char commandHeader, InputStream* in
         enum SerialPort serialPort = (enum SerialPort) readHex2(inputStream);
         SerialLink* serialLink = getSerialLinkBySerialPort(serialPort);
         printSerialLinkBuffer(getInfoOutputStreamLogger(), serialLink);
-    } else if (commandHeader == COMMAND_SERIAL_CLEAR) {
+    } else if (commandHeader == COMMAND_SERIAL_CLEAR_ALL) {
         enum SerialPort serialPort = (enum SerialPort) readHex2(inputStream);
         SerialLink* serialLink = getSerialLinkBySerialPort(serialPort);
-        clearSerialLinkBuffer(serialLink);
+        clearSerialAllLinkBuffer(serialLink);
         // We ack at the end because we just clear the buffer !
-        ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_CLEAR);
-    } else if (commandHeader == COMMAND_SERIAL_LIST) {
+        ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_CLEAR_ALL);
+    } else if (commandHeader == COMMAND_SERIAL_CLEAR_AFTER_WRITE_INDEX) {
+        enum SerialPort serialPort = (enum SerialPort) readHex2(inputStream);
+        SerialLink* serialLink = getSerialLinkBySerialPort(serialPort);
+        clearSerialAfterWriteIndexLinkBuffer(serialLink);
+        // We ack at the end because we just clear the buffer !
+        ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_CLEAR_AFTER_WRITE_INDEX);
+    }
+    else if (commandHeader == COMMAND_SERIAL_LIST) {
         ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_LIST);
         printSerialLinkList(getInfoOutputStreamLogger());
     }// OUTPUT

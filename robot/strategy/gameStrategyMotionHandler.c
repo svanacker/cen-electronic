@@ -42,50 +42,49 @@
 #include "../../robot/robot.h"
 
 bool motionRotateToFollowPath(GameStrategyContext* gameStrategyContext, PathData* pathData) {
+    if (isLoggerTraceEnabled()) {
+        appendStringLN(getTraceOutputStreamLogger(), "motionRotateToFollowPath");
+    }
     if (pathData == NULL) {
         writeError(PATH_NULL);
         return false;
     }
-    float angle = getPathStartAngleRadian(pathData);
+    float angleRadian = getPathStartAngleRadian(pathData);
 
-    float diff = mod2PI(angle - gameStrategyContext->robotAngleRadian);
-    if (fabs(diff) < degToRad(ANGLE_ROTATION_MIN_DEGREE)) {
+    float diff = mod2PI(angleRadian - gameStrategyContext->robotAngleRadian);
+    if (isLoggerTraceEnabled()) {
+        appendStringAndDecfLN(getTraceOutputStreamLogger(), "angle (deg)=", radToDeg(angleRadian));
+    }
+    float diffDeg = radToDeg(diff);
+    if (fabs(diffDeg) < ANGLE_ROTATION_MIN_DEGREE) {
         return false;
     }
-
-    if (diff > 0.0f) {
-        // TODO : Simulate the rotation too ...
-
-        appendStringAndDecf(getDebugOutputStreamLogger(), "motionDriverLeft:", radToDeg(diff));
-        println(getDebugOutputStreamLogger());
-        // Simulate as if the robot goes to the position with a small error to be sure
-        // that we do not rely the navigation on just exact computation
-        if (gameStrategyContext->simulateMove) {
+    if (gameStrategyContext->simulateMove) {
+        // TODO : Remove the PC_COMPILER and use abstraction
 #ifdef PC_COMPILER        
-            simulateRotation(gameStrategyContext, diff);
+        simulateRotation(gameStrategyContext, diff);
 #endif
-        } else {
-            motionDriverLeft(radToDeg(diff));
-        }
-        updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_ROTATION);
-    } else {
-        appendStringAndDecf(getDebugOutputStreamLogger(), "motionDriverRight:", radToDeg(-diff));
-        println(getDebugOutputStreamLogger());
-        if (gameStrategyContext->simulateMove) {
-#ifdef PC_COMPILER        
-            simulateRotation(gameStrategyContext, diff);
-#endif
-        } else {
-            motionDriverRight(radToDeg(-diff));
-        }
-        updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_ROTATION);
     }
-
+    else  {
+        if (diffDeg > 0.0f) {
+            appendStringAndDecf(getDebugOutputStreamLogger(), "motionDriverLeft:", diffDeg);
+            println(getDebugOutputStreamLogger());
+            motionDriverLeft(diffDeg);
+        } else {
+            appendStringAndDecf(getDebugOutputStreamLogger(), "motionDriverRight:", -diffDeg);
+            println(getDebugOutputStreamLogger());
+            motionDriverRight(-diffDeg);
+        }
+    }
+    updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_ROTATION);
 
     return true;
 }
 
 bool motionFollowPath(GameStrategyContext* gameStrategyContext, PathData* pathData) {
+    if (isLoggerTraceEnabled()) {
+        appendStringLN(getTraceOutputStreamLogger(), "motionFollowPath");
+    }
     if (pathData == NULL) {
         writeError(PATH_NULL);
         return false;
@@ -129,6 +128,9 @@ bool motionFollowPath(GameStrategyContext* gameStrategyContext, PathData* pathDa
 // COMBINAISON OF FOLLOW / ROTATE
 
 bool followComputedNextPath(GameStrategyContext* gameStrategyContext) {
+    if (isLoggerTraceEnabled()) {
+        appendStringLN(getTraceOutputStreamLogger(), "followComputedNextPath");
+    }
     Navigation* navigation = gameStrategyContext->navigation;
     // navigation->path
     Location* startLocation = gameStrategyContext->nearestLocation;

@@ -44,9 +44,16 @@ int deviceSerialDebugGetInterface(unsigned char commandHeader, DeviceInterfaceMo
             setArgumentUnsignedHex2(0, "serialPort");
         }
         return commandLengthValueForMode(mode, 2, 0);
-    } else if (commandHeader == COMMAND_SERIAL_CLEAR) {
+    } else if (commandHeader == COMMAND_SERIAL_CLEAR_ALL) {
         if (fillDeviceArgumentList) {
-            setFunction("serial Clear", 1, 0);
+            setFunction("serial Clear All", 1, 0);
+            setArgumentUnsignedHex2(0, "serialPort");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    else if (commandHeader == COMMAND_SERIAL_CLEAR_AFTER_WRITE_INDEX) {
+        if (fillDeviceArgumentList) {
+            setFunction("serial Clear After Write Idx", 1, 0);
             setArgumentUnsignedHex2(0, "serialPort");
         }
         return commandLengthValueForMode(mode, 2, 0);

@@ -79,11 +79,18 @@ void clearBuffer(Buffer* buffer);
 void bufferClearLastChars(Buffer* buffer, unsigned char charToRemoveCount);
 
 /**
- * Do a deep clear of buffer (write 0 on all cells of array);
+ * Do a deep clear of buffer (write 0 on all cells of array)
  * @param buffer the buffer to clear very deeply (simulates object programming)
  * @throws IO_BUFFER_NULL if the pointer is NULL
  */
 void deepClearBuffer(Buffer* buffer);
+
+/**
+ * Do a clear of buffer (write 0 on all cell after the write Index)
+ * @param buffer the buffer to clear very deeply (simulates object programming)
+ * @throws IO_BUFFER_NULL if the pointer is NULL
+ */
+void clearAfterWriteIndexBuffer(Buffer* buffer);
 
 /**
  * Returns true if the buffer is full, false else.

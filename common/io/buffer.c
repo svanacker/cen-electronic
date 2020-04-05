@@ -289,6 +289,21 @@ void deepClearBuffer(Buffer* buffer) {
     clearBuffer(buffer);
 }
 
+
+void clearAfterWriteIndexBuffer(Buffer* buffer) {
+    if (!checkBufferNotNull(buffer)) {
+        return;
+    }
+    unsigned int i;
+    char* sPointer = (char*)buffer->s;
+    sPointer += buffer->writeIndex;
+    for (i = buffer->writeIndex; i < buffer->length; i++) {
+        // Shift to the right cell index
+        *sPointer = 0;
+        sPointer++;
+    }
+}
+
 InputStream* getInputStream(Buffer* buffer) {
     if (!checkBufferNotNull(buffer)) {
         return NULL;

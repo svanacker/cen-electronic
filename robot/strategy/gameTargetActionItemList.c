@@ -4,6 +4,7 @@
 #include "gameTargetActionItem.h"
 
 #include "../../common/error/error.h"
+#include "../../common/log/logger.h"
 
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
@@ -64,6 +65,9 @@ int getGameTargetActionItemCount(GameTargetActionItemList* targetActionItemList)
 // ACTIONS
 
 bool executeTargetActionItemList(GameTargetActionItemList* actionItemList, int* context) {
+    if (isLoggerTraceEnabled()) {
+        appendStringLN(getTraceOutputStreamLogger(), "executeTargetActionItemList");
+    }
     bool result = true;
     unsigned int actionItemIndex;
     // Loop on all action Items to do
@@ -83,6 +87,9 @@ bool executeTargetActionItemList(GameTargetActionItemList* actionItemList, int* 
 }
 
 bool doGameTargetActionItem(GameTargetActionItem* gameTargetActionItem, int* context) {
+    if (isLoggerTraceEnabled()) {
+        appendStringLN(getTraceOutputStreamLogger(), "doGameTargetActionItem");
+    }
     if (gameTargetActionItem->actionItemFunction == NULL) {
         writeError(TOO_MUCH_TARGET_ACTION_ITEM_FUNCTION_NULL);
         return false;
@@ -100,6 +107,9 @@ bool doGameTargetActionItem(GameTargetActionItem* gameTargetActionItem, int* con
         gameTargetActionItem->status = ACTION_ITEM_STATUS_DONE;
     } else {
         gameTargetActionItem->status = ACTION_ITEM_STATUS_ERROR;
+    }
+    if (isLoggerTraceEnabled()) {
+        appendStringAndBoolLN(getTraceOutputStreamLogger(), "doGameTargetActionItem:result=", succeed);
     }
     return succeed;
 }
