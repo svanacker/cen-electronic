@@ -98,6 +98,6 @@ bool targetActionNeedsMove(GameTargetAction* targetAction);
  * Used for test but not in real situation, just to debug if action could be done easily
  * @return true if all items were done successfully, false if there at least one problem
  */
-bool doGameTargetAction(GameTargetAction* targetAction, int* context);
+void doGameTargetAction(GameTargetAction* targetAction, int* context);
 
 #endif

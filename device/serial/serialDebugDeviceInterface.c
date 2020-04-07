@@ -82,7 +82,14 @@ int deviceSerialDebugGetInterface(unsigned char commandHeader, DeviceInterfaceMo
             serialDebugCharArrayFunctionArgument("serial Char Array Input");
         }
         return commandLengthValueForMode(mode, 14, 0);
+    } else if (commandHeader == COMMAND_SERIAL_RESTART_PORT) {
+        if (fillDeviceArgumentList) {
+            setFunction("serial Restart Port", 1, 0);
+            setArgumentUnsignedHex2(0, "serialPort");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
     }
+    
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

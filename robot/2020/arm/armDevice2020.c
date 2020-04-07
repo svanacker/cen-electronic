@@ -61,7 +61,7 @@ void deviceArm2020HandleRawData(unsigned char commandHeader, InputStream* inputS
     else if (commandHeader == COMMAND_2020_HOOK_DOWN) {
         ackCommand(outputStream, ARM_2020_DEVICE_HEADER, COMMAND_2020_HOOK_DOWN);
         unsigned char servoIndex = readHex2(inputStream);
-        arm2020HookDown(servoList, servoIndex, false);
+        arm2020HookDown(servoList, servoIndex);
     } else if (commandHeader == COMMAND_2020_HOOK_UP) {
         ackCommand(outputStream, ARM_2020_DEVICE_HEADER, COMMAND_2020_HOOK_UP);
         unsigned char servoIndex = readHex2(inputStream);
@@ -69,7 +69,7 @@ void deviceArm2020HandleRawData(unsigned char commandHeader, InputStream* inputS
     } else if (commandHeader == COMMAND_2020_HOOK_TAKE) {
         ackCommand(outputStream, ARM_2020_DEVICE_HEADER, COMMAND_2020_HOOK_TAKE);
         unsigned char servoIndex = readHex2(inputStream);
-        arm2020HookTake(servoList, servoIndex, false);
+        arm2020HookTake(servoList, servoIndex);
     } else if (commandHeader == COMMAND_2020_HOOK_RELEASE) {
         ackCommand(outputStream, ARM_2020_DEVICE_HEADER, COMMAND_2020_HOOK_RELEASE);
         unsigned char servoIndex = readHex2(inputStream);
@@ -77,16 +77,16 @@ void deviceArm2020HandleRawData(unsigned char commandHeader, InputStream* inputS
     } else if (commandHeader == COMMAND_2020_HOOK_PREPARE_FLOOR) {
         ackCommand(outputStream, ARM_2020_DEVICE_HEADER, COMMAND_2020_HOOK_PREPARE_FLOOR);
         unsigned char servoIndex = readHex2(inputStream);
-        arm2020HookPrepareFloor(servoList, servoIndex, false);
+        arm2020HookPrepareFloor(servoList, servoIndex);
     } else if (commandHeader == COMMAND_2020_HOOK_LOCK_FLOOR) {
         ackCommand(outputStream, ARM_2020_DEVICE_HEADER, COMMAND_2020_HOOK_LOCK_FLOOR);
         unsigned char servoIndex = readHex2(inputStream);
-        arm2020HookLockFloor(servoList, servoIndex, true);
+        arm2020HookLockFloor(servoList, servoIndex);
     }
     // HOOK - SIMPLE - ALL
     else if (commandHeader == COMMAND_2020_HOOK_ALL_DOWN) {
         ackCommand(outputStream, ARM_2020_DEVICE_HEADER, COMMAND_2020_HOOK_ALL_DOWN);
-        arm2020HookDownAll(servoList, true);
+        arm2020HookDownAll(servoList);
     }
     else if (commandHeader == COMMAND_2020_HOOK_ALL_UP) {
         ackCommand(outputStream, ARM_2020_DEVICE_HEADER, COMMAND_2020_HOOK_ALL_UP);
@@ -94,7 +94,7 @@ void deviceArm2020HandleRawData(unsigned char commandHeader, InputStream* inputS
     }
     else if (commandHeader == COMMAND_2020_HOOK_ALL_TAKE) {
         ackCommand(outputStream, ARM_2020_DEVICE_HEADER, COMMAND_2020_HOOK_ALL_TAKE);
-        arm2020HookTakeAll(servoList, true);
+        arm2020HookTakeAll(servoList);
     }
     else if (commandHeader == COMMAND_2020_HOOK_ALL_RELEASE) {
         ackCommand(outputStream, ARM_2020_DEVICE_HEADER, COMMAND_2020_HOOK_ALL_RELEASE);
@@ -102,34 +102,34 @@ void deviceArm2020HandleRawData(unsigned char commandHeader, InputStream* inputS
      } else if (commandHeader == COMMAND_2020_HOOK_PREPARE_FLOOR) {
         ackCommand(outputStream, ARM_2020_DEVICE_HEADER, COMMAND_2020_HOOK_PREPARE_FLOOR);
         unsigned char servoIndex = readHex2(inputStream);
-        arm2020HookPrepareFloor(servoList, servoIndex, false);
+        arm2020HookPrepareFloor(servoList, servoIndex);
     }
     else if (commandHeader == COMMAND_2020_HOOK_ALL_PREPARE_FLOOR) {
         ackCommand(outputStream, ARM_2020_DEVICE_HEADER, COMMAND_2020_HOOK_ALL_PREPARE_FLOOR);
-        arm2020HookPrepareFloorAll(servoList, false);
+        arm2020HookPrepareFloorAll(servoList);
     }
     else if (commandHeader == COMMAND_2020_HOOK_LOCK_FLOOR) {
         ackCommand(outputStream, ARM_2020_DEVICE_HEADER, COMMAND_2020_HOOK_LOCK_FLOOR);
         unsigned char servoIndex = readHex2(inputStream);
-        arm2020HookLockFloor(servoList, servoIndex, true);
+        arm2020HookLockFloor(servoList, servoIndex);
     }
     else if (commandHeader == COMMAND_2020_HOOK_ALL_LOCK_FLOOR) {
         ackCommand(outputStream, ARM_2020_DEVICE_HEADER, COMMAND_2020_HOOK_ALL_LOCK_FLOOR);
-        arm2020HookLockFloorAll(servoList, true);
+        arm2020HookLockFloorAll(servoList);
     }
     // HOOK - COMPLEX - SINGLE
     else if (commandHeader == COMMAND_2020_HOOK_PREPARE) {
         ackCommand(outputStream, ARM_2020_DEVICE_HEADER, COMMAND_2020_HOOK_PREPARE);
         unsigned char servoIndex = readHex2(inputStream);
-        arm2020HookPrepare(servoList, servoIndex, true);
+        arm2020HookPrepare(servoList, servoIndex);
     } else if (commandHeader == COMMAND_2020_HOOK_TAKE_AND_UP) {
         ackCommand(outputStream, ARM_2020_DEVICE_HEADER, COMMAND_2020_HOOK_TAKE_AND_UP);
         unsigned char servoIndex = readHex2(inputStream);
-        arm2020TakeAndUp(servoList, servoIndex, true);
+        arm2020TakeAndUp(servoList, servoIndex);
     } else if (commandHeader == COMMAND_2020_HOOK_DOWN_AND_RELEASE) {
         ackCommand(outputStream, ARM_2020_DEVICE_HEADER, COMMAND_2020_HOOK_DOWN_AND_RELEASE);
         unsigned char servoIndex = readHex2(inputStream);
-        arm2020DownAndRelease(servoList, servoIndex, true);
+        arm2020DownAndRelease(servoList, servoIndex);
     }
     // HOOK - COMPLEX - ALL
     else if (commandHeader == COMMAND_2020_HOOK_ALL_PREPARE) {

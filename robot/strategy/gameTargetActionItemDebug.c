@@ -12,6 +12,8 @@
 unsigned int appendActionItemStatusAsString(OutputStream* outputStream, enum ActionItemStatus actionItemStatus) {
     if (actionItemStatus == ACTION_ITEM_STATUS_TODO) {
         return appendString(outputStream, "TODO");
+    } else if (actionItemStatus == ACTION_ITEM_STATUS_DOING) {
+        return appendString(outputStream, "DOING");
     } else if (actionItemStatus == ACTION_ITEM_STATUS_DONE) {
         return appendString(outputStream, "DONE");
     } else if (actionItemStatus == ACTION_ITEM_STATUS_DISABLED) {

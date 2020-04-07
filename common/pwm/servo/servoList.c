@@ -24,6 +24,12 @@ void interruptServoTimerCallbackFunc(Timer* timer) {
         if (servo->currentPosition == servo->targetPosition) {
             continue;
         }
+        // Manage a delay if any
+        if (servo->delayBeforeMoving > 0) {
+            servo->delayBeforeMoving--;
+            continue;
+        }
+        // TODO : Compute the next Position
         if (servo->currentPosition < servo->targetPosition) {
             servo->currentPosition += servo->targetSpeed;
             if (servo->currentPosition > servo->targetPosition) {
@@ -41,8 +47,58 @@ void interruptServoTimerCallbackFunc(Timer* timer) {
                 servo->currentPosition = servo->targetPosition;
             }
         }
-        servo->internalPwmFunction(servo, servo->currentPosition);
+        // We could not call internalPwmFunction, because it could take too 
+        // much time, and in this case, it will overrun the callback and the 
+        // calling interruption
+        servo->toUpdate = true;
     }
+    // Updates must be done in the main loop of the robot, and not inside the 
+    // callback (itself raised through an interruption)
+    servoList->timerUpdateFlag = true;
+}
+
+bool servoListStillWorking(ServoList* servoList) {
+    unsigned int i;
+    unsigned size = servoList->size;
+    for (i = 0; i < size; i++) {
+        Servo* servo = getServo(servoList, i);
+        if (servo->currentPosition != servo->targetPosition) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * This function ensure that we call the servoListMainUpdateCall until there
+ * is something to do
+ * @param servoList
+ * @return 
+ */
+void servoListUpdateUntilFinished(ServoList* servoList) {
+    while(true) {
+        if (!servoListStillWorking(servoList)) {
+            break;
+        }
+        servoListMainUpdateCall(servoList);
+    }
+}
+
+bool servoListMainUpdateCall(ServoList* servoList) {
+    if (!servoList->timerUpdateFlag) {
+        return false;
+    }
+    unsigned int i;
+    unsigned size = servoList->size;
+    for (i = 0; i < size; i++) {
+        Servo* servo = getServo(servoList, i);
+        if (servo->toUpdate) {
+            servo->internalPwmFunction(servo, servo->currentPosition);
+            servo->toUpdate = false;
+        }
+    }
+    servoList->timerUpdateFlag = false;
+    return true;
 }
 
 void initServoList(ServoList* servoList,
@@ -154,6 +210,7 @@ void pwmServoAll(ServoList* servoList, unsigned int speed, unsigned int targetPo
     for (i = 0; i < servoList->maxSize; i++) {
         Servo* servo = getServo(servoList, i);
         pwmServo(servo, speed, targetPosition, false);
+        servoListUpdateUntilFinished(servoList);
     }
 }
 

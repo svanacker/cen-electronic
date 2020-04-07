@@ -84,6 +84,9 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
     // mainBoardCommonHandleAccelerometer();
     mainBoardCommonMotorHandleStreamInstruction();
     mainBoardCommonStrategyHandleStreamInstruction();
+    
+    ServoList* servoList = mainBoardCommonGetServoList();
+    servoListMainUpdateCall(servoList);
 
     return true;
 }

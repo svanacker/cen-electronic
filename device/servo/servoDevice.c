@@ -153,7 +153,7 @@ void deviceServoHandleRawData(unsigned char commandHeader, InputStream* inputStr
         ServoList* servoList = getServoDeviceServoList();
         Servo* servo = getServo(servoList, servoIndex);
 
-        unsigned int timeToReachUnderLoad = pwmServoComputeTimeMilliSecondsToReachTargetPosition(servo, servoTargetPosition);
+        unsigned int timeToReachUnderLoad = pwmServoComputeTimeCycleToReachTargetPosition(servo, servoTargetPosition);
         ackCommand(outputStream, SERVO_DEVICE_HEADER, SERVO_COMMAND_GET_TIME_TO_REACH_UNDER_LOAD);
         appendHex4(outputStream, timeToReachUnderLoad);
     } else if (commandHeader == SERVO_COMMAND_DEBUG) {

@@ -33,13 +33,14 @@
 
 // 
 
+
 bool bigRobotPrepareFloorCups(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "-> Prepare Floor Cups");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
 
-    arm2020HookPrepareFloorAll(servoList, false);
+    arm2020HookPrepareFloorAll(servoList);
 
     return true;
 }
@@ -50,7 +51,7 @@ bool bigRobotLockFloorCups(int* context) {
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
 
-    arm2020HookLockFloorAll(servoList, true);
+    arm2020HookLockFloorAll(servoList);
 
     return true;
 }
@@ -61,7 +62,43 @@ bool bigRobotReleaseCups(int* context) {
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
 
-    arm2020HookPrepareFloorAll(servoList, true);
+    arm2020HookPrepareFloorAll(servoList);
+
+    return true;
+}
+
+// 
+
+bool bigRobotPrepareHook(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "-> Prepare Hook");
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+
+    arm2020HookPrepareAll(servoList);
+//    arm2020HookUpAll(servoList, false);
+    
+    return true;
+}
+
+bool bigRobotTakeCups(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "-> Take Cups");
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+
+    arm2020TakeAndUpAll(servoList);
+
+    return true;
+}
+
+bool bigRobotDropCups(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "-> Drop Cups");
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+
+    arm2020DownAndReleaseAll(servoList);
 
     return true;
 }

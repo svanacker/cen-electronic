@@ -20,13 +20,42 @@ typedef struct ServoList {
     unsigned int maxSize;
     /** Use Timer, if false, update immediately the value of the servo ! .*/
     bool useTimer;
+    /**
+     * Timer Update Flag. If On, the main loop must call the method to update all values.
+     * We must not update it in the callback function, because the function is itself
+     * called by a timer with an interruption, and it could cause problem if it takes
+     * too much time (like sending instruction through I2C for example)
+     */
+    bool timerUpdateFlag;
 } ServoList;
-
 
 /**
  * Initialize a list of Servo with a mask to select each pwm must be activated.
  */
 void initServoList(ServoList* servoList, Servo(*servoArray)[], unsigned int servoListSize);
+
+/**
+ * A function which detect if there is some update to do to any servo.
+ * It is useful to implement some method which waits after input
+ * @param servoList
+ * @return true if there still a servo which must be updated, false else
+ */
+bool servoListStillWorking(ServoList* servoList);
+
+/**
+ * This function ensure that we call the servoListMainUpdateCall until there
+ * is something to do
+ * @param servoList
+ */
+void servoListUpdateUntilFinished(ServoList* servoList);
+
+/**
+ * The function which must be called by the main loop method to avoid
+ * to be called in the interruption.
+ * @param servoList
+ * @return true if there was an update, false else
+ */
+bool servoListMainUpdateCall(ServoList* servoList);
 
 /**
  * Returns if the servo List contains already a servo with the same type.

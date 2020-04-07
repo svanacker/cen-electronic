@@ -68,36 +68,36 @@ unsigned int arm2020FlagUp(ServoList* servoList);
 
 // -> General
 
-unsigned int arm2020HookDown(ServoList* servoList, unsigned char hookIndex, bool wait);
-unsigned int arm2020HookDownAll(ServoList* servoList, bool wait);
+unsigned int arm2020HookDown(ServoList* servoList, unsigned char hookIndex);
+unsigned int arm2020HookDownAll(ServoList* servoList);
 
-unsigned int arm2020HookUp(ServoList* servoList, unsigned char hookIndex, bool wait);
-unsigned int arm2020HookUpAll(ServoList* servoList, bool wait);
+unsigned int arm2020HookUp(ServoList* servoList, unsigned char hookIndex, unsigned int delayBeforeMoving);
+unsigned int arm2020HookUpAll(ServoList* servoList, unsigned int delayBeforeMoving);
 
 // -> On the floor
-unsigned int arm2020HookPrepareFloor(ServoList* servoList, unsigned char hookIndex, bool wait);
-unsigned int arm2020HookPrepareFloorAll(ServoList* servoList, bool wait);
+unsigned int arm2020HookPrepareFloor(ServoList* servoList, unsigned char hookIndex);
+unsigned int arm2020HookPrepareFloorAll(ServoList* servoList);
 
-unsigned int arm2020HookLockFloor(ServoList* servoList, unsigned char hookIndex, bool wait);
-unsigned int arm2020HookLockFloorAll(ServoList* servoList, bool wait);
+unsigned int arm2020HookLockFloor(ServoList* servoList, unsigned char hookIndex);
+unsigned int arm2020HookLockFloorAll(ServoList* servoList);
 
 // -> On the Reef
 
-unsigned int arm2020HookTake(ServoList* servoList, unsigned char hookIndex, bool wait);
-unsigned int arm2020HookTakeAll(ServoList* servoList, bool wait);
+unsigned int arm2020HookTake(ServoList* servoList, unsigned char hookIndex);
+unsigned int arm2020HookTakeAll(ServoList* servoList);
 
-unsigned int arm2020HookRelease(ServoList* servoList, unsigned char hookIndex, bool wait);
-unsigned int arm2020HookReleaseAll(ServoList* servoList, bool wait);
+unsigned int arm2020HookRelease(ServoList* servoList, unsigned char hookIndex, unsigned int delayBeforeMoving);
+unsigned int arm2020HookReleaseAll(ServoList* servoList, unsigned int delayBeforeMoving);
 
 // HOOK - COMPLEX
 
-unsigned int arm2020HookPrepare(ServoList* servoList, unsigned char hookIndex, bool wait);
+unsigned int arm2020HookPrepare(ServoList* servoList, unsigned char hookIndex);
 unsigned int arm2020HookPrepareAll(ServoList* servoList);
 
-unsigned int arm2020TakeAndUp(ServoList* servoList, unsigned char hookIndex, bool wait);
+unsigned int arm2020TakeAndUp(ServoList* servoList, unsigned char hookIndex);
 unsigned int arm2020TakeAndUpAll(ServoList* servoList);
 
-unsigned int arm2020DownAndRelease(ServoList* servoList, unsigned char hookIndex, bool wait);
+unsigned int arm2020DownAndRelease(ServoList* servoList, unsigned char hookIndex);
 unsigned int arm2020DownAndReleaseAll(ServoList* servoList);
 
 // HOOK - SEQUENCE

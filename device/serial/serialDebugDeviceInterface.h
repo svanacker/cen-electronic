@@ -27,6 +27,9 @@
 /** Ask to simulate an input of 4 chars to a specific serial port. */
 #define COMMAND_SERIAL_CHAR_ARRAY_INPUT       'I'
 
+/** Ask to Close then reopen the serial port */
+#define COMMAND_SERIAL_RESTART_PORT           'R'
+
 /**
  * Get the serial debug device interface.
  */

@@ -36,8 +36,8 @@ void clearTargetActionItemList(GameTargetActionItemList* targetActionItemList);
 void addTargetActionItem(GameTargetActionItemList* targetActionItemList,
         GameTargetActionItem* targetActionItem,
         GameTargetActionFunction* function,
+        GameTargetActionIsEndedFunction* actionItemIsEndedFunction,
         char* name
-        //                    float timeToAchieve,
         );
 
 /**
@@ -52,12 +52,13 @@ int getGameTargetActionItemCount(GameTargetActionItemList* list);
 
 // DO ACTIONS
 
-bool executeTargetActionItemList(GameTargetActionItemList* actionItemList, int* context);
+enum ActionStatus executeTargetActionItemList(GameTargetActionItemList* actionItemList, int* context);
 
 /**
- * Call the real method by passing a context and the object to do
+ * Call the real method by passing a context and the object to do and update the status 
+ * of gameTargetActionItem.
  */
-bool doGameTargetActionItem(GameTargetActionItem* gameTargetActionItem, int* gameStrategyContext);
+void doGameTargetActionItem(GameTargetActionItem* gameTargetActionItem, int* gameStrategyContext);
 
 
 #endif

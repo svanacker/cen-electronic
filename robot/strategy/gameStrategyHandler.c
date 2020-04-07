@@ -91,13 +91,7 @@ void executeTargetAction(GameStrategyContext* gameStrategyContext, GameTargetAct
         appendStringLN(getTraceOutputStreamLogger(), "executeTargetAction");
     }
     GameTargetActionItemList* actionItemList = targetAction->actionItemList;
-    if (executeTargetActionItemList(actionItemList, (int*) gameStrategyContext)) {
-        // All Items of the actions were done successfully
-        targetAction->status = ACTION_STATUS_DONE;
-    } else {
-        // We mark the action in error
-        targetAction->status = ACTION_STATUS_ERROR;
-    }
+    targetAction->status = executeTargetActionItemList(actionItemList, (int*) gameStrategyContext);
 }
 
 /**

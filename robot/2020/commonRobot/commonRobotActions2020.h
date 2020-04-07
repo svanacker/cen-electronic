@@ -3,5 +3,11 @@
 
 #include <stdbool.h>
 
+/**
+* Common Function to detect if all actions are finished.
+* Not very accurate but do the job in most cases.
+*/
+bool commonAreActionsFinished(int* context);
+
 #endif
 

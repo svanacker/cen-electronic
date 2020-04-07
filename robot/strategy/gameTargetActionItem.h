@@ -17,17 +17,24 @@
 typedef bool GameTargetActionFunction(int* context);
 
 /**
+* Define the callback function which must be called to know if the current action is finished.
+*/
+typedef bool GameTargetActionIsEndedFunction(int* context);
+
+/**
  * Define if the action Item was done or not.
  */
 enum ActionItemStatus {
     // The item action was not done
     ACTION_ITEM_STATUS_TODO = 1,
+    // The item action is doing (we wait that the function isEnded is ok)
+    ACTION_ITEM_STATUS_DOING = 2,
     // The item action was done
-    ACTION_ITEM_STATUS_DONE = 2,
+    ACTION_ITEM_STATUS_DONE = 3,
     // The item action is disabled,
-    ACTION_ITEM_STATUS_DISABLED = 3,
+    ACTION_ITEM_STATUS_DISABLED = 4,
     // The item action is in error,
-    ACTION_ITEM_STATUS_ERROR = 4
+    ACTION_ITEM_STATUS_ERROR = 5
 };
 
 /**
@@ -42,6 +49,8 @@ typedef struct GameTargetActionItem {
     enum ActionItemStatus status;
     /** Function which will be called. */
     GameTargetActionFunction* actionItemFunction;
+    /** Function which will be called to know if the action is finished. */
+    GameTargetActionIsEndedFunction* actionItemIsEndedFunction;
 } GameTargetActionItem;
 
 /**

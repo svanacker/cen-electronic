@@ -45,6 +45,8 @@ void initServo(Servo* servo,
     servo->internalServoIndex = internalServoIndex;
     servo->name = name;
     servo->enabled = true;
+    servo->toUpdate = false;
+    servo->delayBeforeMoving = 0;
     servo->targetPosition = PWM_SERVO_MIDDLE_POSITION;
     servo->currentPosition = PWM_SERVO_MIDDLE_POSITION;
     servo->targetSpeed = PWM_SERVO_SPEED_MAX;
@@ -64,7 +66,7 @@ void initServo(Servo* servo,
 
 // PUBLIC WRITE FUNCTIONS
 
-unsigned int pwmServo(Servo* servo, unsigned int targetSpeed, int targetPosition, bool wait) {
+unsigned int pwmServo(Servo* servo, unsigned int targetSpeed, int targetPosition, unsigned int delayBeforeMoving) {
     if (servo == NULL) {
         writeError(SERVO_LIST_SERVO_NULL);
         return 0;
@@ -74,20 +76,17 @@ unsigned int pwmServo(Servo* servo, unsigned int targetSpeed, int targetPosition
     }
     servo->targetSpeed = targetSpeed;
     servo->targetPosition = targetPosition;
-    // By default, we update the value immediately, if we want some speed, we need a timer !
+    servo->delayBeforeMoving = delayBeforeMoving;
     ServoList* servoList = getServoList(servo);
     if (servoList == NULL) {
         writeError(SERVO_LIST_NULL);
         return 0;
     }
+    // By default, we update the value immediately, if we want some speed, we need a timer !
     if (!servoList->useTimer) {
         servo->internalPwmFunction(servo, targetPosition);
     }
-    unsigned int delayMilliSeconds = pwmServoComputeTimeMilliSecondsToReachTargetPosition(servo, targetPosition);
-    if (wait) {
-        timerDelayMilliSeconds(delayMilliSeconds);
-    }
-    return delayMilliSeconds;
+    return pwmServoComputeTimeCycleToReachTargetPosition(servo, targetPosition);
 }
 
 void pwmServoSetEnabled(Servo* servo, bool enabled) {
@@ -138,7 +137,7 @@ unsigned int pwmServoReadTargetPosition(Servo* servo) {
 
 // COMPUTE
 
-unsigned int pwmServoComputeTimeMilliSecondsToReachTargetPosition(Servo* servo, unsigned int targetPosition) {
+unsigned int pwmServoComputeTimeCycleToReachTargetPosition(Servo* servo, unsigned int targetPosition) {
     if (servo == NULL) {
         writeError(SERVO_LIST_NULL);
         return -1;
@@ -154,6 +153,5 @@ unsigned int pwmServoComputeTimeMilliSecondsToReachTargetPosition(Servo* servo, 
     unsigned int currentPosition = servo->currentPosition;
     unsigned int diffPositionAbs = abs(targetPosition - currentPosition);
 
-    // 20 ms of cycle for a 50 Hz signal
-    return (20 * (diffPositionAbs / realSpeed));
+    return (diffPositionAbs / realSpeed);
 }

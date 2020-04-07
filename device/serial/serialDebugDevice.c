@@ -120,6 +120,12 @@ void deviceSerialDebugHandleRawData(unsigned char commandHeader, InputStream* in
             }
         }
     }
+    else if (commandHeader == COMMAND_SERIAL_RESTART_PORT) {
+        enum SerialPort serialPort = (enum SerialPort) readHex2(inputStream);
+        ackCommand(outputStream, SERIAL_DEBUG_DEVICE_HEADER, COMMAND_SERIAL_RESTART_PORT);
+        closeSerial(serialPort);
+        openSerialAtDefaultSpeed(serialPort);
+    }
 }
 
 static DeviceDescriptor descriptor;

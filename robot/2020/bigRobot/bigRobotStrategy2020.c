@@ -61,8 +61,7 @@
 #include "../../../robot/2020/strategy/strategy2020Utils.h"
 #include "../../../robot/2020/strategy/strategyConfig2020.h"
 
-// TODO : TO REMOVE
-#include "../../../robot/2020/smallRobot/smallRobotActions2020.h"
+#include "../../../robot/2020/commonRobot/commonRobotActions2020.h"
 
 // ------------------------------------------------------- NAVIGATIONS ----------------------------------------------------------------
 
@@ -255,14 +254,14 @@ void initBigRobotTargetActions2020(GameStrategyContext* gameStrategyContext) {
 void initBigRobotTargetActionsItems2020(GameStrategyContext* gameStrategyContext) {
     // Small Harbor 1
     // TODO : Replace takeCups by more precise semantic
-    addTargetActionItem(&smallHarbor1PrepareTargetActionItemList, &smallHarbor1PrepareTargetActionItem, &bigRobotPrepareFloorCups, "SMALL HARBOR 1 -> PREPARE CUP UP");
-    addTargetActionItem(&smallHarbor1TakeTargetActionItemList, &smallHarbor1TakeTargetActionItem, &bigRobotLockFloorCups, "SMALL HARBOR 1 -> LOOK FLOOR CUPS");
-    addTargetActionItem(&smallHarbor1DropTargetActionItemList, &smallHarbor1DropTargetActionItem, &bigRobotReleaseCups, "SMALL HARBOR 1 -> DROP CUPS");
+    addTargetActionItem(&smallHarbor1PrepareTargetActionItemList, &smallHarbor1PrepareTargetActionItem, &bigRobotPrepareFloorCups, NULL, "SMALL HARBOR 1 -> PREPARE CUP UP");
+    addTargetActionItem(&smallHarbor1TakeTargetActionItemList, &smallHarbor1TakeTargetActionItem, &bigRobotLockFloorCups, &commonAreActionsFinished, "SMALL HARBOR 1 -> LOOK FLOOR CUPS");
+    addTargetActionItem(&smallHarbor1DropTargetActionItemList, &smallHarbor1DropTargetActionItem, &bigRobotReleaseCups, &commonAreActionsFinished, "SMALL HARBOR 1 -> DROP CUPS");
 
     // Left Reef
-    addTargetActionItem(&leftCupPrepareTargetActionItemList, &leftCupPrepareTargetActionItem, &smallRobotPrepareHook, "LEFT REEF -> PREPARE CUP UP");
-    addTargetActionItem(&leftCupTakeTargetActionItemList, &leftCupTakeTargetActionItem, &smallRobotTakeCups, "LEFT REEF -> TAKE CUPS");
-    addTargetActionItem(&leftCupDropTargetActionItemList, &leftCupDropTargetActionItem, &smallRobotDropCups, "LEFT REEF -> DROP CUPS");
+    addTargetActionItem(&leftCupPrepareTargetActionItemList, &leftCupPrepareTargetActionItem, &bigRobotPrepareHook, NULL, "LEFT REEF -> PREPARE CUP UP");
+    addTargetActionItem(&leftCupTakeTargetActionItemList, &leftCupTakeTargetActionItem, &bigRobotTakeCups, &commonAreActionsFinished, "LEFT REEF -> TAKE CUPS");
+    addTargetActionItem(&leftCupDropTargetActionItemList, &leftCupDropTargetActionItem, &bigRobotDropCups, &commonAreActionsFinished, "LEFT REEF -> DROP CUPS");
 }
 
 GameStrategy* initBigRobotStrategiesItems2020(GameStrategyContext* gameStrategyContext) {

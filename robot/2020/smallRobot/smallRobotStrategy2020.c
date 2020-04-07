@@ -52,6 +52,7 @@
 #include "../../../robot/2020/navigation/path2020.h"
 
 #include "../../../robot/2020/commonRobot/commonRobotLocations2020.h"
+#include "../../../robot/2020/commonRobot/commonRobotActions2020.h"
 
 #include "../../../robot/2020/smallRobot/smallRobotActions2020.h"
 #include "../../../robot/2020/smallRobot/smallRobotLocation2020.h"
@@ -241,17 +242,17 @@ void initSmallRobotTargetActions2020(GameStrategyContext* gameStrategyContext) {
 
 void initSmallRobotTargetActionsItems2020(GameStrategyContext* gameStrategyContext) {
     // Flag 1
-    addTargetActionItem(&flag1PrepareTargetActionItemList, &flag1PrepareTargetActionItem1, &lateralArmOn, "LAT ARM ON");
-    addTargetActionItem(&flag1DropTargetActionItemList, &flag1DropTargetActionItem1, &lateralArmOff, "LAT ARM OFF");
+    addTargetActionItem(&flag1PrepareTargetActionItemList, &flag1PrepareTargetActionItem1, &lateralArmOn, NULL, "LAT ARM ON");
+    addTargetActionItem(&flag1DropTargetActionItemList, &flag1DropTargetActionItem1, &lateralArmOff, NULL, "LAT ARM OFF");
 
     // Flag 1 & 2
-    addTargetActionItem(&flag2PrepareTargetActionItemList, &flag2PrepareTargetActionItem1, &lateralArmOn, "LAT ARM ON");
-    addTargetActionItem(&flag2DropTargetActionItemList, &flag2DropTargetActionItem1, &lateralArmOff, "LAT ARM OFF");
+    addTargetActionItem(&flag2PrepareTargetActionItemList, &flag2PrepareTargetActionItem1, &lateralArmOn, NULL, "LAT ARM ON");
+    addTargetActionItem(&flag2DropTargetActionItemList, &flag2DropTargetActionItem1, &lateralArmOff, NULL, "LAT ARM OFF");
 
     // RightCup
-    addTargetActionItem(&rightCupPrepareTargetActionItemList, &rightCupPrepareTargetActionItem, &smallRobotPrepareHook, "PREP HOOK");
-    addTargetActionItem(&rightCupTakeTargetActionItemList, &rightCupTakeTargetActionItem, &smallRobotTakeCups, "TAKE CUPS");
-    addTargetActionItem(&rightCupRightDropTargetActionItemList, &rightCupRightDropTargetActionItem, &smallRobotDropCups, "DROP CUPS RIGHT");
+    addTargetActionItem(&rightCupPrepareTargetActionItemList, &rightCupPrepareTargetActionItem, &smallRobotPrepareHook, NULL, "PREP HOOK");
+    addTargetActionItem(&rightCupTakeTargetActionItemList, &rightCupTakeTargetActionItem, &smallRobotTakeCups, &commonAreActionsFinished, "TAKE CUPS");
+    addTargetActionItem(&rightCupRightDropTargetActionItemList, &rightCupRightDropTargetActionItem, &smallRobotDropCups, &commonAreActionsFinished, "DROP CUPS RIGHT");
 }
 
 GameStrategy* initSmallRobotStrategiesItems2020(GameStrategyContext* gameStrategyContext) {

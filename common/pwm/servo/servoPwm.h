@@ -78,6 +78,10 @@ struct Servo {
     unsigned int maxSpeedUnderLoad;
     /** The current position. */
     unsigned int currentPosition;
+    /** If the update function has to be called in a main method */
+    bool toUpdate;
+    /** A delay (in timer cycle) to start the action */
+    unsigned int delayBeforeMoving;
     /** The target position. */
     unsigned int targetPosition;
     /** The function which must be used when a new type is added. */
@@ -153,10 +157,10 @@ void initServo(Servo* servo,
  * @param speed the speed to reach the targetPosition
  * @param targetPosition duration of pwm to 1 typical value between
  * PWM_SERVO_LEFT_POSITION and PWM_SERVO_RIGHT_POSITION 
- * @param wait indicates if we compute the needed time and we wait before going further
- * @return the time in milliseconds needed to reach the position
+ * @param wait indicates the delay that we wait before doing the action
+ * @return the time in cycle needed to reach the position
  */
-unsigned int pwmServo(Servo* servo, unsigned int newSpeed, int newTargetPosition, bool wait);
+unsigned int pwmServo(Servo* servo, unsigned int newSpeed, int newTargetPosition, unsigned int delayBeforeMoving);
 
 /**
  * Change the enabled property by a new value.
@@ -200,8 +204,8 @@ unsigned int pwmServoReadTargetPosition(Servo* servo);
 // COMPUTATION
 
 /**
- * Returns how milli seconds should the servo to reach the new position under load
+ * Returns how timer interrupt should the servo to reach the new position under load.
  */
-unsigned int pwmServoComputeTimeMilliSecondsToReachTargetPosition(Servo* servo, unsigned int targetPosition);
+unsigned int pwmServoComputeTimeCycleToReachTargetPosition(Servo* servo, unsigned int targetPosition);
 
 #endif

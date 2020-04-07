@@ -103,7 +103,7 @@ GameTargetAction* getNextGameTargetActionTodoByLocation(GameTargetActionList* ta
     int size = targetActionList->size;
     for (i = 0; i < size; i++) {
         GameTargetAction* targetAction = targetActionList->actions[i];
-        if (targetAction->status != ACTION_STATUS_TODO) {
+        if (targetAction->status != ACTION_STATUS_TODO && targetAction->status != ACTION_STATUS_DOING) {
             continue;
         }
         // If the start Location is not defined (for Preparation for example, we could do it where we want !)
@@ -124,7 +124,7 @@ GameTargetAction* getNextGameTargetActionTodoByPriority(GameTargetActionList* ta
     GameTargetAction* result = NULL;
     for (i = 0; i < size; i++) {
         GameTargetAction* targetAction = targetActionList->actions[i];
-        if (targetAction->status != ACTION_STATUS_TODO) {
+        if (targetAction->status != ACTION_STATUS_TODO && targetAction->status != ACTION_STATUS_DOING) {
             continue;
         }
         // We try to do the action with the highest priority !

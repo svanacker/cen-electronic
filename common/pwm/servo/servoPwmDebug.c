@@ -160,7 +160,7 @@ void testAllPwmServos(ServoList* servoList) {
         Servo* servo = getServo(servoList, servoIndex);
         appendString(infoOutputStream, "Servo : ");
         appendDec(infoOutputStream, servoIndex);
-        pwmServo(servo, PWM_SERVO_SPEED_MAX, PWM_SERVO_MIDDLE_POSITION, true);
+        pwmServo(servo, PWM_SERVO_SPEED_MAX, PWM_SERVO_MIDDLE_POSITION, 0);
         pwmServo(servo, PWM_SERVO_SPEED_MAX, PWM_SERVO_LEFT_POSITION, true);
         pwmServo(servo, PWM_SERVO_SPEED_MAX, PWM_SERVO_RIGHT_POSITION, true);
         appendCRLF(infoOutputStream);

@@ -438,6 +438,10 @@ bool mainBoardPcWaitForInstruction(StartMatch* startMatchParam) {
     if (gameStrategyContext != NULL) {
         handleTofSensorList(gameStrategyContext, startMatchParam, gameStrategyContext->tofSensorList, gameBoard);
     }
+
+    // To Update the the position of the servo not by interruption but in the main Thread
+    servoListMainUpdateCall(&servoList);
+
     // Protection against the start before the match
     if (startMatchParam->isMatchStartedFunction(startMatchParam)) {
         if (gameStrategyContext != NULL) {

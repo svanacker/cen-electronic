@@ -282,8 +282,9 @@ void deepClearBuffer(Buffer* buffer) {
     unsigned int i;
     char* sPointer = (char*) buffer->s;
     for (i = 0; i < buffer->length; i++) {
-        // Shift to the right cell index
+        // Clear the value
         *sPointer = 0;
+        // Shift to the right cell index
         sPointer++;
     }
     clearBuffer(buffer);
@@ -296,10 +297,12 @@ void clearAfterWriteIndexBuffer(Buffer* buffer) {
     }
     unsigned int i;
     char* sPointer = (char*)buffer->s;
+    // Start at writeIndex
     sPointer += buffer->writeIndex;
     for (i = buffer->writeIndex; i < buffer->length; i++) {
-        // Shift to the right cell index
+        // Clear the value
         *sPointer = 0;
+        // Shift to the right cell index
         sPointer++;
     }
 }

@@ -40,17 +40,13 @@ bool targetActionNeedsMove(GameTargetAction* targetAction) {
     return targetAction->startLocation != targetAction->endLocation;
 }
 
-bool doGameTargetAction(GameTargetAction* targetAction, int* context) {
+void doGameTargetAction(GameTargetAction* targetAction, int* context) {
     GameTargetActionItemList* itemList = targetAction->actionItemList;
     unsigned int actionItemSize = itemList->size;
     unsigned char i;
     for (i = 0; i < actionItemSize; i++) {
         GameTargetActionItem* actionItem = getGameTargetActionItem(itemList, i);
         // Launch the action Item
-        if (!doGameTargetActionItem(actionItem, context)) {
-            // If there is a problem, we do not do further action
-            return false;
-        }
+        doGameTargetActionItem(actionItem, context);
     }
-    return true;
 }
