@@ -72,6 +72,8 @@
 static Location* bigRobotStartAreaLocation;
 static Location* bigRobotPoint1Location;
 static Location* smallHarborFrontMiddleLocation;
+static Location* dropLightHouseFrontLocation;
+
 static Location* centerPointLocation;
 static Location* leftReefFrontLocation;
 static Location* dropLeftFrontLocation;
@@ -83,7 +85,10 @@ static Location* dropCenterFrontLocation;
 
 // Big Robot
 PathData* bigRobotStartArea_to_point1_Path;
-PathData* point1_to_smallHarborFrontMiddle_Path;
+// PathData* point1_to_smallHarborFrontMiddle_Path;
+PathData* point1_to_lightHouseDropFrontMiddle_Path;
+PathData* lightHouseDrop_to_smallHarborFrontMiddle_Path;
+
 PathData* smallHarborFrontMiddle_to_centerPoint_Path;
 PathData* centerPoint_to_leftReefFront_Path;
 PathData* leftReefFront_to_dropLeftFront_Path;
@@ -95,11 +100,17 @@ PathData* leftReef2_to_dropCenter_Path;
 
 // Targets List
 
+static GameTarget lightHouseTarget;
 static GameTarget smallHarbor1Target;
 static GameTarget leftReefTarget;
 static GameTarget leftReef2Target;
 
 // ------------------------------------------------------- TARGETS ACTIONS ---------------------------------------------------------------
+
+// Lighthouse
+static GameTargetAction lightHousePrepareTargetAction;
+static GameTargetAction lightHouseTakeTargetAction;
+static GameTargetAction lightHouseDropTargetAction;
 
 // Small Harbor 1
 static GameTargetAction smallHarbor1PrepareTargetAction;
@@ -117,6 +128,11 @@ static GameTargetAction left2CupTakeTargetAction;
 static GameTargetAction left2CupDropTargetAction;
 
 // ------------------------------------------------------- TARGETS ACTIONS ITEM LIST --------------------------------------------------------
+
+// Big Robot -> Light House
+static GameTargetActionItemList lightHousePrepareTargetActionItemList;
+static GameTargetActionItemList lightHouseTakeTargetActionItemList;
+static GameTargetActionItemList lightHouseDropTargetActionItemList;
 
 // Big Robot -> Small Harbor 1
 static GameTargetActionItemList smallHarbor1PrepareTargetActionItemList;
@@ -136,6 +152,12 @@ static GameTargetActionItemList left2CupDropTargetActionItemList;
 // ------------------------------------------------------- TARGET ACTION ITEM LIST ---------------------------------------------------
 
 // Big Robot
+
+// -> LightHouse
+static GameTargetActionItem lightHousePrepareCupTargetActionItem;
+static GameTargetActionItem lightHousePrepareArmTargetActionItem;
+static GameTargetActionItem lightHouseTakeTargetActionItem;
+static GameTargetActionItem lightHouseDropTargetActionItem;
 
 // -> Small Harbor 1
 static GameTargetActionItem smallHarbor1PrepareTargetActionItem;
@@ -164,6 +186,7 @@ static GameStrategy bigRobotStrategy3;
 
 // ------------------------------------------------------- STRATEGY ITEM -------------------------------------------------------------
 
+static GameStrategyItem lightHouseStrategyItem;
 static GameStrategyItem bigRobotSmallHarborStrategyItem;
 static GameStrategyItem leftReefStrategyItem;
 static GameStrategyItem leftReef2StrategyItem;
@@ -174,6 +197,7 @@ void initBigRobotLocations2020(GameStrategyContext* gameStrategyContext) {
 
     bigRobotStartAreaLocation = addLocationWithColors(teamColor, navigation, BIG_ROBOT_START_AREA, BIG_ROBOT_START_AREA_LABEL, BIG_ROBOT_START_AREA_X, BIG_ROBOT_START_AREA_Y);
     bigRobotPoint1Location = addLocationWithColors(teamColor, navigation, BIG_ROBOT_POINT_1, BIG_ROBOT_POINT_1_LABEL, BIG_ROBOT_POINT_1_X, BIG_ROBOT_POINT_1_Y);
+    dropLightHouseFrontLocation = addLocationWithColors(teamColor, navigation, LIGHT_HOUSE_DROP_POINT, LIGHT_HOUSE_DROP_POINT_LABEL, LIGHT_HOUSE_DROP_POINT_X, LIGHT_HOUSE_DROP_POINT_Y);
     smallHarborFrontMiddleLocation = addLocationWithColors(teamColor, navigation, SMALL_HARBOR_FRONT_MIDDLE, SMALL_HARBOR_FRONT_MIDDLE_LABEL, SMALL_HARBOR_FRONT_MIDDLE_X, SMALL_HARBOR_FRONT_MIDDLE_Y);
     centerPointLocation = addLocationWithColors(teamColor, navigation, CENTER_POINT, CENTER_POINT_LABEL, CENTER_POINT_X, CENTER_POINT_Y);
     leftReefFrontLocation = addLocationWithColors(teamColor, navigation, LEFT_REEF_FRONT, LEFT_REEF_FRONT_LABEL, LEFT_REEF_FRONT_X, LEFT_REEF_FRONT_Y);
@@ -203,6 +227,7 @@ void initBigRobotPaths2020(GameStrategyContext* gameStrategyContext) {
         aFactor * BIG_ROBOT_STARTAREA__TO__BIG_ROBOT_POINT_1_SPEED_FACTOR,
         speedFactor * BIG_ROBOT_STARTAREA__TO__BIG_ROBOT_POINT_1_ACC_FACTOR);
 
+    /*
     point1_to_smallHarborFrontMiddle_Path = addNavigationPathWithColor(teamColor,
         navigation,
         bigRobotPoint1Location,
@@ -215,6 +240,33 @@ void initBigRobotPaths2020(GameStrategyContext* gameStrategyContext) {
         speedFactor * BIG_ROBOT_POINT_1__TO__SMALL_HARBOR_FRONT_MIDDLE_SPEED_FACTOR,
         aFactor * BIG_ROBOT_POINT_1__TO__SMALL_HARBOR_FRONT_MIDDLE_ACC_FACTOR
         );
+        */
+
+    point1_to_lightHouseDropFrontMiddle_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        bigRobotPoint1Location,
+        dropLightHouseFrontLocation,
+        BIG_ROBOT_POINT_1__TO__LIGHT_HOUSE_DROP_FRONT_COST,
+        BIG_ROBOT_POINT_1__TO__LIGHT_HOUSE_DROP_FRONT_CP1,
+        BIG_ROBOT_POINT_1__TO__LIGHT_HOUSE_DROP_FRONT_CP2,
+        deciDegreeToRad(BIG_ROBOT_POINT_1_START_ANGLE_DECI_DEG),
+        deciDegreeToRad(LIGHT_HOUSE_DROP_POINT_ANGLE_DECI_DEG),
+        speedFactor * BIG_ROBOT_POINT_1__TO__LIGHT_HOUSE_DROP_FRONT_SPEED_FACTOR,
+        aFactor * BIG_ROBOT_POINT_1__TO__LIGHT_HOUSE_DROP_FRONT__ACC_FACTOR
+    );
+
+    lightHouseDrop_to_smallHarborFrontMiddle_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        dropLightHouseFrontLocation,
+        smallHarborFrontMiddleLocation,
+        LIGHT_HOUSE_DROP_FRONT__TO__SMALL_HARBOR_FRONT_MIDDLE_COST,
+        LIGHT_HOUSE_DROP_FRONT__TO__SMALL_HARBOR_FRONT_MIDDLE_CP1,
+        LIGHT_HOUSE_DROP_FRONT__TO__SMALL_HARBOR_FRONT_MIDDLE_CP2,
+        deciDegreeToRad(LIGHT_HOUSE_DROP_POINT_ANGLE_DECI_DEG),
+        deciDegreeToRad(SMALL_HARBOR_FRONT_MIDDLE_ANGLE_DECI_DEG),
+        speedFactor * LIGHT_HOUSE_DROP_FRONT__TO__SMALL_HARBOR_FRONT_MIDDLE_SPEED_FACTOR,
+        aFactor * LIGHT_HOUSE_DROP_FRONT__TO__SMALL_HARBOR_FRONT_MIDDLE_ACC_FACTOR
+    );
 
     smallHarborFrontMiddle_to_centerPoint_Path = addNavigationPathWithColor(teamColor,
         navigation,
@@ -298,17 +350,23 @@ void initBigRobotPaths2020(GameStrategyContext* gameStrategyContext) {
 void initBigRobotTargets2020(GameStrategyContext* gameStrategyContext) {
     clearGameTargets();
     // TODO : Change Value of gain
-    addGameTarget(&smallHarbor1Target, "SMALL_HARB_1", 30, bigRobotStartAreaLocation, smallHarborFrontMiddleLocation);
+    addGameTarget(&lightHouseTarget, "LIGHT HOUSE", 30, bigRobotStartAreaLocation, dropLightHouseFrontLocation);
+    addGameTarget(&smallHarbor1Target, "SMALL_HARB_1", 30, dropLightHouseFrontLocation, smallHarborFrontMiddleLocation);
     addGameTarget(&leftReefTarget, "LEFT_REEF", 10, leftReefFrontLocation, dropLeftFrontLocation);
     addGameTarget(&leftReefTarget, "LEFT_REEF2", 10, leftReef2FrontLocation, dropCenterFrontLocation);
 }
 
 void initBigRobotTargetActions2020(GameStrategyContext* gameStrategyContext) {
 
+    // LightHouse
+    addTargetPrepareAction(&(lightHouseTarget.actionList), &lightHousePrepareTargetAction, bigRobotStartAreaLocation, 0.0f, &lightHousePrepareTargetActionItemList);
+    addTargetTakeAction(&(lightHouseTarget.actionList), &lightHouseTakeTargetAction, bigRobotPoint1Location, 1.0f, &lightHouseTakeTargetActionItemList);
+    addTargetDropAction(&(lightHouseTarget.actionList), &lightHouseDropTargetAction, dropLightHouseFrontLocation, 0.0f, &lightHouseDropTargetActionItemList);
+
     // SmallHarbor1
     // TODO : Change Time
-    addTargetPrepareAction(&(smallHarbor1Target.actionList), &smallHarbor1PrepareTargetAction, bigRobotStartAreaLocation, 10, &smallHarbor1PrepareTargetActionItemList);
-    addTargetTakeAction(&(smallHarbor1Target.actionList), &smallHarbor1TakeTargetAction, bigRobotPoint1Location, 10, &smallHarbor1TakeTargetActionItemList);
+    // addTargetPrepareAction(&(smallHarbor1Target.actionList), &smallHarbor1PrepareTargetAction, bigRobotStartAreaLocation, 10, &smallHarbor1PrepareTargetActionItemList);
+    // addTargetTakeAction(&(smallHarbor1Target.actionList), &smallHarbor1TakeTargetAction, bigRobotPoint1Location, 10, &smallHarbor1TakeTargetActionItemList);
     addTargetDropAction(&(smallHarbor1Target.actionList), &smallHarbor1DropTargetAction, smallHarborFrontMiddleLocation, 10, &smallHarbor1DropTargetActionItemList);
 
     // LeftReef
@@ -319,16 +377,22 @@ void initBigRobotTargetActions2020(GameStrategyContext* gameStrategyContext) {
 
     // LeftReef 2
     // TODO : Change Time
-    addTargetPrepareAction(&(leftReef2Target.actionList), &left2CupPrepareTargetAction, centerStartAreaLocation, 10, &leftCupPrepareTargetActionItemList);
-    addTargetTakeAction(&(leftReef2Target.actionList), &left2CupTakeTargetAction, leftReef2FrontLocation, 10, &leftCupTakeTargetActionItemList);
-    addTargetDropAction(&(leftReef2Target.actionList), &left2CupDropTargetAction, dropCenterFrontLocation, 10, &leftCupDropTargetActionItemList);
+    addTargetPrepareAction(&(leftReef2Target.actionList), &left2CupPrepareTargetAction, centerStartAreaLocation, 10, &left2CupPrepareTargetActionItemList);
+    addTargetTakeAction(&(leftReef2Target.actionList), &left2CupTakeTargetAction, leftReef2FrontLocation, 10, &left2CupTakeTargetActionItemList);
+    addTargetDropAction(&(leftReef2Target.actionList), &left2CupDropTargetAction, dropCenterFrontLocation, 10, &left2CupDropTargetActionItemList);
 }
 
 void initBigRobotTargetActionsItems2020(GameStrategyContext* gameStrategyContext) {
+    // Light House
+    addTargetActionItem(&lightHousePrepareTargetActionItemList, &lightHousePrepareCupTargetActionItem, &bigRobotPrepareFloorCups, NULL, "PREP FLOOR CUPS");
+    addTargetActionItem(&lightHousePrepareTargetActionItemList, &lightHousePrepareArmTargetActionItem, &lightHouseLateralArmOn, NULL, "ARM ON");
+    addTargetActionItem(&lightHouseTakeTargetActionItemList, &lightHouseTakeTargetActionItem, &bigRobotLockFloorCups, &commonAreActionsFinished, "LOCK FLOOR CUPS");
+    addTargetActionItem(&smallHarbor1DropTargetActionItemList, &smallHarbor1DropTargetActionItem, &lightHouseLateralArmOff, NULL, "ARM OFF");
+
     // Small Harbor 1
     // TODO : Replace takeCups by more precise semantic
-    addTargetActionItem(&smallHarbor1PrepareTargetActionItemList, &smallHarbor1PrepareTargetActionItem, &bigRobotPrepareFloorCups, NULL, "SMALL HARBOR 1 -> PREPARE CUP UP");
-    addTargetActionItem(&smallHarbor1TakeTargetActionItemList, &smallHarbor1TakeTargetActionItem, &bigRobotLockFloorCups, &commonAreActionsFinished, "SMALL HARBOR 1 -> LOOK FLOOR CUPS");
+    // addTargetActionItem(&smallHarbor1PrepareTargetActionItemList, &smallHarbor1PrepareTargetActionItem, &bigRobotPrepareFloorCups, NULL, "SMALL HARBOR 1 -> PREPARE CUP UP");
+    // addTargetActionItem(&smallHarbor1TakeTargetActionItemList, &smallHarbor1TakeTargetActionItem, &bigRobotLockFloorCups, &commonAreActionsFinished, "SMALL HARBOR 1 -> LOOK FLOOR CUPS");
     addTargetActionItem(&smallHarbor1DropTargetActionItemList, &smallHarbor1DropTargetActionItem, &bigRobotReleaseCups, &commonAreActionsFinished, "SMALL HARBOR 1 -> DROP CUPS");
 
     // Left Reef
@@ -350,15 +414,18 @@ GameStrategy* initBigRobotStrategiesItems2020(GameStrategyContext* gameStrategyC
         return NULL;
     }
     else if (strategyId == BIG_ROBOT_STRATEGY_2020_1_SMALL_HARBOR) {
+        addGameStrategyItem(&bigRobotStrategy1, &lightHouseStrategyItem, &lightHouseTarget);
         addGameStrategyItem(&bigRobotStrategy1, &bigRobotSmallHarborStrategyItem, &smallHarbor1Target);
         return &bigRobotStrategy1;
     }
     else if (strategyId == BIG_ROBOT_STRATEGY_2020_2_SMALL_HARBOR_LEFT_REEF) {
+        addGameStrategyItem(&bigRobotStrategy2, &lightHouseStrategyItem, &lightHouseTarget);
         addGameStrategyItem(&bigRobotStrategy2, &bigRobotSmallHarborStrategyItem, &smallHarbor1Target);
         addGameStrategyItem(&bigRobotStrategy2, &leftReefStrategyItem, &leftReefTarget);
         return &bigRobotStrategy2;
     }
     else if (strategyId == BIG_ROBOT_STRATEGY_2020_3_SMALL_HARBOR_BOTH_REEF) {
+        addGameStrategyItem(&bigRobotStrategy3, &lightHouseStrategyItem, &lightHouseTarget);
         addGameStrategyItem(&bigRobotStrategy3, &bigRobotSmallHarborStrategyItem, &smallHarbor1Target);
         addGameStrategyItem(&bigRobotStrategy3, &leftReefStrategyItem, &leftReefTarget);
         addGameStrategyItem(&bigRobotStrategy3, &leftReef2StrategyItem, &leftReef2Target);

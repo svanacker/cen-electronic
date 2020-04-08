@@ -34,6 +34,37 @@
 // 
 
 
+// LATERAL ARM
+
+bool lightHouseLateralArmOn(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "-> Arm On");
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+
+    if (isBlue2020(gameStrategyContext)) {
+        // Left Arm
+        lateralArm2020(servoList, 0x01);
+    }
+    else {
+        // Right  Arm
+        lateralArm2020(servoList, 0x02);
+    }
+    return true;
+}
+
+
+bool lightHouseLateralArmOff(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "-> Arm Off");
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+    // Center lateral Arm
+    lateralArm2020(servoList, 0x00);
+    return true;
+}
+
+
 bool bigRobotPrepareFloorCups(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "-> Prepare Floor Cups");

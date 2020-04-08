@@ -3,6 +3,11 @@
 
 #include <stdbool.h>
 
+// LIGHT HOUSE LATERAL ARM
+
+bool lightHouseLateralArmOn(int* context);
+bool lightHouseLateralArmOff(int* context);
+
 // HOOK
 
 bool bigRobotPrepareFloorCups(int* context);

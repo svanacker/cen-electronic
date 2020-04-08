@@ -16,6 +16,13 @@
 #define BIG_ROBOT_POINT_1_START_ANGLE_DECI_DEG                ANGLE_DECI_DEG_180
 #define BIG_ROBOT_POINT_1_END_ANGLE_DECI_DEG                   ANGLE_DECI_DEG_45
 
+// Point to touch the lightHouse
+#define LIGHT_HOUSE_DROP_POINT                                            "LHDP"
+#define LIGHT_HOUSE_DROP_POINT_LABEL                    "Light House Drop Point"
+#define LIGHT_HOUSE_DROP_POINT_X                                             200
+#define LIGHT_HOUSE_DROP_POINT_Y                                             200
+#define LIGHT_HOUSE_DROP_POINT_ANGLE_DECI_DEG                  ANGLE_DECI_DEG_90
+
 // Point in Front of the Small Harbor
 #define SMALL_HARBOR_FRONT_MIDDLE                                        "HFRM"
 #define SMALL_HARBOR_FRONT_MIDDLE_LABEL                   "Harbor Front Middle"
@@ -29,7 +36,7 @@
 #define CENTER_POINT_X                                                      1000
 #define CENTER_POINT_Y                                                      1000
 #define CENTER_POINT_START_ANGLE_DECI_DEG                      ANGLE_DECI_DEG_90
-#define CENTER_POINT_END_ANGLE_DECI_DEG                       ANGLE_DECI_DEG_180
+#define CENTER_POINT_END_ANGLE_DECI_DEG                        ANGLE_DECI_DEG_90
 
 // Point in Front of the Left Reef
 #define LEFT_REEF_FRONT                                                   "LRFR"
@@ -48,7 +55,7 @@
 // DROP LEFT
 #define DROP_LEFT_FRONT                                                   "DR_L"
 #define DROP_LEFT_FRONT_LABEL                                        "Drop Left"
-#define DROP_LEFT_FRONT_X                                                    600
+#define DROP_LEFT_FRONT_X                                                    660
 #define DROP_LEFT_FRONT_Y                                                    200
 #define DROP_LEFT_FRONT_DECI_DEG                              ANGLE_DECI_DEG_180
 
@@ -56,7 +63,7 @@
 #define CENTER_START_AREA                                                 "CSTA"
 #define CENTER_START_AREA_LABEL                                "Center Robot Start"
 #define CENTER_START_AREA_X                                                  800
-#define CENTER_START_AREA_Y                                                  100
+#define CENTER_START_AREA_Y                                                   90
 #define CENTER_START_AREA_ANGLE_DECI_DEG                       ANGLE_DECI_DEG_90
 
 // DROP CENTER
