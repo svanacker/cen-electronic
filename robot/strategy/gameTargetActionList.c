@@ -124,7 +124,8 @@ GameTargetAction* getNextGameTargetActionTodoByPriority(GameTargetActionList* ta
     GameTargetAction* result = NULL;
     for (i = 0; i < size; i++) {
         GameTargetAction* targetAction = targetActionList->actions[i];
-        if (targetAction->status != ACTION_STATUS_TODO && targetAction->status != ACTION_STATUS_DOING) {
+        if (targetAction->status != ACTION_STATUS_TODO && targetAction->status != ACTION_STATUS_DOING
+                ) {
             continue;
         }
         // We try to do the action with the highest priority !

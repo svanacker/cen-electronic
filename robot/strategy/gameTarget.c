@@ -30,7 +30,7 @@ void updateTargetStatus(GameTarget* target) {
             return;
         }
 
-        if (targetAction->status == ACTION_STATUS_DOING) {
+        if (targetAction->status != ACTION_STATUS_DONE) {
             target->status = TARGET_HANDLING;
             return;
         }

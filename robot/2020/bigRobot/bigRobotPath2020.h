@@ -36,5 +36,26 @@
 #define LEFT_REEF_FRONT__TO__DROP_LEFT_FRONT_SPEED_FACTOR                          1.0f
 #define LEFT_REEF_FRONT__TO__DROP_LEFT_FRONT_ACC_FACTOR                            1.0f
 
+// Big Robot : Drop Left -> Central Start Area (to adjust Y and angle)
+#define DROP_LEFT_FRONT__TO__CENTRAL_START_AREA_COST                             300.0f
+#define DROP_LEFT_FRONT__TO__CENTRAL_START_AREA_CP1                             -100.0f
+#define DROP_LEFT_FRONT__TO__CENTRAL_START_AREA_CP2                              100.0f
+#define DROP_LEFT_FRONT__TO__CENTRAL_START_SPEED_FACTOR                           0.75f
+#define DROP_LEFT_FRONT__TO__CENTRAL_START_ACC_FACTOR                              0.5f
+
+// Big Robot : Central Start Area -> Leef Reef Front 2
+#define CENTER_START_AREA__TO__LEFT_REEF_FRONT_2_COST                           2000.0f
+#define CENTER_START_AREA__TO__LEFT_REEF_FRONT_2_CP1                             200.0f
+#define CENTER_START_AREA__TO__LEFT_REEF_FRONT_2_CP2                             300.0f
+#define CENTER_START_AREA__TO__LEFT_REEF_FRONT_2_SPEED_FACTOR                      1.0f
+#define CENTER_START_AREA__TO__LEFT_REEF_FRONT_2_ACC_FACTOR                        1.0f
+
+// Big Robot : Leef Reef Front 2 -> Central Drop Area
+#define LEFT_REEF_FRONT_2__TO__DROP_CENTER_FRONT_COST                           2000.0f
+#define LEFT_REEF_FRONT_2__TO__DROP_CENTER_FRONT_CP1                            -300.0f
+#define LEFT_REEF_FRONT_2__TO__DROP_CENTER_FRONT_CP2                             300.0f
+#define LEFT_REEF_FRONT_2__TO__DROP_CENTER_FRONT_SPEED_FACTOR                      1.0f
+#define LEFT_REEF_FRONT_2__TO__DROP_CENTER_FRONT_ACC_FACTOR                        1.0f
+
 #endif
 
