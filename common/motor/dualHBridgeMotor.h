@@ -37,15 +37,15 @@ typedef void dualHBridgeMotorWriteValueFunction(DualHBridgeMotor* dualHBridgeMot
  */
 enum DualHBridgePinUsageType {
     /** The pin is not assigned */
-    NO_USAGE = 0,
-    /** The pin is assigned to detect start of the motor 1 */
-    MOTOR_1_START = 1,
-    /** The pin is assigned to detect end of the motor 1*/
-    MOTOR_1_END = 2,
-    /** The pin is assigned to detect start of the motor 2 */
-    MOTOR_2_START = 3,
-    /** The pin is assigned to detect end of the motor 2 */
-    MOTOR_2_END = 4
+    PIN_USAGE_TYPE_NO_USAGE = 0,
+    /** The pin is assigned to detect end when going forward of the motor 1 */
+    PIN_USAGE_TYPE_MOTOR_1_FORWARD_END = 1,
+    /** The pin is assigned to detect end when going backward of the motor 1*/
+    PIN_USAGE_TYPE_MOTOR_1_BACKWARD_END = 2,
+    /** The pin is assigned to detect start when going forward of the motor 2 */
+    PIN_USAGE_TYPE_MOTOR_2_FORWARD_END = 3,
+    /** The pin is assigned to detect end when going backward of the motor 2 */
+    PIN_USAGE_TYPE_MOTOR_2_BACKWARD_END = 4
 };
 
 /**
@@ -53,11 +53,11 @@ enum DualHBridgePinUsageType {
  */
 enum DualHBridgePinStopEventType {
     /** No Action to do */
-    NO_ACTION = 0,
+    PIN_STOP_EVENT_NO_ACTION = 0,
     /** If we must stop when the value is low. */
-    LOW_STOP = 1,
-    /** If we stop when the value is high. */
-    HIGH_STOP = 2,
+    PIN_STOP_EVENT_LOW_STOP = 1,
+    /** If we must stop when the value is high. */
+    PIN_STOP_EVENT_HIGH_STOP = 2,
 };
 
 /**
@@ -86,6 +86,8 @@ struct DualHBridgeMotor {
     enum DualHBridgePinStopEventType pin2StopEventType;
     /** pointer on other object (useful for I2C Connection for example) .*/
     int* object;
+    /** pointer on pinList (but not typed to avoid to take the dependency). */
+    int* pinListObject;
 };
 
 // PUBLIC FUNCTIONS
@@ -98,7 +100,9 @@ void initDualHBridge(DualHBridgeMotor* dualHBridgeMotors,
         dualHBridgeMotorReadValueFunction* dualHBridgeMotorReadValue,
         dualHBridgeMotorWriteValueFunction* dualHBridgeMotorWriteValue,
         dualHBridgeMotorGetSoftwareRevisionFunction* dualHBridgeMotorGetSoftwareRevision,
-        int* object);
+        int* object,
+        int* pinListObject
+    );
 
 /** 
  * Stop the motor for the specified Dual HBridge Motors.

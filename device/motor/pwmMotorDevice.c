@@ -7,6 +7,7 @@
 #include "../../common/delay/cenDelay.h"
 
 #include "../../common/motor/dualHBridgeMotor.h"
+#include "../../common/motor/dualHBridgeMotorDebug.h"
 #include "../../common/pwm/motor/dualHBridgeMotorPwm.h"
 
 #include "../../common/io/printWriter.h"
@@ -43,24 +44,28 @@ void devicePwmMotorHandleRawData(unsigned char commandHeader, InputStream* input
         signed int right = readSignedHex2(inputStream);
         ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_MOVE_MOTOR);
         dualHBridgeMotorPwm->dualHBridgeMotorWriteValue(dualHBridgeMotorPwm, left * 2, right * 2);
-    } else if (commandHeader == COMMAND_READ_MOTOR_VALUE) {
+    }
+    else if (commandHeader == COMMAND_READ_MOTOR_VALUE) {
         ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_READ_MOTOR_VALUE);
         signed int left = dualHBridgeMotorPwm->dualHBridgeMotorReadValue(dualHBridgeMotorPwm, HBRIDGE_1);
         signed int right = dualHBridgeMotorPwm->dualHBridgeMotorReadValue(dualHBridgeMotorPwm, HBRIDGE_2);
         appendHex2(outputStream, left / 2);
         appendHex2(outputStream, right / 2);
-    } else if (commandHeader == COMMAND_STOP_MOTOR) {
+    }
+    else if (commandHeader == COMMAND_STOP_MOTOR) {
         ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_STOP_MOTOR);
 
         stopMotors(dualHBridgeMotorPwm);
-    } else if (commandHeader == COMMAND_SMALL_TEST_MOTOR) {
+    }
+    else if (commandHeader == COMMAND_SMALL_TEST_MOTOR) {
         ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_SMALL_TEST_MOTOR);
         appendStringLN(getInfoOutputStreamLogger(), "Both Forward");
         // Left forward
         dualHBridgeMotorPwm->dualHBridgeMotorWriteValue(dualHBridgeMotorPwm, 50, 50);
         delayMilliSecs(2000);
         stopMotors(dualHBridgeMotorPwm);
-    } else if (commandHeader == COMMAND_NORMAL_TEST_MOTOR) {
+    }
+    else if (commandHeader == COMMAND_NORMAL_TEST_MOTOR) {
         ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_NORMAL_TEST_MOTOR);
 
         OutputStream* logStream = getInfoOutputStreamLogger();
@@ -95,6 +100,20 @@ void devicePwmMotorHandleRawData(unsigned char commandHeader, InputStream* input
         delayMilliSecs(2000);
 
         stopMotors(dualHBridgeMotorPwm);
+    }
+    else if (commandHeader == COMMAND_DEBUG_MOTOR) {
+        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_DEBUG_MOTOR);
+        printMotorDebug(getDebugOutputStreamLogger(), dualHBridgeMotorPwm);
+    }
+    else if (commandHeader == COMMAND_SET_PIN_USAGE_MOTOR) {
+        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_DEBUG_MOTOR);
+        dualHBridgeMotorPwm->pin1UsageType = (enum DualHBridgePinUsageType) readHex2(inputStream);
+        checkIsSeparator(inputStream);
+        dualHBridgeMotorPwm->pin2UsageType = (enum DualHBridgePinUsageType) readHex2(inputStream);
+        checkIsSeparator(inputStream);
+        dualHBridgeMotorPwm->pin1StopEventType = (enum DualHBridgePinStopEventType) readHex2(inputStream);
+        checkIsSeparator(inputStream);
+        dualHBridgeMotorPwm->pin2StopEventType = (enum DualHBridgePinStopEventType) readHex2(inputStream);
     }
 }
 

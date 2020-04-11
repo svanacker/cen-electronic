@@ -422,7 +422,7 @@ int runMotorBoard() {
     initClockPCF8563(&clock, clockI2cBusConnection);
 
     // MOTOR (PWM for Motion)
-    initDualHBridgeMotorPWM(&motors);
+    initDualHBridgeMotorPWM(&motors, &pinList);
 
     // PidMotion
     initPidMotion(&pidMotion,
@@ -440,7 +440,7 @@ int runMotorBoard() {
     startTimerList(true);
 
     // IO
-    // RB12 & RB 13 are IO of MOTOR_BOARD
+    // RB12 & RB 13 are IO of MOTOR_BOARD and must be an input
     TRISBbits.TRISB12 = 1;
     TRISBbits.TRISB13 = 1;
 

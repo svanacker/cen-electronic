@@ -18,14 +18,15 @@ int deviceMotorGetInterface(unsigned char header, DeviceInterfaceMode mode, bool
             setArgumentSignedHex2(1, "right");
         }
         return commandLengthValueForMode(mode, 4, 0);
-    } else if (header == COMMAND_SET_PIN_USAGE_MOTOR) {
+    }
+    else if (header == COMMAND_SET_PIN_USAGE_MOTOR) {
         if (fillDeviceArgumentList) {
-            setFunction("Set Motor ++-Pin Usages", 4, 0);
+            setFunction("Set Motor Pin Usages", 4, 0);
             setArgumentSignedHex2(0, "Pin 1 Usage Type");
             setArgumentSeparator(1);
-            setArgumentSignedHex2(2, "Pin 2 Stop Type");
+            setArgumentSignedHex2(2, "Pin 2 Usage Type");
             setArgumentSeparator(3);
-            setArgumentSignedHex2(4, "Pin 1 Usage Type");
+            setArgumentSignedHex2(4, "Pin 1 Stop Type");
             setArgumentSeparator(5);
             setArgumentSignedHex2(6, "Pin 2 Stop Type");
         }
@@ -50,6 +51,12 @@ int deviceMotorGetInterface(unsigned char header, DeviceInterfaceMode mode, bool
     } else if (header == COMMAND_NORMAL_TEST_MOTOR) {
         if (fillDeviceArgumentList) {
             setFunctionNoArgumentAndNoResult("normalTestMotor");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (header == COMMAND_DEBUG_MOTOR) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("debug Motor");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }

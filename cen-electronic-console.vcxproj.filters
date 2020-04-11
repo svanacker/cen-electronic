@@ -2313,6 +2313,12 @@
     <ClCompile Include="common\io\pc\fileOutputStream.c">
       <Filter>Source Files\common\io\pc</Filter>
     </ClCompile>
+    <ClCompile Include="common\motor\dualHBridgeMotorDebug.c">
+      <Filter>Source Files\common\motor</Filter>
+    </ClCompile>
+    <ClCompile Include="common\io\pinDebug.c">
+      <Filter>Source Files\common\io</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\io\binaryWriter.h">
@@ -3613,6 +3619,15 @@
     </ClInclude>
     <ClInclude Include="common\io\pc\fileOutputStream.h">
       <Filter>Header Files\common\io\pc</Filter>
+    </ClInclude>
+    <ClInclude Include="common\motor\dualHBridgeMotor.h">
+      <Filter>Header Files\common\motor</Filter>
+    </ClInclude>
+    <ClInclude Include="common\motor\dualHBridgeMotorDebug.h">
+      <Filter>Header Files\common\motor</Filter>
+    </ClInclude>
+    <ClInclude Include="common\io\pinDebug.h">
+      <Filter>Header Files\common\io</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

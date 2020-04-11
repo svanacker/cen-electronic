@@ -123,11 +123,12 @@ unsigned char dualHBridgeMotorGetSoftwareRevisionPwm32(DualHBridgeMotor* dualHBr
     return 1;
 }
 
-void initDualHBridgeMotorPWM(DualHBridgeMotor* dualHBridgeMotor) {
+void initDualHBridgeMotorPWM(DualHBridgeMotor* dualHBridgeMotor, PinList* pinList) {
     initDualHBridge(dualHBridgeMotor,
             &initPwmForMotor,
             &dualHBridgeMotorReadValuePwm32,
             &pwmDualHBridgeMotor,
             &dualHBridgeMotorGetSoftwareRevisionPwm32,
-            NULL);
+            NULL,
+            (int*) pinList);
 }

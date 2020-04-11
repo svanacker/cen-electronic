@@ -350,10 +350,10 @@ void runMotorBoardPC(bool singleMode) {
     // initEepromMemory(&eeprom, (char(*)[]) &memoryEepromArray, MOTOR_BOARD_PC_MEMORY_EEPROM_LENGTH);
 
     // HBridge Fake Motor Pwm
-    initDualHBridgeMotorPc(&dualHBridgeMotor);
+    initDualHBridgeMotorPc(&dualHBridgeMotor, NULL);
 
     // HBridge Fake Motor MD22
-    initDualHBridgeMotorPc(&md22);
+    initDualHBridgeMotorPc(&md22, NULL);
 
     // Battery
     initBattery(&battery, getBatteryVoltage);

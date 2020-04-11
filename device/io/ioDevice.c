@@ -10,6 +10,7 @@
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/pin.h"
+#include "../../common/io/pinDebug.h"
 #include "../../common/io/printWriter.h"
 #include "../../common/io/reader.h"
 
@@ -53,6 +54,9 @@ void deviceIOHandleRawData(unsigned char commandHeader, InputStream* inputStream
         checkIsSeparator(inputStream);
         bool newValue = readBool(inputStream);
         setPinValue(pinList, pinIndex, newValue);
+    } else if (commandHeader == COMMAND_IO_DEBUG) {
+        ackCommand(outputStream, IO_HEADER, COMMAND_IO_DEBUG);
+        printAllPinValues(pinList, getInfoOutputStreamLogger());
     }
 }
 

@@ -194,6 +194,7 @@
     <ClCompile Include="common\io\pc\fileOutputStream.c" />
     <ClCompile Include="common\io\pc\pinPc.c" />
     <ClCompile Include="common\io\pin.c" />
+    <ClCompile Include="common\io\pinDebug.c" />
     <ClCompile Include="common\io\printTableWriter.c" />
     <ClCompile Include="common\io\printWriter.c" />
     <ClCompile Include="common\io\reader.c" />
@@ -211,6 +212,7 @@
     <ClCompile Include="common\math\pc\randomPc.c" />
     <ClCompile Include="common\math\random.c" />
     <ClCompile Include="common\motor\dualHBridgeMotor.c" />
+    <ClCompile Include="common\motor\dualHBridgeMotorDebug.c" />
     <ClCompile Include="common\motor\pc\dualHBridgeMotorPc.c" />
     <ClCompile Include="common\pc\file\fileUtils.c" />
     <ClCompile Include="common\pc\pipe\pipeClientHelper.c" />
@@ -600,6 +602,7 @@
     <ClInclude Include="common\io\pc\fileOutputStream.h" />
     <ClInclude Include="common\io\pc\pinPc.h" />
     <ClInclude Include="common\io\pin.h" />
+    <ClInclude Include="common\io\pinDebug.h" />
     <ClInclude Include="common\io\printTableWriter.h" />
     <ClInclude Include="common\io\printWriter.h" />
     <ClInclude Include="common\io\reader.h" />
@@ -616,6 +619,8 @@
     <ClInclude Include="common\math\cenMath.h" />
     <ClInclude Include="common\math\hexUtils.h" />
     <ClInclude Include="common\math\random.h" />
+    <ClInclude Include="common\motor\dualHBridgeMotor.h" />
+    <ClInclude Include="common\motor\dualHBridgeMotorDebug.h" />
     <ClInclude Include="common\motor\pc\dualHBridgeMotorPc.h" />
     <ClInclude Include="common\pc\file\fileUtils.h" />
     <ClInclude Include="common\pc\pipe\pipeClientHelper.h" />

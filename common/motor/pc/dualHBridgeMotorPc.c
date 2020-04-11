@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 
+#include "../../../common/io/pin.h"
 #include "../dualHBridgeMotor.h"
 
 /**
@@ -44,11 +45,12 @@ bool dualHBridgeMotorInitPc(DualHBridgeMotor* dualHBridgeMotor) {
     return true;
 }
 
-void initDualHBridgeMotorPc(DualHBridgeMotor* dualHBridgeMotor) {
+void initDualHBridgeMotorPc(DualHBridgeMotor* dualHBridgeMotor, PinList* pinList) {
     initDualHBridge(dualHBridgeMotor,
             &dualHBridgeMotorInitPc,
             &dualHBridgeMotorReadValuePc,
             &dualHBridgeMotorWriteValuePc,
             &dualHBridgeMotorGetSoftwareRevisionPc,
-            NULL);
+            NULL,
+            (int*) pinList);
 }

@@ -278,7 +278,7 @@ void runMechanicalBoard1PC(bool singleMode) {
     initSoftClock(&clock);
 
     // HBridge Fake Motor MD22
-    initDualHBridgeMotorPc(&md22);
+    initDualHBridgeMotorPc(&md22, NULL);
 
     // 2018
     //  IO Expander

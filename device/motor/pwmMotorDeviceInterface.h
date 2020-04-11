@@ -5,6 +5,11 @@
 #include "../../device/deviceConstants.h"
 
 /**
+* Print debug inforamation about MOTOR
+*/
+#define COMMAND_DEBUG_MOTOR          'd'
+
+/**
  * Defines the header to move the motor.
  */
 #define COMMAND_MOVE_MOTOR         'w'

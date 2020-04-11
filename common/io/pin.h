@@ -131,18 +131,26 @@ struct PinList {
 #define PIN_INDEX_RE10       0x4A
 
 // PORT F
-#define PIN_INDEX_RF0        0x50
-#define PIN_INDEX_RF1        0x51
-#define PIN_INDEX_RF2        0x52
-#define PIN_INDEX_RF3        0x53
-#define PIN_INDEX_RF4        0x54
-#define PIN_INDEX_RF5        0x55
-#define PIN_INDEX_RF6        0x56
-#define PIN_INDEX_RF7        0x57
-#define PIN_INDEX_RF8        0x58
+#define PIN_INDEX_RF0        0x4B
+#define PIN_INDEX_RF1        0x4C
+#define PIN_INDEX_RF2        0x4D
+#define PIN_INDEX_RF3        0x4E
+#define PIN_INDEX_RF4        0x4F
+#define PIN_INDEX_RF5        0x50
+#define PIN_INDEX_RF6        0x51
+#define PIN_INDEX_RF7        0x52
+#define PIN_INDEX_RF8        0x53
 
 #define PIN_MIN_INDEX        PIN_INDEX_RA0
 #define PIN_MAX_INDEX        PIN_INDEX_RF8
+
+/**
+* Returns the name of the pin.
+ * @param pinList the encapsulation of the list of pin
+ * @param the index of the pin
+ * @return the name of the pin
+*/
+char* getPinName(PinList* pinList, int pinIndex);
 
 /**
  * Returns the value of the pin Index (see pin.h)

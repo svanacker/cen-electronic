@@ -28,6 +28,12 @@ int deviceIOGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, 
         }
         return commandLengthValueForMode(mode, 2, 1);
     }
+    else if (commandHeader == COMMAND_IO_DEBUG) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("IO Debug");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 
