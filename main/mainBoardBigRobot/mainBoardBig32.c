@@ -60,6 +60,7 @@ void initMainBoardDevicesDescriptor() {
     mainBoardCommonAddDevices(&robotConfig);
     mainBoardCommonLcdAddDevices();
     mainBoardCommonMotorAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
+    mainBoardCommonMotionAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
     mainBoardCommonStrategyAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
     mainBoardCommonMatchAddDevices();
     mainBoardCommonTofAddDevices32();

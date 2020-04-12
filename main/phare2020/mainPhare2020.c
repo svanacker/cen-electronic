@@ -26,6 +26,7 @@
 #include "../mainBoard/mainBoardCommon.h"
 #include "../mainBoard/mainBoardCommonLcd.h"
 #include "../mainBoard/mainBoardCommonMatch.h"
+#include "../mainBoard/mainBoardCommonMotor.h"
 #include "../mainBoard/mainBoardCommonTof.h"
 
 #include "../../common/i2c/i2cCommon.h"
@@ -62,6 +63,8 @@ void initMainBoardDevicesDescriptor() {
 
     mainBoardCommonAddDevices(&robotConfig);
     mainBoardCommonLcdAddDevices();
+    mainBoardCommonMotorAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
+
     mainLightHouse2020TofAddDevices();
 
     // addLocalDevice(getIODeviceInterface(), getIODeviceDescriptor());
@@ -77,6 +80,7 @@ void initMainBoardDevicesDescriptor() {
 
 void initMainBoardDriverDataDispatcherList(void) {
     mainBoardCommonInitDriverDataDispatcherList();
+    mainBoardCommonMotorAddDispatcher();
 }
 
 /**
@@ -106,6 +110,9 @@ void mainBoardMainPhase1(void) {
 void mainBoardMainPhase2(void) {
     mainBoardCommonMainInit(&robotConfig);
 
+    // Notify is mandatory even if we don't use it
+    mainBoardCommonMotorNotifyOpenSerialLink();
+    mainBoardCommonMotorOpenSerialLink();
 
     mainBoardCommonInitBusList();
     mainBoardCommonInitTimerList();
@@ -126,6 +133,11 @@ void mainBoardMainPhase2(void) {
 void mainBoardMainPhase3(void) {
     initMainBoardDevicesDescriptor();
     initMainBoardDriverDataDispatcherList();
+    
+    appendString(getAlwaysOutputStreamLogger(), "SET PIN USAGE:");
+    lightHouse2020Reset(&lightHouse);
+    appendStringLN(getAlwaysOutputStreamLogger(), "OK");
+
 }
 
 int main(void) {
@@ -135,7 +147,11 @@ int main(void) {
 
     while (true) {
         mainBoardCommonHandleStreamInstruction();
+        mainBoardCommonMotorHandleStreamInstruction();
 
         /// handleLightHouseActions(&lightHouse);
+        
+        ServoList* servoList = mainBoardCommonGetServoList();
+        servoListMainUpdateCall(servoList);
     }
 }

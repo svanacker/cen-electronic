@@ -6,9 +6,9 @@
 
 #include "dualHBridgeMotor.h"
 
-#define MOTOR_DEBUG_KEY_COLUMN_LENGTH				                          10
+#define MOTOR_DEBUG_KEY_COLUMN_LENGTH				                          20
 #define MOTOR_DEBUG_VALUE_COLUMN_LENGTH				                          30
-#define MOTOR_DEBUG_LAST_COLUMN_LENGTH				                          50
+#define MOTOR_DEBUG_LAST_COLUMN_LENGTH				                          20
 
 unsigned int appendDualHBridgePinUsageTypeAsString(OutputStream* outputStream, enum DualHBridgePinUsageType usageType) {
     if (usageType == PIN_USAGE_TYPE_NO_USAGE) {
@@ -64,11 +64,10 @@ unsigned int addDualDualHBridgePinStopEventTypeTableData(OutputStream* outputStr
     return length + appendSpaces(outputStream, columnSize - length) + 2;
 }
 
+void printMotorDebug(OutputStream* outputStream, DualHBridgeMotor* dualHBridge) {
+    println(outputStream);
 
-/**
- * Private.
- */
-void printMotorDebugHeader(OutputStream* outputStream) {
+    // Header
     appendTableHeaderSeparatorLine(outputStream);
 
     appendStringHeader(outputStream, "key", MOTOR_DEBUG_KEY_COLUMN_LENGTH);
@@ -76,27 +75,41 @@ void printMotorDebugHeader(OutputStream* outputStream) {
     appendEndOfTableColumn(outputStream, MOTOR_DEBUG_LAST_COLUMN_LENGTH);
 
     appendTableHeaderSeparatorLine(outputStream);
-}
 
-void printMotorDebug(OutputStream* outputStream, const DualHBridgeMotor* dualHBridge) {
+    // Motor 1 Value
+    signed int motorValue1 = dualHBridge->dualHBridgeMotorReadValue(dualHBridge, HBRIDGE_1);
+    appendStringTableData(outputStream, "motorValue 1", MOTOR_DEBUG_KEY_COLUMN_LENGTH);
+    appendDecTableData(outputStream, motorValue1, MOTOR_DEBUG_VALUE_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, MOTOR_DEBUG_LAST_COLUMN_LENGTH);
+
+    // Motor 2 Value
+    signed int motorValue2 = dualHBridge->dualHBridgeMotorReadValue(dualHBridge, HBRIDGE_2);
+    appendStringTableData(outputStream, "motorValue 2", MOTOR_DEBUG_KEY_COLUMN_LENGTH);
+    appendDecTableData(outputStream, motorValue2, MOTOR_DEBUG_VALUE_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, MOTOR_DEBUG_LAST_COLUMN_LENGTH);
+
+    appendTableHeaderSeparatorLine(outputStream);
+
     // pin1UsageType
     appendStringTableData(outputStream, "pin1UsageType", MOTOR_DEBUG_KEY_COLUMN_LENGTH);
-    appendDualHBridgePinUsageTypeAsString(outputStream, dualHBridge->pin1UsageType);
+    addDualHBridgePinUsageTypeTableData(outputStream, dualHBridge->pin1UsageType, MOTOR_DEBUG_VALUE_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, MOTOR_DEBUG_LAST_COLUMN_LENGTH);
 
     // pin2UsageType
     appendStringTableData(outputStream, "pin2UsageType", MOTOR_DEBUG_KEY_COLUMN_LENGTH);
-    appendDualHBridgePinUsageTypeAsString(outputStream, dualHBridge->pin2UsageType);
+    addDualHBridgePinUsageTypeTableData(outputStream, dualHBridge->pin2UsageType, MOTOR_DEBUG_VALUE_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, MOTOR_DEBUG_LAST_COLUMN_LENGTH);
+
+    appendTableHeaderSeparatorLine(outputStream);
 
     // pin1StopEventType
     appendStringTableData(outputStream, "pin1StopEventType", MOTOR_DEBUG_KEY_COLUMN_LENGTH);
-    appendDualHBridgePinStopEventTypeAsString(outputStream, dualHBridge->pin1StopEventType);
+    addDualDualHBridgePinStopEventTypeTableData(outputStream, dualHBridge->pin1StopEventType, MOTOR_DEBUG_VALUE_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, MOTOR_DEBUG_LAST_COLUMN_LENGTH);
 
     // pin2StopEventType
     appendStringTableData(outputStream, "pin2StopEventType", MOTOR_DEBUG_KEY_COLUMN_LENGTH);
-    appendDualHBridgePinStopEventTypeAsString(outputStream, dualHBridge->pin2StopEventType);
+    addDualDualHBridgePinStopEventTypeTableData(outputStream, dualHBridge->pin2StopEventType, MOTOR_DEBUG_VALUE_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, MOTOR_DEBUG_LAST_COLUMN_LENGTH);
 
     appendTableHeaderSeparatorLine(outputStream);

@@ -16,22 +16,28 @@
 // SERVO VALUE
 #define LIGHT_HOUSE_2020_SERVO_LEFT_VALUE                        500
 #define LIGHT_HOUSE_2020_SERVO_RIGHT_VALUE                       2500
-#define LIGHT_HOUSE_2020_SERVO_SPEED                             0
+#define LIGHT_HOUSE_2020_SERVO_SPEED                             10
 
 // DISTANCE
-#define LIGHT_HOUSE_2020_ROBOT_PLACED_DISTANCE_MIN                        450
-#define LIGHT_HOUSE_2020_ROBOT_PLACED_DISTANCE_MAX                        600
+#define LIGHT_HOUSE_2020_ROBOT_NO_TOUCH_DISTANCE_MIN                      10
+#define LIGHT_HOUSE_2020_ROBOT_NO_TOUCH_DISTANCE_MAX                      30
 
-#define LIGHT_HOUSE_2020_ROBOT_MOVED_DISTANCE_MIN                         650
-#define LIGHT_HOUSE_2020_ROBOT_MOVED_DISTANCE_MAX                        10000
+#define LIGHT_HOUSE_2020_ROBOT_TOUCH_DISTANCE_MIN                         50
+#define LIGHT_HOUSE_2020_ROBOT_TOUCH_DISTANCE_MAX                         100
 
 // CHECK / THRESHOLD
-#define LIGHT_HOUSE_2020_THRESHOLD_COUNT                                25
-#define LIGHT_HOUSE_2020_MISSED_DECREMENT_VALUE                          5
-
+#define LIGHT_HOUSE_2020_THRESHOLD_COUNT                                5
+#define LIGHT_HOUSE_2020_MISSED_DECREMENT_VALUE                         5
 
 // RELEASE TRY COUNT 
 #define LIGHT_HOUSE_2020_RELEASE_TRY_COUNT                              2
+
+// PWM FOR LIGHT
+#define LIGHT_HOUSE_2020_LIGHT_ON_VALUE                                 0x60
+
+// PWM FOR MOTOR
+#define LIGHT_HOUSE_2020_MOTOR_FORWARD_SPEED                            40
+#define LIGHT_HOUSE_2020_MOTOR_BACKWARD_SPEED                          -20
 
 /**
  * Define the state of the LightHouse.
@@ -43,20 +49,16 @@ enum LightHouse2020State {
     LIGHT_HOUSE_STATE_INITIALIZED = 1,
 
     // PLACED
-    // We search if the robot is placed
-    LIGHT_HOUSE_STATE_SEARCH_ROBOT_PLACED = 2,
-    // The robot is placed
-    LIGHT_HOUSE_STATE_ROBOT_PLACED = 3,
-
-    // NEAR
-    // We search 
-    // We search if the robot is near
-    LIGHT_HOUSE_STATE_SEARCH_ROBOT_NEAR = 4,
-    // The robot is near
-    LIGHT_HOUSE_STATE_ROBOT_NEAR = 5,
-
-    // LAUNCH
-    // We must up the Light House
+    // Check if the tof Sensor is ok
+    LIGHT_HOUSE_STATE_SEARCH_IF_PLACED = 2,
+    // The light House tof Sensor was found
+    LIGHT_HOUSE_STATE_PLACED = 3,
+    // We search if we need to launch
+    LIGHT_HOUSE_STATE_SEARCH = 4,
+    // The light search is ok
+    LIGHT_HOUSE_STATE_SEARCH_OK = 5,
+    
+    // The launcher must be launch
     LIGHT_HOUSE_STATE_TO_LAUNCH = 6,
     // The launcher was launched
     LIGHT_HOUSE_STATE_LAUNCHED = 7,
@@ -123,10 +125,8 @@ void lightHouse2020Bottom(LightHouse2020* lightHouse);
 
 void lightHouse2020Reset(LightHouse2020* lightHouse);
 
-// SIMULATION
+void lightHouse2020On(LightHouse2020* lightHouse);
 
-void lightHouse2020SimulateRobotPlaced(LightHouse2020* lightHouse);
-
-void lightHouse2020SimulateRobotNear(LightHouse2020* lightHouse);
+void lightHouse2020Off(LightHouse2020* lightHouse);
 
 #endif

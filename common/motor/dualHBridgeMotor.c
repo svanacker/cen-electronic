@@ -36,22 +36,21 @@ void setMotorSpeeds(DualHBridgeMotor* dualHBridgeMotor, signed int hBridgeSpeed1
     dualHBridgeMotor->dualHBridgeMotorWriteValue(dualHBridgeMotor, hBridgeSpeed1, hBridgeSpeed2);
 }
 
-// TIMER PART
-
-/**
- * The interrupt timer to know if we must stop the motor.
- */
-void interruptMotorTimerCallbackFunc(Timer* timer) {
-    DualHBridgeMotor* dualHBridgeMotor = (DualHBridgeMotor*)timer->object;
-    PinList* pinList = (PinList*) (dualHBridgeMotor->pinListObject);
+void mainHandleMotorPins(DualHBridgeMotor* dualHBridgeMotor) {
+    PinList* pinList = (PinList*)(dualHBridgeMotor->pinListObject);
     if (pinList == NULL) {
         writeError(IO_PIN_LIST_NULL);
         return;
     }
-    signed int motorValue1 = dualHBridgeMotor->dualHBridgeMotorReadValue(dualHBridgeMotor, HBRIDGE_1);
     enum DualHBridgePinStopEventType pin1Stop = dualHBridgeMotor->pin1StopEventType;
-    signed int motorValue2 = dualHBridgeMotor->dualHBridgeMotorReadValue(dualHBridgeMotor, HBRIDGE_2);
     enum DualHBridgePinStopEventType pin2Stop = dualHBridgeMotor->pin2StopEventType;
+
+    if (pin1Stop == PIN_STOP_EVENT_NO_ACTION && pin2Stop == PIN_STOP_EVENT_NO_ACTION) {
+        return;
+    }
+
+    signed int motorValue1 = dualHBridgeMotor->dualHBridgeMotorReadValue(dualHBridgeMotor, HBRIDGE_1);
+    signed int motorValue2 = dualHBridgeMotor->dualHBridgeMotorReadValue(dualHBridgeMotor, HBRIDGE_2);
 
     unsigned char pinIndex1 = PIN_INDEX_RB12;
     unsigned char pinIndex2 = PIN_INDEX_RB13;
@@ -67,7 +66,7 @@ void interruptMotorTimerCallbackFunc(Timer* timer) {
         if ((dualHBridgeMotor->pin1UsageType == PIN_USAGE_TYPE_MOTOR_1_FORWARD_END && motorValue1 > 0)
             || (dualHBridgeMotor->pin1UsageType == PIN_USAGE_TYPE_MOTOR_1_BACKWARD_END && motorValue1 < 0)) {
 
-            if ( (pin1Stop == PIN_STOP_EVENT_LOW_STOP && !pinValue1)
+            if ((pin1Stop == PIN_STOP_EVENT_LOW_STOP && !pinValue1)
                 || (pin1Stop == PIN_STOP_EVENT_HIGH_STOP && pinValue1)) {
                 newMotorValue1 = 0;
             }
@@ -86,16 +85,16 @@ void interruptMotorTimerCallbackFunc(Timer* timer) {
         bool pinValue2 = getPinValue(pinList, pinIndex2);
 
         // Motor 1
-        if ((dualHBridgeMotor->pin1UsageType == PIN_USAGE_TYPE_MOTOR_1_FORWARD_END && motorValue1 > 0)
-            || (dualHBridgeMotor->pin1UsageType == PIN_USAGE_TYPE_MOTOR_1_BACKWARD_END && motorValue1 < 0)) {
+        if ((dualHBridgeMotor->pin2UsageType == PIN_USAGE_TYPE_MOTOR_1_FORWARD_END && motorValue1 > 0)
+            || (dualHBridgeMotor->pin2UsageType == PIN_USAGE_TYPE_MOTOR_1_BACKWARD_END && motorValue1 < 0)) {
             if ((pin2Stop == PIN_STOP_EVENT_LOW_STOP && !pinValue2)
                 || (pin2Stop == PIN_STOP_EVENT_HIGH_STOP && pinValue2)) {
                 newMotorValue1 = 0;
             }
         }
         // Motor 2
-        else if ((dualHBridgeMotor->pin1UsageType == PIN_USAGE_TYPE_MOTOR_2_FORWARD_END && motorValue2 > 0)
-            || (dualHBridgeMotor->pin1UsageType == PIN_USAGE_TYPE_MOTOR_2_BACKWARD_END && motorValue2 < 0)) {
+        else if ((dualHBridgeMotor->pin2UsageType == PIN_USAGE_TYPE_MOTOR_2_FORWARD_END && motorValue2 > 0)
+            || (dualHBridgeMotor->pin2UsageType == PIN_USAGE_TYPE_MOTOR_2_BACKWARD_END && motorValue2 < 0)) {
             if ((pin2Stop == PIN_STOP_EVENT_LOW_STOP && !pinValue2)
                 || (pin2Stop == PIN_STOP_EVENT_HIGH_STOP && pinValue2)) {
                 newMotorValue2 = 0;
@@ -104,19 +103,7 @@ void interruptMotorTimerCallbackFunc(Timer* timer) {
     }
 
     // if we must update the value of the HBridge
-    if (newMotorValue1 != motorValue1 && newMotorValue2 != motorValue2) {
-        dualHBridgeMotor->dualHBridgeMotorWriteValue(dualHBridgeMotor, newMotorValue1, motorValue2);
-    }
-}
-
-void initDualHBridgeTimer(DualHBridgeMotor* dualHBridgeMotor) {
-    Timer* motorTimer = getTimerByCode(MOTOR_TIMER_CODE);
-    // Avoid to add several timer of the same nature
-    if (motorTimer == NULL) {
-        addTimer(MOTOR_TIMER_CODE,
-                TIME_DIVIDER_10_HERTZ,
-                &interruptMotorTimerCallbackFunc,
-                "MOTOR",
-                (int*) dualHBridgeMotor);
+    if (newMotorValue1 != motorValue1 || newMotorValue2 != motorValue2) {
+        dualHBridgeMotor->dualHBridgeMotorWriteValue(dualHBridgeMotor, newMotorValue1, newMotorValue2);
     }
 }

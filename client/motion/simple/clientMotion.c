@@ -16,14 +16,17 @@
 #include "../../../motion/parameters/motionParameter.h"
 
 #include "../../../device/motion/simple/motionDeviceInterface.h"
+// TODO : Move to a specific client
 #include "../../../device/motion/pid/pidDeviceInterface.h"
 
 #include "../../../drivers/driver.h"
 #include "../../../drivers/driverList.h"
 #include "../../../drivers/driverTransmitter.h"
 
+// TODO : Remove the static
 static bool readyForNextMotion = false;
 
+// TODO : Remove the static
 static unsigned char motionIndex = 0;
 
 void setReadyForNextMotion(bool value) {

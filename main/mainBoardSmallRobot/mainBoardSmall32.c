@@ -22,6 +22,7 @@
 #include "../mainBoard/mainBoardCommonMatch.h"
 #include "../mainBoard/mainBoardCommonMeca1.h"
 #include "../mainBoard/mainBoardCommonMotor.h"
+#include "../mainBoard/mainBoardCommonMotion.h"
 #include "../mainBoard/mainBoardCommonStrategy.h"
 #include "../mainBoard/mainBoardCommonTof.h"
 #include "../mainBoard/mainBoardCommonTof32.h"
@@ -76,6 +77,7 @@ void initMainBoardDevicesDescriptor() {
     mainBoardCommonAddDevices(&robotConfig);
     mainBoardCommonLcdAddDevices();
     mainBoardCommonMotorAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
+    mainBoardCommonMotionAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
     mainBoardCommonStrategyAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
     mainBoardCommonMatchAddDevices();
     mainBoardCommonTofAddDevices32();

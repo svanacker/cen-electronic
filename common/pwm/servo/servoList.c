@@ -42,7 +42,7 @@ void interruptServoTimerCallbackFunc(Timer* timer) {
             } else {
                 servo->currentPosition = 0;
             }
-            // Limit
+            // Limit not to be > TargetPosition
             if (servo->currentPosition < servo->targetPosition) {
                 servo->currentPosition = servo->targetPosition;
             }

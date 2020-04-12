@@ -3629,6 +3629,9 @@
     <ClInclude Include="common\io\pinDebug.h">
       <Filter>Header Files\common\io</Filter>
     </ClInclude>
+    <ClInclude Include="common\motor\dualHBridgePin.h">
+      <Filter>Header Files\common\motor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="cen-electronic-console.rc">

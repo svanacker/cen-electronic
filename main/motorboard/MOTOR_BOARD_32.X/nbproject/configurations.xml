@@ -109,6 +109,7 @@
       <logicalFolder name="f10" displayName="common.motor" projectFiles="true">
         <itemPath>../../../common/motor/dualHBridgeMotor.h</itemPath>
         <itemPath>../../../common/motor/dualHBridgeMotorDebug.h</itemPath>
+        <itemPath>../../../common/motor/dualHBridgePin.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common.pwm" displayName="common.pwm" projectFiles="true">
         <itemPath>../../../common/pwm/pwmPic.h</itemPath>

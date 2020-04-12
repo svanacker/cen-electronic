@@ -16,9 +16,6 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
-#include "../../common/motor/dualHBridgeMotor.h"
-#include "../../common/motor/dualHBridgeMotorDebug.h"
-
 #include "../../device/device.h"
 
 // The underlying dual HBridge structure pointer
@@ -107,7 +104,7 @@ void devicePwmMotorHandleRawData(unsigned char commandHeader, InputStream* input
         printMotorDebug(getDebugOutputStreamLogger(), dualHBridgeMotorPwm);
     }
     else if (commandHeader == COMMAND_SET_PIN_USAGE_MOTOR) {
-        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_DEBUG_MOTOR);
+        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_SET_PIN_USAGE_MOTOR);
         dualHBridgeMotorPwm->pin1UsageType = (enum DualHBridgePinUsageType) readHex2(inputStream);
         checkIsSeparator(inputStream);
         dualHBridgeMotorPwm->pin2UsageType = (enum DualHBridgePinUsageType) readHex2(inputStream);

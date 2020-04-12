@@ -48,6 +48,10 @@
 #include "../../common/pwm/servo/servoList.h"
 #include "../../common/pwm/servo/pc/servoListPc.h"
 
+// ONLY FOR TEST
+#include "../../common/motor/dualHBridgeMotor.h"
+#include "../../common/motor/pc/dualHBridgeMotorPc.h"
+
 #include "../../common/serial/serial.h"
 #include "../../common/serial/serialLink.h"
 #include "../../common/serial/serialLinkList.h"
@@ -100,6 +104,10 @@
 // MAIN
 #include "../../main/motorboard/motorBoardPc.h"
 #include "../../main/meca1/mechanicalMainBoard1Pc.h"
+
+#include "../../device/motor/pwmMotorDeviceInterface.h"
+// MOTOR : NOT PRESENT on MAIN_BOARD
+#include "../../device/motor/pwmMotorDevice.h"
 
 // MOTION
 #include "../../motion/simulation/motionSimulation.h"
@@ -284,6 +292,9 @@ static I2cBusConnection* motorBoardI2cBusConnection;
 static I2cBusConnectionPc motorBoardI2cBusConnectionPc;
 static I2cBusConnection* meca1BoardI2cBusConnection;
 static I2cBusConnectionPc meca1BoardI2cBusConnectionPc;
+
+// HBridge
+static DualHBridgeMotor dualHBridgeMotor;
 
 // Dispatcher i2c->Motor
 static char motorBoardInputBufferArray[MAIN_BOARD_PC_DATA_MOTOR_BOARD_DISPATCHER_BUFFER_LENGTH];
@@ -604,6 +615,9 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     // Clock
     initPcClock(&clock);
 
+    // HBridge
+    initDualHBridgeMotorPc(&dualHBridgeMotor, &pinList);
+
     // IO
     initPinListPc(&pinList);
 
@@ -682,6 +696,10 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
         addI2cRemoteDevice(getExtendedMotionDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
         addI2cRemoteDevice(getRobotKinematicsDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
         addI2cRemoteDevice(getMotionSimulationDeviceInterface(), MOTOR_BOARD_I2C_ADDRESS);
+    }
+    else {
+        addLocalDevice(getMotorDeviceInterface(), getMotorDeviceDescriptor(&dualHBridgeMotor));
+
     }
     initDevices();
 

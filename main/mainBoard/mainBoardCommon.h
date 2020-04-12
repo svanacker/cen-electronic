@@ -30,10 +30,10 @@
 // UART
 #define MAIN_BOARD_SERIAL_LINK_LIST_LENGTH                              4
 #define MAIN_BOARD_SERIAL_PORT_DEBUG                        SERIAL_PORT_2
-#define MAIN_BOARD_SERIAL_PORT_MOTOR_NOTIFY                 SERIAL_PORT_6
+#define MAIN_BOARD_SERIAL_PORT_MOTOR_NOTIFY                 SERIAL_PORT_5
 
 #define MAIN_BOARD_SERIAL_PORT_MOTOR                        SERIAL_PORT_1
-#define MAIN_BOARD_SERIAL_PORT_MECA_1                       SERIAL_PORT_5
+#define MAIN_BOARD_SERIAL_PORT_MECA_1                       SERIAL_PORT_6
 
 // I2C
 

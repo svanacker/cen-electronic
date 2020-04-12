@@ -12,9 +12,13 @@
 
 #include "../../../common/log/logger.h"
 
+#include "../../../common/motor/dualHBridgeMotor.h"
+
 #include "../../../common/timer/timerConstants.h"
 #include "../../../common/timer/delayTimer.h"
 #include "../../../common/timer/timerList.h"
+
+#include "../../../client/motor/clientMotor.h"
 
 #include "../../../robot/config/robotConfig.h"
 
@@ -39,25 +43,14 @@ void updateLightHouseState(LightHouse2020* lightHouse, enum LightHouse2020State 
     }
 }
 
-
-// SIMULATION
-
-void lightHouse2020SimulateRobotPlaced(LightHouse2020* lightHouse) {
-    updateLightHouseState(lightHouse, LIGHT_HOUSE_STATE_ROBOT_PLACED);
-}
-
-void lightHouse2020SimulateRobotPlacedAndNear(LightHouse2020* lightHouse) {
-    updateLightHouseState(lightHouse, LIGHT_HOUSE_STATE_ROBOT_NEAR);
-}
-
 // CHECKS
-
+ 
 void checkLightHouse2020RobotPlaced(LightHouse2020* lightHouse) {
     if (lightHouse == NULL) {
         writeError(LIGHT_HOUSE_2020_NULL);
         return;
     }
-    if (lightHouse->state != LIGHT_HOUSE_STATE_SEARCH_ROBOT_PLACED) {
+    if (lightHouse->state != LIGHT_HOUSE_STATE_SEARCH_IF_PLACED) {
         return;
     }
     TofSensor* tofSensor = lightHouse->tofSensor;
@@ -66,24 +59,24 @@ void checkLightHouse2020RobotPlaced(LightHouse2020* lightHouse) {
         return;
     }
     lightHouse->robotPlacedAnalysisCount++;
-    tofSensor->thresholdMinDistanceMM = LIGHT_HOUSE_2020_ROBOT_PLACED_DISTANCE_MIN;
-    tofSensor->thresholdMaxDistanceMM = LIGHT_HOUSE_2020_ROBOT_PLACED_DISTANCE_MAX;
+    tofSensor->thresholdMinDistanceMM = LIGHT_HOUSE_2020_ROBOT_NO_TOUCH_DISTANCE_MIN;
+    tofSensor->thresholdMaxDistanceMM = LIGHT_HOUSE_2020_ROBOT_NO_TOUCH_DISTANCE_MAX;
 
     unsigned int distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
     if (isTofDistanceInRange(tofSensor)) {
         // We only notify one time
-        appendStringAndDec(getAlwaysOutputStreamLogger(), "ROBOT PLACED:", distanceMM);
+        appendStringAndDec(getAlwaysOutputStreamLogger(), "PLACED:", distanceMM);
         appendStringCRLF(getAlwaysOutputStreamLogger(), " mm");
-        updateLightHouseState(lightHouse, LIGHT_HOUSE_STATE_ROBOT_PLACED);
+        updateLightHouseState(lightHouse, LIGHT_HOUSE_STATE_PLACED);
     }
 }
 
-void checkLightHouse2020RobotNear(LightHouse2020* lightHouse) {
+void checkLightHouse2020RobotTouch(LightHouse2020* lightHouse) {
     if (lightHouse == NULL) {
         writeError(LIGHT_HOUSE_2020_NULL);
         return;
     }
-    if (lightHouse->state != LIGHT_HOUSE_STATE_SEARCH_ROBOT_NEAR) {
+    if (lightHouse->state != LIGHT_HOUSE_STATE_SEARCH) {
         return;
     }
     TofSensor* tofSensor = lightHouse->tofSensor;
@@ -94,16 +87,16 @@ void checkLightHouse2020RobotNear(LightHouse2020* lightHouse) {
     lightHouse->robotNearAnalysisCount++;
     unsigned int distanceMM = 0;
     distanceMM = tofSensor->tofGetDistanceMM(tofSensor);
-    tofSensor->thresholdMinDistanceMM = LIGHT_HOUSE_2020_ROBOT_MOVED_DISTANCE_MIN;
-    tofSensor->thresholdMaxDistanceMM = LIGHT_HOUSE_2020_ROBOT_MOVED_DISTANCE_MAX;
+    tofSensor->thresholdMinDistanceMM = LIGHT_HOUSE_2020_ROBOT_TOUCH_DISTANCE_MIN;
+    tofSensor->thresholdMaxDistanceMM = LIGHT_HOUSE_2020_ROBOT_TOUCH_DISTANCE_MAX;
 
     if (isTofDistanceInRange(tofSensor)) {
         lightHouse->robotNearDetectionCount++;
         // Store how many Count the detect
         if (lightHouse->robotNearDetectionCount >= LIGHT_HOUSE_2020_THRESHOLD_COUNT) {
-            appendStringAndDec(getAlwaysOutputStreamLogger(), "ROBOT NEAR:", distanceMM);
+            appendStringAndDec(getAlwaysOutputStreamLogger(), "ROBOT TOUCH:", distanceMM);
             appendStringCRLF(getAlwaysOutputStreamLogger(), " mm");
-            updateLightHouseState(lightHouse, LIGHT_HOUSE_STATE_ROBOT_NEAR);
+            updateLightHouseState(lightHouse, LIGHT_HOUSE_STATE_LAUNCHED);
         }
     } else {
         lightHouse->robotNearDetectionCount -= LIGHT_HOUSE_2020_MISSED_DECREMENT_VALUE;
@@ -139,7 +132,6 @@ void checkLightHouse2020ShowRemainingTime(LightHouse2020* lightHouse) {
     }
     if (lightHouse->timerCount % 10 == 0) {
         showRemainingTime(endMatch, getAlwaysOutputStreamLogger());
-
     }
 }
 
@@ -150,17 +142,7 @@ void lightHouse2020Up(LightHouse2020* lightHouse) {
         writeError(LIGHT_HOUSE_2020_NULL);
         return;
     }
-    /*
-    ServoList* servoList = lightHouse->servoList;
-    Servo* electronServo = getServo(servoList, LIGHT_HOUSE_2020_ELECTRON_SERVO_INDEX);
-    unsigned int tryCount = 0;
-    for (tryCount = 0; tryCount < LIGHT_HOUSE_2020_RELEASE_TRY_COUNT; tryCount++) {
-        pwmServo(electronServo, PWM_SERVO_SPEED_MAX, LIGHT_HOUSE_2020_ELECTRON_RELEASE_SERVO_VALUE, true);
-        pwmServo(electronServo, PWM_SERVO_SPEED_MAX, LIGHT_HOUSE_2020_ELECTRON_LOCKED_SERVO_VALUE, true);
-    }
-    updateLightHouseState(launcher, LIGHT_HOUSE_STATE_LAUNCHED);
-    markStartMatch(lightHouse->endMatch);
-     */
+    clientMotorWrite(0, LIGHT_HOUSE_2020_MOTOR_FORWARD_SPEED);
 }
 
 void lightHouse2020Bottom(LightHouse2020* lightHouse) {
@@ -168,7 +150,23 @@ void lightHouse2020Bottom(LightHouse2020* lightHouse) {
         writeError(LIGHT_HOUSE_2020_NULL);
         return;
     }
-    // TODO
+    clientMotorWrite(0, LIGHT_HOUSE_2020_MOTOR_BACKWARD_SPEED);
+}
+
+void lightHouse2020On(LightHouse2020* lightHouse) {
+    if (lightHouse == NULL) {
+        writeError(LIGHT_HOUSE_2020_NULL);
+        return;
+    }
+    clientMotorWrite(LIGHT_HOUSE_2020_LIGHT_ON_VALUE, 0);
+}
+
+void lightHouse2020Off(LightHouse2020* lightHouse) {
+    if (lightHouse == NULL) {
+        writeError(LIGHT_HOUSE_2020_NULL);
+        return;
+    }
+    clientMotorStop();
 }
 
 void lightHouse2020Reset(LightHouse2020* lightHouse) {
@@ -188,13 +186,11 @@ void lightHouse2020Reset(LightHouse2020* lightHouse) {
         writeError(SERVO_LIST_NOT_INITIALIZED);
         return;
     }
-
-    // Light House
-    /*
-    Servo* electronServo = getServo(servoList, LIGHT_HOUSE_2020_SERVO_INDEX);
-    pwmServo(electronServo, PWM_SERVO_SPEED_MAX, LIGHT_HOUSE_2020_SERVO_LEFT_VALUE, true);
-    electronServo->maxSpeedUnderLoad = MAX_SPEED_UNDER_LOAD__1_SECOND_60_DEG;
-     */
+    // Set the Pin Management on Motor Board
+    clientMotorSetPinUsage(PIN_USAGE_TYPE_MOTOR_2_BACKWARD_END, 
+                           PIN_USAGE_TYPE_MOTOR_2_FORWARD_END,
+                           PIN_STOP_EVENT_HIGH_STOP,
+                           PIN_STOP_EVENT_HIGH_STOP);
 
     // State
     updateLightHouseState(lightHouse, LIGHT_HOUSE_STATE_INITIALIZED);
@@ -244,6 +240,7 @@ void initLightHouse2020(LightHouse2020* lightHouse,
     lightHouse->robotConfig = robotConfig;
     lightHouse->servoList = servoList;
     lightHouse->tofSensorList = tofSensorList;
+    /*
     if (isConfigSet(robotConfig, CONFIG_COLOR_YELLOW_MASK)) {
         appendStringCRLF(getAlwaysOutputStreamLogger(), "YELLOW->RIGHT");
         lightHouse->tofIndex = 0;
@@ -251,6 +248,7 @@ void initLightHouse2020(LightHouse2020* lightHouse,
         appendStringCRLF(getAlwaysOutputStreamLogger(), "VIOLET->LEFT");
         lightHouse->tofIndex = 1;
     }
+    */
     TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, lightHouse->tofIndex);
     lightHouse->tofSensor = tofSensor;
     Timer* timer = getTimerByCode(LIGHT_HOUSE_2020_TIMER_CODE);
@@ -262,7 +260,6 @@ void initLightHouse2020(LightHouse2020* lightHouse,
                 (int*) lightHouse);
         timer->enabled = true;
     }
-    lightHouse2020Reset(lightHouse);
 }
 
 
@@ -275,15 +272,28 @@ void handleLightHouseActions(LightHouse2020* lightHouse) {
     }
 
     if (lightHouse->state == LIGHT_HOUSE_STATE_INITIALIZED) {
-        updateLightHouseState(lightHouse, LIGHT_HOUSE_STATE_SEARCH_ROBOT_PLACED);
+        updateLightHouseState(lightHouse, LIGHT_HOUSE_STATE_SEARCH_IF_PLACED);
         return;
     }
-    if (lightHouse->state == LIGHT_HOUSE_STATE_ROBOT_PLACED) {
-        updateLightHouseState(lightHouse, LIGHT_HOUSE_STATE_SEARCH_ROBOT_NEAR);
+    if (lightHouse->state == LIGHT_HOUSE_STATE_SEARCH_IF_PLACED) {
+        updateLightHouseState(lightHouse, LIGHT_HOUSE_STATE_PLACED);
         return;
     }
-    if (lightHouse->state == LIGHT_HOUSE_STATE_ROBOT_NEAR) {
+    if (lightHouse->state == LIGHT_HOUSE_STATE_PLACED) {
+        updateLightHouseState(lightHouse, LIGHT_HOUSE_STATE_SEARCH);
+        return;
+    }
+    if (lightHouse->state == LIGHT_HOUSE_STATE_SEARCH) {
+        updateLightHouseState(lightHouse, LIGHT_HOUSE_STATE_SEARCH_OK);
+        return;
+    }
+    if (lightHouse->state == LIGHT_HOUSE_STATE_SEARCH_OK) {
         updateLightHouseState(lightHouse, LIGHT_HOUSE_STATE_TO_LAUNCH);
+        return;
+    }
+    
+    if (lightHouse->state == LIGHT_HOUSE_STATE_TO_LAUNCH) {
+        updateLightHouseState(lightHouse, LIGHT_HOUSE_STATE_LAUNCHED);
         return;
     }
     if (lightHouse->state == LIGHT_HOUSE_STATE_LAUNCHED) {
@@ -303,7 +313,7 @@ void handleLightHouseActions(LightHouse2020* lightHouse) {
         appendStringLN(getAlwaysOutputStreamLogger(), ")");
     }
     checkLightHouse2020RobotPlaced(lightHouse);
-    checkLightHouse2020RobotNear(lightHouse);
+    checkLightHouse2020RobotTouch(lightHouse);
     checkLightHouse2020ToLaunch(lightHouse);
     checkLightHouse2020ShowRemainingTime(lightHouse);
 

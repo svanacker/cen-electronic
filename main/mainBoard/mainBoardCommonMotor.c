@@ -30,8 +30,6 @@
 // TEST
 #include "../../device/motion/position/codersDeviceInterface.h"
 #include "../../device/motion/pid/pidDeviceInterface.h"
-#include "../../device/motion/extended/extendedMotionDeviceInterface.h"
-#include "../../robot/kinematics/robotKinematicsDeviceInterface.h"
 
 // TEST
 #include "../../device/test/testDevice.h"
@@ -83,10 +81,6 @@ void mainBoardCommonMotorAddDevices(unsigned char serialIndex) {
     addUartRemoteDeviceWithNotification(getTestDeviceInterface(), serialIndex, &mainBoardDeviceHandleTestDeviceNotification);
     addUartRemoteDevice(getMotorDeviceInterface(), serialIndex);
     addUartRemoteDevice(getCodersDeviceInterface(), serialIndex);
-    addUartRemoteDevice(getPidDeviceInterface(), serialIndex);
-    addUartRemoteDevice(getExtendedMotionDeviceInterface(), serialIndex);
-    addUartRemoteDevice(getRobotKinematicsDeviceInterface(), serialIndex);
-    addUartRemoteDeviceWithNotification(getMotionDeviceInterface(), serialIndex, &mainBoardDeviceHandleMotionDeviceNotification);
 }
 
 void mainBoardCommonMotorAddDispatcher(void) {

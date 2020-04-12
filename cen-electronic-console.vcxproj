@@ -621,6 +621,7 @@
     <ClInclude Include="common\math\random.h" />
     <ClInclude Include="common\motor\dualHBridgeMotor.h" />
     <ClInclude Include="common\motor\dualHBridgeMotorDebug.h" />
+    <ClInclude Include="common\motor\dualHBridgePin.h" />
     <ClInclude Include="common\motor\pc\dualHBridgeMotorPc.h" />
     <ClInclude Include="common\pc\file\fileUtils.h" />
     <ClInclude Include="common\pc\pipe\pipeClientHelper.h" />

@@ -16,9 +16,9 @@ typedef struct {
     /** An array of pointer on timer pointer. */
     Timer(*timers)[];
     /** the size of the list. */
-    unsigned char size;
+    unsigned char timerListSize;
     /** the max size of the list.*/
-    unsigned char maxSize;
+    unsigned char timerListMaxSize;
 } TimerList;
 
 // INTERFACES

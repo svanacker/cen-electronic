@@ -30,6 +30,6 @@ unsigned int addDualDualHBridgePinStopEventTypeTableData(OutputStream* outputStr
 /**
 * Print a table with the value of HBridge Value (especially pin Usage).
 */
-void printMotorDebug(OutputStream* outputStream, const DualHBridgeMotor* dualHBridge);
+void printMotorDebug(OutputStream* outputStream, DualHBridgeMotor* dualHBridge);
 
 #endif

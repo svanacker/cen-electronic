@@ -56,14 +56,14 @@ void deviceLightHouse2020HandleRawData(unsigned char commandHeader, InputStream*
     else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_INIT) {
         ackCommand(outputStream, LIGHT_HOUSE_2020_DEVICE_HEADER, COMMAND_LIGHT_HOUSE_2020_INIT);
         lightHouse2020Reset(lightHouse);
-    }// SIMULATE ROBOT PLACED
-    else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_SIMULATE_ROBOT_PLACED) {
-        ackCommand(outputStream, LIGHT_HOUSE_2020_DEVICE_HEADER, COMMAND_LIGHT_HOUSE_2020_SIMULATE_ROBOT_PLACED);
-        lightHouse2020SimulateRobotPlaced(lightHouse);
-    }// SIMULATE ROBOT NEAR
-    else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_SIMULATE_ROBOT_NEAR) {
-        ackCommand(outputStream, LIGHT_HOUSE_2020_DEVICE_HEADER, COMMAND_LIGHT_HOUSE_2020_SIMULATE_ROBOT_NEAR);
-        // lightHouse2020SimulateRobotPlacedAndNear(lightHouse);
+    }
+    else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_SHOW) {
+        ackCommand(outputStream, LIGHT_HOUSE_2020_DEVICE_HEADER, COMMAND_LIGHT_HOUSE_2020_SHOW);
+        lightHouse2020On(lightHouse);
+    }
+    else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_OFF) {
+        ackCommand(outputStream, LIGHT_HOUSE_2020_DEVICE_HEADER, COMMAND_LIGHT_HOUSE_2020_OFF);
+        lightHouse2020Off(lightHouse);
     }
 }
 

@@ -308,6 +308,9 @@ void waitForInstruction() {
 
     // Manage Motion
     handleInstructionAndMotion(&pidMotion, notifyBufferedOutputStream);
+    
+    // Handle stopping Motor if pin
+    mainHandleMotorPins(&motors);
 
     // Copy the buffered notify to the serial NotifyOutputStream
     copyInputToOutputStream(getInputStream(&notifyOutputBuffer), &notifyOutputStream, &filterRemoveCRLF_255, COPY_ALL);

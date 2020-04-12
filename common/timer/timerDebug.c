@@ -54,11 +54,15 @@ void printTimer(OutputStream* outputStream, int index, Timer* timer) {
 void printTimerList(OutputStream* outputStream, TimerList* timerList) {
     appendStringAndBool(outputStream, "timerList.enabled : ", timerList->started);
     appendCRLF(outputStream);
+    appendStringAndDec(outputStream, "timerList.timerListMaxSize : ", timerList->timerListMaxSize);
+    appendCRLF(outputStream);
+    appendStringAndDec(outputStream, "timerList.timerListSize : ", timerList->timerListSize);
+    appendCRLF(outputStream);
     appendStringAndBool(outputStream, "working : ", timerList->working);
     appendCRLF(outputStream);
     printTimerListHeader(outputStream);
     int i;
-    for (i = 0; i < timerList->size; i++) {
+    for (i = 0; i < timerList->timerListSize; i++) {
         Timer* timer = (Timer*) timerList->timers;
         timer += i;
         printTimer(outputStream, i, timer);

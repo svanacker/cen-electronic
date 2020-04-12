@@ -123,12 +123,13 @@
         <itemPath>../../../common/math/bcdUtils.h</itemPath>
         <itemPath>../../../common/math/bitList.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="common.pwm.motor"
+                     displayName="common.motor"
+                     projectFiles="true">
+        <itemPath>../../../common/motor/dualHBridgePin.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="common.pwm" displayName="common.pwm" projectFiles="true">
         <itemPath>../../../common/pwm/pwmPic.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="common.pwm.motor"
-                     displayName="common.pwm.motor"
-                     projectFiles="true">
       </logicalFolder>
       <logicalFolder name="common.pwm.servo"
                      displayName="common.pwm.servo"
@@ -511,6 +512,7 @@
         <itemPath>../../mainBoard/mainBoardCommonStrategy.h</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonMatch.h</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonTof32.h</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonMotion.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f28"
                      displayName="main.mainBoardSmallRobot"
@@ -833,14 +835,6 @@
                      displayName="common.pwm.32"
                      projectFiles="true">
         <itemPath>../../../common/pwm/32/pwmPic32.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="common.pwm.motor"
-                     displayName="common.pwm.motor"
-                     projectFiles="true">
-      </logicalFolder>
-      <logicalFolder name="common.pwm.motor.32"
-                     displayName="common.pwm.motor.32"
-                     projectFiles="true">
       </logicalFolder>
       <logicalFolder name="common.pwm.servo"
                      displayName="common.pwm.servo"
@@ -1231,6 +1225,7 @@
         <itemPath>../../mainBoard/mainBoardCommonStrategy.c</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonMatch.c</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonTof32.c</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonMotion.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f28"
                      displayName="main.mainBoardSmallRobot"

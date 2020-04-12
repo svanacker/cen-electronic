@@ -13,43 +13,38 @@ int deviceLightHouse2020GetInterface(unsigned char commandHeader, DeviceInterfac
     // DEBUG
     if (commandHeader == COMMAND_LIGHT_HOUSE_2020_DEBUG) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Debug");
+            setFunctionNoArgumentAndNoResult("LightHouse Debug");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }// INIT
     else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_INIT) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Init");
+            setFunctionNoArgumentAndNoResult("LightHouse Init");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }// UP
     else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_UP) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Up");
+            setFunctionNoArgumentAndNoResult("LightHouse Up");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }// BOTTOM
     else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_BOTTOM) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Bottom");
+            setFunctionNoArgumentAndNoResult("LightHouse Bottom");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }// SHOW
     else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_SHOW) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Show");
+            setFunctionNoArgumentAndNoResult("Light Show");
         }
         return commandLengthValueForMode(mode, 0, 0);
-    }// SIMULATE ROBOT PLACED
-    else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_SIMULATE_ROBOT_PLACED) {
+    }
+    // OFF
+    else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_OFF) {
         if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Simulate Robot Placed");
-        }
-        return commandLengthValueForMode(mode, 0, 0);
-    }// SIMULATE ROBOT NEAR
-    else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_SIMULATE_ROBOT_NEAR) {
-        if (fillDeviceArgumentList) {
-            setFunctionNoArgumentAndNoResult("Simulate Robot Near");
+            setFunctionNoArgumentAndNoResult("Light Off");
         }
         return commandLengthValueForMode(mode, 0, 0);
     }

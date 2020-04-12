@@ -146,6 +146,13 @@ bool appendHex(OutputStream* outputStream, unsigned char c);
 void appendHex2(OutputStream* outputStream, unsigned char value);
 
 /**
+ * Send a signed char value into hexadecimal value (2 chars)
+ * @param outputStream the pointer on outputStream (POO simulation)
+ * @param value the value which must be sent
+ */
+void appendSignedHex2(OutputStream* outputStream, signed char value);
+
+/**
  * Send an signed int into hexadecimal value (3 chars)
  * @param value the value which must be sent
  */

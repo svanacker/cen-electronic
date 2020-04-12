@@ -190,6 +190,10 @@ void appendHex2(OutputStream* outputStream, unsigned char value) {
     internalAppendHex(outputStream, value, 4);
 }
 
+void appendSignedHex2(OutputStream* outputStream, signed char value) {
+    internalAppendHex(outputStream, value, 4);
+}
+
 void appendHex3(OutputStream* outputStream, signed int value) {
     internalAppendHex(outputStream, value, 8);
 }
