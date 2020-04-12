@@ -5,6 +5,9 @@
 
 #include "../pin.h"
 
+
+bool isPinInput32(PinList* pinList, int pinIndex);
+
 /**
  * Returns the name of each pin.
  * @param pinList the pinList object (POO approach)

@@ -57,6 +57,18 @@ void deviceIOHandleRawData(unsigned char commandHeader, InputStream* inputStream
     } else if (commandHeader == COMMAND_IO_DEBUG) {
         ackCommand(outputStream, IO_HEADER, COMMAND_IO_DEBUG);
         printAllPinValues(pinList, getInfoOutputStreamLogger());
+    } else if (commandHeader == COMMAND_IO_IS_INPUT) {
+        ackCommand(outputStream, IO_HEADER, COMMAND_IO_IS_INPUT);
+        unsigned char pinIndex = readHex2(inputStream);
+        bool value = isPinInput(pinList, pinIndex);
+        appendBool(outputStream, value);
+    }
+    else if (commandHeader == COMMAND_IO_SET_INPUT) {
+        ackCommand(outputStream, IO_HEADER, COMMAND_IO_SET_INPUT);
+        unsigned char pinIndex = readHex2(inputStream);
+        checkIsSeparator(inputStream);
+        bool newValue = readBool(inputStream);
+        setPinInput(pinList, pinIndex, newValue);
     }
 }
 

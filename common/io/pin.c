@@ -114,7 +114,16 @@ char* getPinName(PinList* pinList, int pinIndex) {
     return false;
 }
 
-void initPinList(PinList* pinList, GetPinValueFunction* getPinValueFunction, SetPinValueFunction* setPinValueFunction, int* object) {
+void initPinList(PinList* pinList, 
+        IsPinValidFunction* isPinValidFunction,
+        IsPinInputFunction* isPinInputFunction,
+        SetPinInputFunction* setPinInputFunction,
+        GetPinValueFunction* getPinValueFunction,
+        SetPinValueFunction* setPinValueFunction,
+        int* object) {
+    pinList->isPinValidFunction = isPinValidFunction;
+    pinList->isPinInputFunction = isPinInputFunction;
+    pinList->setPinInputFunction = setPinInputFunction;
     pinList->getPinValueFunction = getPinValueFunction;
     pinList->setPinValueFunction = setPinValueFunction;
     pinList->object = object;
@@ -144,6 +153,38 @@ void setPinValue(PinList* pinList, int pinIndex, bool pinValue) {
     pinList->setPinValueFunction(pinList, pinIndex, pinValue);
 }
 
+bool isPinInput(PinList* pinList, int pinIndex) {
+    if (pinList == NULL) {
+        writeError(IO_PIN_LIST_NULL);
+        return false;
+    }
+    if (pinList->isPinInputFunction == NULL) {
+        writeError(IO_PIN_LIST_IS_INPUT_FUNCTION_NULL);
+        return false;
+    }
+    return pinList->isPinInputFunction(pinList, pinIndex);
+}
 
+void setPinInput(PinList* pinList, int pinIndex, bool input) {
+    if (pinList == NULL) {
+        writeError(IO_PIN_LIST_NULL);
+        return;
+    }
+    if (pinList->setPinInputFunction == NULL) {
+        writeError(IO_PIN_LIST_SET_INPUT_FUNCTION_NULL);
+        return;
+    }
+    pinList->setPinInputFunction(pinList, pinIndex, input);
+}
 
-
+bool isPinValid(PinList* pinList, int pinIndex) {
+    if (pinList == NULL) {
+        writeError(IO_PIN_LIST_NULL);
+        return false;
+    }
+    if (pinList->isPinInputFunction == NULL) {
+        writeError(IO_PIN_LIST_IS_INPUT_FUNCTION_NULL);
+        return false;
+    }
+    return pinList->isPinValidFunction(pinList, pinIndex);
+}

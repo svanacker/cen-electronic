@@ -3,9 +3,9 @@
 
 #include <stdbool.h>
 
+#include "pin.h"
 #include "../../common/io/outputStream.h"
 
-#include "pin.h"
 
 /**
  * Print All Pin Values.

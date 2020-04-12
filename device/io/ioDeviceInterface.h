@@ -4,6 +4,10 @@
 #include "../../device/deviceInterface.h"
 #include "../../device/deviceConstants.h"
 
+#define COMMAND_IO_IS_INPUT      'i'
+
+#define COMMAND_IO_SET_INPUT     'I'
+
 #define COMMAND_IO_READ          'r'
 
 #define COMMAND_IO_WRITE         'w'

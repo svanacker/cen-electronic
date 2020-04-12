@@ -104,6 +104,7 @@
         <itemPath>../../../common/io/nullOutputStream.h</itemPath>
         <itemPath>../../../common/io/printTableWriter.h</itemPath>
         <itemPath>../../../common/io/bufferDebug.h</itemPath>
+        <itemPath>../../../common/io/pinDebug.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f47" displayName="common.io.32" projectFiles="true">
         <itemPath>../../../common/io/32/pin32.h</itemPath>
@@ -804,6 +805,7 @@
         <itemPath>../../../common/io/nullOutputStream.c</itemPath>
         <itemPath>../../../common/io/printTableWriter.c</itemPath>
         <itemPath>../../../common/io/bufferDebug.c</itemPath>
+        <itemPath>../../../common/io/pinDebug.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f45" displayName="common.io.32" projectFiles="true">
         <itemPath>../../../common/io/32/pin32.c</itemPath>

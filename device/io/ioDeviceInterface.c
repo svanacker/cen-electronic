@@ -23,7 +23,7 @@ int deviceIOGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, 
     } else if (commandHeader == COMMAND_IO_READ) {
         if (fillDeviceArgumentList) {
             setFunction("Read Bit", 1, 1);
-            setArgumentUnsignedHex2(0, "Pin Expander Index");
+            setArgumentUnsignedHex2(0, "Pin Index");
             setResultUnsignedChar1(0, "Value (bool)");
         }
         return commandLengthValueForMode(mode, 2, 1);
@@ -33,6 +33,23 @@ int deviceIOGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, 
             setFunctionNoArgumentAndNoResult("IO Debug");
         }
         return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_IO_IS_INPUT) {
+        if (fillDeviceArgumentList) {
+            setFunction("Is Pin Input", 1, 1);
+            setArgumentUnsignedHex2(0, "Pin Index");
+            setResultUnsignedChar1(0, "Input (1) / Output (0)");
+        }
+        return commandLengthValueForMode(mode, 2, 1);
+    }
+    else if (commandHeader == COMMAND_IO_SET_INPUT) {
+        if (fillDeviceArgumentList) {
+            setFunction("Set the pin input or output", 3, 0);
+            setArgumentUnsignedHex2(0, "Pin Index");
+            setArgumentSeparator(1);
+            setArgumentUnsignedChar1(2, "Input(1)/Output(0)");
+        }
+        return commandLengthValueForMode(mode, 4, 0);
     }
     return DEVICE_HEADER_NOT_HANDLED;
 }

@@ -12,17 +12,36 @@ struct PinList;
 typedef struct PinList PinList;
 
 /**
+* As we do not use always the same hardware, some pin could be 
+*/
+typedef bool IsPinValidFunction(PinList* pinList, int pinIndex);
+
+/**
+ * Returns if the pin is input
+ * @return true if the pin is input, false else
+ */
+typedef bool IsPinInputFunction(PinList* pinList, int pinIndex);
+
+/**
+* Set the input / output for the pinList.
+ * @param pinList the encapsulation of the list of pin
+ * @param pintIndex the index of the pin
+ * @param input true if we would like to set the pin as input, false if we want an output
+*/
+typedef void SetPinInputFunction(PinList* pinList, int pinIndex, bool input);
+
+/**
  * Get the pin value for the index.
  * @param pinList the encapsulation of the list of pin
- * @param the index of the pin
- * true if the pin is on, false if the pin is off
+ * @param pinIndex the index of the pin
+ * @return true if the pin is on, false if the pin is off
  */
 typedef bool GetPinValueFunction(PinList* pinList, int pinIndex);
 
 /**
  * Set the value for the pin Index (see pin.h)
  * @param pinList the encapsulation of the list of pin
- * @param the index of the pin
+ * @param pinIndex the index of the pin
  * @param pinValue the new value of the pin
  */
 typedef void SetPinValueFunction(PinList* pinList, int pinIndex, bool pinValue);
@@ -31,9 +50,21 @@ typedef void SetPinValueFunction(PinList* pinList, int pinIndex, bool pinValue);
  * Initialise a pin List for Pc.
  * @param pinList pointer on pinList object (POO Paradigm)
  */
-void initPinList(PinList* pinList, GetPinValueFunction* getPinValueFunction, SetPinValueFunction* setPinValueFunction, int* object);
+void initPinList(PinList* pinList, 
+        IsPinValidFunction* isPinValidFunction,
+        IsPinInputFunction* isPinInputFunction,
+        SetPinInputFunction* setPinInputFunction,
+        GetPinValueFunction* getPinValueFunction,
+        SetPinValueFunction* setPinValueFunction,
+        int* object);
 
 struct PinList {
+    /** Returns if the pin is valid or not (because of the use of PIC with 64 pin, 100 pin, or 144 pin. */
+    IsPinValidFunction* isPinValidFunction;
+    /** Returns if the pin is in input (1) or output (0)*/
+    IsPinInputFunction* isPinInputFunction;
+    /** Set the mode input/output of the pin. */
+    SetPinInputFunction* setPinInputFunction;
     /** The function which must be called to get the status of a pin. */
     GetPinValueFunction* getPinValueFunction;
     /** The function which must be called to set a pin. */
@@ -163,10 +194,34 @@ bool getPinValue(PinList* pinList, int pinIndex);
 /**
  * Set the value for the pin Index (see pin.h)
  * @param pinList the encapsulation of the list of pin
- * @param the index of the pin
+ * @param pinIndex the index of the pin
  * @param pinValue the new value of the pin
  */
 void setPinValue(PinList* pinList, int pinIndex, bool pinValue);
+
+/**
+ * Returns if the pin is configured as input or output.
+ * @param pinList the encapsulation of the list of pin
+ * @param pinIndex the index of the pin
+ * @return true if the pin is in input (true) or output (false)
+ */
+bool isPinInput(PinList* pinList, int pinIndex);
+
+/**
+* Set as input or output the pin defined by the index
+* @param pinList the encapsulation of the list of pin
+* @param pinIndex the index of the pin
+* @param input true if we want to set the pin as input, false if we want to set pin as output
+*/
+void setPinInput(PinList* pinList, int pinIndex, bool input);
+
+/**
+ * Returns if the pin is a really valid or invalid pin.
+ * @param pinList the encapsulation of the list of pin
+ * @param pinIndex the index of the pin
+ * @return true if the pin is valid or invalid
+ */
+bool isPinValid(PinList* pinList, int pinIndex);
 
 #endif
 

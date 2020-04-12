@@ -17,6 +17,7 @@
 #include "../../common/log/logLevel.h"
 
 #include "../../common/motor/dualHBridgeMotor.h"
+#include "../../common/motor/dualHBridgeMotorDebug.h"
 
 #include "../../device/device.h"
 

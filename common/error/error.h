@@ -48,6 +48,9 @@ void clearLastError();
 #define IO_PIN_LIST_NULL                                                  0x0111
 #define IO_PIN_LIST_GET_FUNCTION_NULL                                     0x0112
 #define IO_PIN_LIST_SET_FUNCTION_NULL                                     0x0113
+#define IO_PIN_LIST_IS_INPUT_FUNCTION_NULL                                0x0114
+#define IO_PIN_LIST_SET_INPUT_FUNCTION_NULL                               0x0115
+#define IO_PIN_LIST_IS_PIN_VALID_FUNCTION_NULL                            0x0116
 
 #define IO_READER_READ_FILTERED_CHAR                                      0x0120
 #define IO_READER_CHECK_CHAR_PROBLEM                                      0x0130

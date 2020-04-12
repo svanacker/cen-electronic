@@ -440,9 +440,14 @@ int runMotorBoard() {
     startTimerList(true);
 
     // IO
+    // Desactive le port JTAG et libere les ports  RB10.RB11.RB12.RB13 pour les IO
+    DDPCONbits.JTAGEN = 0;
     // RB12 & RB 13 are IO of MOTOR_BOARD and must be an input
     TRISBbits.TRISB12 = 1;
     TRISBbits.TRISB13 = 1;
+    // Digital Mode
+    AD1PCFGbits.PCFG12 = 1;
+    AD1PCFGbits.PCFG13 = 1;    
 
     while (1) {
         waitForInstruction();
