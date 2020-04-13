@@ -1,6 +1,7 @@
 #include "lightHouseDevice2020.h"
 
 #include "lightHouse2020.h"
+#include "lightHouse2020Actions.h"
 #include "lightHouse2020Debug.h"
 #include "lightHouseDeviceInterface2020.h"
 
@@ -24,6 +25,7 @@
 #include "../../../common/log/logLevel.h"
 
 #include "../../../device/deviceConstants.h"
+#include "lightHouse2020Workflow.h"
 
 static LightHouse2020* lightHouse;
 
@@ -55,14 +57,16 @@ void deviceLightHouse2020HandleRawData(unsigned char commandHeader, InputStream*
     }// INIT
     else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_INIT) {
         ackCommand(outputStream, LIGHT_HOUSE_2020_DEVICE_HEADER, COMMAND_LIGHT_HOUSE_2020_INIT);
-        lightHouse2020Reset(lightHouse);
+        lightHouse2020ResetWorkflow(lightHouse);
     }
     else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_SHOW) {
         ackCommand(outputStream, LIGHT_HOUSE_2020_DEVICE_HEADER, COMMAND_LIGHT_HOUSE_2020_SHOW);
+        lightHouse2020RotationOn(lightHouse);
         lightHouse2020On(lightHouse);
     }
     else if (commandHeader == COMMAND_LIGHT_HOUSE_2020_OFF) {
         ackCommand(outputStream, LIGHT_HOUSE_2020_DEVICE_HEADER, COMMAND_LIGHT_HOUSE_2020_OFF);
+        lightHouse2020RotationOff(lightHouse);
         lightHouse2020Off(lightHouse);
     }
 }

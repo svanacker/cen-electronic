@@ -43,8 +43,10 @@ static IOExpanderList ioExpanderList;
 static IOExpander ioExpanderArray[MAIN_PHARE_2020_IO_EXPANDER_LIST_LENGTH];
 
 // Multiplexer
+/*
 static MultiplexerList multiplexerList;
 static Multiplexer multiplexerArray[MAIN_PHARE_2020_MULTIPLEXER_LIST_LENGTH];
+*/
 
 // TOF
 static TofSensorList tofSensorList;
@@ -54,7 +56,7 @@ static TofSensorVL53L0X tofSensorVL53L0XArray[MAIN_PHARE_2020_TOF_SENSOR_LIST_CO
 void mainLightHouse2020TofAddDevices(void) {
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(&tofSensorList));
     addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
-    addLocalDevice(getMultiplexerDeviceInterface(), getMultiplexerDeviceDescriptor(&multiplexerList));
+    // addLocalDevice(getMultiplexerDeviceInterface(), getMultiplexerDeviceDescriptor(&multiplexerList));
 }
 
 void mainBoardLightHouse2020IOExpanderListInitDrivers(I2cBus* i2cBus) {
@@ -72,17 +74,20 @@ void mainBoardLightHouse2020IOExpanderListInitDrivers(I2cBus* i2cBus) {
 }
 
 MultiplexerList* mainLightHouse2020MultiplexerListInitDrivers(I2cBus* i2cBus) {
+    /*
     appendString(getDebugOutputStreamLogger(), "Multiplexer List ...");
     initMultiplexerList(&multiplexerList, (Multiplexer(*)[]) & multiplexerArray, MAIN_PHARE_2020_MULTIPLEXER_LIST_LENGTH);
 
     // -> Multiplexer 0 Board
     Multiplexer* multiplexerExpander0 = getMultiplexerByIndex(&multiplexerList, 0);
     I2cBusConnection* multiplexerBoardBusConnection0 = addI2cBusConnection(i2cBus, TCA9548A_ADDRESS_0, true);
-    initMultiplexerTca9548A(multiplexerExpander0, multiplexerBoardBusConnection0, /* Cache Masks */ true);
+    initMultiplexerTca9548A(multiplexerExpander0, multiplexerBoardBusConnection0, true);
 
     appendStringLN(getDebugOutputStreamLogger(), "OK");
 
     return &multiplexerList;
+    */
+    return NULL;
 }
 
 TofSensorList* mainLightHouse2020TofInitDrivers(I2cBus* i2cBus) {
@@ -91,7 +96,7 @@ TofSensorList* mainLightHouse2020TofInitDrivers(I2cBus* i2cBus) {
     mainBoardLightHouse2020IOExpanderListInitDrivers(i2cBus);
 
     if (MAIN_PHARE_2020_TOF_SENSOR_LIST_COUNT > 0) {
-        tofSensorArray[0].name = "TOF LIGHT HOUSE 0";
+        tofSensorArray[0].name = "TOF 0";
         tofSensorArray[0].enabled = true;
         tofSensorArray[0].orientationRadian = 0.0f;
         tofSensorArray[0].distanceFromRobotCenter = 0.0f;
@@ -99,35 +104,15 @@ TofSensorList* mainLightHouse2020TofInitDrivers(I2cBus* i2cBus) {
 
         tofSensorArray[0].detectionThreshold = 1;
 
-        tofSensorArray[0].i2cBusIndex = 1;
+        tofSensorArray[0].i2cBusIndex = 0;
         tofSensorArray[0].changeAddress = true;
         tofSensorArray[0].targetAddress = VL530X_ADDRESS_0;
-        tofSensorArray[0].multiplexer = getMultiplexerByIndex(&multiplexerList, 0);
-        tofSensorArray[0].multiplexerChannel = MULTIPLEXER_CHANNEL_0;
+        tofSensorArray[0].multiplexer = NULL;
+        tofSensorArray[0].multiplexerChannel = 0;
 
         tofSensorArray[0].hardwareRestartable = false;
         tofSensorArray[0].hardwareRestartIOExpander = NULL;
         tofSensorArray[0].hardwareRestartIOExpanderIoIndex = 0;
-
-    }
-    if (MAIN_PHARE_2020_TOF_SENSOR_LIST_COUNT > 1) {
-        tofSensorArray[1].name = "TOF LIGHT HOUSE 1";
-        tofSensorArray[1].enabled = true;
-        tofSensorArray[1].orientationRadian = 0.0f;
-        tofSensorArray[1].distanceFromRobotCenter = 0.0f;
-        tofSensorArray[1].angleFromRobotCenterRadian = 0.0f;
-
-        tofSensorArray[1].detectionThreshold = 1;
-
-        tofSensorArray[1].i2cBusIndex = 1;
-        tofSensorArray[1].changeAddress = true;
-        tofSensorArray[1].targetAddress = VL530X_ADDRESS_1;
-        tofSensorArray[1].multiplexer = getMultiplexerByIndex(&multiplexerList, 0);
-        tofSensorArray[1].multiplexerChannel = MULTIPLEXER_CHANNEL_1;
-
-        tofSensorArray[1].hardwareRestartable = false;
-        tofSensorArray[1].hardwareRestartIOExpander = NULL;
-        tofSensorArray[1].hardwareRestartIOExpanderIoIndex = 0;
     }
 
     appendStringLN(getDebugOutputStreamLogger(), "TOF ...");

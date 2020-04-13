@@ -9,35 +9,6 @@
 #include "../../../robot/config/robotConfig.h"
 #include "../../../robot/match/endMatch.h"
 
-// SERVO INDEX
-
-#define LIGHT_HOUSE_2020_SERVO_INDEX                             0
-
-// SERVO VALUE
-#define LIGHT_HOUSE_2020_SERVO_LEFT_VALUE                        500
-#define LIGHT_HOUSE_2020_SERVO_RIGHT_VALUE                       2500
-#define LIGHT_HOUSE_2020_SERVO_SPEED                             10
-
-// DISTANCE
-#define LIGHT_HOUSE_2020_ROBOT_NO_TOUCH_DISTANCE_MIN                      10
-#define LIGHT_HOUSE_2020_ROBOT_NO_TOUCH_DISTANCE_MAX                      30
-
-#define LIGHT_HOUSE_2020_ROBOT_TOUCH_DISTANCE_MIN                         50
-#define LIGHT_HOUSE_2020_ROBOT_TOUCH_DISTANCE_MAX                         100
-
-// CHECK / THRESHOLD
-#define LIGHT_HOUSE_2020_THRESHOLD_COUNT                                5
-#define LIGHT_HOUSE_2020_MISSED_DECREMENT_VALUE                         5
-
-// RELEASE TRY COUNT 
-#define LIGHT_HOUSE_2020_RELEASE_TRY_COUNT                              2
-
-// PWM FOR LIGHT
-#define LIGHT_HOUSE_2020_LIGHT_ON_VALUE                                 0x60
-
-// PWM FOR MOTOR
-#define LIGHT_HOUSE_2020_MOTOR_FORWARD_SPEED                            40
-#define LIGHT_HOUSE_2020_MOTOR_BACKWARD_SPEED                          -20
 
 /**
  * Define the state of the LightHouse.
@@ -45,26 +16,37 @@
 enum LightHouse2020State {
     // Unknown (to avoid that we forget to init it by error)
     LIGHT_HOUSE_STATE_UNKNOWN = 0,
+
+    // INIT
     // The Launcher is initialized
     LIGHT_HOUSE_STATE_INITIALIZED = 1,
 
+    // GO TO BOTTOM
+    // The robot is going down
+    LIGHT_HOUSE_STATE_INIT_GOING_DOWN = 2,
+    // The robot is at the bottom
+    LIGHT_HOUSE_STATE_INIT_POSITION_BOTTOM = 3,
+    
     // PLACED
     // Check if the tof Sensor is ok
-    LIGHT_HOUSE_STATE_SEARCH_IF_PLACED = 2,
+    LIGHT_HOUSE_STATE_SEARCH_IF_PLACED = 4,
     // The light House tof Sensor was found
-    LIGHT_HOUSE_STATE_PLACED = 3,
-    // We search if we need to launch
-    LIGHT_HOUSE_STATE_SEARCH = 4,
-    // The light search is ok
-    LIGHT_HOUSE_STATE_SEARCH_OK = 5,
+    LIGHT_HOUSE_STATE_PLACED = 5,
     
+    // TOUCH
+    // We search after a touch
+    LIGHT_HOUSE_STATE_SEARCH_TOUCH = 6,
+    // The lightHouse was touch
+    LIGHT_HOUSE_STATE_TOUCHED = 7,
+    
+    // LAUNCH
     // The launcher must be launch
-    LIGHT_HOUSE_STATE_TO_LAUNCH = 6,
+    LIGHT_HOUSE_STATE_TO_LAUNCH = 8,
     // The launcher was launched
-    LIGHT_HOUSE_STATE_LAUNCHED = 7,
+    LIGHT_HOUSE_STATE_LAUNCHED = 9,
 
     // SHOW REMAINING TIME
-    LIGHT_HOUSE_STATE_SHOW_REMAINING_TIME = 8
+    LIGHT_HOUSE_STATE_SHOW_REMAINING_TIME = 11
 };
 
 /**
@@ -95,6 +77,8 @@ typedef struct {
     signed int robotNearDetectionCount;
     /** Internal timer (to avoid to show more than 10x by second) */
     unsigned int timerCount;
+    /** Rotation of Servo. */
+    bool rotateServo;
 } LightHouse2020;
 
 /**
@@ -106,27 +90,8 @@ void initLightHouse2020(LightHouse2020* lightHouse,
         ServoList* servoList,
         TofSensorList* tofSensorList);
 
-/**
- * Main method which must be called in the main processing loop so that
- * we could manage the state and find actions to do.
- */
-void handleElectronLauncherActions(LightHouse2020* lightHouse);
-
-/**
- * Handle all Change of state to be able to debug the workflow.
- */
-void updateElectronLauncherState(LightHouse2020* lightHouse, enum LightHouse2020State newState);
-
-// ACTIONS
-
-void lightHouse2020Up(LightHouse2020* lightHouse);
-
-void lightHouse2020Bottom(LightHouse2020* lightHouse);
+// OTHER
 
 void lightHouse2020Reset(LightHouse2020* lightHouse);
-
-void lightHouse2020On(LightHouse2020* lightHouse);
-
-void lightHouse2020Off(LightHouse2020* lightHouse);
 
 #endif

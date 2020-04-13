@@ -12,6 +12,16 @@
 bool clientMotorWrite(signed int motorValue1, signed int motorValue2);
 
 /**
+ * Client Stub to send instruction to move left motor (1).
+ */
+bool clientMotorLeft(signed int motorValueLeft);
+
+/**
+ * Client Stub to send instruction to move right motor (2).
+ */
+bool clientMotorRight(signed int motorValueRight);
+
+/**
  * Client stub to send instruction to stop the motor.
  * @return 
  */

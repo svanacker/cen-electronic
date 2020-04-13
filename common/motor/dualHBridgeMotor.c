@@ -36,31 +36,39 @@ void setMotorSpeeds(DualHBridgeMotor* dualHBridgeMotor, signed int hBridgeSpeed1
     dualHBridgeMotor->dualHBridgeMotorWriteValue(dualHBridgeMotor, hBridgeSpeed1, hBridgeSpeed2);
 }
 
-void mainHandleMotorPins(DualHBridgeMotor* dualHBridgeMotor) {
+void resetMotorPinNotification(DualHBridgeMotor* dualHBridgeMotor) {
     PinList* pinList = (PinList*)(dualHBridgeMotor->pinListObject);
     if (pinList == NULL) {
         writeError(IO_PIN_LIST_NULL);
         return;
     }
+    dualHBridgeMotor->pin1LastNotificationValue = getPinValue(pinList, DUAL_H_BRIDGE_PIN_1_INDEX);
+    dualHBridgeMotor->pin2LastNotificationValue = getPinValue(pinList, DUAL_H_BRIDGE_PIN_2_INDEX);
+}
+
+bool mainHandleMotorPins(DualHBridgeMotor* dualHBridgeMotor) {
+    bool result = false;
+    PinList* pinList = (PinList*)(dualHBridgeMotor->pinListObject);
+    if (pinList == NULL) {
+        writeError(IO_PIN_LIST_NULL);
+        return result;
+    }
     enum DualHBridgePinStopEventType pin1Stop = dualHBridgeMotor->pin1StopEventType;
     enum DualHBridgePinStopEventType pin2Stop = dualHBridgeMotor->pin2StopEventType;
 
     if (pin1Stop == PIN_STOP_EVENT_NO_ACTION && pin2Stop == PIN_STOP_EVENT_NO_ACTION) {
-        return;
+        return result;
     }
 
     signed int motorValue1 = dualHBridgeMotor->dualHBridgeMotorReadValue(dualHBridgeMotor, HBRIDGE_1);
     signed int motorValue2 = dualHBridgeMotor->dualHBridgeMotorReadValue(dualHBridgeMotor, HBRIDGE_2);
-
-    unsigned char pinIndex1 = PIN_INDEX_RB12;
-    unsigned char pinIndex2 = PIN_INDEX_RB13;
 
     signed int newMotorValue1 = motorValue1;
     signed int newMotorValue2 = motorValue2;
 
     // Pin1
     if (pin1Stop != PIN_STOP_EVENT_NO_ACTION) {
-        bool pinValue1 = getPinValue(pinList, pinIndex1);
+        bool pinValue1 = getPinValue(pinList, DUAL_H_BRIDGE_PIN_1_INDEX);
 
         // Motor 1
         if ((dualHBridgeMotor->pin1UsageType == PIN_USAGE_TYPE_MOTOR_1_FORWARD_END && motorValue1 > 0)
@@ -69,6 +77,7 @@ void mainHandleMotorPins(DualHBridgeMotor* dualHBridgeMotor) {
             if ((pin1Stop == PIN_STOP_EVENT_LOW_STOP && !pinValue1)
                 || (pin1Stop == PIN_STOP_EVENT_HIGH_STOP && pinValue1)) {
                 newMotorValue1 = 0;
+                result = true;
             }
         }
         // Motor 2
@@ -77,12 +86,13 @@ void mainHandleMotorPins(DualHBridgeMotor* dualHBridgeMotor) {
             if ((pin1Stop == PIN_STOP_EVENT_LOW_STOP && !pinValue1)
                 || (pin1Stop == PIN_STOP_EVENT_HIGH_STOP && pinValue1)) {
                 newMotorValue2 = 0;
+                result = true;
             }
         }
     }
     // Pin 2
     if (pin2Stop != PIN_STOP_EVENT_NO_ACTION) {
-        bool pinValue2 = getPinValue(pinList, pinIndex2);
+        bool pinValue2 = getPinValue(pinList, DUAL_H_BRIDGE_PIN_2_INDEX);
 
         // Motor 1
         if ((dualHBridgeMotor->pin2UsageType == PIN_USAGE_TYPE_MOTOR_1_FORWARD_END && motorValue1 > 0)
@@ -90,6 +100,7 @@ void mainHandleMotorPins(DualHBridgeMotor* dualHBridgeMotor) {
             if ((pin2Stop == PIN_STOP_EVENT_LOW_STOP && !pinValue2)
                 || (pin2Stop == PIN_STOP_EVENT_HIGH_STOP && pinValue2)) {
                 newMotorValue1 = 0;
+                result = true;
             }
         }
         // Motor 2
@@ -98,6 +109,7 @@ void mainHandleMotorPins(DualHBridgeMotor* dualHBridgeMotor) {
             if ((pin2Stop == PIN_STOP_EVENT_LOW_STOP && !pinValue2)
                 || (pin2Stop == PIN_STOP_EVENT_HIGH_STOP && pinValue2)) {
                 newMotorValue2 = 0;
+                result = true;
             }
         }
     }
@@ -106,4 +118,5 @@ void mainHandleMotorPins(DualHBridgeMotor* dualHBridgeMotor) {
     if (newMotorValue1 != motorValue1 || newMotorValue2 != motorValue2) {
         dualHBridgeMotor->dualHBridgeMotorWriteValue(dualHBridgeMotor, newMotorValue1, newMotorValue2);
     }
+    return result;
 }

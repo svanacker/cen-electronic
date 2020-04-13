@@ -56,7 +56,7 @@ int deviceIOExpanderGetInterface(unsigned char commandHeader, DeviceInterfaceMod
 }
 
 static DeviceInterface deviceInterface = {
-    .deviceHeader = IO_DEVICE_HEADER,
+    .deviceHeader = IO_DEVICE_EXPANDER_HEADER,
     .deviceGetName = &deviceIOExpanderGetName,
     .deviceGetInterface = &deviceIOExpanderGetInterface
 };

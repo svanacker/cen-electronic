@@ -55,7 +55,7 @@ int deviceIOGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode, 
 }
 
 static DeviceInterface deviceInterface = {
-    .deviceHeader = IO_HEADER,
+    .deviceHeader = IO_DEVICE_HEADER,
     .deviceGetName = &deviceIOGetName,
     .deviceGetInterface = &deviceIOGetInterface
 };

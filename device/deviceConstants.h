@@ -3,7 +3,7 @@
 
 
 /** Device header .*/
-#define IO_HEADER                                  '@'
+#define IO_DEVICE_HEADER                           '@'
 
 #define BATTERY_DEVICE_HEADER                      'b'
 
@@ -23,7 +23,7 @@
 
 #define FILE_DEVICE_HEADER                         'F'
 
-#define IO_DEVICE_HEADER                           'g'
+#define IO_DEVICE_EXPANDER_HEADER                  'g'
 
 #define MULTIPLEXER_HEADER                         'G'
 

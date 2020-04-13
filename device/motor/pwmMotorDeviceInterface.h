@@ -15,6 +15,18 @@
 #define COMMAND_MOVE_MOTOR         'w'
 
 /**
+ * Defines the header to move only the first motor (Left).
+ * @return 
+ */
+#define COMMAND_MOVE_MOTOR_LEFT     'L'
+
+/**
+ * Defines the header to move only the second motor (Right).
+ * @return 
+ */
+#define COMMAND_MOVE_MOTOR_RIGHT    'R'
+
+/**
  * Defines the header to move the motor.
  */
 #define COMMAND_READ_MOTOR_VALUE   'r'
@@ -38,6 +50,13 @@
  * Set the usage of each pin. 
  */
 #define COMMAND_SET_PIN_USAGE_MOTOR  'p'
+
+// NOTIFICATION
+
+/**
+ * Notification when a change was detected on PIN.
+ */
+#define NOTIFY_PIN_CHANGED           'n'
 
 /**
  * Interface for Device.

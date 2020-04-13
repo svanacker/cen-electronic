@@ -19,6 +19,20 @@ int deviceMotorGetInterface(unsigned char header, DeviceInterfaceMode mode, bool
         }
         return commandLengthValueForMode(mode, 4, 0);
     }
+    else if (header == COMMAND_MOVE_MOTOR_LEFT) {
+        if (fillDeviceArgumentList) {
+            setFunction("Motor Left only", 1, 0);
+            setArgumentSignedHex2(0, "motor 1 (left)");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    else if (header == COMMAND_MOVE_MOTOR_RIGHT) {
+        if (fillDeviceArgumentList) {
+            setFunction("Motor Right only", 1, 0);
+            setArgumentSignedHex2(0, "motor 2 (right)");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
     else if (header == COMMAND_SET_PIN_USAGE_MOTOR) {
         if (fillDeviceArgumentList) {
             setFunction("Set Motor Pin Usages", 7, 0);
@@ -60,6 +74,19 @@ int deviceMotorGetInterface(unsigned char header, DeviceInterfaceMode mode, bool
         }
         return commandLengthValueForMode(mode, 0, 0);
     }
+    // NOTIFICATION
+    if (DEVICE_MODE_NOTIFY == mode) {
+        if (header == NOTIFY_PIN_CHANGED) {
+            if (fillDeviceArgumentList) {
+                setNotification("Motor Pin Changed", 3);
+                setArgumentUnsignedChar1(0, "pin 1");
+                setArgumentSeparator(1);
+                setArgumentUnsignedChar1(2, "pin 2");
+            }
+            return 3;
+        }
+    }
+
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

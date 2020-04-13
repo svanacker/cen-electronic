@@ -55,13 +55,13 @@ IOExpander* readIOExpanderFromInputStream(InputStream* inputStream) {
 void deviceIOExpanderHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     // ALL BITS
     if (commandHeader == COMMAND_IO_EXPANDER_READ_VALUE) {
-        ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_IO_EXPANDER_READ_VALUE);
+        ackCommand(outputStream, IO_DEVICE_EXPANDER_HEADER, COMMAND_IO_EXPANDER_READ_VALUE);
         IOExpander* ioExpander = readIOExpanderFromInputStream(inputStream);
 
         unsigned char value = ioExpander->ioExpanderReadValue(ioExpander);
         appendHex2(outputStream, value);
     } else if (commandHeader == COMMAND_IO_EXPANDER_WRITE_VALUE) {
-        ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_IO_EXPANDER_WRITE_VALUE);
+        ackCommand(outputStream, IO_DEVICE_EXPANDER_HEADER, COMMAND_IO_EXPANDER_WRITE_VALUE);
         IOExpander* ioExpander = readIOExpanderFromInputStream(inputStream);
         checkIsSeparator(inputStream);
         unsigned char newValue = readHex2(inputStream);
@@ -69,7 +69,7 @@ void deviceIOExpanderHandleRawData(unsigned char commandHeader, InputStream* inp
         ioExpander->ioExpanderWriteValue(ioExpander, newValue);
     }// SINGLE BIT
     else if (commandHeader == COMMAND_IO_EXPANDER_READ_SINGLE_BIT) {
-        ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_IO_EXPANDER_READ_SINGLE_BIT);
+        ackCommand(outputStream, IO_DEVICE_EXPANDER_HEADER, COMMAND_IO_EXPANDER_READ_SINGLE_BIT);
 
         IOExpander* ioExpander = readIOExpanderFromInputStream(inputStream);
 
@@ -79,7 +79,7 @@ void deviceIOExpanderHandleRawData(unsigned char commandHeader, InputStream* inp
         bool value = ioExpander->ioExpanderReadSingleValue(ioExpander, ioIndex);
         appendHex(outputStream, (unsigned char) value);
     } else if (commandHeader == COMMAND_IO_EXPANDER_WRITE_SINGLE_BIT) {
-        ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_IO_EXPANDER_WRITE_SINGLE_BIT);
+        ackCommand(outputStream, IO_DEVICE_EXPANDER_HEADER, COMMAND_IO_EXPANDER_WRITE_SINGLE_BIT);
 
         IOExpander* ioExpander = readIOExpanderFromInputStream(inputStream);
 
@@ -91,7 +91,7 @@ void deviceIOExpanderHandleRawData(unsigned char commandHeader, InputStream* inp
         ioExpander->ioExpanderWriteSingleValue(ioExpander, ioIndex, newValue);
     }// DEBUG
     else if (commandHeader == COMMAND_IO_EXPANDER_DEBUG) {
-        ackCommand(outputStream, IO_DEVICE_HEADER, COMMAND_IO_EXPANDER_DEBUG);
+        ackCommand(outputStream, IO_DEVICE_EXPANDER_HEADER, COMMAND_IO_EXPANDER_DEBUG);
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
 
         IOExpanderList* ioExpanderList = getIOExpanderListFromDeviceDescriptor(&descriptor);

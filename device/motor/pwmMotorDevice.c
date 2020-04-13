@@ -37,7 +37,12 @@ bool isPwmMotorDeviceOk(void) {
 }
 
 void devicePwmMotorHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
-    if (commandHeader == COMMAND_MOVE_MOTOR) {
+    if (commandHeader == COMMAND_STOP_MOTOR) {
+        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_STOP_MOTOR);
+
+        stopMotors(dualHBridgeMotorPwm);
+    }
+    else if (commandHeader == COMMAND_MOVE_MOTOR) {
         signed int left = readSignedHex2(inputStream);
         signed int right = readSignedHex2(inputStream);
         ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_MOVE_MOTOR);
@@ -50,10 +55,17 @@ void devicePwmMotorHandleRawData(unsigned char commandHeader, InputStream* input
         appendHex2(outputStream, left / 2);
         appendHex2(outputStream, right / 2);
     }
-    else if (commandHeader == COMMAND_STOP_MOTOR) {
-        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_STOP_MOTOR);
-
-        stopMotors(dualHBridgeMotorPwm);
+    else if (commandHeader == COMMAND_MOVE_MOTOR_LEFT) {
+        signed int left = readSignedHex2(inputStream);
+        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_MOVE_MOTOR_LEFT);
+        signed int right = dualHBridgeMotorPwm->dualHBridgeMotorReadValue(dualHBridgeMotorPwm, HBRIDGE_2);
+        dualHBridgeMotorPwm->dualHBridgeMotorWriteValue(dualHBridgeMotorPwm, left * 2, right);
+    }
+    else if (commandHeader == COMMAND_MOVE_MOTOR_RIGHT) {
+        signed int right = readSignedHex2(inputStream);
+        ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_MOVE_MOTOR_RIGHT);
+        signed int left = dualHBridgeMotorPwm->dualHBridgeMotorReadValue(dualHBridgeMotorPwm, HBRIDGE_1);
+        dualHBridgeMotorPwm->dualHBridgeMotorWriteValue(dualHBridgeMotorPwm, left, right * 2);
     }
     else if (commandHeader == COMMAND_SMALL_TEST_MOTOR) {
         ackCommand(outputStream, MOTOR_DEVICE_HEADER, COMMAND_SMALL_TEST_MOTOR);
@@ -112,7 +124,40 @@ void devicePwmMotorHandleRawData(unsigned char commandHeader, InputStream* input
         dualHBridgeMotorPwm->pin1StopEventType = (enum DualHBridgePinStopEventType) readHex2(inputStream);
         checkIsSeparator(inputStream);
         dualHBridgeMotorPwm->pin2StopEventType = (enum DualHBridgePinStopEventType) readHex2(inputStream);
+        
+        // Reset to the current Pin Values to be sure to notify
+        resetMotorPinNotification(dualHBridgeMotorPwm);
     }
+}
+
+bool motorDevicePinChangeNotify(OutputStream* notificationOutputStream) {
+    if (notificationOutputStream == NULL) {
+        return false;;
+    }
+    PinList* pinList = (PinList*)(dualHBridgeMotorPwm->pinListObject);
+    if (pinList == NULL) {
+        writeError(IO_PIN_LIST_NULL);
+        return;
+    }
+
+    bool pinValue1 = getPinValue(pinList, DUAL_H_BRIDGE_PIN_1_INDEX);
+    bool pinValue2 = getPinValue(pinList, DUAL_H_BRIDGE_PIN_2_INDEX);
+    
+    // We don't notify if no change
+    if (pinValue1 == dualHBridgeMotorPwm->pin1LastNotificationValue && pinValue2 == dualHBridgeMotorPwm->pin2LastNotificationValue) {
+        return false;
+    }
+
+    // Notification part
+    append(notificationOutputStream, MOTOR_DEVICE_HEADER);
+    append(notificationOutputStream, NOTIFY_PIN_CHANGED);
+    appendBool(notificationOutputStream, pinValue1);
+    appendSeparator(notificationOutputStream);
+    appendBool(notificationOutputStream, pinValue2);
+    
+    resetMotorPinNotification(dualHBridgeMotorPwm);
+    
+    return true;
 }
 
 static DeviceDescriptor descriptor = {

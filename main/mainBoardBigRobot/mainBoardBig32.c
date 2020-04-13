@@ -21,6 +21,7 @@
 #include "../../main/mainBoard/mainBoardCommonMatch.h"
 #include "../../main/mainBoard/mainBoardCommonMeca1.h"
 #include "../../main/mainBoard/mainBoardCommonMotor.h"
+#include "../../main/mainBoard/mainBoardCommonMotion.h"
 #include "../../main/mainBoard/mainBoardCommonStrategy.h"
 #include "../../main/mainBoard/mainBoardCommonTof.h"
 #include "../../main/mainBoard/mainBoardCommonTof32.h"

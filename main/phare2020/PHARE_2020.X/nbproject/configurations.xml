@@ -4,8 +4,14 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <logicalFolder name="f29" displayName="client.io" projectFiles="true">
+        <itemPath>../../../client/io/clientIO.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f22" displayName="client.motor" projectFiles="true">
         <itemPath>../../../client/motor/clientMotor.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f30" displayName="client.test" projectFiles="true">
+        <itemPath>../../../client/test/clientTest.h</itemPath>
       </logicalFolder>
       <logicalFolder name="common" displayName="common" projectFiles="true">
         <itemPath>../../../common/commons.h</itemPath>
@@ -447,6 +453,12 @@
         <itemPath>../../../robot/2020/lightHouse/lightHouse2020Debug.h</itemPath>
         <itemPath>../../../robot/2020/lightHouse/lightHouseDevice2020.h</itemPath>
         <itemPath>../../../robot/2020/lightHouse/lightHouseDeviceInterface2020.h</itemPath>
+        <itemPath>../../../robot/2020/lightHouse/lightHouse2020CheckRobotPlaced.h</itemPath>
+        <itemPath>../../../robot/2020/lightHouse/lightHouse2020CheckRobotTouched.h</itemPath>
+        <itemPath>../../../robot/2020/lightHouse/lightHouse2020Workflow.h</itemPath>
+        <itemPath>../../../robot/2020/lightHouse/lightHouse2020CheckShowRemainingTime.h</itemPath>
+        <itemPath>../../../robot/2020/lightHouse/lightHouse2020CheckRobotBottom.h</itemPath>
+        <itemPath>../../../robot/2020/lightHouse/lightHouse2020CheckRobotLaunched.h</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"
@@ -509,8 +521,14 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="f24" displayName="client.io" projectFiles="true">
+        <itemPath>../../../client/io/clientIO.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="f23" displayName="client.motor" projectFiles="true">
         <itemPath>../../../client/motor/clientMotor.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f27" displayName="client.test" projectFiles="true">
+        <itemPath>../../../client/test/clientTest.c</itemPath>
       </logicalFolder>
       <logicalFolder name="common.2d" displayName="common.2d" projectFiles="true">
         <itemPath>../../../common/2d/2d.c</itemPath>
@@ -946,6 +964,13 @@
         <itemPath>../../../robot/2020/lightHouse/lightHouse2020Debug.c</itemPath>
         <itemPath>../../../robot/2020/lightHouse/lightHouseDevice2020.c</itemPath>
         <itemPath>../../../robot/2020/lightHouse/lightHouseDeviceInterface2020.c</itemPath>
+        <itemPath>../../../robot/2020/lightHouse/lightHouse2020Actions.c</itemPath>
+        <itemPath>../../../robot/2020/lightHouse/lightHouse2020CheckRobotPlaced.c</itemPath>
+        <itemPath>../../../robot/2020/lightHouse/lightHouse2020CheckRobotTouched.c</itemPath>
+        <itemPath>../../../robot/2020/lightHouse/lightHouse2020Workflow.c</itemPath>
+        <itemPath>../../../robot/2020/lightHouse/lightHouse2020CheckShowRemainingTime.c</itemPath>
+        <itemPath>../../../robot/2020/lightHouse/lightHouse2020CheckRobotBottom.c</itemPath>
+        <itemPath>../../../robot/2020/lightHouse/lightHouse2020CheckRobotLaunched.c</itemPath>
       </logicalFolder>
       <logicalFolder name="robot.config"
                      displayName="robot.config"

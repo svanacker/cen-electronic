@@ -113,8 +113,8 @@ static GameTargetAction lightHouseTakeTargetAction;
 static GameTargetAction lightHouseDropTargetAction;
 
 // Small Harbor 1
-static GameTargetAction smallHarbor1PrepareTargetAction;
-static GameTargetAction smallHarbor1TakeTargetAction;
+// static GameTargetAction smallHarbor1PrepareTargetAction;
+// static GameTargetAction smallHarbor1TakeTargetAction;
 static GameTargetAction smallHarbor1DropTargetAction;
 
 // To take Cup from Left Reef
@@ -135,8 +135,8 @@ static GameTargetActionItemList lightHouseTakeTargetActionItemList;
 static GameTargetActionItemList lightHouseDropTargetActionItemList;
 
 // Big Robot -> Small Harbor 1
-static GameTargetActionItemList smallHarbor1PrepareTargetActionItemList;
-static GameTargetActionItemList smallHarbor1TakeTargetActionItemList;
+// static GameTargetActionItemList smallHarbor1PrepareTargetActionItemList;
+// static GameTargetActionItemList smallHarbor1TakeTargetActionItemList;
 static GameTargetActionItemList smallHarbor1DropTargetActionItemList;
 
 // Big Robot -> Left Reef
@@ -157,11 +157,11 @@ static GameTargetActionItemList left2CupDropTargetActionItemList;
 static GameTargetActionItem lightHousePrepareCupTargetActionItem;
 static GameTargetActionItem lightHousePrepareArmTargetActionItem;
 static GameTargetActionItem lightHouseTakeTargetActionItem;
-static GameTargetActionItem lightHouseDropTargetActionItem;
+// static GameTargetActionItem lightHouseDropTargetActionItem;
 
 // -> Small Harbor 1
-static GameTargetActionItem smallHarbor1PrepareTargetActionItem;
-static GameTargetActionItem smallHarbor1TakeTargetActionItem;
+// static GameTargetActionItem smallHarbor1PrepareTargetActionItem;
+// static GameTargetActionItem smallHarbor1TakeTargetActionItem;
 static GameTargetActionItem smallHarbor1DropTargetActionItem;
 
 // -> Cup

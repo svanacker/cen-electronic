@@ -36,6 +36,7 @@
 #include "../../common/io/outputStream.h"
 #include "../../common/io/ioUtils.h"
 #include "../../common/io/printWriter.h"
+#include "../../common/io/pin.h"
 
 #include "../../common/io/32/pin32.h"
 
@@ -310,7 +311,10 @@ void waitForInstruction() {
     handleInstructionAndMotion(&pidMotion, notifyBufferedOutputStream);
     
     // Handle stopping Motor if pin
-    mainHandleMotorPins(&motors);
+    bool pinChanged = mainHandleMotorPins(&motors);
+    if (pinChanged) {
+        motorDevicePinChangeNotify(notifyBufferedOutputStream);
+    }
 
     // Copy the buffered notify to the serial NotifyOutputStream
     copyInputToOutputStream(getInputStream(&notifyOutputBuffer), &notifyOutputStream, &filterRemoveCRLF_255, COPY_ALL);

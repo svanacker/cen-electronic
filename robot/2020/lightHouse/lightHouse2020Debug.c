@@ -4,6 +4,8 @@
 #include <stdbool.h>
 
 #include "lightHouse2020.h"
+#include "lightHouse2020Actions.h"
+#include "lightHouse2020CheckRobotPlaced.h"
 
 #include "../../../common/error/error.h"
 
@@ -24,14 +26,18 @@ unsigned int printLightHouseState(OutputStream* outputStream, enum LightHouse202
         return appendString(outputStream, "UNKNOWN");
     } else if (state == LIGHT_HOUSE_STATE_INITIALIZED) {
         return appendString(outputStream, "INITIALIZED");
+    } else if (state == LIGHT_HOUSE_STATE_INIT_GOING_DOWN) {
+        return appendString(outputStream, "INIT GOING DOWN");
+    } else if (state == LIGHT_HOUSE_STATE_INIT_POSITION_BOTTOM) {
+        return appendString(outputStream, "BOTTOM OK");
     } else if (state == LIGHT_HOUSE_STATE_SEARCH_IF_PLACED) {
         return appendString(outputStream, "SEARCH IF PLACED");
     } else if (state == LIGHT_HOUSE_STATE_PLACED) {
-        return appendString(outputStream, "ROBOT PLACED");
-    } else if (state == LIGHT_HOUSE_STATE_SEARCH) {
-        return appendString(outputStream, "SEARCH");
-    } else if (state == LIGHT_HOUSE_STATE_SEARCH_OK) {
-        return appendString(outputStream, "SEARCH OK");
+        return appendString(outputStream, "PLACED");
+    } else if (state == LIGHT_HOUSE_STATE_SEARCH_TOUCH) {
+        return appendString(outputStream, "SEARCH TOUCH");
+    } else if (state == LIGHT_HOUSE_STATE_TOUCHED) {
+        return appendString(outputStream, "TOUCHED");
     } else if (state == LIGHT_HOUSE_STATE_TO_LAUNCH) {
         return appendString(outputStream, "TO LAUNCH");
     } else if (state == LIGHT_HOUSE_STATE_LAUNCHED) {
@@ -71,6 +77,18 @@ void lightHouse2020Debug(LightHouse2020* lightHouse, OutputStream* outputStream)
     appendStringTableData(outputStream, "-", LIGHT_HOUSE_2020_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, LIGHT_HOUSE_2020_LAST_COLUMN);
 
+    // Do Next Action
+    appendStringTableData(outputStream, "Do Next Action", LIGHT_HOUSE_2020_KEY_COLUMN_LENGTH);
+    appendBoolAsStringTableData(outputStream, lightHouse->doNextAction, LIGHT_HOUSE_2020_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "-", LIGHT_HOUSE_2020_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, LIGHT_HOUSE_2020_LAST_COLUMN);
+    
+    // Rotation
+    appendStringTableData(outputStream, "Rotate Servo", LIGHT_HOUSE_2020_KEY_COLUMN_LENGTH);
+    appendBoolAsStringTableData(outputStream, lightHouse->rotateServo, LIGHT_HOUSE_2020_VALUE_COLUMN_LENGTH);
+    appendStringTableData(outputStream, "-", LIGHT_HOUSE_2020_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, LIGHT_HOUSE_2020_LAST_COLUMN);
+    
     // Timer Count
     appendStringTableData(outputStream, "Timer Count", LIGHT_HOUSE_2020_KEY_COLUMN_LENGTH);
     appendDecTableData(outputStream, lightHouse->timerCount, LIGHT_HOUSE_2020_VALUE_COLUMN_LENGTH);
@@ -142,7 +160,7 @@ void lightHouse2020Debug(LightHouse2020* lightHouse, OutputStream* outputStream)
 
 
     appendStringTableData(outputStream, "RobotNearDetectionCount - Threshold", LIGHT_HOUSE_2020_KEY_COLUMN_LENGTH);
-    appendDecTableData(outputStream, LIGHT_HOUSE_2020_THRESHOLD_COUNT, LIGHT_HOUSE_2020_VALUE_COLUMN_LENGTH);
+    appendDecTableData(outputStream, LIGHT_HOUSE_2020_ROBOT_PLACED_THRESHOLD_COUNT, LIGHT_HOUSE_2020_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "-", LIGHT_HOUSE_2020_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, LIGHT_HOUSE_2020_LAST_COLUMN);
 

@@ -7,6 +7,9 @@
 #define HBRIDGE_1        1
 #define HBRIDGE_2        2
 
+#define DUAL_H_BRIDGE_PIN_1_INDEX           PIN_INDEX_RB12
+#define DUAL_H_BRIDGE_PIN_2_INDEX           PIN_INDEX_RB13
+
 // forward declaration
 struct DualHBridgeMotor;
 typedef struct DualHBridgeMotor DualHBridgeMotor;
@@ -58,6 +61,10 @@ struct DualHBridgeMotor {
     enum DualHBridgePinStopEventType pin1StopEventType;
     /** the action to do when we analyze pin 2 */
     enum DualHBridgePinStopEventType pin2StopEventType;
+    /** the last value of pin1 (to avoid to notify continuously) */
+    bool pin1LastNotificationValue;
+    /** the last value of pin2 (to avoid to notify continuously) */
+    bool pin2LastNotificationValue;
     /** pointer on other object (useful for I2C Connection for example) .*/
     int* object;
     /** pointer on pinList (but not typed to avoid to take the dependency). */
@@ -96,9 +103,18 @@ void setMotorSpeeds(DualHBridgeMotor* dualHBridgeMotor, signed int hBridgeSpeed1
  */
 void initDualHBridgeTimer(DualHBridgeMotor* dualHBridgeMotor);
 
+// PINS MANAGEMENT
+
+/**
+ * Reset the pins to avoid to notify too much.
+ * @param dualHBridgeMotor
+ */
+void resetMotorPinNotification(DualHBridgeMotor* dualHBridgeMotor);
+
 /**
 * Function which must be called by the main method to handle the management of motor with Pins
+* @return true if there was a change to the dualHBridgeMotor
 */
-void mainHandleMotorPins(DualHBridgeMotor* dualHBridgeMotor);
+bool mainHandleMotorPins(DualHBridgeMotor* dualHBridgeMotor);
 
 #endif

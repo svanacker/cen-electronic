@@ -10,4 +10,11 @@
  */
 DeviceDescriptor* getMotorDeviceDescriptor(DualHBridgeMotor* dualHBrideMotorParam);
 
+/**
+ * Method which must be called when the pin state change.
+ * @param notificationOutputStream the outputStream to notify
+ * @return true if we have notify
+ */
+bool motorDevicePinChangeNotify(OutputStream* notificationOutputStream);
+
 #endif

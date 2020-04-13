@@ -343,7 +343,6 @@ void mainBoardCommonAddDevices(RobotConfig* robotConfig) {
     // COMMON DEVICES
     addLocalDevice(getServoDeviceInterface(), getServoDeviceDescriptor(&servoList));
     addLocalDevice(getEepromDeviceInterface(), getEepromDeviceDescriptor(&eeprom));
-    addLocalDevice(getIODeviceInterface(), getIODeviceDescriptor(&pinList));
     addLocalDevice(getClockDeviceInterface(), getClockDeviceDescriptor(&clock));
     addLocalDevice(getTemperatureSensorDeviceInterface(), getTemperatureSensorDeviceDescriptor(&temperature));
     // addLocalDevice(getCurrentSensorDeviceInterface(), getCurrentSensorDeviceDescriptor(&current));

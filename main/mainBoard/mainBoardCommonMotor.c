@@ -24,6 +24,9 @@
 #include "../../device/motion/position/trajectoryDeviceInterface.h"
 #include "../../device/motion/simple/motionDeviceInterface.h"
 
+// IO
+#include "../../device/io/ioDeviceInterface.h"
+
 // Motor
 #include "../../device/motor/pwmMotorDeviceInterface.h"
 
@@ -58,6 +61,12 @@ static Buffer motorNotifyOutputBuffer;
 static OutputStream motorNotifyOutputStream;
 static StreamLink motorNotifySerialStreamLink;
 
+static PinChangedEventCallbackFunction* pinChangedEventCallbackFunction;
+
+void registerPinChangedCallback(PinChangedEventCallbackFunction* pinChangedEventCallbackFunctionParam) {
+    pinChangedEventCallbackFunction = pinChangedEventCallbackFunctionParam;
+}
+
 // FORWARD DECLARATION
 
 void mainBoardDeviceHandleTestDeviceNotification(const Device* device, const unsigned char commandHeader, InputStream* notificationInputStream) {
@@ -76,10 +85,35 @@ void mainBoardDeviceHandleTestDeviceNotification(const Device* device, const uns
     }
 }
 
+void mainBoardDeviceHandleMotorDeviceNotification(const Device* device, const unsigned char commandHeader, InputStream* notificationInputStream) {
+    if (device->deviceInterface->deviceHeader == MOTOR_DEVICE_HEADER) {
+        if (commandHeader == NOTIFY_PIN_CHANGED) {
+            bool pinValue1 = readBool(notificationInputStream);
+            checkIsSeparator(notificationInputStream);
+            bool pinValue2 = readBool(notificationInputStream);
+            
+            appendStringLN(getDebugOutputStreamLogger(), "Notify Motor !");
+            appendStringAndBoolLN(getDebugOutputStreamLogger(), "Pin1=", pinValue1);
+            appendStringAndBoolLN(getDebugOutputStreamLogger(), "Pin2=", pinValue2);
+            if (pinChangedEventCallbackFunction != NULL) {
+                pinChangedEventCallbackFunction(pinValue1, pinValue2);
+            }
+        } else {
+            writeError(NOTIFICATION_BAD_DEVICE_COMMAND_HANDLER_NOT_HANDLE);
+            appendString(getDebugOutputStreamLogger(), "header:");
+            append(getDebugOutputStreamLogger(), commandHeader);
+            println(getDebugOutputStreamLogger());
+        }
+    } else {
+        writeError(NOTIFICATION_BAD_DEVICE);
+    }
+}
+
 void mainBoardCommonMotorAddDevices(unsigned char serialIndex) {
     // MOTOR BOARD -> UART
     addUartRemoteDeviceWithNotification(getTestDeviceInterface(), serialIndex, &mainBoardDeviceHandleTestDeviceNotification);
-    addUartRemoteDevice(getMotorDeviceInterface(), serialIndex);
+    addUartRemoteDeviceWithNotification(getMotorDeviceInterface(), serialIndex, &mainBoardDeviceHandleMotorDeviceNotification);
+    addUartRemoteDevice(getIODeviceInterface(), serialIndex);
     addUartRemoteDevice(getCodersDeviceInterface(), serialIndex);
 }
 

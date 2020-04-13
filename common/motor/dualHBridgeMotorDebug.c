@@ -89,6 +89,17 @@ void printMotorDebug(OutputStream* outputStream, DualHBridgeMotor* dualHBridge) 
     appendEndOfTableColumn(outputStream, MOTOR_DEBUG_LAST_COLUMN_LENGTH);
 
     appendTableHeaderSeparatorLine(outputStream);
+    
+    // Pin 1 Notification Value
+    appendStringTableData(outputStream, "Last Notif. Pin 1", MOTOR_DEBUG_KEY_COLUMN_LENGTH);
+    appendDecTableData(outputStream, dualHBridge->pin1LastNotificationValue, MOTOR_DEBUG_VALUE_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, MOTOR_DEBUG_LAST_COLUMN_LENGTH);    
+
+    appendStringTableData(outputStream, "Last Notif. Pin 2", MOTOR_DEBUG_KEY_COLUMN_LENGTH);
+    appendDecTableData(outputStream, dualHBridge->pin2LastNotificationValue, MOTOR_DEBUG_VALUE_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, MOTOR_DEBUG_LAST_COLUMN_LENGTH);    
+
+    appendTableHeaderSeparatorLine(outputStream);
 
     // pin1UsageType
     appendStringTableData(outputStream, "pin1UsageType", MOTOR_DEBUG_KEY_COLUMN_LENGTH);

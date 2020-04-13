@@ -48,6 +48,7 @@
 #include "../../robot/match/endMatchDetectorDevice.h"
 #include "../../robot/match/endMatchDetectorDeviceInterface.h"
 #include "io/ioDeviceInterface.h"
+#include "2020/lightHouse/lightHouse2020Workflow.h"
 
 
 // Robot Configuration
@@ -66,8 +67,6 @@ void initMainBoardDevicesDescriptor() {
     mainBoardCommonMotorAddDevices(MAIN_BOARD_SERIAL_PORT_MOTOR);
 
     mainLightHouse2020TofAddDevices();
-
-    // addLocalDevice(getIODeviceInterface(), getIODeviceDescriptor());
 
     // 2020 specific
     addLocalDevice(getLightHouse2020DeviceInterface(), getLightHouse2020DeviceDescriptor(&lightHouse));
@@ -134,10 +133,22 @@ void mainBoardMainPhase3(void) {
     initMainBoardDevicesDescriptor();
     initMainBoardDriverDataDispatcherList();
     
-    appendString(getAlwaysOutputStreamLogger(), "SET PIN USAGE:");
-    lightHouse2020Reset(&lightHouse);
-    appendStringLN(getAlwaysOutputStreamLogger(), "OK");
+    lightHouse2020ResetWorkflow(&lightHouse);
+}
 
+void lightHouse2020PinChangedCallback(bool pinValue1, bool pinValue2) {
+    // PinValue1 to High means that back sensor touch -> At the bottom
+    if (pinValue1) {
+        if (lightHouse.state == LIGHT_HOUSE_STATE_INIT_GOING_DOWN) {
+            updateLightHouseState(&lightHouse, LIGHT_HOUSE_STATE_SEARCH_IF_PLACED);
+        }
+    }
+    // PinValue2 to High means that forward sensor touch -> At the end
+    if (pinValue2) {
+        if (lightHouse.state == LIGHT_HOUSE_STATE_LAUNCHED) {
+            updateLightHouseState(&lightHouse, LIGHT_HOUSE_STATE_SHOW_REMAINING_TIME);
+        }
+    }
 }
 
 int main(void) {
@@ -145,11 +156,13 @@ int main(void) {
     mainBoardMainPhase2();
     mainBoardMainPhase3();
 
+    registerPinChangedCallback(&lightHouse2020PinChangedCallback);
+    
     while (true) {
         mainBoardCommonHandleStreamInstruction();
         mainBoardCommonMotorHandleStreamInstruction();
 
-        /// handleLightHouseActions(&lightHouse);
+        handleLightHouseActions(&lightHouse);
         
         ServoList* servoList = mainBoardCommonGetServoList();
         servoListMainUpdateCall(servoList);

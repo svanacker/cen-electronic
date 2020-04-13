@@ -7,6 +7,17 @@
 
 #include "../../device/device.h"
 
+/**
+ * Define the type of callback function that could be raised when pinValue1
+ * or pinValue2 change.
+ */
+typedef void PinChangedEventCallbackFunction(bool pinValue1, bool pinValue2);
+
+/**
+ * Register a call back
+ */
+void registerPinChangedCallback(PinChangedEventCallbackFunction* pinChangedEventCallbackFunction);
+
 // DEVICES
 
 /**

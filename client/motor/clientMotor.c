@@ -33,6 +33,30 @@ bool clientMotorWrite(signed int motorValue1, signed int motorValue2) {
     return result;
 }
 
+bool clientMotorLeft(signed int motorValueLeft) {
+    OutputStream* outputStream = getDriverRequestOutputStream();
+
+    append(outputStream, MOTOR_DEVICE_HEADER);
+    append(outputStream, COMMAND_MOVE_MOTOR_LEFT);
+    appendSignedHex2(outputStream, motorValueLeft);
+    
+    bool result = transmitFromDriverRequestBuffer();
+
+    return result;
+}
+
+bool clientMotorRight(signed int motorValueRight) {
+    OutputStream* outputStream = getDriverRequestOutputStream();
+
+    append(outputStream, MOTOR_DEVICE_HEADER);
+    append(outputStream, COMMAND_MOVE_MOTOR_RIGHT);
+    appendSignedHex2(outputStream, motorValueRight);
+    
+    bool result = transmitFromDriverRequestBuffer();
+
+    return result;
+}
+
 bool clientMotorStop(void) {
     OutputStream* outputStream = getDriverRequestOutputStream();
 
