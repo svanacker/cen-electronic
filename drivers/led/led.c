@@ -5,6 +5,7 @@
 #include "../../common/error/error.h"
 
 void initLedArray(LedArray* ledArray,
+        int ledCount,
         LedArrayInitFunction* ledInitFunction,
         LedArrayReadValueFunction* ledReadValue,
         LedArrayWriteValueFunction* ledWriteValue,
@@ -17,6 +18,7 @@ void initLedArray(LedArray* ledArray,
         writeError(LED_ARRAY_INIT_FUNCTION_NULL);
         return;
     }
+    ledArray->ledCount = ledCount;
     ledArray->ledArrayInit = ledInitFunction;
     ledArray->ledArrayReadValue = ledReadValue;
     ledArray->ledArrayWriteValue = ledWriteValue;

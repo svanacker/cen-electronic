@@ -24,6 +24,60 @@ int deviceLedGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
         }
         return commandLengthValueForMode(mode, 11, 0);
     }
+    else if (commandHeader == COMMAND_LED_RED) {
+        if (fillDeviceArgumentList) {
+            setFunction("write Led RED", 1, 0);
+            setArgumentUnsignedHex2(0, "ledIndex");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    else if (commandHeader == COMMAND_LED_GREEN) {
+        if (fillDeviceArgumentList) {
+            setFunction("write Led GREEN", 1, 0);
+            setArgumentUnsignedHex2(0, "ledIndex");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    else if (commandHeader == COMMAND_LED_BLUE) {
+        if (fillDeviceArgumentList) {
+            setFunction("write Led BLUE", 1, 0);
+            setArgumentUnsignedHex2(0, "ledIndex");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
+    // ALL LEDS
+    else if (commandHeader == COMMAND_LED_CLEAR_ALL) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Clear All Led");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    }
+    else if (commandHeader == COMMAND_LED_ALL_ON) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Led All On");
+        }
+        return commandLengthValueForMode(mode, 0, 0);    
+    }
+    // Specific Color
+    else if (commandHeader == COMMAND_LED_ALL_RED) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Led All Red");
+        }
+        return commandLengthValueForMode(mode, 0, 0);    
+    }
+    else if (commandHeader == COMMAND_LED_ALL_GREEN) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Led All Green");
+        }
+        return commandLengthValueForMode(mode, 0, 0);    
+    }
+    else if (commandHeader == COMMAND_LED_ALL_BLUE) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Led All Blue");
+        }
+        return commandLengthValueForMode(mode, 0, 0);    
+    }
+
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

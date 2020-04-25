@@ -130,6 +130,9 @@ void clearLastError();
 #define LED_ARRAY_NULL                                                    0x04A8
 #define LED_ARRAY_INIT_FUNCTION_NULL                                      0x04A9
 #define LED_ARRAY_WRITE_VALUE_NULL                                        0x04AA
+#define LED_ILLEGAL_INDEX                                                 0x04AB
+#define LED_ILLEGAL_COLOR                                                 0x04AC
+
 
 // ACCELEROMETER
 #define ACCELEROMETER_SENSOR_SETUP_PROBLEM                                0x04B0

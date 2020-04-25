@@ -48,6 +48,17 @@
 
 #include "../../drivers/ioExpander/ioExpanderPcf8574.h"
 
+// LED
+#include "../../device/led/ledDevice.h"
+#include "../../device/led/ledDeviceInterface.h"
+
+// -> LED
+#include "../../drivers/led/pca9685/ledPca9685.h"
+
+// LED
+static LedArray ledArray;
+static I2cBusConnection* ledArrayBusConnection;
+
 // Robot Configuration
 static RobotConfig robotConfig;
 static IOExpander ioExpanderStrategy;
@@ -67,6 +78,7 @@ void initMainBoardDevicesDescriptor() {
     mainBoardCommonTofAddDevices32();
     mainBoardCommonMeca1AddDevices();
 
+    addLocalDevice(getLedDeviceInterface(), getLedDeviceDescriptor(&ledArray));
     // Call the init on each devices
     initDevices();
 }
@@ -143,6 +155,15 @@ void mainBoardMainPhase2(void) {
     ServoList* servoList = mainBoardCommonGetServoList();
     I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
     addServoAllPca9685(servoList, servoI2cBusConnection);
+    
+    appendString(getDebugOutputStreamLogger(), "LED ...");
+    ledArrayBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_2, true);
+    initLedArrayPca9685(&ledArray, ledArrayBusConnection);
+    appendStringLN(getDebugOutputStreamLogger(), "OK");
+    // -> SHOW COLOR OF THE TEAM
+    enum TeamColor teamColor = getTeamColorFromRobotConfig(&robotConfig);
+    Color color = getColorForTeam(teamColor);
+    setLedColor(&ledArray, MAIN_BOARD_LED_COLOR_TEAM_INDEX, color);
 
     // Initialise the Strategy first so that we could show the color & stragegy
     // index at a very early stage

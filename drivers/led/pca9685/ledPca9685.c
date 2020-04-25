@@ -2,6 +2,8 @@
 
 #include "../led.h"
 
+#include "../../../common/error/error.h"
+
 #include "../../../common/i2c/i2cBusConnectionList.h"
 
 #include "../../../common/io/outputStream.h"
@@ -12,6 +14,10 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
+
+// Pca is able to drive 16 independant pwm, each led need 3 pwm (each color)
+// So 16 / 5 => 3
+#define LED_COUNT_BY_PCA              5
 
 I2cBusConnection* getLedArrayI2cBusConnection(LedArray* ledArray) {
     return (I2cBusConnection*) ledArray->object;
@@ -56,11 +62,16 @@ Color ledArrayReadValuePca9685(LedArray* ledArray, unsigned int ledIndex) {
  */
 void ledArrayWriteValuePca9685(LedArray* ledArray, unsigned int ledIndex, unsigned int R, unsigned int G, unsigned int B) {
     I2cBusConnection* i2cBusConnection = getLedArrayI2cBusConnection(ledArray);
-    pca9685_setPWM(i2cBusConnection, ledIndex * 3, 4095 - B * 16, B * 16);
-    pca9685_setPWM(i2cBusConnection, ledIndex * 3 + 1, 4095 - G * 16, G * 16);
-    pca9685_setPWM(i2cBusConnection, ledIndex * 3 + 2, 4095 - R * 16, R * 16);
+    if (ledIndex <= ledArray->ledCount) {
+        pca9685_setPWM(i2cBusConnection, ledIndex * 3, 4095 - B * 16, B * 16);
+        pca9685_setPWM(i2cBusConnection, ledIndex * 3 + 1, 4095 - G * 16, G * 16);
+        pca9685_setPWM(i2cBusConnection, ledIndex * 3 + 2, 4095 - R * 16, R * 16);
+    }
+    else {
+        writeError(LED_ILLEGAL_INDEX);
+    }
 }
 
 void initLedArrayPca9685(LedArray* ledArray, I2cBusConnection* i2cBusConnection) {
-    initLedArray(ledArray, &ledArrayInitPca9685, &ledArrayReadValuePca9685, &ledArrayWriteValuePca9685, (int*) i2cBusConnection);
+    initLedArray(ledArray, LED_COUNT_BY_PCA, &ledArrayInitPca9685, &ledArrayReadValuePca9685, &ledArrayWriteValuePca9685, (int*) i2cBusConnection);
 }

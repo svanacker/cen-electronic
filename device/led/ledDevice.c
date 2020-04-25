@@ -45,6 +45,7 @@ bool deviceLedIsOk(void) {
 }
 
 void deviceLedHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
+    // SPECIFIC LED
     if (commandHeader == COMMAND_LED_WRITE) {
         ackCommand(outputStream, LED_DEVICE_HEADER, COMMAND_LED_WRITE);
         LedArray* ledArray = getLedArrayFromDeviceDescriptor();
@@ -56,6 +57,70 @@ void deviceLedHandleRawData(unsigned char commandHeader, InputStream* inputStrea
         checkIsSeparator(inputStream);
         unsigned int b = readHex2(inputStream);
         ledArray->ledArrayWriteValue(ledArray, ledIndex, r, g, b);
+    }
+    else if (commandHeader == COMMAND_LED_RED) {
+        ackCommand(outputStream, LED_DEVICE_HEADER, COMMAND_LED_RED);
+        LedArray* ledArray = getLedArrayFromDeviceDescriptor();
+        unsigned char ledIndex = readHex2(inputStream);
+        ledArray->ledArrayWriteValue(ledArray, ledIndex, 0xFF, 0, 0);
+    }
+    else if (commandHeader == COMMAND_LED_GREEN) {
+        ackCommand(outputStream, LED_DEVICE_HEADER, COMMAND_LED_GREEN);
+        LedArray* ledArray = getLedArrayFromDeviceDescriptor();
+        unsigned char ledIndex = readHex2(inputStream);
+        ledArray->ledArrayWriteValue(ledArray, ledIndex, 0x00, 0xFF, 0);
+    }
+    else if (commandHeader == COMMAND_LED_BLUE) {
+        ackCommand(outputStream, LED_DEVICE_HEADER, COMMAND_LED_BLUE);
+        LedArray* ledArray = getLedArrayFromDeviceDescriptor();
+        unsigned char ledIndex = readHex2(inputStream);
+        ledArray->ledArrayWriteValue(ledArray, ledIndex, 0, 0, 0xFF);
+    }
+    // All LEDS
+    else if (commandHeader == COMMAND_LED_CLEAR_ALL) {
+        ackCommand(outputStream, LED_DEVICE_HEADER, COMMAND_LED_CLEAR_ALL);
+        LedArray* ledArray = getLedArrayFromDeviceDescriptor();
+        int count = ledArray->ledCount;
+        int i;
+        for (i = 0; i < count; i++) {
+            ledArray->ledArrayWriteValue(ledArray, i, 0, 0, 0);
+        }
+    }
+    else if (commandHeader == COMMAND_LED_ALL_ON) {
+        ackCommand(outputStream, LED_DEVICE_HEADER, COMMAND_LED_ALL_ON);
+        LedArray* ledArray = getLedArrayFromDeviceDescriptor();
+        int count = ledArray->ledCount;
+        int i;
+        for (i = 0; i < count; i++) {
+            ledArray->ledArrayWriteValue(ledArray, i, 0xFF, 0xFF, 0xFF);
+        }
+    }
+    else if (commandHeader == COMMAND_LED_ALL_RED) {
+        ackCommand(outputStream, LED_DEVICE_HEADER, COMMAND_LED_ALL_RED);
+        LedArray* ledArray = getLedArrayFromDeviceDescriptor();
+        int count = ledArray->ledCount;
+        int i;
+        for (i = 0; i < count; i++) {
+            ledArray->ledArrayWriteValue(ledArray, i, 0xFF, 0x00, 0x00);
+        }
+    }
+    else if (commandHeader == COMMAND_LED_ALL_GREEN) {
+        ackCommand(outputStream, LED_DEVICE_HEADER, COMMAND_LED_ALL_GREEN);
+        LedArray* ledArray = getLedArrayFromDeviceDescriptor();
+        int count = ledArray->ledCount;
+        int i;
+        for (i = 0; i < count; i++) {
+            ledArray->ledArrayWriteValue(ledArray, i, 0x00, 0xFF, 0x00);
+        }
+    }
+    else if (commandHeader == COMMAND_LED_ALL_BLUE) {
+        ackCommand(outputStream, LED_DEVICE_HEADER, COMMAND_LED_ALL_BLUE);
+        LedArray* ledArray = getLedArrayFromDeviceDescriptor();
+        int count = ledArray->ledCount;
+        int i;
+        for (i = 0; i < count; i++) {
+            ledArray->ledArrayWriteValue(ledArray, i, 0x00, 0x00, 0xFF);
+        }
     }
 }
 

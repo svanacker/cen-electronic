@@ -36,6 +36,8 @@ typedef Color LedArrayReadValueFunction(LedArray* ledArray, unsigned int ledInde
 struct LedArray {
     /** A flag to know if the structure was already initialized */
     bool initialized;
+    /** How man led are available */
+    int ledCount;
     /** The function which must be used to init the led Array */
     LedArrayInitFunction* ledArrayInit;
     /** The function which must be used to read the value of the led array */
@@ -50,6 +52,7 @@ struct LedArray {
  * Init the wrapper around Led Array. 
  */
 void initLedArray(LedArray* ledArray,
+        int ledCount,
         LedArrayInitFunction* ledArrayInit,
         LedArrayReadValueFunction* ledArrayReadValue,
         LedArrayWriteValueFunction* ledArrayWriteValue,
