@@ -112,6 +112,7 @@ void showGameStrategyContextTeamColorAndStrategy(GameStrategyContext* gameStrate
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
     unsigned int speedIndex = (robotConfig->robotConfigReadInt(robotConfig) & CONFIG_SPEED_MASK) >> CONFIG_SPEED_SHIFT_BIT_VALUE;
     appendDec(outputStream, speedIndex);
+    println(outputStream);
     // MANUAL MODE if activated
     if (!gameStrategyContext->loopTargetAndActions) {
         appendStringLN(outputStream, "!! MANUAL MODE !!");

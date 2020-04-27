@@ -77,6 +77,14 @@ int deviceLedGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
         }
         return commandLengthValueForMode(mode, 0, 0);    
     }
+    // DISTANCE
+    else if (commandHeader == COMMAND_LED_ALL_AS_DISTANCE) {
+        if (fillDeviceArgumentList) {
+            setFunction("All Led as distance", 1, 0);
+            setArgumentUnsignedHex2(0, "distance (0..255)");
+        }
+        return commandLengthValueForMode(mode, 2, 0);
+    }
 
     return DEVICE_HEADER_NOT_HANDLED;
 }

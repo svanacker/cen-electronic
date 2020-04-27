@@ -43,5 +43,5 @@ void ledArrayWriteValuePc(LedArray* ledArray, unsigned int ledIndex, unsigned in
 }
 
 void initLedArrayPc(LedArray* ledArray) {
-    initLedArray(ledArray, &ledArrayInitPc, &ledArrayReadValuePc , &ledArrayWriteValuePc, NULL);
+    initLedArray(ledArray, 5, &ledArrayInitPc, &ledArrayReadValuePc , &ledArrayWriteValuePc, NULL);
 }

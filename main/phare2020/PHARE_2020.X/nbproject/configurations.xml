@@ -427,6 +427,37 @@
         <itemPath>../../../drivers/tof/vl53l0x/tofNetwork_vl53l0x.h</itemPath>
         <itemPath>../../../drivers/tof/vl53l0x/tofRanging_vl53l0x.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f31" displayName="drivers.tof.vl53l1x" projectFiles="true">
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_api.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_api_calibration.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_api_core.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_api_debug.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_api_preset_modes.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_api_strings.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_core.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_core_support.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_def.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_error_codes.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_error_exceptions.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_error_strings.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_ll_def.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_ll_device.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_nvm_map.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_preset_setup.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_register_funcs.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_register_map.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_register_settings.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_register_structs.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_silicon_core.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_tuning_parm_defaults.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_wait.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_platform.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_platform_log.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_platform_user_config.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_platform_user_data.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_platform_user_defines.h</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_types.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="main" displayName="main.mainboard" projectFiles="true">
         <itemPath>../../mainBoard/mainBoardCommon.h</itemPath>
         <itemPath>../../mainBoard/mainBoardPc.h</itemPath>
@@ -939,6 +970,26 @@
                      displayName="drivers.tof.vl53l0x.32"
                      projectFiles="true">
         <itemPath>../../../drivers/tof/vl53l0x/32/vl53l0x_platform_pic32.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f29" displayName="drivers.tof.vl53l1x" projectFiles="true">
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_api.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_api_calibration.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_api_core.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_api_debug.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_api_preset_modes.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_api_strings.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_core.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_core_support.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_error_strings.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_register_funcs.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_silicon_core.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_wait.c</itemPath>
+        <itemPath>../../../drivers/tof/vl53l1x/vl53l1_platform.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f30"
+                     displayName="drivers.tof.vl53l1x.32"
+                     projectFiles="true">
+        <itemPath>../../../drivers/tof/vl53l1x/32/vl53l1x_platform_pic32.c</itemPath>
       </logicalFolder>
       <logicalFolder name="main" displayName="main.mainboard" projectFiles="true">
         <itemPath>../../mainBoard/mainBoardCommon.c</itemPath>

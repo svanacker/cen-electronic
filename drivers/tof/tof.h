@@ -106,6 +106,12 @@ struct TofSensor {
     unsigned int detectionThreshold;
     /** The counter of how many detected were done. */
     unsigned int detectedCount;
+    
+    // LED MANAGEMENT
+    /** The led array linked to this sensor. */
+    unsigned char ledArrayIndex;
+    /** The led index inside the led array linked to his sensor */
+    unsigned char ledIndex;
 
     // CONFIG
     /** The beam angle of what he could detect. */

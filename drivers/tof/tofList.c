@@ -14,6 +14,8 @@
 #include "../../common/log/logger.h"
 #include "../../common/log/logLevel.h"
 
+#include "../../drivers/led/led.h"
+
 void initTofSensorList(TofSensorList* tofSensorList,
         TofSensor(*tofSensorArray)[],
         unsigned int tofSensorListSize,
@@ -50,6 +52,8 @@ TofSensor* getTofSensorByIndex(TofSensorList* tofSensorList, unsigned int index)
 
     return result;
 }
+
+// BEEP MANAGEMENT
 
 void initTofSensorListBeep(TofSensorList* tofSensorList,
         IOExpander* beepIoExpander,
@@ -101,6 +105,13 @@ void tofSensorListResetDetectionCount(TofSensorList* tofSensorList) {
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, i);
         tofSensor->detectedCount = 0;
     }
+}
+
+// LED
+
+void initTofSensorListLedArrays(TofSensorList* tofSensorList, LedArray* ledArray0, LedArray* ledArray1) {
+    tofSensorList->ledArray0 = ledArray0;
+    tofSensorList->ledArray1 = ledArray1;
 }
 
 // UTILS METHODS

@@ -25,6 +25,8 @@
 #include "../../drivers/ioExpander/ioExpanderList.h"
 
 void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* startMatch, TofSensorList* tofSensorList, GameBoard* gameBoard) {
+    // TODO : Reactivate code
+    /*
     RobotConfig* robotConfig = gameStrategyContext->robotConfig;
     // We only lookup if the match is started !
     if (!startMatch->isMatchStartedFunction(startMatch)) {
@@ -36,12 +38,13 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
         tofSensorListBeep(tofSensorList, false);
         return;
     }
+    */
     unsigned int index;
     enum TrajectoryType trajectoryType = gameStrategyContext->trajectoryType;
     // Do not beep when no move, or rotation (could not hurt something when rotating)
     if (trajectoryType == TRAJECTORY_TYPE_NONE || trajectoryType == TRAJECTORY_TYPE_ROTATION) {
         tofSensorListBeep(tofSensorList, false);
-        return;
+//        return;
     }
     for (index = 0; index < tofSensorList->size; index++) {
         TofSensor* tofSensor = getTofSensorByIndex(tofSensorList, index);
@@ -51,7 +54,7 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
         if (tofSensor->usageType != TOF_SENSOR_USAGE_TYPE_COLLISION) {
             continue;
         }
-
+        
         bool tofBackward = isTofSensorBackwardOriented(tofSensor);
 
         // Don't manage Backward TofSensor if we go forward
@@ -64,7 +67,21 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
             continue;
         }
 
-        tofSensor->tofGetDistanceMM(tofSensor);
+        // LED MANAGEMENT
+        unsigned int distance = tofSensor->tofGetDistanceMM(tofSensor);
+        unsigned char ledArrayIndex = tofSensor->ledArrayIndex;
+        unsigned char ledIndex = tofSensor->ledIndex;
+        LedArray* ledArray = NULL;
+        if (ledArrayIndex == 0) {
+            ledArray = tofSensorList->ledArray0;
+        }
+        else if (ledArrayIndex == 1) {
+            ledArray = tofSensorList->ledArray1;
+        }
+        if (ledArray != NULL) {
+            setLedColorAsDistance(ledArray, ledIndex, distance / 10);
+        }
+        
         // If the last distance is not in the range
         if (isTofDistanceInRange(tofSensor)) {
             tofSensor->detectedCount++;
@@ -107,6 +124,7 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
                 updateObstacleCostIfObstacle(currentPath);
             }
 
+            /*
             // Then we notify !
             OutputStream* alwaysOutputStream = getAlwaysOutputStreamLogger();
             println(alwaysOutputStream);
@@ -129,6 +147,7 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
 
             // TODO 2018 : handleObstacle(gameStrategyContext);
             break;
+            */
         }
     }
 }

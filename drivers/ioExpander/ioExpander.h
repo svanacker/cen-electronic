@@ -38,10 +38,21 @@ typedef bool ioExpanderReadSingleValueFunction(IOExpander* ioExpander, unsigned 
  */
 typedef void ioExpanderWriteSingleValueFunction(IOExpander* ioExpander, unsigned int ioIndex, bool value);
 
+// EVENT
+
+/**
+ * Callback function which must be used when the value is changing from previous
+ * @param ioExpander the ioExpander (source of the event)
+ * @param value the value of the ioExpander
+ * @param eventContext an object of context for event
+ */
+typedef void ioExpanderOnValueChangeEventFunction(IOExpander* ioExpander, unsigned char value, int* eventContext);
+
 /**
  * Defines the contract IO Expander like PCF8574.
  */
 struct IOExpander {
+    // IMPLEMENTATION
     /** The function which must be used to init the io */
     ioExpanderInitFunction* ioExpanderInit;
     /** The function which must be used to read all values at the same time */
@@ -52,9 +63,15 @@ struct IOExpander {
     ioExpanderReadSingleValueFunction* ioExpanderReadSingleValue;
     /** The function which can be used to change the value of a specific io. */
     ioExpanderWriteSingleValueFunction* ioExpanderWriteSingleValue;
+    // EVENTS
+    ioExpanderOnValueChangeEventFunction* ioExpanderOnValueChangeEvent;
+    // A pointer on an object which will be provide to the callback
+    int* eventContext;
+    // SCALAR VALUES
     /** How many IO are managed .*/
     unsigned int count;
-    /** Last value (must not be handled by external systems) */
+    /** Last value (must not be handled by external systems, but needed when writing a single bit
+     * (to avoid to read before writing) */
     unsigned value;
     /** pointer on other object (useful for I2C Connection for example) .*/
     int* object;
@@ -71,5 +88,15 @@ void initIOExpander(IOExpander* ioExpander,
         ioExpanderWriteSingleValueFunction* ioExpanderWriteSingleValue,
         unsigned int count,
         int* object);
+
+/**
+ * Set the event callback Function when value change.
+ * @param ioExpander the IO Expander Object
+ * @param ioExpanderOnValueChangeEvent the callback function which must be called
+ * when value change
+ */
+void ioExpanderSetOnValueChangeEvent(IOExpander* ioExpander, 
+                                     ioExpanderOnValueChangeEventFunction* ioExpanderOnValueChangeEvent,
+                                     int* eventContext);
 
 #endif

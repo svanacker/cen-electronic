@@ -63,6 +63,7 @@ void mainBoardCommonUpdateTofMaxDistanceMM(GameStrategyContext* gameStrategyCont
         if (gameStrategyContext->robotSpeed > 0.0f) {
             // Ex : At 2 m ^s -2, we need timeToDecelerate = currentSpeed / maxDeceleration  = time to stop
             // distanceToStop = (currentSpeed²) / (maxDeceleration * 2.0f)
+            // TODO : Remove Magic Number
             float maxDeceleration = 500.0f; // 500 mm^s-2 on the robot
             // We convert the speed in m^s-1
             float robotSpeed = gameStrategyContext->robotSpeed;
@@ -78,7 +79,7 @@ void mainBoardCommonUpdateTofMaxDistanceMM(GameStrategyContext* gameStrategyCont
     }
 }
 
-TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, MultiplexerList* multiplexerList, IOExpanderList* ioExpanderList) {
+TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, MultiplexerList* multiplexerList) {
     (&tofSensorList)->tofSensorArray = (TofSensor(*)[]) & tofSensorArray;
 
     float distanceFactor = (float) getSonarDistanceCheckFactor(robotConfig);
@@ -86,7 +87,7 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
 
     // TOF
 #pragma warning( disable : 6326)
-    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_RIGHT_SENSOR_INDEX) {
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FRONT_RIGHT_SENSOR_INDEX) {
         TofSensor* frontRightSensor = &(tofSensorArray[FRONT_RIGHT_SENSOR_INDEX]);
         frontRightSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
         frontRightSensor->angleFromRobotCenterRadian = degToRad(FRONT_RIGHT_SENSOR_ANGLE_DEGREE);
@@ -103,6 +104,9 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         frontRightSensor->targetAddress = VL530X_ADDRESS_0;
         frontRightSensor->multiplexer = getMultiplexerByIndex(multiplexerList, 1);
         frontRightSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_0;
+        
+        frontRightSensor->ledArrayIndex = LED_ARRAY_INDEX_1;
+        frontRightSensor->ledIndex = 1;
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FRONT_MIDDLE_SENSOR_INDEX) {
         TofSensor* frontMiddleSensor = &(tofSensorArray[FRONT_MIDDLE_SENSOR_INDEX]);
@@ -121,6 +125,9 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         frontMiddleSensor->targetAddress = VL530X_ADDRESS_1;
         frontMiddleSensor->multiplexer = getMultiplexerByIndex(multiplexerList, 1);
         frontMiddleSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_1;
+
+        frontMiddleSensor->ledArrayIndex = LED_ARRAY_INDEX_1;
+        frontMiddleSensor->ledIndex = 0;
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FRONT_LEFT_SENSOR_INDEX) {
         TofSensor* frontLeftSensor = &(tofSensorArray[FRONT_LEFT_SENSOR_INDEX]);
@@ -139,6 +146,9 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         frontLeftSensor->targetAddress = VL530X_ADDRESS_2;
         frontLeftSensor->multiplexer = getMultiplexerByIndex(multiplexerList, 1);
         frontLeftSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_2;
+
+        frontLeftSensor->ledArrayIndex = LED_ARRAY_INDEX_0;
+        frontLeftSensor->ledIndex = 2;
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_RIGHT_SENSOR_INDEX) {
         TofSensor* backRightSensor = &(tofSensorArray[BACK_RIGHT_SENSOR_INDEX]);
@@ -157,6 +167,9 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         backRightSensor->targetAddress = VL530X_ADDRESS_3;
         backRightSensor->multiplexer = getMultiplexerByIndex(multiplexerList, 1);
         backRightSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_3;
+        
+        backRightSensor->ledArrayIndex = LED_ARRAY_INDEX_1;
+        backRightSensor->ledIndex = 4;
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_MIDDLE_SENSOR_INDEX) {
         TofSensor* backMiddleSensor = &(tofSensorArray[BACK_MIDDLE_SENSOR_INDEX]);
@@ -175,8 +188,11 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         backMiddleSensor->targetAddress = VL530X_ADDRESS_4;
         backMiddleSensor->multiplexer = getMultiplexerByIndex(multiplexerList, 1);
         backMiddleSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_4;
+        
+        backMiddleSensor->ledArrayIndex = LED_ARRAY_INDEX_0;
+        backMiddleSensor->ledIndex = 3;
     }
-    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > 5) {
+    if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_LEFT_SENSOR_INDEX) {
         TofSensor* backLeftSensor = &(tofSensorArray[BACK_LEFT_SENSOR_INDEX]);
         backLeftSensor->usageType = TOF_SENSOR_USAGE_TYPE_COLLISION;
         backLeftSensor->angleFromRobotCenterRadian = degToRad(BACK_LEFT_SENSOR_ANGLE_DEGREE);
@@ -193,6 +209,9 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         backLeftSensor->targetAddress = VL530X_ADDRESS_5;
         backLeftSensor->multiplexer = getMultiplexerByIndex(multiplexerList, 1);
         backLeftSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_5;
+        
+        backLeftSensor->ledArrayIndex = LED_ARRAY_INDEX_0;
+        backLeftSensor->ledIndex = 4;
     }
 
     // NOT USED
@@ -221,6 +240,9 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         frontSideLeftSensor->targetAddress = VL530X_ADDRESS_8;
         frontSideLeftSensor->multiplexer = getMultiplexerByIndex(multiplexerList, 0);
         frontSideLeftSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_0;
+        
+        frontSideLeftSensor->ledArrayIndex = LED_ARRAY_INDEX_0;
+        frontSideLeftSensor->ledIndex = 1;
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > FRONT_SIDE_RIGHT_SENSOR_INDEX) {
         TofSensor* frontSideRightSensor = &(tofSensorArray[FRONT_SIDE_RIGHT_SENSOR_INDEX]);
@@ -238,6 +260,9 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         frontSideRightSensor->targetAddress = VL530X_ADDRESS_9;
         frontSideRightSensor->multiplexer = getMultiplexerByIndex(multiplexerList, 0);
         frontSideRightSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_1;
+
+        frontSideRightSensor->ledArrayIndex = LED_ARRAY_INDEX_1;
+        frontSideRightSensor->ledIndex = 2;
     }
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_SIDE_RIGHT_SENSOR_INDEX) {
         TofSensor* backSideRightSensor = &(tofSensorArray[BACK_SIDE_RIGHT_SENSOR_INDEX]);
@@ -255,6 +280,9 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         backSideRightSensor->targetAddress = VL530X_ADDRESS_10;
         backSideRightSensor->multiplexer = getMultiplexerByIndex(multiplexerList, 0);
         backSideRightSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_2;
+
+        backSideRightSensor->ledArrayIndex = LED_ARRAY_INDEX_1;
+        backSideRightSensor->ledIndex = 3;
     }
     // TOF 11 & 12 are defined in forkScan2019.c
     if (MAIN_BOARD_TOF_SENSOR_LIST_LENGTH > BACK_SIDE_LEFT_SENSOR_INDEX) {
@@ -273,6 +301,9 @@ TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, Multiplex
         backSideLeftSensor->targetAddress = VL530X_ADDRESS_13;
         backSideLeftSensor->multiplexer = getMultiplexerByIndex(multiplexerList, 0);
         backSideLeftSensor->multiplexerChannel = MULTIPLEXER_CHANNEL_5;
+        
+        backSideLeftSensor->ledArrayIndex = LED_ARRAY_INDEX_0;
+        backSideLeftSensor->ledIndex = 0;        
     }
 
     return &tofSensorList;

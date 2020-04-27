@@ -137,7 +137,7 @@ bool motorDevicePinChangeNotify(OutputStream* notificationOutputStream) {
     PinList* pinList = (PinList*)(dualHBridgeMotorPwm->pinListObject);
     if (pinList == NULL) {
         writeError(IO_PIN_LIST_NULL);
-        return;
+        return false;
     }
 
     bool pinValue1 = getPinValue(pinList, DUAL_H_BRIDGE_PIN_1_INDEX);

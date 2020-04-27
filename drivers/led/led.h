@@ -66,4 +66,30 @@ void initLedArray(LedArray* ledArray,
  */
 void setLedColor(LedArray* ledArray, unsigned int ledIndex, Color color);
 
+/**
+ * Converts a distance in cm as an equivalence in terms of color.
+ * The distance is between 0 (RED) and (127 and more) (GREEN)
+ * Between 0 and 25 cm, 
+ *   RED = 255,                 
+ *   GREEN = distance * 10,
+ *   BLUE = 0
+ * Between 26 and 50,
+ *   RED = 255 - (distance - 25) * 10
+ *   GREEN = 255
+ *   BLUE = 0
+ * Between 50 and 75,
+ *   RED = 0,
+ *   GREEN = 255,
+ *   BLUE = (distance - 50) * 10
+ * Between 75 and 100
+ *   RED = 0
+ *   GREEN = 255 - (distance - 75) * 10
+ *   BLUE = 255
+ * > 100 
+ *   RED = 0
+ *   GREEN = 0
+ *   BLUE = 255
+ */
+void setLedColorAsDistance(LedArray* ledArray, unsigned int ledIndex, unsigned int distance);
+
 #endif

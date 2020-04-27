@@ -57,8 +57,18 @@ int deviceTofGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
             setResultUnsignedChar1(0, "0 = KO, 1 = Success");
         }
         return commandLengthValueForMode(mode, 2, 1);
+    // LED MANAGEMENT
+    } else if (commandHeader == COMMAND_TOF_LED_SHOW) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("TOF Led Show");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
+    } else if (commandHeader == COMMAND_TOF_LED_HIDE) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("TOF Led Hide");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
     }
-
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

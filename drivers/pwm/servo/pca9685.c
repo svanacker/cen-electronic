@@ -39,7 +39,7 @@ void pca9685_reset(I2cBusConnection* i2cBusConnection) {
     // Start / Address
     portableMasterStartI2C(i2cBusConnection);
     WaitI2cBusConnection(i2cBusConnection);
-    portableMasterWriteI2C(i2cBusConnection, I2C_GENERAL_ADDRESS);
+    portableMasterWriteI2C(i2cBusConnection, i2cBusConnection->i2cAddress);
     WaitI2cBusConnection(i2cBusConnection);
     // Register
     portableMasterWriteI2C(i2cBusConnection, PCA9685_SOFTWARE_RESET);

@@ -6,6 +6,8 @@
 
 #include "../../common/delay/cenDelay.h"
 
+#include "../../common/error/error.h"
+
 #include "../../common/io/inputStream.h"
 #include "../../common/io/outputStream.h"
 #include "../../common/io/printWriter.h"
@@ -128,6 +130,52 @@ void deviceTofHandleRawData(unsigned char commandHeader, InputStream* inputStrea
 
         bool restartSuccess = tofRestart(tofSensor);
         appendBool(outputStream, restartSuccess);
+    } else if (commandHeader == COMMAND_TOF_LED_SHOW) {
+        ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_LED_SHOW);
+        TofSensorList* tofSensorList = getTofDeviceTofSensorList();
+
+        LedArray* ledArray0 = tofSensorList->ledArray0;
+        LedArray* ledArray1 = tofSensorList->ledArray1;
+        if (ledArray0 != NULL) {
+            int count = ledArray0->ledCount;
+            int i;
+            for (i = 0; i < count; i++) {
+                ledArray0->ledArrayWriteValue(ledArray0, i, 0x00, 0xFF, 0x00);
+            }
+        }
+        else {
+            writeError(LED_ARRAY_NULL);
+        }
+        if (ledArray1 != NULL) {
+            int count = ledArray1->ledCount;
+            int i;
+            for (i = 0; i < count; i++) {
+                ledArray1->ledArrayWriteValue(ledArray1, i, 0x00, 0xFF, 0x00);
+            }
+        }
+        else {
+            writeError(LED_ARRAY_NULL);
+        }
+    } else if (commandHeader == COMMAND_TOF_LED_HIDE) {
+        ackCommand(outputStream, TOF_DEVICE_HEADER, COMMAND_TOF_LED_HIDE);
+        TofSensorList* tofSensorList = getTofDeviceTofSensorList();
+
+        LedArray* ledArray0 = tofSensorList->ledArray0;
+        LedArray* ledArray1 = tofSensorList->ledArray1;
+        if (ledArray0 != NULL) {
+            int count = ledArray0->ledCount;
+            int i;
+            for (i = 0; i < count; i++) {
+                ledArray0->ledArrayWriteValue(ledArray0, i, 0x00, 0x00, 0x00);
+            }
+        }
+        if (ledArray1 != NULL) {
+            int count = ledArray1->ledCount;
+            int i;
+            for (i = 0; i < count; i++) {
+                ledArray1->ledArrayWriteValue(ledArray1, i, 0x00, 0x00, 0x00);
+            }
+        }
     }
 }
 

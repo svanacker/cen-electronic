@@ -15,24 +15,17 @@
 
 #include "../../device/deviceList.h"
 
-// IO Expander
-#include "../../device/ioExpander/ioExpanderDeviceInterface.h"
-#include "../../device/ioExpander/ioExpanderDevice.h"
-
 // Multiplexer
 #include "../../device/i2c/multiplexer/multiplexerDeviceInterface.h"
 #include "../../device/i2c/multiplexer/multiplexerDevice.h"
 
+// LED
+#include "../../device/led/ledDevice.h"
+#include "../../device/led/ledDeviceInterface.h"
+
 // Tof
 #include "../../device/tof/tofDevice.h"
 #include "../../device/tof/tofDeviceInterface.h"
-
-// -> IO EXPANDER
-#include "../../drivers/ioExpander/ioExpander.h"
-#include "../../drivers/ioExpander/ioExpanderDebug.h"
-#include "../../drivers/ioExpander/ioExpanderList.h"
-#include "../../drivers/ioExpander/ioExpanderPcf8574.h"
-#include "../../drivers/ioExpander/pcf8574.h"
 
 // MULTIPLEXER
 #include "../../drivers/i2c/multiplexer/multiplexer.h"
@@ -40,6 +33,10 @@
 #include "../../drivers/i2c/multiplexer/multiplexerList.h"
 #include "../../drivers/i2c/multiplexer/multiplexerTca9548A.h"
 #include "../../drivers/i2c/multiplexer/tca9548A.h"
+
+// -> LED
+#include "../../drivers/led/led.h"
+#include "../../drivers/led/pca9685/ledPca9685.h"
 
 // TOF
 #include "../../drivers/tof/vl53l0x/tof_vl53l0x.h"
@@ -49,10 +46,6 @@
 #include "../../robot/2019/fork/forkScan2019.h"
 #include "../../robot/2019/strategy/strategyConfig2019.h"
 
-// IO Expander
-static IOExpanderList ioExpanderList;
-static IOExpander ioExpanderArray[MAIN_BOARD_IO_EXPANDER_LIST_LENGTH];
-
 // Multiplexer
 static MultiplexerList multiplexerList;
 static Multiplexer multiplexerArray[MAIN_BOARD_MULTIPLEXER_LIST_LENGTH];
@@ -60,27 +53,15 @@ static Multiplexer multiplexerArray[MAIN_BOARD_MULTIPLEXER_LIST_LENGTH];
 // SPECIFIC TOF
 static TofSensorVL53L0X tofSensorVL53L0XArray[MAIN_BOARD_TOF_SENSOR_LIST_LENGTH];
 
+// DISTANCE LED
+static LedArray ledArray0;
+static LedArray ledArray1;
+static I2cBusConnection* ledArrayBusConnection0;
+static I2cBusConnection* ledArrayBusConnection1;
+
 void mainBoardCommonTofAddDevices32(void) {
     addLocalDevice(getTofDeviceInterface(), getTofDeviceDescriptor(mainBoardCommonTofGetTofSensorList()));
-    addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
     addLocalDevice(getMultiplexerDeviceInterface(), getMultiplexerDeviceDescriptor(&multiplexerList));
-}
-
-void mainBoardCommonIOExpanderListInitDrivers32(void) {
-    I2cBus* ioExpanderBus = getI2cBusByIndex(MAIN_BOARD_TOF_EXPANDER_BUS_INDEX);
-    // IO Expander List
-    appendString(getDebugOutputStreamLogger(), "IO Expander List ...");
-    initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) & ioExpanderArray, MAIN_BOARD_IO_EXPANDER_LIST_LENGTH);
-
-    // -> IO Expander (either classical or IOButtonBoard)
-    IOExpander* ioExpander = getIOExpanderByIndex(&ioExpanderList, 0);
-    I2cBusConnection* ioExpanderBusConnection = addI2cBusConnection(ioExpanderBus, PCF8574_ADDRESS_0, true);
-    initIOExpanderPCF8574(ioExpander, ioExpanderBusConnection);
-    // We need to be sure that the VL530X will not be reseted by the IO Expander
-    ioExpander->ioExpanderWriteValue(ioExpander, 0xFF);
-
-    // End of IOExpanderList
-    appendStringLN(getDebugOutputStreamLogger(), "OK");
 }
 
 MultiplexerList* mainBoardCommonMultiplexerListInitDrivers32(void) {
@@ -104,13 +85,10 @@ MultiplexerList* mainBoardCommonMultiplexerListInitDrivers32(void) {
 }
 
 void mainBoardCommonTofInitDrivers32(RobotConfig* robotConfig) {
-    // IO Expander List
-    mainBoardCommonIOExpanderListInitDrivers32();
-
     // Multiplexer List
     mainBoardCommonMultiplexerListInitDrivers32();
 
-    TofSensorList* tofSensorList = mainBoardCommonTofInitDrivers(robotConfig, &multiplexerList, &ioExpanderList);
+    TofSensorList* tofSensorList = mainBoardCommonTofInitDrivers(robotConfig, &multiplexerList);
 
     // HARDWARE Initialization
     appendStringLN(getDebugOutputStreamLogger(), "TOF ...");
@@ -124,11 +102,22 @@ void mainBoardCommonTofInitDrivers32(RobotConfig* robotConfig) {
             );
 
     // BEEP
+    /*
     IOExpander* beepIOExpander = getIOExpanderByIndex(&ioExpanderList, MAIN_BOARD_TOF_BEEP_IO_EXPANDER_INDEX);
     initTofSensorListBeep(tofSensorList,
             beepIOExpander,
             MAIN_BOARD_TOF_BEEP_IO_EXPANDER_GROUND_PIN_INDEX,
             MAIN_BOARD_TOF_BEEP_IO_EXPANDER_VCC_PIN_INDEX);
-
-    appendStringLN(getDebugOutputStreamLogger(), "OK");
+    */
+     
+    // LED ARRAY
+    I2cBus* i2cBus = getI2cBusByIndex(MAIN_BOARD_TOF_SENSOR_LIST_BUS_INDEX);
+    
+    ledArrayBusConnection0 = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_2, true);
+    initLedArrayPca9685(&ledArray0, ledArrayBusConnection0);
+    
+    ledArrayBusConnection1 = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_3, true);
+    initLedArrayPca9685(&ledArray1, ledArrayBusConnection1);
+    
+    initTofSensorListLedArrays(tofSensorList, &ledArray0, &ledArray1);
 }

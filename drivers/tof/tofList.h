@@ -9,7 +9,7 @@
 
 #include "tof.h"
 #include "../../drivers/ioExpander/ioExpander.h"
-
+#include "../../drivers/led/led.h"
 
 // Forward declaration
 typedef struct TofSensorList TofSensorList;
@@ -55,6 +55,12 @@ struct TofSensorList {
     bool beepValue;
     /** If we lock the beep so that we could avoid that automatic code change his value */
     bool beepLocked;
+    
+    // LED MANAGEMENT
+    /** The led for Tof (0 -> 5) */
+    LedArray* ledArray0;
+    /** The led for Tof (8, 9, 10, 11) */
+    LedArray* ledArray1;
 
     // IMPLEMENTATION CALLBACK
     /** If Debug Mode is activated .*/
@@ -104,12 +110,24 @@ TofSensor* getTofSensorByIndex(TofSensorList* tofSensorList, unsigned int index)
  */
 unsigned int getTofSensorListSize(TofSensorList* tofSensorList);
 
+// BEEP MANAGEMENT
+
 /**
  * Activate or not the beep on tofSensorList.
  */
 void tofSensorListBeep(TofSensorList* tofSensorList, bool beepValue);
 
 void tofSensorListBeepOverrideLock(TofSensorList* tofSensorList, bool beepValue);
+
+// LED MANAGEMENT
+
+/**
+ * Initialize the Led Management if any
+ * @param tofSensorList
+ * @param ledArray0
+ * @param ledArray1
+ */
+void initTofSensorListLedArrays(TofSensorList* tofSensorList, LedArray* ledArray0, LedArray* ledArray1);
 
 /**
  * Reset for all tof Sensor List the detection counter.

@@ -16,3 +16,10 @@ void initIOExpander(IOExpander* ioExpander,
     ioExpander->count = count;
     ioExpander->object = object;
 }
+
+void ioExpanderSetOnValueChangeEvent(IOExpander* ioExpander, 
+                                     ioExpanderOnValueChangeEventFunction* ioExpanderOnValueChangeEvent,
+                                     int* eventContext) {
+    ioExpander->ioExpanderOnValueChangeEvent = ioExpanderOnValueChangeEvent;
+    ioExpander->eventContext = eventContext;
+}

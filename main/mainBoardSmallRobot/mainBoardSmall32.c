@@ -8,10 +8,15 @@
 #include "../../robot/match/32/startMatchDetector32.h"
 
 #include "../../common/delay/cenDelay.h"
+
 #include "../../common/io/printWriter.h"
 #include "../../common/io/printTableWriter.h"
-#include "../../common/log/logger.h"
 
+#include "../../common/i2c/i2cCommon.h"
+#include "../../common/i2c/i2cConstants.h"
+#include "../../common/i2c/i2cBusConnectionList.h"
+
+#include "../../common/log/logger.h"
 
 #include "../../common/system/system.h"
 #include "../../device/deviceList.h"
@@ -19,23 +24,21 @@
 // COMMON PART
 #include "../mainBoard/mainBoardCommon.h"
 #include "../mainBoard/mainBoardCommonLcd.h"
+#include "../mainBoard/mainBoardCommonIoExpanderList.h"
 #include "../mainBoard/mainBoardCommonMatch.h"
 #include "../mainBoard/mainBoardCommonMeca1.h"
 #include "../mainBoard/mainBoardCommonMotor.h"
 #include "../mainBoard/mainBoardCommonMotion.h"
+#include "../mainBoard/mainBoardCommonServo.h"
 #include "../mainBoard/mainBoardCommonStrategy.h"
 #include "../mainBoard/mainBoardCommonTof.h"
 #include "../mainBoard/mainBoardCommonTof32.h"
 
 #include "../../drivers/ioExpander/ioExpander.h"
 
-#include "../../drivers/pwm/servo/servoPwmPca9685.h"
 #include "../../drivers/pwm/servo/pca9685.h"
 #include "../../drivers/accelerometer/adxl345.h"
 #include "../../drivers/accelerometer/adxl345Debug.h"
-#include "../../common/i2c/i2cCommon.h"
-#include "../../common/i2c/i2cConstants.h"
-#include "../../common/i2c/i2cBusConnectionList.h"
 
 #include "../../robot/strategy/teamColor.h"
 #include "../../robot/2020/mainBoard2020.h"
@@ -52,7 +55,7 @@
 #include "../../drivers/pwm/servo/servoPwmPca9685.h"
 
 // -> ARM
-
+#include "../../robot/2020/arm/buttonBoardArm2020.h"
 #include "../../robot/2020/arm/armDeviceInterface2020.h"
 #include "../../robot/2020/arm/armDevice2020.h"
 
@@ -62,11 +65,10 @@
 
 // Robot Configuration
 static RobotConfig robotConfig;
-static IOExpander ioExpanderStrategy;
 
 // LED
 static LedArray ledArray;
-static I2cBusConnection* ledArrayBusConnection;
+// static I2cBusConnection* ledArrayBusConnection;
 
 /**
  * @private
@@ -148,12 +150,7 @@ void mainBoardMainPhase2(void) {
     mainBoardCommonInitTimerList();
     mainBoardCommonInitCommonDrivers();
 
-    // ROBOT2020 : PCA9685 for SERVO
-    ServoList* servoList = mainBoardCommonGetServoList();
-    // I2cBus* i2cBus = mainBoardCommonGetMainI2cBus();
-    I2cBus* i2cBus = getI2cBusByIndex(MAIN_BOARD_SERVO_I2C_BUS_INDEX);
-    I2cBusConnection* servoI2cBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_0, true);
-    addServoAllPca9685(servoList, servoI2cBusConnection);
+    mainBoardCommonAddPca9685Servos();
 
     // -> LED
     /*
@@ -169,9 +166,15 @@ void mainBoardMainPhase2(void) {
     
     // Initialise the Strategy first so that we could show the color & stragegy
     // index at a very early stage
-    I2cBusConnection* ioExpanderI2cBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_2, true);
-    initIOExpanderPCF8574(&ioExpanderStrategy, ioExpanderI2cBusConnection);
-    mainBoardCommonStrategyMainInitDrivers(&robotConfig, &ioExpanderStrategy);
+    
+    // Attach a callback to the button Board
+    IOExpanderList* ioExpanderList = mainBoardCommonIOExpanderListInitDrivers32(&robotConfig);
+    IOExpander* ioExpanderStrategy = getIOExpanderByIndex(ioExpanderList, MAIN_BOARD_IO_EXPANDER_STRATEGY_INDEX);
+    mainBoardCommonStrategyMainInitDrivers(&robotConfig, ioExpanderStrategy);
+    
+    // Attach a callback to the button Board
+    IOExpander* ioExpanderButtonBoard = getIOExpanderByIndex(ioExpanderList, MAIN_BOARD_IO_EXPANDER_IOBOARD_INDEX);
+    ioExpanderSetOnValueChangeEvent(ioExpanderButtonBoard, &arm2020IoExpanderOnValueChangeEvent, (int*) mainBoardCommonGetServoList());
 
     mainBoardCommonTofInitDrivers32(&robotConfig);
     mainBoardCommonMatchMainInitDrivers(&robotConfig,
@@ -196,7 +199,7 @@ int main(void) {
     mainBoardMainPhase2();
     mainBoardMainPhase3();
 
-    TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
+    // TofSensorList* tofSensorList = mainBoardCommonTofGetTofSensorList();
     ServoList* servoList = mainBoardCommonGetServoList();
     addLocalDevice(getArm2020DeviceInterface(), getArm2020DeviceDescriptor(servoList));
 

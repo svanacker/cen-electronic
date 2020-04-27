@@ -47,6 +47,10 @@
 #define BACK_SIDE_RIGHT_SENSOR_INDEX    10
 #define BACK_SIDE_LEFT_SENSOR_INDEX     13
 
+// LED MANAGEMENT
+#define LED_ARRAY_INDEX_0                0
+#define LED_ARRAY_INDEX_1                1
+
 // THRESHOLD
 #define STRATEGY_DETECTION_THRESHOLD     5
 
@@ -88,7 +92,7 @@
  * Useful when we just want to initialize 2 tof like for Experience 2019 Main
  * Program.
  */
-TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, MultiplexerList* multiplexerList, IOExpanderList* ioExpanderList);
+TofSensorList* mainBoardCommonTofInitDrivers(RobotConfig* robotConfig, MultiplexerList* multiplexerList);
 
 /**
  * Function used to update the threshold of the Tof regarding the speed of the robot.

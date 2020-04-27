@@ -30,7 +30,7 @@ TofSensorList* mainBoardCommonTofInitDriversPc(RobotConfig* robotConfig,
         MultiplexerList* multiplexerList,
         IOExpanderList* ioExpanderList,
         GameStrategyContext* gameStrategyContext) {
-    TofSensorList* tofSensorList = mainBoardCommonTofInitDrivers(robotConfig, multiplexerList, ioExpanderList);
+    TofSensorList* tofSensorList = mainBoardCommonTofInitDrivers(robotConfig, multiplexerList);
     initTofSensorListPc(tofSensorList, tofSensorList->tofSensorArray, MAIN_BOARD_TOF_SENSOR_LIST_LENGTH, (int*) gameStrategyContext);
 
     return tofSensorList;

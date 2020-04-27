@@ -19,8 +19,8 @@
 // Point to touch the lightHouse
 #define LIGHT_HOUSE_DROP_POINT                                            "LHDP"
 #define LIGHT_HOUSE_DROP_POINT_LABEL                    "Light House Drop Point"
-#define LIGHT_HOUSE_DROP_POINT_X                                             200
-#define LIGHT_HOUSE_DROP_POINT_Y                                             200
+#define LIGHT_HOUSE_DROP_POINT_X                                             225
+#define LIGHT_HOUSE_DROP_POINT_Y                                             150
 #define LIGHT_HOUSE_DROP_POINT_ANGLE_DECI_DEG                  ANGLE_DECI_DEG_90
 
 // Point in Front of the Small Harbor

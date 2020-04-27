@@ -122,6 +122,17 @@ void deviceLedHandleRawData(unsigned char commandHeader, InputStream* inputStrea
             ledArray->ledArrayWriteValue(ledArray, i, 0x00, 0x00, 0xFF);
         }
     }
+    // DISTANCE
+    else if (commandHeader == COMMAND_LED_ALL_AS_DISTANCE) {
+        ackCommand(outputStream, LED_DEVICE_HEADER, COMMAND_LED_ALL_AS_DISTANCE);
+        LedArray* ledArray = getLedArrayFromDeviceDescriptor();
+        unsigned char distance = readHex2(inputStream);
+        int count = ledArray->ledCount;
+        int i;
+        for (i = 0; i < count; i++) {
+            setLedColorAsDistance(ledArray, i, distance);
+        }
+    }
 }
 
 static DeviceDescriptor descriptor;

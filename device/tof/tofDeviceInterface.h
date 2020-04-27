@@ -31,6 +31,11 @@
 /** Command header to reset & restart a specific Tof */
 #define COMMAND_TOF_RESTART           'R'
 
+/** Command to show the LED blink to see if this is right configured ! */
+#define COMMAND_TOF_LED_SHOW          'L'
+
+#define COMMAND_TOF_LED_HIDE          'l'
+
 /**
  * Interface for Device "Time of Flight".
  */

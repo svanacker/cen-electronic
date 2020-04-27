@@ -203,4 +203,3 @@ void arm2020HookSequenceAll(ServoList* servoList) {
     arm2020DownAndReleaseAll(servoList);
     // motionDriverBackward(50);
 }
-
