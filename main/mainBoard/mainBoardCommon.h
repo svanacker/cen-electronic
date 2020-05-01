@@ -22,11 +22,11 @@
 #define MAIN_BOARD_SERVO_LIST_LENGTH                                   21
 
 // IO EXPANDER
-#define MAIN_BOARD_IO_EXPANDER_LIST_LENGTH                             2
+#define MAIN_BOARD_IO_EXPANDER_BUS_INDEX                               0
+#define MAIN_BOARD_IO_EXPANDER_LIST_LENGTH                             3
 #define MAIN_BOARD_IO_EXPANDER_STRATEGY_INDEX                          0
 #define MAIN_BOARD_IO_EXPANDER_IOBOARD_INDEX                           1
-
-
+#define MAIN_BOARD_IO_EXPANDER_BEEP_INDEX                              2
 
 // MULTIPLEXER
 #define MAIN_BOARD_MULTIPLEXER_LIST_LENGTH                             2
@@ -42,7 +42,7 @@
 // I2C
 
 #define MAIN_BOARD_I2C_BUS_LIST_LENGTH                                  2
-#define MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH                      24
+#define MAIN_BOARD_I2C_BUS_CONNECTION_LIST_LENGTH                      30
 
 // LOGS
 #define MAIN_BOARD_LOG_HANDLER_LIST_LENGTH                              2

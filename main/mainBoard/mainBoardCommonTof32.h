@@ -4,6 +4,7 @@
 #include "mainBoardCommon.h"
 
 #include "../../robot/config/robotConfig.h"
+#include "../../drivers/ioExpander/ioExpander.h"
 
 /**
  * Device Tof Initialization of MAIN_BOARD 32.
@@ -15,6 +16,6 @@ void mainBoardCommonTofAddDevices32(void);
  * Useful when we just want to initialize 2 tof like for Specific Year Main
  * Program.
  */
-void mainBoardCommonTofInitDrivers32(RobotConfig* robotConfig);
+void mainBoardCommonTofInitDrivers32(RobotConfig* robotConfig, IOExpander* beepIOExpander);
 
 #endif

@@ -42,7 +42,7 @@ bool startupCheckList2020(StartMatch* startMatch);
 bool endMatchBeforeEnd2020(EndMatch* endMatch);
 
 GameStrategyContext* initGameStrategyContext2020(RobotConfig* robotConfig,
-        IOExpander* ioExpanderStrategy,
+        unsigned char strategyId,
         EndMatch* endMatch,
         TofSensorList* tofSensorList,
         ServoList* servoList);

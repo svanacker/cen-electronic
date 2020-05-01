@@ -31,7 +31,12 @@ bool ioExpanderPCF8574Init(IOExpander* ioExpander) {
 unsigned char ioExpanderPCF8574ReadValue(IOExpander* ioExpander) {
     I2cBusConnection* i2cBusConnection = getIOExpanderBusConnection(ioExpander);
     unsigned char result = readPCF8574(i2cBusConnection);
-    ioExpander->value = result;
+    if (result != ioExpander->value) {
+        ioExpander->value = result;
+        if (ioExpander->ioExpanderOnValueChangeEvent != NULL) {
+            ioExpander->ioExpanderOnValueChangeEvent(ioExpander, ioExpander->value, ioExpander->eventContext);
+        }
+    }
     return result;
 }
 

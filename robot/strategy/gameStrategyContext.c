@@ -21,27 +21,6 @@
 #include "../../motion/motionConstants.h"
 #include "../../motion/position/trajectoryDebug.h"
 
-/**
- * @private
- */
-void initGameStrategyIndex(GameStrategyContext* gameStrategyContext) {
-    IOExpander* ioExpander = gameStrategyContext->ioExpander;
-
-    gameStrategyContext->strategyId = ioExpander->ioExpanderReadValue(ioExpander) & 0x0F;
-    /* OLD IMPLEMENTATION BASED ON ROBOT CONFIG
-    RobotConfig* robotConfig = gameStrategyContext->robotConfig;
-    unsigned int configValue = robotConfig->robotConfigReadInt(robotConfig);
-    // If config == 0 ==> No Strategy (free to use by UART Command)
-    // Mask = 0b001 => Strategy 1, but we use 0 based array => 0
-    unsigned int strategyMask = (configValue & CONFIG_STRATEGY_MASK);
-    if (strategyMask == 0) {
-        gameStrategyContext->strategyId = NO_STRATEGY_INDEX;
-    } else {
-        gameStrategyContext->strategyId = strategyMask;
-    }
-    */
-}
-
 void obstacleTimerCallbackFunc(Timer* timer) {
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*) timer->object;
     Navigation* navigation = gameStrategyContext->navigation;
@@ -52,7 +31,7 @@ void obstacleTimerCallbackFunc(Timer* timer) {
 
 void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
         RobotConfig* robotConfig,
-        IOExpander* ioExpanderStrategy,
+        unsigned char strategyId,
         Navigation* navigation,
         EndMatch* endMatch,
         TofSensorList* tofSensorList,
@@ -60,9 +39,9 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
         Point* opponentRobotPosition,
         Point* lastObstaclePosition,
         ServoList* servoList) {
+    gameStrategyContext->strategyId = strategyId;
     gameStrategyContext->navigation = navigation;
     gameStrategyContext->robotConfig = robotConfig;
-    gameStrategyContext->ioExpander = ioExpanderStrategy;
     gameStrategyContext->endMatch = endMatch;
     gameStrategyContext->tofSensorList = tofSensorList;
     gameStrategyContext->servoList = servoList;
@@ -84,9 +63,6 @@ void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
 
     // Position Management
     initGameStrategyMotionHandler(gameStrategyContext);
-
-    // Complex init
-    initGameStrategyIndex(gameStrategyContext);
 }
 
 void updateStrategyContextTrajectoryType(GameStrategyContext* gameStrategyContext, enum TrajectoryType trajectoryType) {

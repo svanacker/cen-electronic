@@ -84,6 +84,7 @@ void initMainBoardDevicesDescriptor() {
     mainBoardCommonMatchAddDevices();
     mainBoardCommonTofAddDevices32();
     mainBoardCommonMeca1AddDevices();
+	mainBoardCommonIOExpanderListAddDevices32();
 
     addLocalDevice(getLedDeviceInterface(), getLedDeviceDescriptor(&ledArray));
 
@@ -95,7 +96,6 @@ void initMainBoardDriverDataDispatcherList(void) {
     mainBoardCommonInitDriverDataDispatcherList();
 
     mainBoardCommonMotorAddDispatcher();
-    // mainBoardCommonMeca1AddDispatcher();
 }
 
 bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
@@ -106,6 +106,13 @@ bool mainBoardWaitForInstruction(StartMatch* startMatchParam) {
     // mainBoardCommonHandleAccelerometer();
     mainBoardCommonMotorHandleStreamInstruction();
     mainBoardCommonStrategyHandleStreamInstruction();
+	
+	ServoList* servoList = mainBoardCommonGetServoList();
+    servoListMainUpdateCall(servoList);
+    
+    IOExpanderList* ioExpanderList = mainBoardCommonGetIOExpanderList();
+    IOExpander* ioExpander = getIOExpanderByIndex(ioExpanderList, MAIN_BOARD_IO_EXPANDER_IOBOARD_INDEX);
+    ioExpander->ioExpanderReadValue(ioExpander);
 
     return true;
 }
@@ -152,38 +159,35 @@ void mainBoardMainPhase2(void) {
 
     mainBoardCommonAddPca9685Servos();
 
-    // -> LED
     /*
     appendString(getDebugOutputStreamLogger(), "LED ...");
-    ledArrayBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_3, true);
+    ledArrayBusConnection = addI2cBusConnection(i2cBus, PCA9685_ADDRESS_7, true);
     initLedArrayPca9685(&ledArray, ledArrayBusConnection);
     appendStringLN(getDebugOutputStreamLogger(), "OK");
     // -> SHOW COLOR OF THE TEAM
     enum TeamColor teamColor = getTeamColorFromRobotConfig(&robotConfig);
     Color color = getColorForTeam(teamColor);
     setLedColor(&ledArray, MAIN_BOARD_LED_COLOR_TEAM_INDEX, color);
-*/
-    
-    // Initialise the Strategy first so that we could show the color & stragegy
-    // index at a very early stage
-    
-    // Attach a callback to the button Board
+    */
     IOExpanderList* ioExpanderList = mainBoardCommonIOExpanderListInitDrivers32(&robotConfig);
     IOExpander* ioExpanderStrategy = getIOExpanderByIndex(ioExpanderList, MAIN_BOARD_IO_EXPANDER_STRATEGY_INDEX);
-    mainBoardCommonStrategyMainInitDrivers(&robotConfig, ioExpanderStrategy);
+    unsigned char strategyId = ioExpanderStrategy->ioExpanderReadValue(ioExpanderStrategy) & 0x0F;
+    mainBoardCommonStrategyMainInitDrivers(&robotConfig, strategyId);
     
     // Attach a callback to the button Board
     IOExpander* ioExpanderButtonBoard = getIOExpanderByIndex(ioExpanderList, MAIN_BOARD_IO_EXPANDER_IOBOARD_INDEX);
     ioExpanderSetOnValueChangeEvent(ioExpanderButtonBoard, &arm2020IoExpanderOnValueChangeEvent, (int*) mainBoardCommonGetServoList());
 
-    mainBoardCommonTofInitDrivers32(&robotConfig);
+    // Initialise the Strategy first so that we could show the color & stragegy
+    // index at a very early stage
+    IOExpander* ioExpanderBeepExpander = getIOExpanderByIndex(ioExpanderList, MAIN_BOARD_IO_EXPANDER_BEEP_INDEX);
+    mainBoardCommonTofInitDrivers32(&robotConfig, ioExpanderBeepExpander);
     mainBoardCommonMatchMainInitDrivers(&robotConfig,
                                         &startupCheckList2020,
                                         isMatchStarted32,
                                         mainBoardWaitForInstruction,
                                         loopUnWaitForInstruction,
-                                        endMatchBeforeEnd2020
-            );
+                                        endMatchBeforeEnd2020);
 }
 
 void mainBoardMainPhase3(void) {

@@ -23,7 +23,7 @@ void mainBoardCommonStrategyHandleStreamInstruction(void);
 /**
  * Main Board Strategy Driver Init Part.
  */
-GameStrategyContext* mainBoardCommonStrategyMainInitDrivers(RobotConfig* robotConfig, IOExpander* ioExpanderStrategy);
+GameStrategyContext* mainBoardCommonStrategyMainInitDrivers(RobotConfig* robotConfig, unsigned char strategyId);
 
 /**
  * Main Board Strategy Init Part (After the Drivers Init).

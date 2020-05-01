@@ -2,12 +2,16 @@
 
 #include <stdlib.h>
 
+#include "../../../common/io/printWriter.h"
+#include "../../../common/log/logger.h"
+
 #include "../../../common/error/error.h"
 #include "../../../common/pwm/servo/servoList.h"
 
 #include "arm2020.h"
 
 void arm2020IoExpanderOnValueChangeEvent(IOExpander* ioExpander, unsigned char value, int* eventContext) {
+    appendStringAndDecLN(getDebugOutputStreamLogger(), "arm2020IoExpanderOnValueChangeEvent:value=", value);
     ServoList* servoList = (ServoList*) eventContext;
     if (servoList == NULL) {
         writeError(SERVO_LIST_NULL);
@@ -21,7 +25,7 @@ void arm2020IoExpanderOnValueChangeEvent(IOExpander* ioExpander, unsigned char v
         else if (value & MASK_MENU_ITEM_BUTTON_ARM_RIGHT) {
             lateralArm2020(servoList, 0x02);
         }
-        else if (value & MASK_MENU_ITEM_BUTTON_ARM_RIGHT) {
+        else if (value & MASK_MENU_ITEM_BUTTON_ARM_CENTER) {
             lateralArm2020(servoList, 0x00);
         }
     }

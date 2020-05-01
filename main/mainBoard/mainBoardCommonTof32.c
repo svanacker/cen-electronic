@@ -84,7 +84,7 @@ MultiplexerList* mainBoardCommonMultiplexerListInitDrivers32(void) {
     return &multiplexerList;
 }
 
-void mainBoardCommonTofInitDrivers32(RobotConfig* robotConfig) {
+void mainBoardCommonTofInitDrivers32(RobotConfig* robotConfig, IOExpander* beepIOExpander) {
     // Multiplexer List
     mainBoardCommonMultiplexerListInitDrivers32();
 
@@ -102,13 +102,10 @@ void mainBoardCommonTofInitDrivers32(RobotConfig* robotConfig) {
             );
 
     // BEEP
-    /*
-    IOExpander* beepIOExpander = getIOExpanderByIndex(&ioExpanderList, MAIN_BOARD_TOF_BEEP_IO_EXPANDER_INDEX);
     initTofSensorListBeep(tofSensorList,
             beepIOExpander,
             MAIN_BOARD_TOF_BEEP_IO_EXPANDER_GROUND_PIN_INDEX,
             MAIN_BOARD_TOF_BEEP_IO_EXPANDER_VCC_PIN_INDEX);
-    */
      
     // LED ARRAY
     I2cBus* i2cBus = getI2cBusByIndex(MAIN_BOARD_TOF_SENSOR_LIST_BUS_INDEX);

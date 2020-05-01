@@ -43,7 +43,7 @@ struct GameStrategyContext {
     /** Configuration of the robot. */
     RobotConfig* robotConfig;
     /** The IO Expander. */
-    IOExpander* ioExpander;
+    // IOExpander* ioExpander;
     /** Navigation object with the list of location, paths ...*/
     Navigation* navigation;
     /** Time in seconds since last collision. */
@@ -97,7 +97,7 @@ struct GameStrategyContext {
  */
 void initGameStrategyContext(GameStrategyContext* gameStrategyContext,
         RobotConfig* robotConfig,
-        IOExpander* ioExpanderStrategy,
+        unsigned char strategyId,
         Navigation* navigation,
         EndMatch* endMatch,
         TofSensorList* tofSensorList,

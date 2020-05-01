@@ -24,8 +24,6 @@
 
 // BEEP MANAGEMENT
 // I2C PORT 1
-#define MAIN_BOARD_TOF_EXPANDER_BUS_INDEX                                      1
-#define MAIN_BOARD_TOF_BEEP_IO_EXPANDER_INDEX                                  0
 #define MAIN_BOARD_TOF_BEEP_IO_EXPANDER_GROUND_PIN_INDEX                       6
 #define MAIN_BOARD_TOF_BEEP_IO_EXPANDER_VCC_PIN_INDEX                          7
 
