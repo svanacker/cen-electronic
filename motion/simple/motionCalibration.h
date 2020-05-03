@@ -9,4 +9,5 @@
 
 void squareCalibration(PidMotion* pidMotion, unsigned char type, float lengthInMM, OutputStream* notificationOutputStream);
 
+void squareCalibrationUsingSpline(PidMotion* pidMotion, unsigned char type, float lengthInMM, OutputStream* notificationOutputStream);
 #endif

@@ -889,6 +889,7 @@
     <ClInclude Include="robot\2020\bigRobot\bigRobotStrategy2020.h" />
     <ClInclude Include="robot\2020\commonRobot\commonRobotActions2020.h" />
     <ClInclude Include="robot\2020\commonRobot\commonRobotLocations2020.h" />
+    <ClInclude Include="robot\2020\commonRobot\commonRobotPath2020.h" />
     <ClInclude Include="robot\2020\gameboard\gameBoardElement2020.h" />
     <ClInclude Include="robot\2020\mainBoard2020.h" />
     <ClInclude Include="robot\2020\navigation\angle2020.h" />

@@ -50,6 +50,11 @@ int trajectoryGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode
             setArgumentUnsignedHex4(4, ANGLE_1_10_DEG);
         }
         return commandLengthValueForMode(mode, 18, 0);
+    } else if (commandHeader == COMMAND_TRAJECTORY_CLEAR_ABSOLUTE_POSITION) {
+        if (fillDeviceArgumentList) {
+            setFunctionNoArgumentAndNoResult("Pos(x=0, y=0, angle=0)");
+        }
+        return commandLengthValueForMode(mode, 0, 0);
     } else if (commandHeader == COMMAND_TRAJECTORY_ADJUST_X) {
         if (fillDeviceArgumentList) {
             setFunction("Adjust X", 1, 1);

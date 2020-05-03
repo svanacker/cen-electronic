@@ -21,6 +21,9 @@
 #define MAIN_BOARD_SERVO_I2C_BUS_INDEX                                  0
 #define MAIN_BOARD_SERVO_LIST_LENGTH                                   21
 
+// COLOR
+#define MAIN_BOARD_COLOR_BUS_INDEX                                     0
+
 // IO EXPANDER
 #define MAIN_BOARD_IO_EXPANDER_BUS_INDEX                               0
 #define MAIN_BOARD_IO_EXPANDER_LIST_LENGTH                             3

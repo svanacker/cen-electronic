@@ -19,7 +19,7 @@
 void initTcs34725Struct(Tcs34725* tcs34725, I2cBusConnection* i2cBusConnection) {
     tcs34725->i2cBusConnection = i2cBusConnection;
     tcs34725->integrationTime = TCS34725_INTEGRATIONTIME_2_4MS;
-    tcs34725->gain = TCS34725_GAIN_1X;
+    tcs34725->gain = TCS34725_GAIN_60X;
     tcs34725->initialized = false;
 }
 

@@ -3632,6 +3632,9 @@
     <ClInclude Include="common\motor\dualHBridgePin.h">
       <Filter>Header Files\common\motor</Filter>
     </ClInclude>
+    <ClInclude Include="robot\2020\commonRobot\commonRobotPath2020.h">
+      <Filter>Header Files\robot\2020\commonRobot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="cen-electronic-console.rc">

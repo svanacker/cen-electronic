@@ -86,9 +86,11 @@ void deviceTrajectoryHandleRawData(unsigned char header,
         float fX = (float) newX;
         float fY = (float) newY;
         float fAngle = degToRad(newAngle);
-
-        // We must ensure are not in 
+        
         setPosition(fX, fY, fAngle);
+    } else if (header == COMMAND_TRAJECTORY_CLEAR_ABSOLUTE_POSITION) {
+        ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_CLEAR_ABSOLUTE_POSITION);
+        setPosition(0.0f, 0.0f, 0.0f);
     }// Adjust Angle / X / Y
     else if (header == COMMAND_TRAJECTORY_ADJUST_ANGLE_TO_CLOSEST) {
         ackCommand(outputStream, TRAJECTORY_DEVICE_HEADER, COMMAND_TRAJECTORY_ADJUST_ANGLE_TO_CLOSEST);

@@ -19,7 +19,7 @@ void updateSimpleSplineWithDistance(BSplineCurve* curve,
         bool relative);
 
 /**
- * Go from the relative destination to the initial Position of the robot
+ * Go from a specified destination to the initial Position of the robot
  * Computes the bezier Point so that the curve is not to huge
  * @param relativeDestX the relative X destination point
  * @param relativeDestY the relative Y destination point
@@ -30,6 +30,32 @@ void updateSimpleSplineWithDistance(BSplineCurve* curve,
  * system determines the best distance to avoid too huge curve
  */
 void gotoSpline(PidMotion* pidMotion,
+        float sourceX,
+        float sourceY,
+        float sourceAngleRadian,
+        float relativeDestX,
+        float relativeDestY,
+        float relativeDestAngle,
+        float controlPointDistance1,
+        float controlPointDistance2,
+        float accelerationFactor,
+        float speedFactor,
+        bool relative,
+        OutputStream* notificationOutputStream
+        );
+
+/**
+ * Go from the relative destination to the initial Position of the robot
+ * Computes the bezier Point so that the curve is not to huge
+ * @param relativeDestX the relative X destination point
+ * @param relativeDestY the relative Y destination point
+ * @param relativeDestAngle the relative Angle 
+ * @param controlPointDistance1 the distance of P0->P1. If egal to 0.0f, the 
+ * system determines the best distance to avoid too huge curve
+ * @param controlPointDistance2 the distance of P2->P3. If egal to 0.0f, the 
+ * system determines the best distance to avoid too huge curve
+ */
+void gotoSplineFromCurrentPosition(PidMotion* pidMotion,
         float relativeDestX,
         float relativeDestY,
         float relativeDestAngle,

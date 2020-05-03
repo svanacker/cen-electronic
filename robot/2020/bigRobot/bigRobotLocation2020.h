@@ -30,28 +30,6 @@
 #define SMALL_HARBOR_FRONT_MIDDLE_Y                                        1800
 #define SMALL_HARBOR_FRONT_MIDDLE_ANGLE_DECI_DEG               ANGLE_DECI_DEG_0
 
-// Center Point
-#define CENTER_POINT                                                      "CENT"
-#define CENTER_POINT_LABEL                                        "Center Point"
-#define CENTER_POINT_X                                                      1000
-#define CENTER_POINT_Y                                                      1000
-#define CENTER_POINT_START_ANGLE_DECI_DEG                      ANGLE_DECI_DEG_90
-#define CENTER_POINT_END_ANGLE_DECI_DEG                        ANGLE_DECI_DEG_90
-
-// Point in Front of the Left Reef
-#define LEFT_REEF_FRONT                                                   "LRFR"
-#define LEFT_REEF_FRONT_LABEL                                  "Left Reef Front"
-#define LEFT_REEF_FRONT_X                                                     70
-#define LEFT_REEF_FRONT_Y                                                    850
-#define LEFT_REEF_FRONT_ANGLE_DECI_DEG                        ANGLE_DECI_DEG_180
-
-// Point in Front Left Reef 2
-#define LEFT_REEF_2_FRONT                                                 "LRF2"
-#define LEFT_REEF_2_FRONT_LABEL                              "Left Reef Front 2"
-#define LEFT_REEF_2_FRONT_X                                                   70
-#define LEFT_REEF_2_FRONT_Y                                                 2150
-#define LEFT_REEF_2_FRONT_ANGLE_DECI_DEG          LEFT_REEF_FRONT_ANGLE_DECI_DEG
-
 // DROP LEFT
 #define DROP_LEFT_FRONT                                                   "DR_L"
 #define DROP_LEFT_FRONT_LABEL                                        "Drop Left"
@@ -59,19 +37,6 @@
 #define DROP_LEFT_FRONT_Y                                                    200
 #define DROP_LEFT_FRONT_DECI_DEG                              ANGLE_DECI_DEG_180
 
-// CENTER START AREA
-#define CENTER_START_AREA                                                 "CSTA"
-#define CENTER_START_AREA_LABEL                                "Center Robot Start"
-#define CENTER_START_AREA_X                                                  800
-#define CENTER_START_AREA_Y                                                   90
-#define CENTER_START_AREA_ANGLE_DECI_DEG                       ANGLE_DECI_DEG_90
-
-// DROP CENTER
-#define DROP_CENTER_FRONT                                                   "DR_C"
-#define DROP_CENTER_FRONT_LABEL                                      "Drop Center"
-#define DROP_CENTER_FRONT_X                                                    800
-#define DROP_CENTER_FRONT_Y                                                    300
-#define DROP_CENTER_FRONT_DECI_DEG                              ANGLE_DECI_DEG_270
 
 // 
 

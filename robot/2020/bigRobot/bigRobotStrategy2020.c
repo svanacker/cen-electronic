@@ -43,7 +43,9 @@
 
 #include "../../../robot/tof/strategyTofSensorList.h"
 
+#include "../../../robot/2020/commonRobot/commonRobotActions2020.h"
 #include "../../../robot/2020/commonRobot/commonRobotLocations2020.h"
+#include "../../../robot/2020/commonRobot/commonRobotPath2020.h"
 
 #include "../../../robot/2020/bigRobot/bigRobotActions2020.h"
 #include "../../../robot/2020/bigRobot/bigRobotLocation2020.h"
@@ -94,7 +96,8 @@ PathData* centerPoint_to_leftReefFront_Path;
 PathData* leftReefFront_to_dropLeftFront_Path;
 PathData* dropLeftFront_to_centerStartArea_Path;
 PathData* centerStartArea_to_leftReef2_Path;
-PathData* leftReef2_to_dropCenter_Path;
+PathData* leftReef2_to_centerPoint_Path;
+PathData* centerPoint_to_dropCenter_Path;
 
 // ------------------------------------------------------- TARGETS -----------------------------------------------------------------------
 
@@ -169,7 +172,7 @@ static GameTargetActionItem leftCupPrepareTargetActionItem;
 static GameTargetActionItem leftCupTakeTargetActionItem;
 static GameTargetActionItem leftCupDropTargetActionItem;
 
-// -> Cup
+// -> Cup 2
 static GameTargetActionItem left2CupPrepareTargetActionItem;
 static GameTargetActionItem left2CupTakeTargetActionItem;
 static GameTargetActionItem left2CupDropTargetActionItem;
@@ -333,17 +336,30 @@ void initBigRobotPaths2020(GameStrategyContext* gameStrategyContext) {
         aFactor * CENTER_START_AREA__TO__LEFT_REEF_FRONT_2_ACC_FACTOR
     );
 
-    leftReef2_to_dropCenter_Path = addNavigationPathWithColor(teamColor,
+    leftReef2_to_centerPoint_Path = addNavigationPathWithColor(teamColor,
         navigation,
         leftReef2FrontLocation,
-        dropCenterFrontLocation,
-        LEFT_REEF_FRONT_2__TO__DROP_CENTER_FRONT_COST,
-        LEFT_REEF_FRONT_2__TO__DROP_CENTER_FRONT_CP1,
-        LEFT_REEF_FRONT_2__TO__DROP_CENTER_FRONT_CP2,
+        centerPointLocation,
+        LEFT_REEF_FRONT_2__TO__CENTRAL_POINT_COST,
+        LEFT_REEF_FRONT_2__TO__CENTRAL_POINT_CP1,
+        LEFT_REEF_FRONT_2__TO__CENTRAL_POINT_CP2,
         deciDegreeToRad(LEFT_REEF_2_FRONT_ANGLE_DECI_DEG),
+        deciDegreeToRad(CENTER_POINT_END_ANGLE_DECI_DEG),
+        speedFactor * LEFT_REEF_FRONT_2__TO__CENTRAL_POINT_SPEED_FACTOR,
+        aFactor * LEFT_REEF_FRONT_2__TO__CENTRAL_POINT_ACC_FACTOR
+    );
+
+    centerPoint_to_dropCenter_Path = addNavigationPathWithColor(teamColor,
+        navigation,
+        centerPointLocation,
+        dropCenterFrontLocation,
+        CENTRAL_POINT__TO__DROP_CENTER_FRONT_COST,
+        CENTRAL_POINT__TO__DROP_CENTER_FRONT_CP1,
+        CENTRAL_POINT__TO__DROP_CENTER_FRONT_CP2,
+        deciDegreeToRad(CENTER_POINT_END_ANGLE_DECI_DEG),
         deciDegreeToRad(DROP_CENTER_FRONT_DECI_DEG),
-        speedFactor * LEFT_REEF_FRONT_2__TO__DROP_CENTER_FRONT_SPEED_FACTOR,
-        aFactor * LEFT_REEF_FRONT_2__TO__DROP_CENTER_FRONT_ACC_FACTOR
+        speedFactor * CENTRAL_POINT__TO__DROP_CENTER_FRONT_SPEED_FACTOR,
+        aFactor * CENTRAL_POINT__TO__DROP_CENTER_FRONT_ACC_FACTOR
     );
 }
 

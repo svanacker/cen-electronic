@@ -24,9 +24,11 @@
 #include "../../drivers/colorSensor/colorSensor.h"
 #include "../../drivers/colorSensor/colorSensorDebug.h"
 
-static ColorSensor* colorSensor;
+// FORWARD DECLARATION
+ColorSensor* getColorSensorFromDeviceDescriptor(void);
 
 void deviceColorSensorInit(void) {
+    ColorSensor* colorSensor = getColorSensorFromDeviceDescriptor();
     if (colorSensor == NULL) {
         writeError(COLOR_SENSOR_NULL);
         return;
@@ -44,6 +46,7 @@ bool deviceColorSensorIsOk(void) {
 void deviceColorSensorHandleRawData(unsigned char commandHeader, InputStream* inputStream, OutputStream* outputStream, OutputStream* notificationOutputStream) {
     if (commandHeader == COMMAND_COLOR_SENSOR_READ) {
         ackCommand(outputStream, COLOR_SENSOR_DEVICE_HEADER, COMMAND_COLOR_SENSOR_READ);
+        ColorSensor* colorSensor = getColorSensorFromDeviceDescriptor();
         Color* color = colorSensor->colorSensorReadValue(colorSensor);
         appendHex4(outputStream, color->R);
         appendSeparator(outputStream);
@@ -52,15 +55,18 @@ void deviceColorSensorHandleRawData(unsigned char commandHeader, InputStream* in
         appendHex4(outputStream, color->B);
     } else if (commandHeader == COMMAND_COLOR_SENSOR_READ_TYPE) {
         ackCommand(outputStream, COLOR_SENSOR_DEVICE_HEADER, COMMAND_COLOR_SENSOR_READ_TYPE);
+        ColorSensor* colorSensor = getColorSensorFromDeviceDescriptor();
         enum ColorType colorType = colorSensor->colorSensorFindColorType(colorSensor);
         appendHex2(outputStream, colorType);
     } else if (commandHeader == COMMAND_COLOR_SENSOR_DEBUG) {
         ackCommand(outputStream, COLOR_SENSOR_DEVICE_HEADER, COMMAND_COLOR_SENSOR_DEBUG);
+        ColorSensor* colorSensor = getColorSensorFromDeviceDescriptor();
         OutputStream* debugOutputStream = getInfoOutputStreamLogger();
         printColorSensorTable(debugOutputStream, colorSensor);
     }/** Only for PC */
     else if (commandHeader == COMMAND_COLOR_SENSOR_WRITE) {
         ackCommand(outputStream, COLOR_SENSOR_DEVICE_HEADER, COMMAND_COLOR_SENSOR_WRITE);
+        ColorSensor* colorSensor = getColorSensorFromDeviceDescriptor();
         colorSensor->color->R = readHex4(inputStream);
         checkIsSeparator(inputStream);
         colorSensor->color->G = readHex4(inputStream);
@@ -80,5 +86,9 @@ DeviceDescriptor* getColorSensorDeviceDescriptor(ColorSensor* colorSensorParam) 
             (int*) colorSensorParam);
 
     return &descriptor;
+}
+
+ColorSensor* getColorSensorFromDeviceDescriptor(void) {
+    return (ColorSensor*) (descriptor.object);
 }
 

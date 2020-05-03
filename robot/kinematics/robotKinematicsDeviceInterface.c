@@ -31,7 +31,7 @@ int deviceRobotKinematicsGetInterface(unsigned char commandHeader, DeviceInterfa
             // CODER VALUE
             setResultUnsignedHex6(0, "coder Wheel Average Diameter (nanoM)");
             setResultSeparator(1);
-            setResultUnsignedHex6(2, "coder Wheel Average Delta Diameter (nanoM)");
+            setResultUnsignedHex6(2, "coder Wheel Average Delta Diameter (microM)");
             setResultSeparator(3);
             setResultUnsignedHex6(4, "coder Wheel Distance Between Wheels (microM)");
             setResultSeparator(5);

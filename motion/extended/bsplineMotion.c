@@ -30,8 +30,9 @@
 #include "../../robot/kinematics/robotKinematics.h"
 
 void updateSimpleSplineWithDistance(BSplineCurve* curve,
+        
         float destX, float destY,
-        float destAngle,
+        float destAngleRadian,
         float distance1, float distance2,
         float accelerationFactor, float speedFactor,
         bool relative) {
@@ -39,7 +40,7 @@ void updateSimpleSplineWithDistance(BSplineCurve* curve,
     Position* position = getPosition();
 
     parameterBSplineWithDistanceAndAngle(curve, position->pos.x, position->pos.y, position->orientation,
-            destX, destY, destAngle,
+            destX, destY, destAngleRadian,
             distance1, distance2,
             accelerationFactor, speedFactor,
             relative);
@@ -62,9 +63,32 @@ float computeBestAccelerationForBSpline(BSplineCurve* curve, float a) {
     return result;
 }
 
-void gotoSpline(PidMotion* pidMotion,
+void gotoSplineFromCurrentPosition(PidMotion* pidMotion,
         float destX, float destY,
-        float destAngle,
+        float destAngleRadian,
+        float controlPointDistance1, float controlPointDistance2,
+        float accelerationFactor, float speedFactor,
+        bool relative,
+        OutputStream* notificationOutputStream) {
+
+    Position* position = getPosition();
+    gotoSpline(pidMotion,
+            position->pos.x,
+            position->pos.y,
+            position->orientation,
+            destX, destY,
+            destAngleRadian,
+            controlPointDistance1, controlPointDistance2,
+            accelerationFactor, speedFactor,
+            relative,
+            notificationOutputStream);
+}
+
+void gotoSpline(PidMotion* pidMotion,
+        float sourceX, float sourceY,
+        float sourceAngleRadian,
+        float destX, float destY,
+        float destAngleRadian,
         float controlPointDistance1, float controlPointDistance2,
         float accelerationFactor, float speedFactor,
         bool relative,
@@ -75,9 +99,10 @@ void gotoSpline(PidMotion* pidMotion,
     motionDefinition->motionType = MOTION_TYPE_BSPLINE;
     BSplineCurve* curve = &(motionDefinition->curve);
 
-    updateSimpleSplineWithDistance(curve,
+    parameterBSplineWithDistanceAndAngle(curve,
+            sourceX, sourceY, sourceAngleRadian,
             destX, destY,
-            destAngle,
+            destAngleRadian,
             controlPointDistance1, controlPointDistance2,
             accelerationFactor, speedFactor,
             relative);

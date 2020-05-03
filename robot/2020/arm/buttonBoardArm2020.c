@@ -17,6 +17,10 @@ void arm2020IoExpanderOnValueChangeEvent(IOExpander* ioExpander, unsigned char v
         writeError(SERVO_LIST_NULL);
         return;
     }
+    if (value == 0xFF) {
+        // Button board is not presend
+        return;
+    }
     // ARM
     if (value & MASK_MENU_BUTTON_ARM_0) {
         if (value & MASK_MENU_ITEM_BUTTON_ARM_LEFT) {

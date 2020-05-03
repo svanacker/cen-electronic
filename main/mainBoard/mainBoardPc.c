@@ -604,8 +604,8 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     }
 
     // CONFIG
-    initRobotConfigPc(&robotConfig, ROBOT_TYPE_BIG);
-//    initRobotConfigPc(&robotConfig, ROBOT_TYPE_SMALL);
+//    initRobotConfigPc(&robotConfig, ROBOT_TYPE_BIG);
+    initRobotConfigPc(&robotConfig, ROBOT_TYPE_SMALL);
     initIOExpanderFilePc(&strategyIOExpander, "strategyConfigPc.txt");
 
     // EEPROM
@@ -654,7 +654,8 @@ void runMainBoardPC(bool connectToRobotManagerMode, bool singleMode) {
     initFakeRobot(900.0f, 1800.0f, 0.0f, 140.0f);
 
     navigation = initNavigation2020();
-    gameStrategyContext = initGameStrategyContext2020(&robotConfig, &strategyIOExpander, &endMatch, mainBoardCommonTofGetTofSensorList(), &servoList);
+    unsigned char strategyId = strategyIOExpander.ioExpanderReadValue(&strategyIOExpander) & 0x0F;
+    gameStrategyContext = initGameStrategyContext2020(&robotConfig, strategyId, &endMatch, mainBoardCommonTofGetTofSensorList(), &servoList);
 
     // Init the Tof as soon with have the gameStrategyContext
     mainBoardCommonTofInitDriversPc(&robotConfig, &multiplexerList, &ioExpanderList, gameStrategyContext);

@@ -105,7 +105,7 @@ int deviceMotionGetInterface(unsigned char commandHeader, DeviceInterfaceMode mo
     else if (commandHeader == COMMAND_SQUARE_CALIBRATION) {
         if (fillDeviceArgumentList) {
             setFunction("square Calibration", 3, 0);
-            setArgumentUnsignedHex2(0, "left or right");
+            setArgumentUnsignedHex2(0, "left (0x00)or right (0x01)");
             setArgumentSeparator(1);
             setArgumentUnsignedHex4(2, "length (distance in mm)");
         }

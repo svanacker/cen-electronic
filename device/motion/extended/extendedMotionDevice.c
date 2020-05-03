@@ -89,7 +89,7 @@ void deviceExtendedMotionHandleRawData(unsigned char commandHeader,
 
         // if distance = 0, the system computes the optimum distance
         // we use relative
-        gotoSpline(pidMotion,
+        gotoSplineFromCurrentPosition(pidMotion,
                 x, y,
                 angleRadian,
                 distance1, distance2,
@@ -99,7 +99,7 @@ void deviceExtendedMotionHandleRawData(unsigned char commandHeader,
                 );
     } else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD) {
         ackCommand(outputStream, EXTENDED_MOTION_DEVICE_HEADER, commandHeader);
-        gotoSpline(pidMotion,
+        gotoSplineFromCurrentPosition(pidMotion,
                 400.0f, 0.0f,
                 0.0f,
                 100.0f, 100.0f,
@@ -108,7 +108,7 @@ void deviceExtendedMotionHandleRawData(unsigned char commandHeader,
                 notificationOutputStream);
     } else if (commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD) {
         ackCommand(outputStream, EXTENDED_MOTION_DEVICE_HEADER, commandHeader);
-        gotoSpline(pidMotion,
+        gotoSplineFromCurrentPosition(pidMotion,
                 -400.0f, 0.0f,
                 0.0f,
                 -100.0f, -100.0f,
@@ -121,7 +121,7 @@ void deviceExtendedMotionHandleRawData(unsigned char commandHeader,
         if (commandHeader == COMMAND_MOTION_SPLINE_TEST_RIGHT) {
             sign = -sign;
         }
-        gotoSpline(pidMotion,
+        gotoSplineFromCurrentPosition(pidMotion,
                 400.0f, sign * 400.0f,
                 sign * 0.75f * PI,
                 200.0f, 200.0f,
@@ -134,7 +134,7 @@ void deviceExtendedMotionHandleRawData(unsigned char commandHeader,
         if (commandHeader == COMMAND_MOTION_SPLINE_TEST_FORWARD_RIGHT_FORWARD) {
             sign = -sign;
         }
-        gotoSpline(pidMotion,
+        gotoSplineFromCurrentPosition(pidMotion,
                 1200.0f, sign * 600.0f,
                 0.0f,
                 1000.0f, 1000.0f,
@@ -147,7 +147,7 @@ void deviceExtendedMotionHandleRawData(unsigned char commandHeader,
         if (commandHeader == COMMAND_MOTION_SPLINE_TEST_BACKWARD_LEFT_BACKWARD) {
             sign = -sign;
         }
-        gotoSpline(pidMotion,
+        gotoSplineFromCurrentPosition(pidMotion,
                 -1200.0f, -sign * 600.0f,
                 0.0f,
                 -1000.0f, -1000.0f,

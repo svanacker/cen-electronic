@@ -42,6 +42,11 @@
 #define COMMAND_TRAJECTORY_SET_ABSOLUTE_POSITION            'W'
 
 /**
+ * Defines the header used to clear the absolute position to (x=0, y=0, angle=0.0f).
+ */
+#define COMMAND_TRAJECTORY_CLEAR_ABSOLUTE_POSITION          'c'
+
+/**
  * Set the angle to the closest value.
  * Ex : 0, 90, 180, 270 (in radians) ... 
  */

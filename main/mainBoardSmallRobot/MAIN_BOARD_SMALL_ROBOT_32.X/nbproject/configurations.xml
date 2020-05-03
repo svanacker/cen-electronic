@@ -515,6 +515,7 @@
         <itemPath>../../mainBoard/mainBoardCommonMotion.h</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonIoExpanderList.h</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonServo.h</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonColor.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f28"
                      displayName="main.mainBoardSmallRobot"
@@ -587,6 +588,7 @@
                      projectFiles="true">
         <itemPath>../../../robot/2020/commonRobot/commonRobotActions2020.h</itemPath>
         <itemPath>../../../robot/2020/commonRobot/commonRobotLocations2020.h</itemPath>
+        <itemPath>../../../robot/2020/commonRobot/commonRobotPath2020.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f37" displayName="robot.2020.fork" projectFiles="true">
       </logicalFolder>
@@ -1231,6 +1233,7 @@
         <itemPath>../../mainBoard/mainBoardCommonMotion.c</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonIoExpanderList.c</itemPath>
         <itemPath>../../mainBoard/mainBoardCommonServo.c</itemPath>
+        <itemPath>../../mainBoard/mainBoardCommonColor.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f28"
                      displayName="main.mainBoardSmallRobot"

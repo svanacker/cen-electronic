@@ -74,7 +74,7 @@ typedef enum {
 tcs34725Gain_t;
 
 /**
- * Encapsulate all informations
+ * Encapsulate all informations about the Tcs34725
  */
 typedef struct Tcs34725 {
     I2cBusConnection* i2cBusConnection;

@@ -3,8 +3,8 @@
 
 #define SMALL_ROBOT_START_AREA                                                 "SSTA"
 #define SMALL_ROBOT_START_AREA_LABEL                              "Small Robot Start"
-#define SMALL_ROBOT_START_AREA_X                                                  980
-#define SMALL_ROBOT_START_AREA_Y                                                  180
+#define SMALL_ROBOT_START_AREA_X                                                  995
+#define SMALL_ROBOT_START_AREA_Y                                                  185
 #define SMALL_ROBOT_START_AREA_ANGLE_DECI_DEG                      ANGLE_DECI_DEG_180
 
 // Flag 1 (SMALL ROBOT)
@@ -31,8 +31,8 @@
 // DROP RIGHT (SMALL ROBOT)
 #define DROP_RIGHT_FRONT                                                        "DR_R"
 #define DROP_RIGHT_FRONT_LABEL                                             "Drop Right"
-#define DROP_RIGHT_FRONT_X                                                       1000
-#define DROP_RIGHT_FRONT_Y                                                        250
+#define DROP_RIGHT_FRONT_X                                                        940
+#define DROP_RIGHT_FRONT_Y                                                        200
 #define DROP_RIGHT_FRONT_DECI_DEG                                    ANGLE_DECI_DEG_0
 
 #endif

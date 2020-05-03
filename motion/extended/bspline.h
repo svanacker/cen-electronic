@@ -181,8 +181,8 @@ float computeBSplineTimeAtDistance(BSplineCurve* bSplineCurve, float distance);
  * Parametrize a curve by providing source coordinates / angle, target coordinates / angle + controlDistance1 / 2 instead of 4 control points
  */
 void parameterBSplineWithDistanceAndAngle(BSplineCurve* curve,
-        float sourceX, float sourceY, float sourceAngle,
-        float destX, float destY, float destAngle,
+        float sourceX, float sourceY, float sourceAngleRadian,
+        float destX, float destY, float destAngleRadian,
         float distance1, float distance2,
         float accelerationFactor, float speedFactor,
         bool relative);

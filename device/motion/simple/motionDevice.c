@@ -178,7 +178,8 @@ void deviceMotionHandleRawData(unsigned char commandHeader,
         unsigned char type = readHex2(inputStream);
         checkIsSeparator(inputStream);
         float length = readHexFloat4(inputStream, POSITION_DIGIT_MM_PRECISION);
-        squareCalibration(pidMotion, type, length, notificationOutputStream);
+        // squareCalibration(pidMotion, type, length, notificationOutputStream);
+        squareCalibrationUsingSpline(pidMotion, type, length, notificationOutputStream);
     }// MODE
     else if (commandHeader == COMMAND_MOTION_MODE_ADD) {
         ackCommand(outputStream, MOTION_DEVICE_HEADER, COMMAND_MOTION_MODE_ADD);
