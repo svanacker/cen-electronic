@@ -8,7 +8,7 @@
 #include <stdlib.h>
 
 #define MOTION_END_DETECTION_PARAMETER_DATA_SIZE                               4
-#define MOTION_END_DETECTION_PARAMETERS_VALUES_COUNT                           10
+#define MOTION_END_DETECTION_PARAMETERS_VALUES_COUNT                           18
 #define MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION                        2
 
 // Relative Index in the Eeprom
@@ -25,6 +25,23 @@
 #define MOTION_END_DETECTION_NO_ANALYSIS_AT_STARTUP_TIME_IN_SECOND_INDEX        8
 #define MOTION_END_DETECTION_TIME_RANGE_ANALYSIS_INDEX                          9
 
+// FAILED
+#define MOTION_END_DETECTION_FAILED_TIMEOUT_SECOND_AFTER_T3_INDEX               10
+
+// REACHED THRESHOLD
+#define MOTION_END_DETECTION_REACHED_WINDOW_COUNT_INDEX                         11
+#define MOTION_END_DETECTION_REACHED_DERIVATIVE_ERROR_THRESHOLD_INDEX           12
+
+// SHOCK THRESHOLD
+#define MOTION_END_DETECTION_SHOCKED_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD_INDEX     13
+#define MOTION_END_DETECTION_SHOCKED_ACCELERATION_WINDOW_ANALYSIS_COUNT_INDEX           14
+#define MOTION_END_DETECTION_SHOCKED_ACCELERATION_INTEGRAL_THRESHOLD_INDEX              15
+
+// BLOCKED THRESHOLD
+#define MOTION_END_DETECTION_BLOCKED_WINDOW_ANALYSIS_COUNT_INDEX                  16
+#define MOTION_END_DETECTION_BLOCKED_PERCENTAGE_THRESHOLD_INDEX                   17
+
+
 // EEPROM values
 static float MOTION_END_DETECTION_PARAMETERS_DEFAULT_EEPROM_VALUES[MOTION_END_DETECTION_PARAMETERS_VALUES_COUNT] = {
     ACCELERATION_TOO_HIGH_THRESHOLD_FACTOR_DEFAULT_VALUE,
@@ -37,7 +54,19 @@ static float MOTION_END_DETECTION_PARAMETERS_DEFAULT_EEPROM_VALUES[MOTION_END_DE
     MAX_U_INTEGRAL_FACTOR_THRESHOLD_DEFAULT_VALUE,
     MAX_U_INTEGRAL_CONSTANT_THRESHOLD_DEFAULT_VALUE,
     BLOCKING_OR_REACH_DETECTION_DELAY_DEFAULT_VALUE,
-    BLOCKING_OR_REACH_SKIP_DETECTION_DELAY_DEFAULT_VALUE
+    BLOCKING_OR_REACH_SKIP_DETECTION_DELAY_DEFAULT_VALUE,
+    // FAILED
+    MOTION_END_DETECTION_FAILED_TIMEOUT_SECOND_AFTER_T3_DEFAULT_VALUE,
+    // REACHED THRESHOLD
+    MOTION_END_DETECTION_REACHED_WINDOW_COUNT_DEFAULT_VALUE,
+    MOTION_END_DETECTION_REACHED_DERIVATIVE_ERROR_THRESHOLD_DEFAULT_VALUE,
+    // SHOCK THRESHOLD
+    MOTION_END_DETECTION_SHOCKED_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD_DEFAULT_VALUE,
+    MOTION_END_DETECTION_SHOCKED_ACCELERATION_WINDOW_ANALYSIS_COUNT_DEFAULT_VALUE,
+    MOTION_END_DETECTION_SHOCKED_ACCELERATION_INTEGRAL_THRESHOLD_DEFAULT_VALUE,
+    // BLOCKED
+    MOTION_END_DETECTION_BLOCKED_WINDOW_ANALYSIS_COUNT_DEFAULT_VALUE,
+    MOTION_END_DETECTION_BLOCKED_PERCENTAGE_THRESHOLD_DEFAULT_VALUE        
 };
 
 // CHECK
@@ -110,6 +139,22 @@ void loadMotionEndDetectionParameters(MotionEndDetectionParameter* motionEndDete
     motionEndDetectionParameter->maxUIntegralConstantThreshold = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_MAX_U_INTEGRAL_CONSTANT_THRESHOLD_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
     motionEndDetectionParameter->noAnalysisAtStartupTimeInSecond = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_NO_ANALYSIS_AT_STARTUP_TIME_IN_SECOND_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
     motionEndDetectionParameter->timeRangeAnalysisInSecond = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_TIME_RANGE_ANALYSIS_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
+    
+    // FAILED
+    motionEndDetectionParameter->failedTimeoutAfterT3InSecond = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_FAILED_TIMEOUT_SECOND_AFTER_T3_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
+
+    // REACHED THRESHOLD
+    motionEndDetectionParameter->reachedWindowCount = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_REACHED_WINDOW_COUNT_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
+    motionEndDetectionParameter->reachedDerivativeErrorThreshold = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_REACHED_DERIVATIVE_ERROR_THRESHOLD_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
+
+    // SHOCK THRESHOLD
+    motionEndDetectionParameter->shockedAccelerationMaxForOneValueThreshold = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_SHOCKED_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
+    motionEndDetectionParameter->shockedAccelerationWindowAnalysisCount = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_SHOCKED_ACCELERATION_WINDOW_ANALYSIS_COUNT_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
+    motionEndDetectionParameter->shockedAccelerationIntegralThreshold = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_SHOCKED_ACCELERATION_INTEGRAL_THRESHOLD_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
+    
+    // BLOCKED
+    motionEndDetectionParameter->blockedWindowsAnalysisCount = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_BLOCKED_WINDOW_ANALYSIS_COUNT_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
+    motionEndDetectionParameter->blockedPercentageThreshold = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_BLOCKED_PERCENTAGE_THRESHOLD_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
 }
 
 void saveMotionEndDetectionParameters(MotionEndDetectionParameter* motionEndDetectionParameter,
@@ -171,4 +216,48 @@ void saveMotionEndDetectionParameters(MotionEndDetectionParameter* motionEndDete
             MOTION_END_DETECTION_TIME_RANGE_ANALYSIS_INDEX,
             motionEndDetectionParameter->timeRangeAnalysisInSecond,
             MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+    
+    // FAILED
+    internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
+        MOTION_END_DETECTION_FAILED_TIMEOUT_SECOND_AFTER_T3_INDEX,
+        motionEndDetectionParameter->failedTimeoutAfterT3InSecond,
+        MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+    
+    // REACHED
+    internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
+        MOTION_END_DETECTION_REACHED_WINDOW_COUNT_INDEX,
+        motionEndDetectionParameter->reachedWindowCount,
+        MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+
+    internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
+        MOTION_END_DETECTION_REACHED_DERIVATIVE_ERROR_THRESHOLD_INDEX,
+        motionEndDetectionParameter->reachedDerivativeErrorThreshold,
+        MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+    
+    // SHOCKED
+    internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
+        MOTION_END_DETECTION_SHOCKED_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD_INDEX,
+        motionEndDetectionParameter->shockedAccelerationMaxForOneValueThreshold,
+        MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+
+    internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
+        MOTION_END_DETECTION_SHOCKED_ACCELERATION_WINDOW_ANALYSIS_COUNT_INDEX,
+        motionEndDetectionParameter->shockedAccelerationWindowAnalysisCount,
+        MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+
+    internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
+        MOTION_END_DETECTION_SHOCKED_ACCELERATION_INTEGRAL_THRESHOLD_INDEX,
+        motionEndDetectionParameter->shockedAccelerationIntegralThreshold,
+        MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+    
+    // BLOCKED
+    internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
+        MOTION_END_DETECTION_BLOCKED_WINDOW_ANALYSIS_COUNT_INDEX,
+        motionEndDetectionParameter->blockedWindowsAnalysisCount,
+        MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+
+    internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
+        MOTION_END_DETECTION_BLOCKED_PERCENTAGE_THRESHOLD_INDEX,
+        motionEndDetectionParameter->blockedPercentageThreshold,
+        MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
 }

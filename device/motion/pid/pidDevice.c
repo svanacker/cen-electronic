@@ -338,7 +338,7 @@ void devicePidHandleRawData(unsigned char commandHeader, InputStream* inputStrea
         appendSeparator(outputStream);
         appendHexFloat4(outputStream, motionEndDetectionParameter->noAnalysisAtStartupTimeInSecond, MOTION_END_DETECTION_PARAMETER_DIGIT);
     } else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER_AGGREGATION) {
-        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER_AGGREGATION);
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SET_END_DETECTION_PARAMETER_AGGREGATION);
 
         MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
 
@@ -351,6 +351,50 @@ void devicePidHandleRawData(unsigned char commandHeader, InputStream* inputStrea
         motionEndDetectionParameter->timeRangeAnalysisInSecond = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
         checkIsSeparator(inputStream);
         motionEndDetectionParameter->noAnalysisAtStartupTimeInSecond = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+    }
+    // FAILED
+    else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER_FAILED) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER_FAILED);
+        MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->failedTimeoutAfterT3InSecond, MOTION_END_DETECTION_PARAMETER_DIGIT);
+    } else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER_FAILED) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SET_END_DETECTION_PARAMETER_FAILED);
+        MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
+        motionEndDetectionParameter->failedTimeoutAfterT3InSecond = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+    }
+    // REACHED
+    else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER_REACHED) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER_REACHED);
+
+        MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->reachedWindowCount, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->reachedDerivativeErrorThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
+    } else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER_REACHED) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER_REACHED);
+        MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
+        motionEndDetectionParameter->reachedWindowCount = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        checkIsSeparator(inputStream);
+        motionEndDetectionParameter->reachedDerivativeErrorThreshold = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+    }
+    // SHOCKED
+    else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER_SHOCKED) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER_SHOCKED);
+
+        MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->shockedAccelerationMaxForOneValueThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->shockedAccelerationWindowAnalysisCount, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        appendSeparator(outputStream);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->shockedAccelerationIntegralThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
+    } else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER_SHOCKED) {
+        ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SET_END_DETECTION_PARAMETER_SHOCKED);
+        MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
+        motionEndDetectionParameter->shockedAccelerationMaxForOneValueThreshold = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        checkIsSeparator(inputStream);
+        motionEndDetectionParameter->shockedAccelerationWindowAnalysisCount = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        checkIsSeparator(inputStream);
+        motionEndDetectionParameter->shockedAccelerationIntegralThreshold = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
     }
 }
 

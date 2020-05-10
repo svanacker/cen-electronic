@@ -27,28 +27,35 @@
 #define LIGHT_HOUSE_DROP_FRONT__TO__SMALL_HARBOR_FRONT_MIDDLE_CP1                 200.0f
 #define LIGHT_HOUSE_DROP_FRONT__TO__SMALL_HARBOR_FRONT_MIDDLE_CP2                  50.0f
 #define LIGHT_HOUSE_DROP_FRONT__TO__SMALL_HARBOR_FRONT_MIDDLE_SPEED_FACTOR         0.75f
-#define LIGHT_HOUSE_DROP_FRONT__TO__SMALL_HARBOR_FRONT_MIDDLE_ACC_FACTOR           0.5f
+#define LIGHT_HOUSE_DROP_FRONT__TO__SMALL_HARBOR_FRONT_MIDDLE_ACC_FACTOR            0.5f
 
-// -> Big Robot : Small Harbor Front Middle -> Center Point
-#define SMALL_HARBOR_FRONT_MIDDLE__TO__CENTER_POINT_COST                         800.0f
-#define SMALL_HARBOR_FRONT_MIDDLE__TO__CENTER_POINT_CP1                         -100.0f
-#define SMALL_HARBOR_FRONT_MIDDLE__TO__CENTER_POINT_CP2                         -100.0f
-#define SMALL_HARBOR_FRONT_MIDDLE__TO__CENTER_POINT_SPEED_FACTOR                   0.5f
-#define SMALL_HARBOR_FRONT_MIDDLE__TO__CENTER_POINT_ACC_FACTOR                     0.5f
+// -> Big Robot : Small Harbor Front Middle -> Left Reef Front
+#define SMALL_HARBOR_FRONT_MIDDLE__TO__LEFT_REEF_FRONT_COST                     800.0f
+#define SMALL_HARBOR_FRONT_MIDDLE__TO__LEFT_REEF_FRONT_CP1                         -200.0f
+#define SMALL_HARBOR_FRONT_MIDDLE__TO__LEFT_REEF_FRONT_CP2                         -600.0f
+#define SMALL_HARBOR_FRONT_MIDDLE__TO__LEFT_REEF_FRONT_SPEED_FACTOR                  1.0f
+#define SMALL_HARBOR_FRONT_MIDDLE__TO__LEFT_REEF_FRONT_ACC_FACTOR                    1.0f
 
-// -> Big Robot : Center Point -> Left Reef Front
-#define CENTER_POINT__TO__LEFT_REEF_FRONT_COST                                  1000.0f
-#define CENTER_POINT__TO__LEFT_REEF_FRONT_CP1                                    200.0f
-#define CENTER_POINT__TO__LEFT_REEF_FRONT_CP2                                    200.0f
-#define CENTER_POINT__TO__LEFT_REEF_FRONT_SPEED_FACTOR                             1.0f
-#define CENTER_POINT__TO__LEFT_REEF_FRONT_ACC_FACTOR                               1.0f
+// -> Big Robot : Left Reef Front -> Left Reef Take
+#define LEFT_REEF_FRONT__TO__LEFT_REEF_TAKE_COST                                  1000.0f
+#define LEFT_REEF_FRONT__TO__LEFT_REEF_TAKE_CP1                                    100.0f
+#define LEFT_REEF_FRONT__TO__LEFT_REEF_TAKE_CP2                                    100.0f
+#define LEFT_REEF_FRONT__TO__LEFT_REEF_TAKE_SPEED_FACTOR                            0.5f
+#define LEFT_REEF_FRONT__TO__LEFT_REEF_TAKE_ACC_FACTOR                              0.5f
 
-// -> Big Robot : Left Reef Front -> Drop Left
-#define LEFT_REEF_FRONT__TO__DROP_LEFT_FRONT_COST                                800.0f
-#define LEFT_REEF_FRONT__TO__DROP_LEFT_FRONT_CP1                                -150.0f
-#define LEFT_REEF_FRONT__TO__DROP_LEFT_FRONT_CP2                                -150.0f
-#define LEFT_REEF_FRONT__TO__DROP_LEFT_FRONT_SPEED_FACTOR                          1.0f
-#define LEFT_REEF_FRONT__TO__DROP_LEFT_FRONT_ACC_FACTOR                            1.0f
+// -> Big Robot : Left Reef Take -> Front Left
+#define LEFT_REEF_TAKE__TO__FRONT_LEFT_COST                                        800.0f
+#define LEFT_REEF_TAKE__TO__FRONT_LEFT_CP1                                        -350.0f
+#define LEFT_REEF_TAKE__TO__FRONT_LEFT_CP2                                        -350.0f
+#define LEFT_REEF_TAKE__TO__FRONT_LEFT_SPEED_FACTOR                                 0.75f
+#define LEFT_REEF_TAKE__TO__FRONT_LEFT_ACC_FACTOR                                   0.75f
+
+// Front Left -> Drop Left
+#define FRONT_LEFT__TO__DROP_LEFT_COST                                             300.0f
+#define FRONT_LEFT__TO__DROP_LEFT_CP1                                              100.0f
+#define FRONT_LEFT__TO__DROP_LEFT_CP2                                              100.0f
+#define FRONT_LEFT__TO__DROP_LEFT_SPEED_FACTOR                                      0.75f
+#define FRONT_LEFT__TO__DROP_LEFT_ACC_FACTOR                                        0.75f
 
 // Big Robot : Drop Left -> Central Start Area (to adjust Y and angle)
 #define DROP_LEFT_FRONT__TO__CENTRAL_START_AREA_COST                             300.0f

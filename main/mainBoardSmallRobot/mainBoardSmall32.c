@@ -23,6 +23,7 @@
 
 // COMMON PART
 #include "../mainBoard/mainBoardCommon.h"
+#include "../mainBoard/mainBoardCommonColor.h"
 #include "../mainBoard/mainBoardCommonLcd.h"
 #include "../mainBoard/mainBoardCommonIoExpanderList.h"
 #include "../mainBoard/mainBoardCommonMatch.h"
@@ -85,7 +86,7 @@ void initMainBoardDevicesDescriptor() {
     mainBoardCommonTofAddDevices32();
     mainBoardCommonMeca1AddDevices();
 	mainBoardCommonIOExpanderListAddDevices32();
-
+    mainBoardCommonColorSensorAddDevices();
     addLocalDevice(getLedDeviceInterface(), getLedDeviceDescriptor(&ledArray));
 
     // Call the init on each devices
@@ -188,6 +189,8 @@ void mainBoardMainPhase2(void) {
                                         mainBoardWaitForInstruction,
                                         loopUnWaitForInstruction,
                                         endMatchBeforeEnd2020);
+    
+    mainBoardCommonColorSensorInitDrivers();
 }
 
 void mainBoardMainPhase3(void) {

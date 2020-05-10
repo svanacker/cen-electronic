@@ -23,14 +23,14 @@
 #include "../../pidConstants.h"
 #include "../../pid.h"
 
-#define MOTION_FAILED_DETECTION_TIMEOUT_AFTER_T3                           1.0f
-
 /**
  * @private
  */
 bool isMotionInstructionFailed(PidMotion* pidMotion, MotionInstruction* motionInstruction, PidComputationInstructionValues* currentValues) {
+    MotionEndDetectionParameter* endDetectionParameters = &(pidMotion->globalParameters.motionEndDetectionParameter);
+
     // We don't consider that we reach the real position before the expected motion
-    if (pidMotion->computationValues.pidTimeInSecond > motionInstruction->t3 + MOTION_FAILED_DETECTION_TIMEOUT_AFTER_T3) {
+    if (pidMotion->computationValues.pidTimeInSecond > motionInstruction->t3 + endDetectionParameters->failedTimeoutAfterT3InSecond) {
         return true;
     }
     return false;

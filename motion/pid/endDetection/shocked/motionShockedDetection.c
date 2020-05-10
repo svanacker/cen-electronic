@@ -21,15 +21,12 @@
 #include "../../pidConstants.h"
 #include "../../pid.h"
 
-#define SHOCKED_DETECTION_ACCELERATION_WINDOW_COUNT 5
-#define SHOCKED_DETECTION_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD    10000.0f
-#define SHOCKED_DETECTION_ACCELERATION_THRESHOLD                      30000.0f
 
 /**
  * Detects a shock by analyzing a window of time and check if there is a high acceleration (shock on a short time are often responsible of a high acceleration / deceleration)
  */
-bool detectShockByAcceleration(MotionInstruction* motionInstruction, PidComputationInstructionValues* currentValues) {
-    unsigned windowElementCount = SHOCKED_DETECTION_ACCELERATION_WINDOW_COUNT;
+bool detectShockByAcceleration(MotionEndDetectionParameter* endDetectionParameters, MotionInstruction* motionInstruction, PidComputationInstructionValues* currentValues) {
+    unsigned int windowElementCount = (int) endDetectionParameters->shockedAccelerationWindowAnalysisCount;
     unsigned int startIndex = 0;
     startIndex = currentValues->historyWriteIndex - windowElementCount;
     if (startIndex < 0) {
@@ -40,19 +37,20 @@ bool detectShockByAcceleration(MotionInstruction* motionInstruction, PidComputat
     for (index = startIndex; index < currentValues->historyWriteIndex - 1; index++) {
         float absAccelerationHistory = fabsf(currentValues->accelerationHistory[index]);
         // Avoid that a single value could be more than the global threshold
-        if (absAccelerationHistory > SHOCKED_DETECTION_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD) {
-            absAccelerationHistoryIntegral += SHOCKED_DETECTION_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD;
+        if (absAccelerationHistory > endDetectionParameters->shockedAccelerationMaxForOneValueThreshold) {
+            absAccelerationHistoryIntegral += endDetectionParameters->shockedAccelerationMaxForOneValueThreshold;
         } else {
             absAccelerationHistoryIntegral += absAccelerationHistory;
         }
     }
-    if (absAccelerationHistoryIntegral >= SHOCKED_DETECTION_ACCELERATION_THRESHOLD) {
+    if (absAccelerationHistoryIntegral >= endDetectionParameters->shockedAccelerationIntegralThreshold) {
         return true;
     }
     return false;
 }
 
 bool detectIfRobotIsShocked(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {
+    MotionEndDetectionParameter* endDetectionParameters = &(pidMotion->globalParameters.motionEndDetectionParameter);
     PidComputationValues* computationValues = &(pidMotion->computationValues);
     PidComputationInstructionValues* thetaCurrentValues = &(computationValues->values[THETA]);
     PidComputationInstructionValues* alphaCurrentValues = &(computationValues->values[ALPHA]);
@@ -60,8 +58,8 @@ bool detectIfRobotIsShocked(PidMotion* pidMotion, PidMotionDefinition* motionDef
     MotionInstruction* thetaMotionInstruction = &(motionDefinition->inst[THETA]);
     MotionInstruction* alphaMotionInstruction = &(motionDefinition->inst[ALPHA]);
 
-    bool thetaShocked = detectShockByAcceleration(thetaMotionInstruction, thetaCurrentValues);
-    bool alphaShocked = detectShockByAcceleration(alphaMotionInstruction, alphaCurrentValues);
+    bool thetaShocked = detectShockByAcceleration(endDetectionParameters, thetaMotionInstruction, thetaCurrentValues);
+    bool alphaShocked = detectShockByAcceleration(endDetectionParameters, alphaMotionInstruction, alphaCurrentValues);
 
     return (thetaShocked || alphaShocked);
 }

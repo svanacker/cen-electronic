@@ -13,7 +13,7 @@ bool ioExpanderFilePcInit(IOExpander* ioExpander) {
 unsigned char ioExpanderFilePcReadValue(IOExpander* ioExpander) {
     char* fileName = (char*) ioExpander->object;
     char data[IO_EXPANDER_FILE_BIT_COUNT];
-    readOrWriteDataFromFile(fileName, true, '0', (char*) &data, IO_EXPANDER_FILE_BIT_COUNT);
+    readOrWriteDataFromFile(fileName, true, '0', (char*) &data, IO_EXPANDER_FILE_BIT_COUNT, true);
     unsigned int i;
     unsigned char result = 0;
     for (i = 0; i < IO_EXPANDER_FILE_BIT_COUNT; i++) {
@@ -37,7 +37,7 @@ void ioExpanderFilePcWriteValue(IOExpander* ioExpander, unsigned char value) {
         }
     }
 
-    readOrWriteDataFromFile(fileName, false, '0', (char*) &data, IO_EXPANDER_FILE_BIT_COUNT);
+    readOrWriteDataFromFile(fileName, false, '0', (char*) &data, IO_EXPANDER_FILE_BIT_COUNT, true);
 }
 
 // SINGLE BIT
@@ -45,7 +45,7 @@ void ioExpanderFilePcWriteValue(IOExpander* ioExpander, unsigned char value) {
 bool ioExpanderFilePcReadSingleValue(IOExpander* ioExpander, unsigned int ioIndex) {
     char* fileName = (char*)ioExpander->object;
     char data[IO_EXPANDER_FILE_BIT_COUNT];
-    readOrWriteDataFromFile(fileName, true, '0', (char*) &data, IO_EXPANDER_FILE_BIT_COUNT);
+    readOrWriteDataFromFile(fileName, true, '0', (char*) &data, IO_EXPANDER_FILE_BIT_COUNT, true);
 
     return (data[IO_EXPANDER_FILE_BIT_COUNT - 1 - ioIndex] == '1');
 }
@@ -54,7 +54,7 @@ void ioExpanderFilePcWriteSingleValue(IOExpander* ioExpander, unsigned int ioInd
     char* fileName = (char*)ioExpander->object;
     char data[IO_EXPANDER_FILE_BIT_COUNT];
     // Load the whole file
-    readOrWriteDataFromFile(fileName, true, '0', (char*) &data, IO_EXPANDER_FILE_BIT_COUNT);
+    readOrWriteDataFromFile(fileName, true, '0', (char*) &data, IO_EXPANDER_FILE_BIT_COUNT, true);
 
     // Change a single value
     if (value) {
@@ -64,7 +64,7 @@ void ioExpanderFilePcWriteSingleValue(IOExpander* ioExpander, unsigned int ioInd
         data[IO_EXPANDER_FILE_BIT_COUNT - 1 - ioIndex] = '0';
     }
     // Write the whole file
-    readOrWriteDataFromFile(fileName, false, '0', (char*) &data, IO_EXPANDER_FILE_BIT_COUNT);
+    readOrWriteDataFromFile(fileName, false, '0', (char*) &data, IO_EXPANDER_FILE_BIT_COUNT, true);
 }
 
 void initIOExpanderFilePc(IOExpander* ioExpander, const char* fileName) {

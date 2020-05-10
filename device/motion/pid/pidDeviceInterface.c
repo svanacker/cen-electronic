@@ -270,6 +270,60 @@ int devicePidGetInterface(unsigned char commandHeader, DeviceInterfaceMode mode,
         }
         return commandLengthValueForMode(mode, 0, 24);
     }
+    else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER_FAILED) {
+        if (fillDeviceArgumentList) {
+            setFunction("get End Detection Failed Param", 0, 1);
+            setResultFloatHex4(0, "failedTimeoutAfterT3InSecond (second)");
+        }
+        return commandLengthValueForMode(mode, 0, 4);
+    }
+    else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER_REACHED) {
+        if (fillDeviceArgumentList) {
+            setFunction("get End Detection Reached Param", 0, 3);
+            setResultFloatHex4(0, "reachedWindowCount");
+            setResultSeparator(1);
+            setResultFloatHex4(2, "reachedDerivativeErrorThreshold");
+        }
+        return commandLengthValueForMode(mode, 0, 9);
+    }
+    else if (commandHeader == COMMAND_GET_END_DETECTION_PARAMETER_SHOCKED) {
+        if (fillDeviceArgumentList) {
+            setFunction("get End Detection Shocked Param", 0, 5);
+            setResultFloatHex4(0, "");
+            setResultSeparator(1);
+            setResultFloatHex4(2, "");
+            setResultSeparator(3);
+            setResultFloatHex4(4, "");
+        }
+        return commandLengthValueForMode(mode, 0, 14);
+    }
+    else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER_FAILED) {
+        if (fillDeviceArgumentList) {
+            setFunction("set End Detection Failed Param", 1, 0);
+            setArgumentFloatHex4(0, "failedTimeoutAfterT3InSecond (second)");
+        }
+        return commandLengthValueForMode(mode, 4, 0);
+    }
+    else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER_REACHED) {
+        if (fillDeviceArgumentList) {
+            setFunction("set End Detection Reached Param", 3, 0);
+            setArgumentFloatHex4(0, "reachedWindowCount");
+            setArgumentSeparator(1);
+            setArgumentFloatHex4(2, "reachedDerivativeErrorThreshold");
+        }
+        return commandLengthValueForMode(mode, 9, 0);
+    }
+    else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER_SHOCKED) {
+        if (fillDeviceArgumentList) {
+            setFunction("set End Detection Shocked Param", 5, 0);
+            setArgumentFloatHex4(0, "");
+            setArgumentSeparator(1);
+            setArgumentFloatHex4(2, "");
+            setArgumentSeparator(3);
+            setArgumentFloatHex4(4, "");
+        }
+        return commandLengthValueForMode(mode, 14, 0);
+    }
     return DEVICE_HEADER_NOT_HANDLED;
 }
 

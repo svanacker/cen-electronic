@@ -23,10 +23,6 @@
 #include "../../pidConstants.h"
 #include "../../pid.h"
 
-#define REACHED_WINDOW_COUNT                           5
-
-#define REACHED_DETECTION_DERIVATIVE_ERROR_THRESHOLD   0.05f
-
 /**
  * @private
  */
@@ -35,7 +31,8 @@ bool isMotionInstructionReached(PidMotion* pidMotion, MotionInstruction* motionI
     if (pidMotion->computationValues.pidTimeInSecond <= motionInstruction->t3) {
         return false;
     }
-    unsigned windowElementCount = REACHED_WINDOW_COUNT;
+    MotionEndDetectionParameter* endDetectionParameters = &(pidMotion->globalParameters.motionEndDetectionParameter);
+    unsigned int windowElementCount = (int) (endDetectionParameters->reachedWindowCount);
     unsigned int startIndex = 0;
     startIndex = currentValues->historyWriteIndex - windowElementCount;
     if (startIndex < 0) {
@@ -45,11 +42,12 @@ bool isMotionInstructionReached(PidMotion* pidMotion, MotionInstruction* motionI
     float absDerivativeErrorIntegral = 0.0f;
     for (index = startIndex; index < currentValues->historyWriteIndex - 1; index++) {
 
-        // We check that the derivative error is verly low (stabilization)
+        // We check that the derivative error is very low (stabilization)
         float absDerivativeError = fabsf(currentValues->derivativeErrorHistory[index]);
         absDerivativeErrorIntegral += absDerivativeError;
     }
-    return (absDerivativeErrorIntegral < REACHED_DETECTION_DERIVATIVE_ERROR_THRESHOLD);
+    float integralThresholdMax = endDetectionParameters->reachedDerivativeErrorThreshold;
+    return (absDerivativeErrorIntegral < integralThresholdMax);
 }
 
 bool isMotionReached(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {

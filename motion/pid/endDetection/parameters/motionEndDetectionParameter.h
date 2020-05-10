@@ -14,7 +14,7 @@ typedef struct MotionEndDetectionParameter {
     float accelerationTooHighTresholdFactor;
     /** Example : speed < speedTooLowThresholdFactor * normalSpeed => detected as abnormal. */
     float speedTooLowThresholdFactor;
-    /** Example : U > uTooHighTresholdFactor * normalU => detected as abnormal. */
+    /** TODO : explanation. */
     float uTooHighTresholdFactor;
     /** We do not detect end detection when we are too slow */
     float speedMinThreshold;
@@ -50,6 +50,52 @@ typedef struct MotionEndDetectionParameter {
      * if the robot is blocked or has ended his trajectory
      */
     float noAnalysisAtStartupTimeInSecond;
+    
+    // FAILED
+    /**
+     * If we don't detect that we reach after t3 + x seconds, we consider that 
+     * the motion was failed
+     */
+    float failedTimeoutAfterT3InSecond;
+    
+    // REACHED
+    /**
+     * How much sample we do in a window to detect that we reached the target
+     */
+    float reachedWindowCount;
+    /**
+     * How much in cumulative derivative Error in the window (see previous parameter)
+     * must be < to consider that we reach the target
+     */
+    float reachedDerivativeErrorThreshold;
+    
+    // SHOCKED
+    /**
+     * From which value of max acceleration we consider that we consider it 
+     * as possibly a problem of "shock"
+     */
+    float shockedAccelerationMaxForOneValueThreshold;
+    /**
+     * The Window analysis Count to detect shock
+     */
+    float shockedAccelerationWindowAnalysisCount;
+    /**
+     * The integral threshold (during Window analysis, see previous example).
+     */
+    float shockedAccelerationIntegralThreshold;
+    
+    // FAILED
+    /**
+     * How much PID must be analysis to detect blocking
+     */
+    float blockedWindowsAnalysisCount;
+    
+    /**
+     * The percentage (between 0 and 1) so that we could consider that the robot
+     * is blocked when 
+     */
+    float blockedPercentageThreshold;
+    
 } MotionEndDetectionParameter;
 
 // For Communication Exchange

@@ -24,8 +24,10 @@
 /**
  * @private
  */
-bool isMotionInstructionBlocked(MotionInstruction* motionInstruction, PidComputationInstructionValues* currentValues) {
-    unsigned windowElementCount = 10;
+bool isMotionInstructionBlocked(PidMotion* pidMotion, MotionInstruction* motionInstruction, PidComputationInstructionValues* currentValues) {
+    MotionEndDetectionParameter* endDetectionParameters = &(pidMotion->globalParameters.motionEndDetectionParameter);
+    
+    unsigned int windowElementCount = (unsigned int) endDetectionParameters->blockedWindowsAnalysisCount;
     unsigned int startIndex = 0;
     startIndex = currentValues->historyWriteIndex - windowElementCount;
     if (startIndex < 0) {
@@ -38,8 +40,8 @@ bool isMotionInstructionBlocked(MotionInstruction* motionInstruction, PidComputa
             aboveThresholdCount++;
         }
     }
-    // If more than 50% have the status higher than expected
-    if (2 * aboveThresholdCount > windowElementCount) {
+    // Test if a significant percentage of PID were blocked
+    if (aboveThresholdCount > windowElementCount * endDetectionParameters->blockedPercentageThreshold) {
         return true;
     }
     return false;
@@ -53,8 +55,8 @@ bool isMotionBlocked(PidMotion* pidMotion, PidMotionDefinition* motionDefinition
     MotionInstruction* thetaMotionInstruction = &(motionDefinition->inst[THETA]);
     MotionInstruction* alphaMotionInstruction = &(motionDefinition->inst[ALPHA]);
 
-    bool isThetaBlocked = isMotionInstructionBlocked(thetaMotionInstruction, thetaCurrentValues);
-    bool isAlphaBlocked = isMotionInstructionBlocked(alphaMotionInstruction, alphaCurrentValues);
+    bool isThetaBlocked = isMotionInstructionBlocked(pidMotion, thetaMotionInstruction, thetaCurrentValues);
+    bool isAlphaBlocked = isMotionInstructionBlocked(pidMotion, alphaMotionInstruction, alphaCurrentValues);
 
     return (isAlphaBlocked || isThetaBlocked);
 }

@@ -14,7 +14,8 @@ unsigned long readFileLength(FILE * filePointer);
 * @param fileName the name of the file
 * @param load if we load the content into the values or if we write the values
 * @param fileLength the length of the values
+* @param close if we must close or not the file after
 */
-FILE* readOrWriteDataFromFile(char* fileName, bool load, char defaultValue, char* values, unsigned int valuesLength);
+FILE* readOrWriteDataFromFile(char* fileName, bool load, char defaultValue, char* values, unsigned int valuesLength, bool close);
 
 #endif

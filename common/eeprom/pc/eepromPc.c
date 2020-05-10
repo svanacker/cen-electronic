@@ -29,7 +29,7 @@ static char eepromPc[EEPROM_PC_MAX_INDEX];
 /**
  * Creates or Open the File when initializing.
  */
-FILE* eepromPCGetOrCreateFile(Eeprom* eeprom_, bool load) {
+FILE* eepromPCGetOrCreateFile(Eeprom* eeprom_, bool load, bool close) {
     char fileName[255];
     // We use the current directory !
     char* boardName = getBoardName();
@@ -37,12 +37,12 @@ FILE* eepromPCGetOrCreateFile(Eeprom* eeprom_, bool load) {
     strcpy(fileName, boardName);
     strcat(fileName, extension);
 
-    return readOrWriteDataFromFile(fileName, load, '\0', (char*) &eepromPc, EEPROM_PC_MAX_INDEX);
+    return readOrWriteDataFromFile(fileName, load, '\0', (char*) &eepromPc, EEPROM_PC_MAX_INDEX, close);
 }
 
 void eepromPcWriteCharIntoFile(Eeprom* eeprom_, unsigned long index, unsigned char value) {
     // Store it in the file too !
-    FILE* file = eepromPCGetOrCreateFile(eeprom_, false);
+    FILE* file = eepromPCGetOrCreateFile(eeprom_, false, false);
     fseek(file, index, 0);
     char valueToWrite[1];
     valueToWrite[0] = value;
@@ -89,8 +89,7 @@ void eepromPcWriteBlock(Eeprom* eeprom_, unsigned long index, unsigned int lengt
  * Reload the content (usefull for Windows).
  */
 void eepromPcReload(Eeprom* eeprom_) {
-    FILE* file = eepromPCGetOrCreateFile(eeprom_, true);
-    fclose(file);
+    eepromPCGetOrCreateFile(eeprom_, true, true);
 }
 
 /**

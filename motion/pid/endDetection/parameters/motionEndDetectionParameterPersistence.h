@@ -12,14 +12,14 @@
 // Factor has no unit, we compare either normal acceleration, speed, or too high u !
 #define ACCELERATION_TOO_HIGH_THRESHOLD_FACTOR_DEFAULT_VALUE    30.0f
 #define SPEED_TOO_LOW_THRESHOLD_FACTOR_DEFAULT_VALUE            5.0f
-#define U_TOO_HIGH_THRESHOLD_FACTOR_DEFAULT_VALUE               8.0f
+#define U_TOO_HIGH_THRESHOLD_FACTOR_DEFAULT_VALUE               20.0f
 
 // In mm / sec
 #define SPEED_MIN_THRESHOLD_DEFAULT_VALUE                       10.0f
 
 // U is between 0 and 255 (or superior, but corresponding to max value)
 // To avoid that we send power but not enough to move the robot !
-#define U_MIN_THRESHOLD_DEFAULT_VALUE                           20.0f
+#define U_MIN_THRESHOLD_DEFAULT_VALUE                           10.0f
 
 // PARAMETERS USED IN AGGREGATION PHASE DETECTION
 
@@ -49,6 +49,25 @@
  * The delay for which we do not try to know if the robot is rolling or blocked
  */
 #define BLOCKING_OR_REACH_SKIP_DETECTION_DELAY_DEFAULT_VALUE      0.6f
+
+// FAILED
+#define MOTION_END_DETECTION_FAILED_TIMEOUT_SECOND_AFTER_T3_DEFAULT_VALUE   1.0f
+
+// REACHED
+#define MOTION_END_DETECTION_REACHED_WINDOW_COUNT_DEFAULT_VALUE                5
+#define MOTION_END_DETECTION_REACHED_DERIVATIVE_ERROR_THRESHOLD_DEFAULT_VALUE 0.05f
+
+// SHOCKED
+
+// -> Threshold for one value
+#define MOTION_END_DETECTION_SHOCKED_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD_DEFAULT_VALUE    10000.0f
+// -> Threshold for several values (sampling)
+#define MOTION_END_DETECTION_SHOCKED_ACCELERATION_WINDOW_ANALYSIS_COUNT_DEFAULT_VALUE          5
+#define MOTION_END_DETECTION_SHOCKED_ACCELERATION_INTEGRAL_THRESHOLD_DEFAULT_VALUE             30000.0f
+
+// BLOCKED
+#define MOTION_END_DETECTION_BLOCKED_WINDOW_ANALYSIS_COUNT_DEFAULT_VALUE              20
+#define MOTION_END_DETECTION_BLOCKED_PERCENTAGE_THRESHOLD_DEFAULT_VALUE             0.75f
 
 void loadMotionEndDetectionParameters(MotionEndDetectionParameter* motionEndDetectionParameter, Eeprom* motionEndDetectionParametersEeprom, bool loadDefaultValues);
 

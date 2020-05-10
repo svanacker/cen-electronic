@@ -13,7 +13,7 @@ unsigned long readFileLength(FILE * filePointer) {
     return result;
 }
 
-FILE* readOrWriteDataFromFile(char* fileName, bool load, char defaultValue, char* values, unsigned int valuesLength) {
+FILE* readOrWriteDataFromFile(char* fileName, bool load, char defaultValue, char* values, unsigned int valuesLength, bool close) {
     FILE* result = fopen(fileName, "rb+");
     // if file does not exist, create it
     if (result == NULL) {
@@ -27,19 +27,19 @@ FILE* readOrWriteDataFromFile(char* fileName, bool load, char defaultValue, char
         result = fopen(fileName, "wb");
         // Write the default values
         fwrite(values, 1, valuesLength, result);
-        fclose(result);
     }
     else {
         // In all cases
         if (load) {
             fread(values, 1, valuesLength, result);
-            fclose(result);
         }
         else {
             // Fill data
             fwrite(values, 1, valuesLength, result);
-            fclose(result);
         }
+    }
+    if (close) {
+        fclose(result);
     }
     return result;
  }

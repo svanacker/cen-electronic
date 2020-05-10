@@ -1,6 +1,7 @@
 #include "motionEndDetectionStatusUpdater.h"
 
 #include <math.h>
+#include "../../../common/math/cenMath.h"
 
 #include "../../../robot/kinematics/robotKinematics.h"
 #include "../../pid/endDetection/parameters/motionEndDetectionParameter.h"
@@ -45,6 +46,7 @@ void updateEndDetectionStatusRegisterSpeedTooLow(MotionEndDetectionParameter* en
  */
 void updateEndDetectionStatusRegisterUTooHigh(MotionEndDetectionParameter* endDetectionParameter, MotionInstruction* motionInstruction, PidComputationInstructionValues* currentValues) {
     float absNormalU = fabsf(currentValues->normalU);
+    // When we go very slowly, we don't detect that U is too much
     if (absNormalU < endDetectionParameter->uMinThresholdValue) {
         currentValues->status.absUTooHighThanExpected = false;
         return;
@@ -52,7 +54,13 @@ void updateEndDetectionStatusRegisterUTooHigh(MotionEndDetectionParameter* endDe
     float absCurrentU = fabsf(currentValues->u);
 
     // Result
-    currentValues->status.absUTooHighThanExpected = absCurrentU > (absNormalU * endDetectionParameter->uTooHighTresholdFactor);
+    if (motionInstruction->speed != 0.0f) {
+        float factor = 1.0f + fabsf(endDetectionParameter->uTooHighTresholdFactor / (logf(E_CONST + fabsf(currentValues->normalSpeed / 10.0f))));
+        currentValues->status.absUTooHighThanExpected = absCurrentU > (absNormalU * factor);
+    }
+    else {
+        currentValues->status.absUTooHighThanExpected = false;
+    }
 }
 
 void updateEndDetectionStatusRegister(PidMotion* pidMotion, PidMotionDefinition* motionDefinition) {

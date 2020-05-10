@@ -30,12 +30,19 @@
 #define SMALL_HARBOR_FRONT_MIDDLE_Y                                        1800
 #define SMALL_HARBOR_FRONT_MIDDLE_ANGLE_DECI_DEG               ANGLE_DECI_DEG_0
 
+// FRONT OF DROP
+#define FRONT_LEFT                                                        "FR_L"
+#define FRONT_LEFT_LABEL                                            "Front Left"
+#define FRONT_LEFT_X                                                         60
+#define FRONT_LEFT_Y                                                        200
+#define FRONT_LEFT_ANGLE_DECI_DEG                               ANGLE_DECI_DEG_0
+
 // DROP LEFT
-#define DROP_LEFT_FRONT                                                   "DR_L"
-#define DROP_LEFT_FRONT_LABEL                                        "Drop Left"
-#define DROP_LEFT_FRONT_X                                                    660
-#define DROP_LEFT_FRONT_Y                                                    200
-#define DROP_LEFT_FRONT_DECI_DEG                              ANGLE_DECI_DEG_180
+#define DROP_LEFT                                                        "DR_L"
+#define DROP_LEFT_LABEL                                             "Drop Left"
+#define DROP_LEFT_X                                                         350
+#define DROP_LEFT_Y                                                         200
+#define DROP_LEFT_ANGLE_DECI_DEG                               ANGLE_DECI_DEG_0
 
 
 // 

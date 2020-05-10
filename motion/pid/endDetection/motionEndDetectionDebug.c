@@ -52,7 +52,23 @@ void printMotionEndDetectionParameter(OutputStream* outputStream, MotionEndDetec
     printMotionEndDetectionParameterLine(outputStream, "Max U Integral Constant Threshold", parameter->maxUIntegralConstantThreshold);
     printMotionEndDetectionParameterLine(outputStream, "Time Range Analysis", parameter->timeRangeAnalysisInSecond);
     printMotionEndDetectionParameterLine(outputStream, "No Analysis At Startup Range Time", parameter->noAnalysisAtStartupTimeInSecond);
+    appendTableHeaderSeparatorLine(outputStream);
 
+    // FAILED
+    printMotionEndDetectionParameterLine(outputStream, "Failed Timeout After T3 In Sec", parameter->failedTimeoutAfterT3InSecond);
+    appendTableHeaderSeparatorLine(outputStream);
+    // REACHED
+    printMotionEndDetectionParameterLine(outputStream, "Reached Window Count", parameter->reachedWindowCount);
+    printMotionEndDetectionParameterLine(outputStream, "Reached Derivative Error Threshold", parameter->reachedDerivativeErrorThreshold);
+    appendTableHeaderSeparatorLine(outputStream);
+    // SHOCKED
+    printMotionEndDetectionParameterLine(outputStream, "Shocked Acc Integral Threshold", parameter->shockedAccelerationMaxForOneValueThreshold);
+    printMotionEndDetectionParameterLine(outputStream, "Shocked Acc Window Analysis Count", parameter->shockedAccelerationWindowAnalysisCount);
+    printMotionEndDetectionParameterLine(outputStream, "Shocked Acc Integral Threshold", parameter->shockedAccelerationIntegralThreshold);
+    appendTableHeaderSeparatorLine(outputStream);
+    // BLOCKED
+    printMotionEndDetectionParameterLine(outputStream, "Blocked Window Analysis Count", parameter->blockedWindowsAnalysisCount);
+    printMotionEndDetectionParameterLine(outputStream, "Blocked Percentage Threshold", parameter->blockedPercentageThreshold);
     appendTableHeaderSeparatorLine(outputStream);
 }
 

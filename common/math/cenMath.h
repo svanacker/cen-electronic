@@ -8,6 +8,7 @@
 #include "../../common/commons.h"
 
 #define PI                     3.1415926535f
+#define E_CONST                2.7182818284590452354f
 
 #define _2_PI                  (PI * 2.0f)
 
