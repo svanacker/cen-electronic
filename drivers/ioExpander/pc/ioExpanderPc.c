@@ -38,8 +38,9 @@ void ioExpanderPcWriteSingleValue(IOExpander* ioExpander, unsigned int ioIndex, 
     }
 }
 
-void initIOExpanderPc(IOExpander* ioExpander, int* ioExpanderValue) {
+void initIOExpanderPc(IOExpander* ioExpander, const char* name, int* ioExpanderValue) {
     initIOExpander(ioExpander,
+            &name,
             &ioExpanderPcInit,
             &ioExpanderPcReadValue,
             &ioExpanderPcWriteValue,

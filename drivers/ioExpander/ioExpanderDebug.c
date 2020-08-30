@@ -15,10 +15,11 @@
 #define IO_EXPANDER_IO_COUNT                      8
 
 #define IO_EXPANDER_INDEX_COLUMN_LENGTH		      13
+#define IO_EXPANDER_NAME_COLUMN_LENGTH		      18
 #define IO_EXPANDER_COUNT_COLUMN_LENGTH           6
-#define IO_EXPANDER_BUS_COLUMN_LENGTH             15
+#define IO_EXPANDER_BUS_COLUMN_LENGTH             10
 #define IO_EXPANDER_ADDRESS_COLUMN_LENGTH         8
-#define IO_EXPANDER_VALUE_COLUMN_LENGTH           5
+#define IO_EXPANDER_VALUE_COLUMN_LENGTH           4
 #define IO_EXPANDER_LAST_COLUMN		              0
 
 /**
@@ -30,6 +31,7 @@ void printIOExpanderDebugTableHeader(OutputStream* outputStream) {
 
     // First line
     appendStringHeader(outputStream, "IO Expander", IO_EXPANDER_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Name", IO_EXPANDER_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Count", IO_EXPANDER_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Bus", IO_EXPANDER_BUS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Address", IO_EXPANDER_ADDRESS_COLUMN_LENGTH);
@@ -42,6 +44,7 @@ void printIOExpanderDebugTableHeader(OutputStream* outputStream) {
 
     // Second line
     appendStringHeader(outputStream, "Index", IO_EXPANDER_INDEX_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Index", IO_EXPANDER_NAME_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", IO_EXPANDER_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", IO_EXPANDER_BUS_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(Hex)", IO_EXPANDER_ADDRESS_COLUMN_LENGTH);
@@ -61,6 +64,7 @@ void printIOExpanderStatesTable(OutputStream* outputStream, IOExpanderList* ioEx
     for (ioExpanderIndex = 0; ioExpanderIndex < ioExpanderList->size; ioExpanderIndex++) {
         IOExpander* ioExpander = getIOExpanderByIndex(ioExpanderList, ioExpanderIndex);
         appendDecTableData(outputStream, ioExpanderIndex, IO_EXPANDER_INDEX_COLUMN_LENGTH);
+        appendStringTableData(outputStream, ioExpander->name, IO_EXPANDER_NAME_COLUMN_LENGTH);
         appendDecTableData(outputStream, ioExpander->count, IO_EXPANDER_COUNT_COLUMN_LENGTH);
 
         I2cBusConnection* i2cBusConnection = NULL;

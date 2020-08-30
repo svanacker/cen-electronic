@@ -52,6 +52,8 @@ typedef void ioExpanderOnValueChangeEventFunction(IOExpander* ioExpander, unsign
  * Defines the contract IO Expander like PCF8574.
  */
 struct IOExpander {
+    /** The name of the IO Expander. */
+    char* name;
     // IMPLEMENTATION
     /** The function which must be used to init the io */
     ioExpanderInitFunction* ioExpanderInit;
@@ -81,6 +83,7 @@ struct IOExpander {
  * Init the wrapper around IO Expander. 
  */
 void initIOExpander(IOExpander* ioExpander,
+        char* name,
         ioExpanderInitFunction* ioExpanderInit,
         ioExpanderReadValueFunction* ioExpanderReadValue,
         ioExpanderWriteValueFunction* ioExpanderWriteValue,

@@ -283,7 +283,7 @@ void runMechanicalBoard1PC(bool singleMode) {
     // 2018
     //  IO Expander
     initIOExpanderList(&ioExpanderList, (IOExpander(*)[]) & ioExpanderArray, MECHANICAL_BOARD_1_PC_IO_EXPANDER_LIST_LENGTH);
-    initIOExpanderPc(getIOExpanderByIndex(&ioExpanderList, MECHANICAL_BOARD_1_PC_IO_EXPANDER_LAUNCHER_INDEX), &ioExpanderValue0);
+    initIOExpanderPc(getIOExpanderByIndex(&ioExpanderList, MECHANICAL_BOARD_1_PC_IO_EXPANDER_LAUNCHER_INDEX), "IO Expander MECA 1", &ioExpanderValue0);
     IOExpander* launcherIoExpander = getIOExpanderByIndex(&ioExpanderList, MECHANICAL_BOARD_1_PC_IO_EXPANDER_LAUNCHER_INDEX);
 
     // TODO : Add tof !

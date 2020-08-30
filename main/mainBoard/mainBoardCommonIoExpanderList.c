@@ -50,17 +50,17 @@ IOExpanderList* mainBoardCommonIOExpanderListInitDrivers32(void) {
     // -> Strategy    
     I2cBusConnection* ioExpanderStrategyI2cBusConnection = addI2cBusConnection(ioExpanderBus, PCF8574_ADDRESS_2, true);
     IOExpander* ioExpanderStrategy = getIOExpanderByIndex(&ioExpanderList, MAIN_BOARD_IO_EXPANDER_STRATEGY_INDEX);
-    initIOExpanderPCF8574(ioExpanderStrategy, ioExpanderStrategyI2cBusConnection);
+    initIOExpanderPCF8574(ioExpanderStrategy, "IO STRATEGY", ioExpanderStrategyI2cBusConnection);
     
     // -> IO Expander (either classical or IOButtonBoard)
     I2cBusConnection* ioExpanderButtonBoardBusConnection = addI2cBusConnection(ioExpanderBus, PCF8574_ADDRESS_0, true);
     IOExpander* ioExpanderButtonBoard = getIOExpanderByIndex(&ioExpanderList, MAIN_BOARD_IO_EXPANDER_IOBOARD_INDEX);
-    initIOExpanderPCF8574(ioExpanderButtonBoard, ioExpanderButtonBoardBusConnection);
+    initIOExpanderPCF8574(ioExpanderButtonBoard, "IO BOARD", ioExpanderButtonBoardBusConnection);
     
     // BEEP Expander
     I2cBusConnection* beepIOExpanderBusConnection = addI2cBusConnection(ioExpanderBus, PCF8574_ADDRESS_1, true);
     IOExpander* beepIOExpander = getIOExpanderByIndex(&ioExpanderList, MAIN_BOARD_IO_EXPANDER_BEEP_INDEX);
-    initIOExpanderPCF8574(beepIOExpander, beepIOExpanderBusConnection);
+    initIOExpanderPCF8574(beepIOExpander, "IO BEEP", beepIOExpanderBusConnection);
 
 
     // End of IOExpanderList

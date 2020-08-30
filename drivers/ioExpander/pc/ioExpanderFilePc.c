@@ -67,8 +67,9 @@ void ioExpanderFilePcWriteSingleValue(IOExpander* ioExpander, unsigned int ioInd
     readOrWriteDataFromFile(fileName, false, '0', (char*) &data, IO_EXPANDER_FILE_BIT_COUNT, true);
 }
 
-void initIOExpanderFilePc(IOExpander* ioExpander, const char* fileName) {
+void initIOExpanderFilePc(IOExpander* ioExpander, const char* name, const char* fileName) {
     initIOExpander(ioExpander,
+            name,
             &ioExpanderFilePcInit,
             &ioExpanderFilePcReadValue,
             &ioExpanderFilePcWriteValue,

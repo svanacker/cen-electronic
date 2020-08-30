@@ -1,6 +1,7 @@
 #include "ioExpander.h"
 
 void initIOExpander(IOExpander* ioExpander,
+        char* name,
         ioExpanderInitFunction* ioExpanderInit,
         ioExpanderReadValueFunction* ioExpanderReadValue,
         ioExpanderWriteValueFunction* ioExpanderWriteValue,
@@ -8,6 +9,7 @@ void initIOExpander(IOExpander* ioExpander,
         ioExpanderWriteSingleValueFunction* ioExpanderWriteSingleValue,
         unsigned int count,
         int* object) {
+    ioExpander->name = name;
     ioExpander->ioExpanderInit = ioExpanderInit;
     ioExpander->ioExpanderReadValue = ioExpanderReadValue;
     ioExpander->ioExpanderWriteValue = ioExpanderWriteValue;

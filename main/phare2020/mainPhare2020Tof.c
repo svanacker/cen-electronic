@@ -67,7 +67,7 @@ void mainBoardLightHouse2020IOExpanderListInitDrivers(I2cBus* i2cBus) {
     // -> IO Button Board
     IOExpander* ioButtonBoardIoExpander = getIOExpanderByIndex(&ioExpanderList, 0);
     I2cBusConnection* ioButtonBoardBusConnection = addI2cBusConnection(i2cBus, PCF8574_ADDRESS_0, true);
-    initIOExpanderPCF8574(ioButtonBoardIoExpander, ioButtonBoardBusConnection);
+    initIOExpanderPCF8574(ioButtonBoardIoExpander, "IO BOARD", ioButtonBoardBusConnection);
 
     // End of IOExpanderList
     appendStringLN(getDebugOutputStreamLogger(), "OK");

@@ -487,8 +487,8 @@ void initMainBoardLocalDevices(void) {
 
 
     //  IO Expander
-    initIOExpanderPc(getIOExpanderByIndex(&ioExpanderList, 0), &ioExpanderValue0);
-    initIOExpanderPc(getIOExpanderByIndex(&ioExpanderList, 1), &ioExpanderValue1);
+    initIOExpanderPc(getIOExpanderByIndex(&ioExpanderList, 0), "IO Expander 0", &ioExpanderValue0);
+    initIOExpanderPc(getIOExpanderByIndex(&ioExpanderList, 1), "IO Expander 1", &ioExpanderValue1);
     addLocalDevice(getIOExpanderDeviceInterface(), getIOExpanderDeviceDescriptor(&ioExpanderList));
 
     // Multiplexer

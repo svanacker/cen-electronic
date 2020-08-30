@@ -65,8 +65,9 @@ void ioExpanderPCF8574WriteSingleValue(IOExpander* ioExpander, unsigned int inde
     ioExpanderPCF8574WriteValue(ioExpander, valueToWrite);
 }
 
-void initIOExpanderPCF8574(IOExpander* ioExpander, I2cBusConnection* i2cBusConnection) {
+void initIOExpanderPCF8574(IOExpander* ioExpander, const char* name, I2cBusConnection* i2cBusConnection) {
     initIOExpander(ioExpander,
+            name,
             &ioExpanderPCF8574Init,
             &ioExpanderPCF8574ReadValue,
             &ioExpanderPCF8574WriteValue,

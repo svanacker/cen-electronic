@@ -23,6 +23,6 @@ I2cBusConnection* getIOExpanderBusConnection(IOExpander* ioExpander);
  * transparently
  * @param ioExpander
  */
-void initIOExpanderPCF8574(IOExpander* ioExpander, I2cBusConnection* i2cConnection);
+void initIOExpanderPCF8574(IOExpander* ioExpander, const char* name, I2cBusConnection* i2cConnection);
 
 #endif
