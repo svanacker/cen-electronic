@@ -19,6 +19,9 @@
 #include "../../navigation/path.h"
 #include "../../navigation/pathList.h"
 
+#include "../../client/motion/position/clientTrajectory.h"
+#include "../../device/motion/simple/motionDeviceInterface.h"
+
 #include "../../robot/strategy/gameTargetList.h"
 #include "../../robot/strategy/gameStrategyHandler.h"
 #include "../../robot/strategy/gameStrategyOutsidePathHandler.h"
@@ -50,6 +53,25 @@ Location* updateGameStrategyContextNearestLocation(GameStrategyContext* gameStra
         }
     }
     return gameStrategyContext->nearestLocation;
+}
+
+void adjustIfNecessary(GameStrategyContext* gameStrategyContext) {
+    Location* location = gameStrategyContext->nearestLocation;
+    if (location == NULL || location->adjustType == LOCATION_ADJUST_NONE) {
+        return;
+    }
+    unsigned char lastMotionStatus = gameStrategyContext->lastMotionStatus;
+
+    // We adjust only if we have a blocked (if not, the risk is that we are not at the expected point)
+    if (lastMotionStatus == NOTIFY_MOTION_STATUS_BLOCKED) {
+        enum LocationAdjustType adjustType = location->adjustType;
+        if (adjustType == LOCATION_ADJUST_X) {
+            clientTrajectoryAdjustXPosition(location->adjustValue);
+        }
+        else if (adjustType == LOCATION_ADJUST_Y) {
+            clientTrajectoryAdjustYPosition(location->adjustValue);
+        }
+    }
 }
 
 GameTarget* findNextTarget(GameStrategyContext* gameStrategyContext) {

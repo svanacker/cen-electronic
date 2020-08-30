@@ -26,6 +26,8 @@
 #define LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH               8
 #define LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH          8
 #define LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH          8
+#define LOCATION_LIST_LOCATION_ADJUST_TYPE_COLUMN_LENGTH     5
+#define LOCATION_LIST_LOCATION_ADJUST_VALUE_COLUMN_LENGTH    8
 #define LOCATION_LIST_LOCATION_TMP_COST_COLUMN_LENGTH        8
 #define LOCATION_LIST_LOCATION_NEXT_COLUMN_LENGTH            8
 
@@ -47,6 +49,8 @@ void printLocationListHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "y", LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH);
     appendStringHeader(outputStream, "x Hex", LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
     appendStringHeader(outputStream, "y Hex", LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Adj.", LOCATION_LIST_LOCATION_ADJUST_TYPE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Adj.", LOCATION_LIST_LOCATION_ADJUST_VALUE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Tmp", LOCATION_LIST_LOCATION_TMP_COST_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Next", LOCATION_LIST_LOCATION_NEXT_COLUMN_LENGTH);
 
@@ -61,6 +65,8 @@ void printLocationListHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "", LOCATION_LIST_LOCATION_Y_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(mm)", LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(mm)", LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "type", LOCATION_LIST_LOCATION_ADJUST_TYPE_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "(mm)", LOCATION_LIST_LOCATION_ADJUST_VALUE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Cost", LOCATION_LIST_LOCATION_TMP_COST_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Loc", LOCATION_LIST_LOCATION_NEXT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, LOCATION_LIST_LOCATION_LAST_COLUMN_LENGTH);
@@ -70,7 +76,7 @@ void printLocationListHeader(OutputStream* outputStream) {
 void printLocationTable(OutputStream* outputStream, Location* location, unsigned int locationIndex) {
     appendDecTableData(outputStream, locationIndex, LOCATION_LIST_LOCATION_INDEX_COLUMN_LENGTH);
     addLocationUsageTypeShortTableData(outputStream, location->usageType, LOCATION_LIST_LOCATION_USAGE_TYPE_COLUMN_LENGTH);
-    if (location != NULL) {
+    if (location->name != NULL) {
         appendFixedCharArrayTableData(outputStream, &(location->name), LOCATION_LIST_LOCATION_NAME_COLUMN_LENGTH);
         appendHexFixedCharArrayTableData(outputStream, &(location->name), LOCATION_LIST_LOCATION_NAME_HEX_COLUMN_LENGTH);
     } else {
@@ -82,6 +88,11 @@ void printLocationTable(OutputStream* outputStream, Location* location, unsigned
     appendHexFloat4TableData(outputStream, location->x, POSITION_DIGIT_MM_PRECISION, LOCATION_LIST_LOCATION_X_HEXA_COLUMN_LENGTH);
     appendHexFloat4TableData(outputStream, location->y, POSITION_DIGIT_MM_PRECISION, LOCATION_LIST_LOCATION_Y_HEXA_COLUMN_LENGTH);
 
+    // ADJUST
+    addLocationAdjustTypeShortTableData(outputStream, location->adjustType, LOCATION_LIST_LOCATION_ADJUST_TYPE_COLUMN_LENGTH);
+    appendDecfTableData(outputStream, location->adjustValue, LOCATION_LIST_LOCATION_ADJUST_VALUE_COLUMN_LENGTH);
+
+    // COMPUTE
     appendDecfTableData(outputStream, location->computedCost, LOCATION_LIST_LOCATION_TMP_COST_COLUMN_LENGTH);
 
     // Next

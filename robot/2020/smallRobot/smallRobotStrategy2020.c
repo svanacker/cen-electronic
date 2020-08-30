@@ -186,18 +186,23 @@ void initSmallRobotLocations2020(GameStrategyContext* gameStrategyContext) {
     enum TeamColor teamColor = gameStrategyContext->color;
 
     smallRobotStartAreaLocation = addLocationWithColors(teamColor, navigation, SMALL_ROBOT_START_AREA, SMALL_ROBOT_START_AREA_LABEL, SMALL_ROBOT_START_AREA_X, SMALL_ROBOT_START_AREA_Y);
+    // FLAG
     flag1Location = addLocationWithColors(teamColor, navigation, FLAG_1_FRONT, FLAG_1_FRONT_LABEL, FLAG_1_FRONT_X, FLAG_1_FRONT_Y);
     flag2Location = addLocationWithColors(teamColor, navigation, FLAG_2_FRONT, FLAG_2_FRONT_LABEL, FLAG_2_FRONT_X, FLAG_2_FRONT_Y);
+    // FRONT
     reefFrontLocation = addLocationWithColors(teamColor, navigation, REEF_RIGHT_FRONT, REEF_RIGHT_FRONT_LABEL, REEF_RIGHT_FRONT_X, REEF_RIGHT_FRONT_Y);
+    reefFrontLocation->adjustType = LOCATION_ADJUST_Y;
+    reefFrontLocation->adjustValue = REEF_RIGHT_FRONT_ADJUST_Y;
     cupDropRightLocation = addLocationWithColors(teamColor, navigation, DROP_RIGHT_FRONT, DROP_RIGHT_FRONT_LABEL, DROP_RIGHT_FRONT_X, DROP_RIGHT_FRONT_Y);
     
     // To Get Reef 2
     centerStartAreaLocation = addLocationWithColors(teamColor, navigation, CENTER_START_AREA, CENTER_START_AREA_LABEL, CENTER_START_AREA_X, CENTER_START_AREA_Y);
     leftReef2FrontLocation = addLocationWithColors(teamColor, navigation, LEFT_REEF_2_FRONT, LEFT_REEF_2_FRONT_LABEL, LEFT_REEF_2_FRONT_X, LEFT_REEF_2_FRONT_Y);
     leftReef2TakeLocation = addLocationWithColors(teamColor, navigation, LEFT_REEF_2_TAKE, LEFT_REEF_2_TAKE_LABEL, LEFT_REEF_2_TAKE_X, LEFT_REEF_2_TAKE_Y);
+    leftReef2TakeLocation->adjustType = LOCATION_ADJUST_X;
+    leftReef2TakeLocation->adjustValue = LEFT_REEF_2_TAKE_ADJUST_X;
     centerPointLocation = addLocationWithColors(teamColor, navigation, CENTER_POINT, CENTER_POINT_LABEL, CENTER_POINT_X, CENTER_POINT_Y);
     dropCenterFrontLocation = addLocationWithColors(teamColor, navigation, DROP_CENTER_FRONT, DROP_CENTER_FRONT_LABEL, DROP_CENTER_FRONT_X, DROP_CENTER_FRONT_Y);
-
 }
 
 void initSmallRobotPaths2020(GameStrategyContext* gameStrategyContext) {

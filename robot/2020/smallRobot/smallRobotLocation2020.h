@@ -26,6 +26,7 @@
 #define REEF_RIGHT_FRONT_LABEL                                             "Reef Right"
 #define REEF_RIGHT_FRONT_X                                                        1600
 #define REEF_RIGHT_FRONT_Y                                                          70
+#define REEF_RIGHT_FRONT_ADJUST_Y                                                   70
 #define REEF_RIGHT_FRONT_DECI_DEG                                   ANGLE_DECI_DEG_270
 
 // DROP RIGHT (SMALL ROBOT)

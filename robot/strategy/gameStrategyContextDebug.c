@@ -186,7 +186,18 @@ void printGameStrategyContext(OutputStream* outputStream, GameStrategyContext* c
     appendDecfTableData(outputStream, context->timeSinceLastCollision, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
     appendStringTableData(outputStream, "seconds", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
     appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
+    appendTableHeaderSeparatorLine(outputStream);
 
+    // Last Motion Notification Status
+    appendStringTableData(outputStream, "Motion Last Notification Value", GAME_STRATEGY_CONTEXT_KEY_COLUMN_LENGTH);
+    if (context->lastMotionStatus) {
+        appendCharTableData(outputStream, context->lastMotionStatus, GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    }
+    else {
+        appendCharTableData(outputStream, ' ', GAME_STRATEGY_CONTEXT_VALUE_COLUMN_LENGTH);
+    }
+    appendStringTableData(outputStream, "", GAME_STRATEGY_CONTEXT_UNIT_COLUMN_LENGTH);
+    appendEndOfTableColumn(outputStream, GAME_STRATEGY_CONTEXT_LAST_COLUMN);
     appendTableHeaderSeparatorLine(outputStream);
 
     // nearestLocation

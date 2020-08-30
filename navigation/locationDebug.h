@@ -5,13 +5,25 @@
 
 #include "location.h"
 
-unsigned int appendLocationUsageTypeAsString(OutputStream* outputStream, enum LocationUsageType LocationUsageType);
+// USAGE TYPE
 
-unsigned int appendLocationUsageTypeAsShortString(OutputStream* outputStream, enum LocationUsageType LocationUsageType);
+unsigned int appendLocationUsageTypeAsString(OutputStream* outputStream, enum LocationUsageType locationUsageType);
 
-unsigned int addLocationUsageTypeTableData(OutputStream* outputStream, enum LocationUsageType LocationUsageType, int columnSize);
+unsigned int appendLocationUsageTypeAsShortString(OutputStream* outputStream, enum LocationUsageType locationUsageType);
 
-unsigned int addLocationUsageTypeShortTableData(OutputStream* outputStream, enum LocationUsageType LocationUsageType, int columnSize);
+unsigned int addLocationUsageTypeTableData(OutputStream* outputStream, enum LocationUsageType locationUsageType, int columnSize);
+
+unsigned int addLocationUsageTypeShortTableData(OutputStream* outputStream, enum LocationUsageType locationUsageType, int columnSize);
+
+// ADJUST TYPE
+unsigned int appendLocationAdjustTypeAsString(OutputStream* outputStream, enum LocationAdjustType locationAdjustType);
+
+unsigned int appendLocationAdjustTypeAsShortString(OutputStream* outputStream, enum LocationAdjustType locationAdjustType);
+
+unsigned int addLocationAdjustTypeTableData(OutputStream* outputStream, enum LocationAdjustType locationAdjustType, int columnSize);
+
+unsigned int addLocationAdjustTypeShortTableData(OutputStream* outputStream, enum LocationAdjustType locationAdjustType, int columnSize);
+
 
 #endif
 

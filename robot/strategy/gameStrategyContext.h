@@ -48,6 +48,8 @@ struct GameStrategyContext {
     Navigation* navigation;
     /** Time in seconds since last collision. */
     float timeSinceLastCollision;
+    /** The last notification motion status */
+    unsigned char lastMotionStatus;
     /** The chosen gameStrategy. */
     GameStrategy* gameStrategy;
     /** Position of robot. */

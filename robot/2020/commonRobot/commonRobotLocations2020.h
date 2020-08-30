@@ -24,6 +24,7 @@
 #define LEFT_REEF_TAKE                                                   "LRFT"
 #define LEFT_REEF_TAKE_LABEL                                  "Left Reef Front"
 #define LEFT_REEF_TAKE_X                                                     70
+#define LEFT_REEF_TAKE_ADJUST_X                                              70
 #define LEFT_REEF_TAKE_Y                                                    850
 #define LEFT_REEF_TAKE_ANGLE_DECI_DEG                        ANGLE_DECI_DEG_180
 
@@ -39,6 +40,7 @@
 #define LEFT_REEF_2_TAKE_LABEL                              "Left Reef Take 2"
 #define LEFT_REEF_2_TAKE_X                                                   65
 #define LEFT_REEF_2_TAKE_Y                                                 2150
+#define LEFT_REEF_2_TAKE_ADJUST_X                                            65
 #define LEFT_REEF_2_TAKE_ANGLE_DECI_DEG                      ANGLE_DECI_DEG_180
 
 

@@ -206,11 +206,14 @@ void initBigRobotLocations2020(GameStrategyContext* gameStrategyContext) {
 
     bigRobotStartAreaLocation = addLocationWithColors(teamColor, navigation, BIG_ROBOT_START_AREA, BIG_ROBOT_START_AREA_LABEL, BIG_ROBOT_START_AREA_X, BIG_ROBOT_START_AREA_Y);
     bigRobotPoint1Location = addLocationWithColors(teamColor, navigation, BIG_ROBOT_POINT_1, BIG_ROBOT_POINT_1_LABEL, BIG_ROBOT_POINT_1_X, BIG_ROBOT_POINT_1_Y);
+
     dropLightHouseFrontLocation = addLocationWithColors(teamColor, navigation, LIGHT_HOUSE_DROP_POINT, LIGHT_HOUSE_DROP_POINT_LABEL, LIGHT_HOUSE_DROP_POINT_X, LIGHT_HOUSE_DROP_POINT_Y);
     smallHarborFrontMiddleLocation = addLocationWithColors(teamColor, navigation, SMALL_HARBOR_FRONT_MIDDLE, SMALL_HARBOR_FRONT_MIDDLE_LABEL, SMALL_HARBOR_FRONT_MIDDLE_X, SMALL_HARBOR_FRONT_MIDDLE_Y);
     // centerPointLocation = addLocationWithColors(teamColor, navigation, CENTER_POINT, CENTER_POINT_LABEL, CENTER_POINT_X, CENTER_POINT_Y);
     leftReefFrontLocation = addLocationWithColors(teamColor, navigation, LEFT_REEF_FRONT, LEFT_REEF_FRONT_LABEL, LEFT_REEF_FRONT_X, LEFT_REEF_FRONT_Y);
     leftReefTakeLocation = addLocationWithColors(teamColor, navigation, LEFT_REEF_TAKE, LEFT_REEF_TAKE_LABEL, LEFT_REEF_TAKE_X, LEFT_REEF_TAKE_Y);
+    leftReefTakeLocation->adjustType = LOCATION_ADJUST_X;
+    leftReefTakeLocation->adjustValue = LEFT_REEF_TAKE_ADJUST_X;
     frontLeftLocation = addLocationWithColors(teamColor, navigation, FRONT_LEFT, FRONT_LEFT_LABEL, FRONT_LEFT_X, FRONT_LEFT_Y);
     dropLeftLocation = addLocationWithColors(teamColor, navigation, DROP_LEFT, DROP_LEFT_LABEL, DROP_LEFT_X, DROP_LEFT_Y);
     /*

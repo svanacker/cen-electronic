@@ -152,6 +152,7 @@ void mainBoardDeviceHandleMotionDeviceNotification(const Device* device, const u
             // FAKE DATA To Align with TrajectoryDevice
             checkIsSeparator(notificationInputStream);
             checkIsChar(notificationInputStream, 'F');
+            gameStrategyContext->lastMotionStatus = commandHeader;
 
             if (commandHeader != NOTIFY_MOTION_STATUS_MOVING) {
                 updateStrategyContextTrajectoryType(gameStrategyContext, TRAJECTORY_TYPE_NONE);

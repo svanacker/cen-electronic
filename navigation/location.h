@@ -28,6 +28,15 @@ enum LocationUsageType {
     LOCATION_USAGE_TYPE_TO_BE_REUSE = 3
 };
 
+enum LocationAdjustType {
+    /** We don't adjust at this point. */
+    LOCATION_ADJUST_NONE = 0,
+    /** We could (but not mandatory.) adjust in X */
+    LOCATION_ADJUST_X = 1,
+    /** We could (but not mandatory.) adjust in Y */
+    LOCATION_ADJUST_Y = 2
+};
+
 /**
  * Encapsulates the location.
  */
@@ -42,6 +51,10 @@ struct Location {
     float x;
     /** The coordinates in y. */
     float y;
+    /** If we must adjust. */
+    enum LocationAdjustType adjustType;
+    /** The value (X, Y) for which we adjust. For angle, we assume that the angle is a multiple of quadrant (0, 45, 90 ...) */
+    float adjustValue;
     /** Temporary Computer information needed by path finding algorithm. */
     float computedCost;
     /** Temporary Computer information needed by path finding algorithm. */
