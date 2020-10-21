@@ -40,7 +40,7 @@ void ioExpanderPcWriteSingleValue(IOExpander* ioExpander, unsigned int ioIndex, 
 
 void initIOExpanderPc(IOExpander* ioExpander, const char* name, int* ioExpanderValue) {
     initIOExpander(ioExpander,
-            &name,
+            name,
             &ioExpanderPcInit,
             &ioExpanderPcReadValue,
             &ioExpanderPcWriteValue,

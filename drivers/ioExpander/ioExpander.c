@@ -1,7 +1,7 @@
 #include "ioExpander.h"
 
 void initIOExpander(IOExpander* ioExpander,
-        char* name,
+        const char* name,
         ioExpanderInitFunction* ioExpanderInit,
         ioExpanderReadValueFunction* ioExpanderReadValue,
         ioExpanderWriteValueFunction* ioExpanderWriteValue,

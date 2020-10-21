@@ -53,7 +53,7 @@ typedef void ioExpanderOnValueChangeEventFunction(IOExpander* ioExpander, unsign
  */
 struct IOExpander {
     /** The name of the IO Expander. */
-    char* name;
+    const char* name;
     // IMPLEMENTATION
     /** The function which must be used to init the io */
     ioExpanderInitFunction* ioExpanderInit;
@@ -83,7 +83,7 @@ struct IOExpander {
  * Init the wrapper around IO Expander. 
  */
 void initIOExpander(IOExpander* ioExpander,
-        char* name,
+        const char* name,
         ioExpanderInitFunction* ioExpanderInit,
         ioExpanderReadValueFunction* ioExpanderReadValue,
         ioExpanderWriteValueFunction* ioExpanderWriteValue,

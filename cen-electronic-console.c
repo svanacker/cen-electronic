@@ -101,7 +101,7 @@ int main(int argumentCount, char* arguments[]) {
         }
     }
 
-    getchar();
+    char c = getchar();
     return EXIT_SUCCESS;
 }
 

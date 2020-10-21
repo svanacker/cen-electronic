@@ -10,6 +10,6 @@
  * @param ioExpander the pointer on object (simulates POO)
  * @param ioExpanderFileName the fileName of the FILE which will 
  */
-void initIOExpanderFilePc(IOExpander* ioExpander, const char* ioExpanderFileName);
+void initIOExpanderFilePc(IOExpander* ioExpander, const char* name, const char* fileName);
 
 #endif
