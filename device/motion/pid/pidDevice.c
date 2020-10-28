@@ -382,19 +382,19 @@ void devicePidHandleRawData(unsigned char commandHeader, InputStream* inputStrea
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_GET_END_DETECTION_PARAMETER_SHOCKED);
 
         MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
-        appendHexFloat4(outputStream, motionEndDetectionParameter->shockedAccelerationMaxForOneValueThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->shockedAccelerationMaxForOneValueThreshold, 0);
         appendSeparator(outputStream);
-        appendHexFloat4(outputStream, motionEndDetectionParameter->shockedAccelerationWindowAnalysisCount, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->shockedAccelerationWindowAnalysisCount, 0);
         appendSeparator(outputStream);
-        appendHexFloat4(outputStream, motionEndDetectionParameter->shockedAccelerationIntegralThreshold, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        appendHexFloat4(outputStream, motionEndDetectionParameter->shockedAccelerationWindowsMatchCount, 0);
     } else if (commandHeader == COMMAND_SET_END_DETECTION_PARAMETER_SHOCKED) {
         ackCommand(outputStream, PID_DEVICE_HEADER, COMMAND_SET_END_DETECTION_PARAMETER_SHOCKED);
         MotionEndDetectionParameter* motionEndDetectionParameter = getMotionEndDetectionParameter(pidMotion);
-        motionEndDetectionParameter->shockedAccelerationMaxForOneValueThreshold = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        motionEndDetectionParameter->shockedAccelerationMaxForOneValueThreshold = readHexFloat4(inputStream, 0);
         checkIsSeparator(inputStream);
-        motionEndDetectionParameter->shockedAccelerationWindowAnalysisCount = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        motionEndDetectionParameter->shockedAccelerationWindowAnalysisCount = readHexFloat4(inputStream, 0);
         checkIsSeparator(inputStream);
-        motionEndDetectionParameter->shockedAccelerationIntegralThreshold = readHexFloat4(inputStream, MOTION_END_DETECTION_PARAMETER_DIGIT);
+        motionEndDetectionParameter->shockedAccelerationWindowsMatchCount = readHexFloat4(inputStream, 0);
     }
 }
 

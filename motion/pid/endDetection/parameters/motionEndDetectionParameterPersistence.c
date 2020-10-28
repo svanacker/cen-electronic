@@ -35,7 +35,7 @@
 // SHOCK THRESHOLD
 #define MOTION_END_DETECTION_SHOCKED_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD_INDEX     13
 #define MOTION_END_DETECTION_SHOCKED_ACCELERATION_WINDOW_ANALYSIS_COUNT_INDEX           14
-#define MOTION_END_DETECTION_SHOCKED_ACCELERATION_INTEGRAL_THRESHOLD_INDEX              15
+#define MOTION_END_DETECTION_SHOCKED_ACCELERATION_WINDOW_MATCH_COUNT_INDEX              15
 
 // BLOCKED THRESHOLD
 #define MOTION_END_DETECTION_BLOCKED_WINDOW_ANALYSIS_COUNT_INDEX                  16
@@ -63,7 +63,7 @@ static float MOTION_END_DETECTION_PARAMETERS_DEFAULT_EEPROM_VALUES[MOTION_END_DE
     // SHOCK THRESHOLD
     MOTION_END_DETECTION_SHOCKED_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD_DEFAULT_VALUE,
     MOTION_END_DETECTION_SHOCKED_ACCELERATION_WINDOW_ANALYSIS_COUNT_DEFAULT_VALUE,
-    MOTION_END_DETECTION_SHOCKED_ACCELERATION_INTEGRAL_THRESHOLD_DEFAULT_VALUE,
+    MOTION_END_DETECTION_SHOCKED_ACCELERATION_MATCH_COUNT_DEFAULT_VALUE,
     // BLOCKED
     MOTION_END_DETECTION_BLOCKED_WINDOW_ANALYSIS_COUNT_DEFAULT_VALUE,
     MOTION_END_DETECTION_BLOCKED_PERCENTAGE_THRESHOLD_DEFAULT_VALUE        
@@ -148,9 +148,9 @@ void loadMotionEndDetectionParameters(MotionEndDetectionParameter* motionEndDete
     motionEndDetectionParameter->reachedDerivativeErrorThreshold = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_REACHED_DERIVATIVE_ERROR_THRESHOLD_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
 
     // SHOCK THRESHOLD
-    motionEndDetectionParameter->shockedAccelerationMaxForOneValueThreshold = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_SHOCKED_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
-    motionEndDetectionParameter->shockedAccelerationWindowAnalysisCount = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_SHOCKED_ACCELERATION_WINDOW_ANALYSIS_COUNT_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
-    motionEndDetectionParameter->shockedAccelerationIntegralThreshold = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_SHOCKED_ACCELERATION_INTEGRAL_THRESHOLD_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
+    motionEndDetectionParameter->shockedAccelerationMaxForOneValueThreshold = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_SHOCKED_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD_INDEX, 0, loadDefaultValues);
+    motionEndDetectionParameter->shockedAccelerationWindowAnalysisCount = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_SHOCKED_ACCELERATION_WINDOW_ANALYSIS_COUNT_INDEX, 0, loadDefaultValues);
+    motionEndDetectionParameter->shockedAccelerationWindowsMatchCount = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_SHOCKED_ACCELERATION_WINDOW_MATCH_COUNT_INDEX, 0, loadDefaultValues);
     
     // BLOCKED
     motionEndDetectionParameter->blockedWindowsAnalysisCount = internalLoadMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom, MOTION_END_DETECTION_BLOCKED_WINDOW_ANALYSIS_COUNT_INDEX, MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION, loadDefaultValues);
@@ -238,17 +238,17 @@ void saveMotionEndDetectionParameters(MotionEndDetectionParameter* motionEndDete
     internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
         MOTION_END_DETECTION_SHOCKED_ACCELERATION_MAX_FOR_ONE_VALUE_THRESHOLD_INDEX,
         motionEndDetectionParameter->shockedAccelerationMaxForOneValueThreshold,
-        MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+        0);
 
     internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
         MOTION_END_DETECTION_SHOCKED_ACCELERATION_WINDOW_ANALYSIS_COUNT_INDEX,
         motionEndDetectionParameter->shockedAccelerationWindowAnalysisCount,
-        MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+        0);
 
     internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,
-        MOTION_END_DETECTION_SHOCKED_ACCELERATION_INTEGRAL_THRESHOLD_INDEX,
-        motionEndDetectionParameter->shockedAccelerationIntegralThreshold,
-        MOTION_END_DETECTION_PARAMETERS_DIGIT_PRECISION);
+        MOTION_END_DETECTION_SHOCKED_ACCELERATION_WINDOW_MATCH_COUNT_INDEX,
+        motionEndDetectionParameter->shockedAccelerationWindowsMatchCount,
+        0);
     
     // BLOCKED
     internalSaveMotionEndDetectionParameterItem(motionEndDetectionParametersEeprom,

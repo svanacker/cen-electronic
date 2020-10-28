@@ -77,8 +77,15 @@ enum ActionStatus executeTargetActionItemList(GameTargetActionItemList* actionIt
         
         // Handling action item which are doing
         if (actionItem->status == ACTION_ITEM_STATUS_DOING) {
+            // If the actionItem is not finished
             if (!actionItem->actionItemIsEndedFunction(context)) {
                 doingCount++;
+                // We must not go to the next action
+                break;
+            }
+            else {
+                // the action item is finished
+                actionItem->status = ACTION_ITEM_STATUS_DONE;
                 continue;
             }
         }
@@ -96,6 +103,8 @@ enum ActionStatus executeTargetActionItemList(GameTargetActionItemList* actionIt
         }
         if (status == ACTION_ITEM_STATUS_DOING) {
             doingCount++;
+            // Must not go to the next Action Item
+            break;
         }
         if (status == ACTION_ITEM_STATUS_ERROR) {
             // If one item is in error, we consider that the whole action is in error

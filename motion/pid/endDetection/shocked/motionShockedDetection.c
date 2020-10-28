@@ -33,17 +33,15 @@ bool detectShockByAcceleration(MotionEndDetectionParameter* endDetectionParamete
         startIndex = 0;
     }
     unsigned int index = 0;
-    float absAccelerationHistoryIntegral = 0.0f;
+    unsigned int matchCount = 0;
     for (index = startIndex; index < currentValues->historyWriteIndex - 1; index++) {
         float absAccelerationHistory = fabsf(currentValues->accelerationHistory[index]);
         // Avoid that a single value could be more than the global threshold
         if (absAccelerationHistory > endDetectionParameters->shockedAccelerationMaxForOneValueThreshold) {
-            absAccelerationHistoryIntegral += endDetectionParameters->shockedAccelerationMaxForOneValueThreshold;
-        } else {
-            absAccelerationHistoryIntegral += absAccelerationHistory;
+            matchCount++;
         }
     }
-    if (absAccelerationHistoryIntegral >= endDetectionParameters->shockedAccelerationIntegralThreshold) {
+    if (matchCount >= endDetectionParameters->shockedAccelerationWindowsMatchCount) {
         return true;
     }
     return false;

@@ -62,9 +62,9 @@ void printMotionEndDetectionParameter(OutputStream* outputStream, MotionEndDetec
     printMotionEndDetectionParameterLine(outputStream, "Reached Derivative Error Threshold", parameter->reachedDerivativeErrorThreshold);
     appendTableHeaderSeparatorLine(outputStream);
     // SHOCKED
-    printMotionEndDetectionParameterLine(outputStream, "Shocked Acc Integral Threshold", parameter->shockedAccelerationMaxForOneValueThreshold);
+    printMotionEndDetectionParameterLine(outputStream, "Shocked Acc Max For One Value Threshold", parameter->shockedAccelerationMaxForOneValueThreshold);
     printMotionEndDetectionParameterLine(outputStream, "Shocked Acc Window Analysis Count", parameter->shockedAccelerationWindowAnalysisCount);
-    printMotionEndDetectionParameterLine(outputStream, "Shocked Acc Integral Threshold", parameter->shockedAccelerationIntegralThreshold);
+    printMotionEndDetectionParameterLine(outputStream, "Shocked Acc Window Match Count", parameter->shockedAccelerationWindowsMatchCount);
     appendTableHeaderSeparatorLine(outputStream);
     // BLOCKED
     printMotionEndDetectionParameterLine(outputStream, "Blocked Window Analysis Count", parameter->blockedWindowsAnalysisCount);

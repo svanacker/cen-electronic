@@ -170,9 +170,11 @@ bool handleNextMoveActionOrAction(GameStrategyContext* gameStrategyContext) {
         return true;
     }// We must compute via Drijska the next way to go to the end Location of the action
     else {
-        computeBestPath(navigation, nearestLocation, targetAction->endLocation);
-        // TODO : Manage the case where there is no way to go to endLocation
-        return followComputedNextPath(gameStrategyContext);
+        if (targetAction->endLocation != NULL) {
+            computeBestPath(navigation, nearestLocation, targetAction->endLocation);
+            // TODO : Manage the case where there is no way to go to endLocation
+            return followComputedNextPath(gameStrategyContext);
+        }
     }
 
     return true;

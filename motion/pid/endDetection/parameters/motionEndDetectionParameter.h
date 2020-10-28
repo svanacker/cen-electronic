@@ -80,9 +80,9 @@ typedef struct MotionEndDetectionParameter {
      */
     float shockedAccelerationWindowAnalysisCount;
     /**
-     * The integral threshold (during Window analysis, see previous example).
+     * How many times for the window analysis the acceleration is too much
      */
-    float shockedAccelerationIntegralThreshold;
+    float shockedAccelerationWindowsMatchCount;
     
     // FAILED
     /**
