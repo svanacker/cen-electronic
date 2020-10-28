@@ -30,20 +30,6 @@ void printRobotTableConfig(OutputStream* outputStream, RobotConfig* robotConfig)
 
     unsigned int configValue = robotConfig->robotConfigReadInt(robotConfig);
 
-    // Strategy Index
-    appendStringTableData(outputStream, "Strategy Index", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
-    appendBinary16TableData(outputStream, CONFIG_STRATEGY_MASK, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
-    appendDecTableData(outputStream, configValue & CONFIG_STRATEGY_MASK, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
-    appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
-
-    appendTableHeaderSeparatorLine(outputStream);
-
-    // Manual Mode
-    appendStringTableData(outputStream, "Strategy Manual Mode", ROBOT_CONFIG_KEY_COLUMN_LENGTH);
-    appendBinary16TableData(outputStream, CONFIG_STRATEGY_MANUAL_MODE, 4, ROBOT_CONFIG_MASK_COLUMN_LENGTH);
-    appendBoolTableData(outputStream, configValue & CONFIG_STRATEGY_MANUAL_MODE, ROBOT_CONFIG_VALUE_COLUMN_LENGTH);
-    appendEndOfTableColumn(outputStream, ROBOT_CONFIG_LAST_COLUMN);
-
     appendTableHeaderSeparatorLine(outputStream);
 
     // Start Match / End Match

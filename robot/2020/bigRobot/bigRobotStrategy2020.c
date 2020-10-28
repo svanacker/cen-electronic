@@ -168,14 +168,16 @@ static GameTargetActionItem lightHouseTakeTargetActionItem;
 //static GameTargetActionItem lightHouseDropTargetActionItem;
 
 // -> Small Harbor 1
-static GameTargetActionItem smallHarbor1PrepareTargetActionItem;
+static GameTargetActionItem smallHarbor1PrepareTargetActionItem1;
+static GameTargetActionItem smallHarbor1PrepareTargetActionItem2;
 // static GameTargetActionItem smallHarbor1TakeTargetActionItem;
 static GameTargetActionItem smallHarbor1DropTargetActionItem;
 
 // -> Cup
 static GameTargetActionItem leftCupPrepareTargetActionItem;
 static GameTargetActionItem leftCupTakeTargetActionItem;
-static GameTargetActionItem leftCupDropTargetActionItem;
+static GameTargetActionItem leftCupDropTargetActionItem1;
+static GameTargetActionItem leftCupDropTargetActionItem2;
 
 // -> Cup 2
 /*
@@ -428,20 +430,22 @@ void initBigRobotTargetActions2020(GameStrategyContext* gameStrategyContext) {
 
 void initBigRobotTargetActionsItems2020(GameStrategyContext* gameStrategyContext) {
     // Light House
-    addTargetActionItem(&lightHousePrepareTargetActionItemList, &lightHousePrepareCupTargetActionItem, &bigRobotPrepareFloorCups, NULL, "PREP FLOOR CUPS");
+    addTargetActionItem(&lightHousePrepareTargetActionItemList, &lightHousePrepareCupTargetActionItem, &bigRobotPrepareFloorCenterCups, NULL, "PREP FLOOR CEN CUPS");
     addTargetActionItem(&lightHousePrepareTargetActionItemList, &lightHousePrepareArmTargetActionItem, &lightHouseLateralArmOn, NULL, "ARM ON");
     addTargetActionItem(&lightHouseTakeTargetActionItemList, &lightHouseTakeTargetActionItem, &bigRobotLockFloorCups, &commonAreActionsFinished, "LOCK FLOOR CUPS");
 
     // Small Harbor 1
     // TODO : Replace takeCups by more precise semantic
-    addTargetActionItem(&smallHarbor1PrepareTargetActionItemList, &smallHarbor1PrepareTargetActionItem, &lightHouseLateralArmOff, NULL, "ARM OFF");
+    addTargetActionItem(&smallHarbor1PrepareTargetActionItemList, &smallHarbor1PrepareTargetActionItem1, &lightHouseLateralArmOff, NULL, "ARM OFF");
+    addTargetActionItem(&smallHarbor1PrepareTargetActionItemList, &smallHarbor1PrepareTargetActionItem2, &bigRobotPrepareFloorCups, NULL, "PREP FLOOR CUPS");
     // addTargetActionItem(&smallHarbor1TakeTargetActionItemList, &smallHarbor1TakeTargetActionItem, &bigRobotLockFloorCups, &commonAreActionsFinished, "SMALL HARBOR 1 -> LOOK FLOOR CUPS");
-    addTargetActionItem(&smallHarbor1DropTargetActionItemList, &smallHarbor1DropTargetActionItem, &bigRobotReleaseCups, &commonAreActionsFinished, "SMALL HARBOR 1 -> DROP CUPS");
-
+    addTargetActionItem(&smallHarbor1DropTargetActionItemList, &smallHarbor1DropTargetActionItem, &bigRobotReleaseCups, NULL, "SMALL HARBOR 1 -> DROP CUPS");
+    
     // Left Reef
     addTargetActionItem(&leftCupPrepareTargetActionItemList, &leftCupPrepareTargetActionItem, &bigRobotPrepareHook, NULL, "LEFT REEF -> PREP CUP UP");
     addTargetActionItem(&leftCupTakeTargetActionItemList, &leftCupTakeTargetActionItem, &bigRobotTakeCups, &commonAreActionsFinished, "LEFT REEF -> TAKE CUPS");
-    addTargetActionItem(&leftCupDropTargetActionItemList, &leftCupDropTargetActionItem, &bigRobotDropCups, &commonAreActionsFinished, "LEFT REEF -> DROP CUPS");
+    addTargetActionItem(&leftCupDropTargetActionItemList, &leftCupDropTargetActionItem1, &bigRobotDropCupsPhase1, &commonAreActionsFinished, "LEFT REEF -> DROP CUPS 1");
+    addTargetActionItem(&leftCupDropTargetActionItemList, &leftCupDropTargetActionItem2, &bigRobotDropCupsPhase2, &commonAreActionsFinished, "LEFT REEF -> DROP CUPS 2");
 
     // Left Reef 2
     /*

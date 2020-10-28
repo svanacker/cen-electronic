@@ -21,6 +21,18 @@
 #include "../../../robot/2020/strategy/strategy2020Utils.h"
 #include "../../../robot/2020/commonRobot/commonRobotActions2020.h"
 
+// TO AVOID THAT HOOK AND LATERAL ARM ARE ON AT THE SAME TIME (PERIMETER PROBLEM)
+
+bool smallRobotHookUpAll(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "-> Hook Up All");
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+    arm2020HookUpAll(servoList, 0);
+
+    return true;
+}
+
 // LATERAL ARM
 
 bool lateralArmOn(int* context) {

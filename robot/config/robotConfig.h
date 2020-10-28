@@ -9,10 +9,6 @@
 
 // --- 8 LOW CONFIG BITS ---
 
-/** Mask for the strategy */
-// 0b 0000 0000  0000 0111 
-#define CONFIG_STRATEGY_MASK           0x0007
-
 /** Manual Mode to reach step and target */
 // 0b 0000 0000  0000 1000
 #define CONFIG_STRATEGY_MANUAL_MODE    0x0008

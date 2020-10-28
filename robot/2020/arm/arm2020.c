@@ -53,6 +53,19 @@ unsigned int arm2020HookDownAll(ServoList* servoList) {
     return result;
 }
 
+unsigned int arm2020HookDownMiddleAll(ServoList* servoList) {
+    unsigned int hookIndex = 0;
+    unsigned int result = 0;
+    for (hookIndex = 1; hookIndex < ARM_2020_HOOK_COUNT - 1; hookIndex++) {
+        Servo* servo = getServo(servoList, ARM_2020_HOOK_VERTICAL_SERVO_BASE_INDEX + hookIndex);
+        unsigned int timeToReach = pwmServo(servo, ARM_2020_HOOK_DOWN_SPEED_FACTOR, ARM_2020_HOOK_DOWN, 0);
+        if (timeToReach > result) {
+            result = timeToReach;
+        }
+    }
+    return result;
+}
+
 unsigned int arm2020HookUp(ServoList* servoList, unsigned char hookIndex, unsigned int delayBeforeMoving) {
     Servo* servo = getServo(servoList, ARM_2020_HOOK_VERTICAL_SERVO_BASE_INDEX + hookIndex);
     return pwmServo(servo, ARM_2020_HOOK_UP_SPEED_FACTOR, ARM_2020_HOOK_UP, delayBeforeMoving);
@@ -71,9 +84,40 @@ unsigned int arm2020HookUpAll(ServoList* servoList, unsigned int delayBeforeMovi
     return result;
 }
 
+unsigned int arm2020HookUpMiddleAll(ServoList* servoList, unsigned int delayBeforeMoving) {
+    unsigned int hookIndex = 0;
+    unsigned int result = 0;
+    for (hookIndex = 1; hookIndex < ARM_2020_HOOK_COUNT - 1; hookIndex++) {
+        Servo* servo = getServo(servoList, ARM_2020_HOOK_VERTICAL_SERVO_BASE_INDEX + hookIndex);
+        unsigned timeToReach = pwmServo(servo, ARM_2020_HOOK_UP_SPEED_FACTOR, ARM_2020_HOOK_UP, delayBeforeMoving);
+        if (timeToReach > result) {
+            result = timeToReach;
+        }
+    }
+    return result;
+}
+
 unsigned int arm2020HookPrepareFloor(ServoList* servoList, unsigned char hookIndex) {
     Servo* servo = getServo(servoList, ARM_2020_HOOK_VERTICAL_SERVO_BASE_INDEX + hookIndex);
     return pwmServo(servo, ARM_2020_HOOK_FLOOR_UP_SPEED_FACTOR, ARM_2020_HOOK_FLOOR_UP, 0);
+}
+
+unsigned int arm2020HookPrepareFloorCenterAll(ServoList* servoList) {
+    unsigned int hookIndex = 0;
+    unsigned int result = 0;
+    // Up to prepare for 3 central hook 
+    for (hookIndex = 1; hookIndex < ARM_2020_HOOK_COUNT - 1; hookIndex++) {
+        Servo* servo = getServo(servoList, ARM_2020_HOOK_VERTICAL_SERVO_BASE_INDEX + hookIndex);
+        unsigned timeToReach = pwmServo(servo, ARM_2020_HOOK_FLOOR_UP_SPEED_FACTOR, ARM_2020_HOOK_FLOOR_UP, 0);
+        if (timeToReach > result) {
+            result = timeToReach;
+        }
+    }
+    // and up very high at the extreme leftand extreme right
+    arm2020HookUp(servoList, 0, 0);
+    arm2020HookUp(servoList, ARM_2020_HOOK_COUNT - 1, 0);
+
+    return result;
 }
 
 unsigned int arm2020HookPrepareFloorAll(ServoList* servoList) {
@@ -86,8 +130,10 @@ unsigned int arm2020HookPrepareFloorAll(ServoList* servoList) {
             result = timeToReach;
         }
     }
+
     return result;
 }
+
 
 unsigned int arm2020HookLockFloor(ServoList* servoList, unsigned char hookIndex) {
     Servo* servo = getServo(servoList, ARM_2020_HOOK_VERTICAL_SERVO_BASE_INDEX + hookIndex);
@@ -97,13 +143,17 @@ unsigned int arm2020HookLockFloor(ServoList* servoList, unsigned char hookIndex)
 unsigned int arm2020HookLockFloorAll(ServoList* servoList) {
     unsigned int hookIndex = 0;
     unsigned int result = 0;
-    for (hookIndex = 0; hookIndex < ARM_2020_HOOK_COUNT; hookIndex++) {
+    // We lock only the hook at the center (perimeter problem)
+    for (hookIndex = 1; hookIndex < ARM_2020_HOOK_COUNT - 1; hookIndex++) {
         Servo* servo = getServo(servoList, ARM_2020_HOOK_VERTICAL_SERVO_BASE_INDEX + hookIndex);
         unsigned timeToReach = pwmServo(servo, ARM_2020_HOOK_FLOOR_DOWN_SPEED_FACTOR, ARM_2020_HOOK_FLOOR_DOWN, 0);
         if (timeToReach > result) {
             result = timeToReach;
         }
     }
+    // We up the hook to the extreme left and to the extreme right
+    arm2020HookUp(servoList, 0, 0);
+    arm2020HookUp(servoList, ARM_2020_HOOK_COUNT - 1, 0);
     return result;
 }
 

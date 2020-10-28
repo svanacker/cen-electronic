@@ -70,12 +70,15 @@ unsigned int arm2020FlagUp(ServoList* servoList);
 
 unsigned int arm2020HookDown(ServoList* servoList, unsigned char hookIndex);
 unsigned int arm2020HookDownAll(ServoList* servoList);
+unsigned int arm2020HookDownMiddleAll(ServoList* servoList);
 
 unsigned int arm2020HookUp(ServoList* servoList, unsigned char hookIndex, unsigned int delayBeforeMoving);
 unsigned int arm2020HookUpAll(ServoList* servoList, unsigned int delayBeforeMoving);
+unsigned int arm2020HookUpMiddleAll(ServoList* servoList, unsigned int delayBeforeMoving);
 
 // -> On the floor
 unsigned int arm2020HookPrepareFloor(ServoList* servoList, unsigned char hookIndex);
+unsigned int arm2020HookPrepareFloorCenterAll(ServoList* servoList);
 unsigned int arm2020HookPrepareFloorAll(ServoList* servoList);
 
 unsigned int arm2020HookLockFloor(ServoList* servoList, unsigned char hookIndex);

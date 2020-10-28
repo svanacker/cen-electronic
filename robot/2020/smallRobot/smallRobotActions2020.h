@@ -3,6 +3,10 @@
 
 #include <stdbool.h>
 
+// PREPARE
+
+bool smallRobotHookUpAll(int* context);
+
 // FLAG
 
 bool lateralArmOn(int* context);

@@ -140,8 +140,10 @@ static GameTargetActionItemList left2CupDropTargetActionItemList;
 
 // Flag
 static GameTargetActionItem flag1PrepareTargetActionItem1;
+static GameTargetActionItem flag1PrepareTargetActionItem2;
 static GameTargetActionItem flag1DropTargetActionItem1;
 static GameTargetActionItem flag2PrepareTargetActionItem1;
+static GameTargetActionItem flag2PrepareTargetActionItem2;
 static GameTargetActionItem flag2DropTargetActionItem1;
 
 // Cup
@@ -372,10 +374,12 @@ void initSmallRobotTargetActions2020(GameStrategyContext* gameStrategyContext) {
 void initSmallRobotTargetActionsItems2020(GameStrategyContext* gameStrategyContext) {
     // Flag 1
     addTargetActionItem(&flag1PrepareTargetActionItemList, &flag1PrepareTargetActionItem1, &lateralArmOn, NULL, "LAT ARM ON");
+    addTargetActionItem(&flag1PrepareTargetActionItemList, &flag1PrepareTargetActionItem2, &smallRobotHookUpAll, NULL, "HOOK ALL UP");
     addTargetActionItem(&flag1DropTargetActionItemList, &flag1DropTargetActionItem1, &lateralArmOff, NULL, "LAT ARM OFF");
 
     // Flag 1 & 2
     addTargetActionItem(&flag2PrepareTargetActionItemList, &flag2PrepareTargetActionItem1, &lateralArmOn, NULL, "LAT ARM ON");
+    addTargetActionItem(&flag2PrepareTargetActionItemList, &flag2PrepareTargetActionItem2, &smallRobotHookUpAll, NULL, "HOOK ALL UP");
     addTargetActionItem(&flag2DropTargetActionItemList, &flag2DropTargetActionItem1, &lateralArmOff, NULL, "LAT ARM OFF");
 
     // RightCup

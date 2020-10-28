@@ -65,16 +65,28 @@ bool lightHouseLateralArmOff(int* context) {
 }
 
 
+bool bigRobotPrepareFloorCenterCups(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "-> Prepare Floor Center Cups");
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+
+    arm2020HookPrepareFloorCenterAll(servoList);
+
+    return true;
+}
+
 bool bigRobotPrepareFloorCups(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "-> Prepare Floor Cups");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
 
-    arm2020HookPrepareFloorAll(servoList);
+    arm2020HookDownAll(servoList);
 
     return true;
 }
+
 
 bool bigRobotLockFloorCups(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
@@ -97,6 +109,7 @@ bool bigRobotReleaseCups(int* context) {
 
     return true;
 }
+
 
 // 
 
@@ -123,13 +136,24 @@ bool bigRobotTakeCups(int* context) {
     return true;
 }
 
-bool bigRobotDropCups(int* context) {
+bool bigRobotDropCupsPhase1(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
-    appendStringCRLF(debugOutputStream, "-> Drop Cups");
+    appendStringCRLF(debugOutputStream, "-> Drop Cups 1");
     GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
     ServoList* servoList = gameStrategyContext->servoList;
 
     arm2020DownAndReleaseAll(servoList);
+
+    return true;
+}
+
+bool bigRobotDropCupsPhase2(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "-> Drop Cups 2");
+    GameStrategyContext* gameStrategyContext = (GameStrategyContext*)context;
+    ServoList* servoList = gameStrategyContext->servoList;
+
+    arm2020HookUpAll(servoList, 0);
 
     return true;
 }

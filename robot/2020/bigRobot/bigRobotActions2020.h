@@ -12,17 +12,22 @@ bool lightHouseLateralArmOff(int* context);
 
 bool bigRobotPrepareFloorCups(int* context);
 
+bool bigRobotPrepareFloorCenterCups(int* context);
+
 bool bigRobotLockFloorCups(int* context);
 
 bool bigRobotReleaseCups(int* context);
 
-// HOOK
+// REEF
 
 bool bigRobotPrepareHook(int* context);
 
 bool bigRobotTakeCups(int* context);
 
-bool bigRobotDropCups(int* context);
+bool bigRobotDropCupsPhase1(int* context);
+
+bool bigRobotDropCupsPhase2(int* context);
+
 
 #endif
 

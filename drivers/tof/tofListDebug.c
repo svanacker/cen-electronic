@@ -28,8 +28,8 @@ void printTofSensorConfigDebugTableHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Usage", TOF_SENSOR_USAGE_TYPE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Start", TOF_SENSOR_START_RESULT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Enab.", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Thres", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Thres", TOF_SENSOR_VALUE_THRESHOLD_MIN_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Thres", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Detect.", TOF_SENSOR_VALUE_DETECTION_THRESHOLD_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Beam", TOF_SENSOR_VALUE_BEAM_ANGLE_DEGREE_LENGTH);
     appendStringHeader(outputStream, "Orien", TOF_SENSOR_VALUE_ORIENTATION_ANGLE_DEGREE_LENGTH);
@@ -44,8 +44,8 @@ void printTofSensorConfigDebugTableHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "Type", TOF_SENSOR_USAGE_TYPE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Result", TOF_SENSOR_START_RESULT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Hold", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Hold", TOF_SENSOR_VALUE_THRESHOLD_MIN_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Hold", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Thres.", TOF_SENSOR_VALUE_DETECTION_THRESHOLD_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Angle", TOF_SENSOR_VALUE_BEAM_ANGLE_DEGREE_LENGTH);
     appendStringHeader(outputStream, "Angle", TOF_SENSOR_VALUE_ORIENTATION_ANGLE_DEGREE_LENGTH);
@@ -60,8 +60,8 @@ void printTofSensorConfigDebugTableHeader(OutputStream* outputStream) {
     appendStringHeader(outputStream, "", TOF_SENSOR_USAGE_TYPE_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_START_RESULT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "", TOF_SENSOR_ENABLE_COLUMN_LENGTH);
-    appendStringHeader(outputStream, "Max", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Min", TOF_SENSOR_VALUE_THRESHOLD_MIN_COLUMN_LENGTH);
+    appendStringHeader(outputStream, "Max", TOF_SENSOR_VALUE_THRESHOLD_MAX_COLUMN_LENGTH);
     appendStringHeader(outputStream, "Count", TOF_SENSOR_VALUE_DETECTION_THRESHOLD_COUNT_COLUMN_LENGTH);
     appendStringHeader(outputStream, "(Deg)", TOF_SENSOR_VALUE_BEAM_ANGLE_DEGREE_LENGTH);
     appendStringHeader(outputStream, "(Deg)", TOF_SENSOR_VALUE_ORIENTATION_ANGLE_DEGREE_LENGTH);
