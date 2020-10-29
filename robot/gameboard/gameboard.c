@@ -34,8 +34,6 @@
 #include "../../robot/strategy/gameStrategyContext.h"
 #include "../../robot/strategy/gameStrategyHandler.h"
 #include "../../robot/strategy/gameStrategyPositionHandler.h"
-#include "sensor/accelerometer/accelerometer.h"
-
 
 #ifdef _MSC_VER
 #include <Windows.h>

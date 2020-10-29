@@ -101,7 +101,7 @@ bool smallRobotGoBack(int* context) {
     OutputStream* debugOutputStream = getDebugOutputStreamLogger();
     appendStringCRLF(debugOutputStream, "-> Go back");
 
-    motionDriverBackward(200);
+    motionDriverBackward(300);
 
     return true;
 }

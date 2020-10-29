@@ -46,7 +46,7 @@
 // -> Big Robot : Left Reef Take -> Front Left
 #define LEFT_REEF_TAKE__TO__FRONT_LEFT_COST                                        800.0f
 #define LEFT_REEF_TAKE__TO__FRONT_LEFT_CP1                                        -350.0f
-#define LEFT_REEF_TAKE__TO__FRONT_LEFT_CP2                                        -350.0f
+#define LEFT_REEF_TAKE__TO__FRONT_LEFT_CP2                                        -275.0f
 #define LEFT_REEF_TAKE__TO__FRONT_LEFT_SPEED_FACTOR                                 0.75f
 #define LEFT_REEF_TAKE__TO__FRONT_LEFT_ACC_FACTOR                                   0.75f
 
