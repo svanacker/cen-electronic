@@ -34,6 +34,7 @@
 #include "../../robot/strategy/gameStrategyContext.h"
 #include "../../robot/strategy/gameStrategyHandler.h"
 #include "../../robot/strategy/gameStrategyPositionHandler.h"
+#include "sensor/accelerometer/accelerometer.h"
 
 
 #ifdef _MSC_VER
@@ -406,6 +407,14 @@ bool isPointInTheCollisionArea(GameBoard* gameBoard, Point* collisionPoint) {
     unsigned int i;
     GameBoardElementList* gameBoardElementList = gameBoard->gameBoardElementList;
     unsigned int elementSize = gameBoardElementList->size;
+
+    // CUP 2020
+    if (collisionPoint->x < 250.0f || collisionPoint->x > 1750.0f) {
+        return false;
+    }
+    if (collisionPoint->y < 450.0f || collisionPoint->y > 2550.0f) {
+        return false;
+    }
 
     for (i = 0; i < elementSize; i++) {
         GameBoardElement* gameBoardElement = getGameBoardElement(gameBoardElementList, i);

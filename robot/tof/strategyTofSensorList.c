@@ -105,7 +105,7 @@ void handleTofSensorList(GameStrategyContext* gameStrategyContext, StartMatch* s
             continue;
         }
 
-        // We must know if it's in the gameboard
+        // We must know if it's in the gameboard or in a area where we could have a collision
         if (isPointInTheCollisionArea(gameBoard, &detectedPoint)) {
 
             // motionDriverStop();
