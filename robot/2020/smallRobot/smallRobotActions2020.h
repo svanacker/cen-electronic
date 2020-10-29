@@ -21,5 +21,9 @@ bool smallRobotTakeCups(int* context);
 
 bool smallRobotDropCups(int* context);
 
+// GO BACK
+
+bool smallRobotGoBack(int* context);
+
 #endif
 

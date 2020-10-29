@@ -154,7 +154,8 @@ static GameTargetActionItem rightCupRightDropTargetActionItem;
 // -> Cup 2
 static GameTargetActionItem left2CupPrepareTargetActionItem;
 static GameTargetActionItem left2CupTakeTargetActionItem;
-static GameTargetActionItem left2CupDropTargetActionItem;
+static GameTargetActionItem left2CupDropTargetActionItem1;
+static GameTargetActionItem left2CupDropTargetActionItem2;
 
 // ------------------------------------------------------- STRATEGIES ----------------------------------------------------------------
 
@@ -390,7 +391,8 @@ void initSmallRobotTargetActionsItems2020(GameStrategyContext* gameStrategyConte
     // Left Reef 2
     addTargetActionItem(&left2CupPrepareTargetActionItemList, &left2CupPrepareTargetActionItem, &smallRobotPrepareHook, NULL, "LEFT REEF 2 -> PREP CUP UP");
     addTargetActionItem(&left2CupTakeTargetActionItemList, &left2CupTakeTargetActionItem, &smallRobotTakeCups, &commonAreActionsFinished, "LEFT REEF 2 -> TAKE CUPS");
-    addTargetActionItem(&left2CupDropTargetActionItemList, &left2CupDropTargetActionItem, &smallRobotDropCups, &commonAreActionsFinished, "LEFT REEF 2 -> DROP CUPS");
+    addTargetActionItem(&left2CupDropTargetActionItemList, &left2CupDropTargetActionItem1, &smallRobotDropCups, &commonAreActionsFinished, "LEFT REEF 2 -> DROP CUPS");
+    addTargetActionItem(&left2CupDropTargetActionItemList, &left2CupDropTargetActionItem2, &smallRobotGoBack, &commonAreActionsFinished, "LEFT REEF 2 -> GO BACK");
 
 }
 

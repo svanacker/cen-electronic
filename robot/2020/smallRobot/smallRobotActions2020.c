@@ -96,3 +96,12 @@ bool smallRobotDropCups(int* context) {
 
     return true;
 }
+
+bool smallRobotGoBack(int* context) {
+    OutputStream* debugOutputStream = getDebugOutputStreamLogger();
+    appendStringCRLF(debugOutputStream, "-> Go back");
+
+    motionDriverBackward(200);
+
+    return true;
+}
